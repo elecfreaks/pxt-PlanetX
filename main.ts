@@ -1,7 +1,7 @@
 /**
-* Functions to Planet sensor by ELECFREAKS Co.,Ltd.
+* Functions to Planet sensor(Stars) by ELECFREAKS Co.,Ltd.
 */
-//% color=#191970  icon="\uf06d" block="Stars" blockId="Planet_A"
+//% color=#191970  icon="\uf005" block="Stars" blockId="Stars_A"
 //% groups='["Basic", "7-Seg 4-Dig LED Nixietube","IIC"]'
 namespace Stars {
     ///////////////////////////// BME280 

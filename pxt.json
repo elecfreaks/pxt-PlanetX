@@ -12,8 +12,8 @@
         "main.ts",
         "oled.ts",
         "neopixel.ts",
-		"_locales/zh-cn/pxt-stars-jsdoc-strings.json",
-		"_locales/zh-cn/pxt-stars-strings.json"
+        "_locales/zh-cn/pxt-stars-jsdoc-strings.json",
+        "_locales/zh-cn/pxt-stars-strings.json"
     ],
     "testFiles": [
         "test.ts"

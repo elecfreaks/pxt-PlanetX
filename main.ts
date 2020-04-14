@@ -951,7 +951,7 @@ namespace Stars {
     /**
     * toggle fans
     */
-    //% blockId=fans block="at pin %Rjpin fans set speed to %speed"
+    //% blockId=fans block="at pin %Rjpin fans set power to %speed //%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Output group="Basic"

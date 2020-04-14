@@ -865,13 +865,13 @@ namespace Stars {
 
         pins.setPull(pinA, PinPullMode.PullUp)
         pins.setPull(pinB, PinPullMode.PullUp)
-        if (pins.digitalReadPin(pinA) == 0 && ButtonStateList.A) {
+        if (pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.A) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 0 && ButtonStateList.B) {
+        else if (pins.digitalReadPin(pinB) == 0 && button == ButtonStateList.B) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && ButtonStateList.AB) {
+        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
             return true
         }
         else {

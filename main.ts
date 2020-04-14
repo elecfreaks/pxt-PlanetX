@@ -984,16 +984,16 @@ namespace Stars {
         let pin = DigitalPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                pin = DigitalPin.P1
+                pin = DigitalPin.P8
                 break;
             case DigitalRJPin.J2:
-                pin = DigitalPin.P2
+                pin = DigitalPin.P12
                 break;
             case DigitalRJPin.J3:
-                pin = DigitalPin.P13
+                pin = DigitalPin.P14
                 break;
             case DigitalRJPin.J4:
-                pin = DigitalPin.P15
+                pin = DigitalPin.P16
                 break;
         }
         switch (Relaystate) {

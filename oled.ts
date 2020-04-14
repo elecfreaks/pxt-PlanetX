@@ -5,7 +5,6 @@ declare interface Math {
 namespace OLED {
     let font: Buffer;
 
-
     const SSD1306_SETCONTRAST = 0x81
     const SSD1306_SETCOLUMNADRESS = 0x21
     const SSD1306_SETPAGEADRESS = 0x22

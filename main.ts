@@ -2,9 +2,8 @@
 * Functions to Planet sensor(Stars) by ELECFREAKS Co.,Ltd.
 */
 //% color=#191970  icon="\uf005" block="Stars" blockId="Stars_A"
-//% groups='["Basic", "7-Seg 4-Dig LED Nixietube","IIC"]'
+//% groups='["Basic", "7-Seg 4-Dig LED Nixietube"]'
 namespace Stars {
-
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
     let dig_T1 = getUInt16LE(0x88)

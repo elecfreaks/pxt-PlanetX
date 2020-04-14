@@ -4,7 +4,7 @@
 //% color=#191970  icon="\uf005" block="Stars" blockId="Stars_A"
 //% groups='["Basic", "7-Seg 4-Dig LED Nixietube","IIC"]'
 namespace Stars {
-    
+
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
     let dig_T1 = getUInt16LE(0x88)
@@ -947,6 +947,26 @@ namespace Stars {
                 pins.digitalWritePin(pin, 0)
                 break;
         }
+    }
+    /**
+    * toggle fans
+    */
+    //% blockId=fans block="at pin %Rjpin fans toggle speed to %speed"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Output group="Basic"
+    export function fans(Rjpin: AnalogRJPin, speed: number): void {
+        let pin = AnalogPin.P1
+        switch (Rjpin) {
+            case AnalogRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case AnalogRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+        }
+        pins.servoSetPulse(pin, speed*10)
+
     }
     /**
     * toggle Relay

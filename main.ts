@@ -1025,20 +1025,20 @@ namespace Stars {
         let display = new TM1637()
         switch (Rjpin) {
             case 1:
-                display.clkPin = DigitalPin.P1
-                display.dataPin = DigitalPin.P8
+                display.clkPin = DigitalPin.P8
+                display.dataPin = DigitalPin.P1
                 break;
             case 2:
-                display.clkPin = DigitalPin.P2
-                display.dataPin = DigitalPin.P12
+                display.clkPin = DigitalPin.P12
+                display.dataPin = DigitalPin.P2
                 break;
             case 3:
-                display.clkPin = DigitalPin.P13
-                display.dataPin = DigitalPin.P14
+                display.clkPin = DigitalPin.P14
+                display.dataPin = DigitalPin.P13
                 break;
             case 4:
-                display.clkPin = DigitalPin.P15
-                display.dataPin = DigitalPin.P16
+                display.clkPin = DigitalPin.P16
+                display.dataPin = DigitalPin.P15
                 break;
         }
         display.buf = pins.createBuffer(4)

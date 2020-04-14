@@ -862,13 +862,16 @@ namespace Stars {
                 pinB = DigitalPin.P16
                 break;
         }
-        if (pins.digitalReadPin(pinA) == 1 && ButtonStateList.A) {
+
+        pins.setPull(pinA, PinPullMode.PullUp)
+        pins.setPull(pinB, PinPullMode.PullUp)
+        if (pins.digitalReadPin(pinA) == 0 && ButtonStateList.A) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 1 && ButtonStateList.B) {
+        else if (pins.digitalReadPin(pinB) == 0 && ButtonStateList.B) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 1 && pins.digitalReadPin(pinA) == 1 && ButtonStateList.AB) {
+        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && ButtonStateList.AB) {
             return true
         }
         else {
@@ -965,7 +968,7 @@ namespace Stars {
                 pin = AnalogPin.P2
                 break;
         }
-        pins.servoSetPulse(pin, speed*10)
+        pins.servoSetPulse(pin, speed * 10)
 
     }
     /**

@@ -331,30 +331,35 @@ namespace Stars {
     //% distance_unit.fieldOptions.columns=2
     //% subcategory=Sensor
     export function Ultrasoundsensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
-        let pin = DigitalPin.P1
+        let pinT = DigitalPin.P1
+        let pinE = DigitalPin.P2
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                pin = DigitalPin.P1
+                pinT = DigitalPin.P1
+                pinE = DigitalPin.P8
                 break;
             case DigitalRJPin.J2:
-                pin = DigitalPin.P2
+                pinT = DigitalPin.P2
+                pinE = DigitalPin.P12
                 break;
             case DigitalRJPin.J3:
-                pin = DigitalPin.P13
+                pinT = DigitalPin.P13
+                pinE = DigitalPin.P14
                 break;
             case DigitalRJPin.J4:
-                pin = DigitalPin.P15
+                pinT = DigitalPin.P15
+                pinE = DigitalPin.P16
                 break;
         }
-        pins.setPull(pin, PinPullMode.PullNone)
-        pins.digitalWritePin(pin, 0)
+        pins.setPull(pinT, PinPullMode.PullNone)
+        pins.digitalWritePin(pinT, 0)
         control.waitMicros(2)
-        pins.digitalWritePin(pin, 1)
+        pins.digitalWritePin(pinT, 1)
         control.waitMicros(10)
-        pins.digitalWritePin(pin, 0)
+        pins.digitalWritePin(pinT, 0)
 
         // read pulse
-        let d = pins.pulseIn(pin, PulseValue.High, 25000)
+        let d = pins.pulseIn(pinE, PulseValue.High, 25000)
         let distance = d * 9 / 6 / 58
 
         if (distance > 400) {

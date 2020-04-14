@@ -799,19 +799,19 @@ namespace Stars {
         let pin = DigitalPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                pin = DigitalPin.P1
-                break;
-            case DigitalRJPin.J2:
                 pin = DigitalPin.P2
                 break;
+            case DigitalRJPin.J2:
+                pin = DigitalPin.P8
+                break;
             case DigitalRJPin.J3:
-                pin = DigitalPin.P13
+                pin = DigitalPin.P14
                 break;
             case DigitalRJPin.J4:
-                pin = DigitalPin.P15
+                pin = DigitalPin.P16
                 break;
         }
-        if (pins.digitalReadPin(pin) == 1) {
+        if (pins.digitalReadPin(pin) == 0) {
             return true
         }
         else {

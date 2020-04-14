@@ -551,7 +551,7 @@ namespace Stars {
             0,
             100
         );
-        soilmoisture = 100-voltage;
+        soilmoisture = 100 - voltage;
         return Math.round(soilmoisture);
     }
     /**
@@ -867,20 +867,17 @@ namespace Stars {
                 pinB = DigitalPin.P16
                 break;
         }
-        if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB)
-        {
+        if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
             return true
         }
-        else
-        {
+        else {
             if (pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.A) {
                 return true
             }
             else if (pins.digitalReadPin(pinB) == 0 && button == ButtonStateList.B) {
                 return true
-            }        
-            else
-            {
+            }
+            else {
                 return false
             }
         }

@@ -23,6 +23,7 @@
   "Stars.Ultrasoundsensor": "********sensor************************星宿传感器************************************************ \r\nget Ultrasonic distance",
   "Stars.WaterLevel": "get water level value (0~100)",
   "Stars.createDisplay": "Create a new driver Grove - 4-Digit Display",
+  "Stars.fans": "toggle fans",
   "Stars.gestureType": "Gestures",
   "Stars.laserSensor": "toggle laserSensor",
   "Stars.onGesture": "Do something when a gesture is detected",

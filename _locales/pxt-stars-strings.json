@@ -70,6 +70,7 @@
   "Stars.WaterLevel|block": "at pin %Rjpin water level(0~100)",
   "Stars.buttonAB|block": "at pin %Rjpin Button %button is pressed",
   "Stars.createDisplay|block": "connect 4-Digit Display |pin %pin|",
+  "Stars.fans|block": "at pin %Rjpin fans set power to %speed \\%",
   "Stars.gestureType.Anticlockwise|block": "Anticlockwise",
   "Stars.gestureType.Backward|block": "Backward",
   "Stars.gestureType.Clockwise|block": "Clockwise",

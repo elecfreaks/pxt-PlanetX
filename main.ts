@@ -951,10 +951,11 @@ namespace Stars {
     /**
     * toggle fans
     */
-    //% blockId=fans block="at pin %Rjpin fans toggle speed to %speed"
+    //% blockId=fans block="at pin %Rjpin fans set speed to %speed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Output group="Basic"
+    //% speed.min=0 speed.max=100
     export function fans(Rjpin: AnalogRJPin, speed: number): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {

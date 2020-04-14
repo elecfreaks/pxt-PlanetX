@@ -851,7 +851,7 @@ namespace Stars {
                 break;
             case DigitalRJPin.J2:
                 pinA = DigitalPin.P2
-                pinB = DigitalPin.P2
+                pinB = DigitalPin.P12
                 break;
             case DigitalRJPin.J3:
                 pinA = DigitalPin.P13
@@ -862,9 +862,6 @@ namespace Stars {
                 pinB = DigitalPin.P16
                 break;
         }
-
-        pins.setPull(pinA, PinPullMode.PullUp)
-        pins.setPull(pinB, PinPullMode.PullUp)
         if (pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.A) {
             return true
         }

@@ -546,7 +546,7 @@ namespace Stars {
             0,
             100
         );
-        soilmoisture = voltage;
+        soilmoisture = 100-voltage;
         return Math.round(soilmoisture);
     }
     /**

@@ -1024,7 +1024,6 @@ namespace Stars {
                 break;
         }
         pins.servoSetPulse(pin, speed * 10)
-
     }
     /**
     * toggle Relay

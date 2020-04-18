@@ -1013,13 +1013,12 @@ namespace Stars {
     /**
     * toggle led
     */
-    //% blockId=LED block="LED %Rjpin toggle to %ledstate"
+    //% blockId=LED block="LED %Rjpin toggle to $ledstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% ledstate.fieldEditor="gridpicker"
-    //% ledstate.fieldOptions.columns=2
+    //% ledstate.shadow="toggleOnOff"
     //% subcategory=Display group="LED"
-    export function LED(Rjpin: DigitalRJPin, ledstate: GeneralStateList): void {
+    export function LED(Rjpin: DigitalRJPin, ledstate: boolean): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
@@ -1035,13 +1034,11 @@ namespace Stars {
                 pin = DigitalPin.P16
                 break;
         }
-        switch (ledstate) {
-            case GeneralStateList.On:
-                pins.digitalWritePin(pin, 1)
-                break;
-            case GeneralStateList.Off:
-                pins.digitalWritePin(pin, 0)
-                break;
+        if (ledstate) {
+            pins.digitalWritePin(pin, 1)
+        }
+        else{
+            pins.digitalWritePin(pin, 0)
         }
     }
     /**

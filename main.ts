@@ -1021,7 +1021,7 @@ namespace Stars {
     //% Rjpin.fieldOptions.columns=2
     //% ledstate.fieldEditor="gridpicker"
     //% ledstate.fieldOptions.columns=2
-    //% subcategory=Display group="Basic"
+    //% subcategory=Display group="LED"
     export function LED(Rjpin: DigitalRJPin, ledstate: GeneralStateList): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -1131,7 +1131,7 @@ namespace Stars {
          * @param dispData value of number
          */
         //% blockId=grove_tm1637_display_number block="%display|show number|%dispData"
-        //% subcategory=Output group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         show(dispData: number, fillWithZeros = false) {
             let def = 0x7f
             if (fillWithZeros)
@@ -1188,7 +1188,7 @@ namespace Stars {
          */
         //% blockId=grove_tm1637_set_display_level block="%display|brightness level to|%level"
         //% level.min=0 level.max=7
-        //% subcategory=Output group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         set(level: number) {
             this.brightnessLevel = level
 
@@ -1206,7 +1206,7 @@ namespace Stars {
         //% blockId=grove_tm1637_display_bit block="%display|show single number|%dispData|at digit|%bitAddr"
         //% dispData.min=0 dispData.max=9
         //% bitAddr.min=0 bitAddr.max=3
-        //% subcategory=Output group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         bit(dispData: number, bitAddr: number) {
             if ((dispData == 0x7f) || (dispData == 0x3f) || ((dispData <= 9) && (bitAddr <= 3))) {
                 let segData = 0
@@ -1235,7 +1235,7 @@ namespace Stars {
          * @param pointEn value of point switch
          */
         //% blockId=grove_tm1637_display_point block="%display|turn|%point|colon point"
-        //% subcategory=Output group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         point(b: boolean) {
 
             this.pointFlag = b
@@ -1246,7 +1246,7 @@ namespace Stars {
          * Clear the display
          */
         //% blockId=grove_tm1637_display_clear block="%display|clear"
-        //% subcategory=Output group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         clear() {
             this.bit(0x7f, 0x00)
             this.bit(0x7f, 0x01)

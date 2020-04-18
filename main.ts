@@ -2,7 +2,7 @@
 * Functions to Stars sensor by ELECFREAKS Co.,Ltd.
 */
 //% color=#00B1ED  icon="\uf005" block="Stars" blockId="Stars_A"
-//% groups='["LED", "7-Seg 4-Dig LED Nixietube","8*16 Matrix"]'
+//% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube"]'
 namespace Stars {
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
@@ -312,62 +312,7 @@ namespace Stars {
         H = (var2 >> 12) / 1024
     }
 
-    /**********sensor************************星宿传感器************************************************ */
-    /**
-    * get Ultrasonic distance
-    */
-    //% blockId=sonarbit block="Ultrasonic sensor %Rjpin distance  %distance_unit"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% distance_unit.fieldEditor="gridpicker"
-    //% distance_unit.fieldOptions.columns=2
-    //% subcategory=Sensor
-    export function Ultrasoundsensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
-        let pinT = DigitalPin.P1
-        let pinE = DigitalPin.P2
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pinT = DigitalPin.P1
-                pinE = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pinT = DigitalPin.P2
-                pinE = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pinT = DigitalPin.P13
-                pinE = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pinT = DigitalPin.P15
-                pinE = DigitalPin.P16
-                break;
-        }
-        pins.setPull(pinT, PinPullMode.PullNone)
-        pins.digitalWritePin(pinT, 0)
-        control.waitMicros(2)
-        pins.digitalWritePin(pinT, 1)
-        control.waitMicros(10)
-        pins.digitalWritePin(pinT, 0)
 
-        // read pulse
-        let d = pins.pulseIn(pinE, PulseValue.High, 25000)
-        let distance = d * 9 / 6 / 58
-
-        if (distance > 400) {
-            distance = 0
-        }
-        switch (distance_unit) {
-            case Distance_Unit_List.Distance_Unit_cm:
-                return Math.floor(distance)  //cm
-                break
-            case Distance_Unit_List.Distance_Unit_inch:
-                return Math.floor(distance / 254)   //inch
-                break
-            default:
-                return 0
-        }
-    }
     /** 
     * TODO: get noise(dB)
     * @param noisepin describe parameter here, eg: AnalogRJPin.J1
@@ -375,7 +320,7 @@ namespace Stars {
     //% blockId="readnoise" block="Noise sensor %Rjpin loudness(dB)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor
+    //% subcategory=Sensor color=#E2C438 group="Analog"
     export function NoiseSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -495,7 +440,7 @@ namespace Stars {
     //% blockId="LightSensor" block="Light sensor %Rjpin light intensity(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor 
+    //% subcategory=Sensor color=#E2C438 group="Analog"
     export function LightSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -524,7 +469,7 @@ namespace Stars {
     //% blockId="readsoilmoisture" block="Soil moisture sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor 
+    //% subcategory=Sensor color=#E2C438 group="Analog"
     export function SoilHumidity(Rjpin: AnalogRJPin): number {
         let voltage = 0, soilmoisture = 0;
         let pin = AnalogPin.P1
@@ -546,37 +491,7 @@ namespace Stars {
         soilmoisture = 100 - voltage;
         return Math.round(soilmoisture);
     }
-    /**
-    * TODO: Detect soil moisture value(0~100%)
-    * @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
-    */
-    //% blockId="PIR" block="PIR sensor %Rjpin detects motion"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor 
-    export function PIR(Rjpin: DigitalRJPin): boolean {
-        let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
-        if (pins.digitalReadPin(pin) == 1) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
+
     /**
     * get water level value (0~100)
     * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
@@ -584,7 +499,7 @@ namespace Stars {
     //% blockId="readWaterLevel" block="Water level sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor 
+    //% subcategory=Sensor color=#E2C438 group="Analog"
     export function WaterLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -614,7 +529,7 @@ namespace Stars {
     //% blockId="readUVLevel" block="UV sensor %Rjpin level(0~15)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor 
+    //% subcategory=Sensor color=#E2C438 group="Analog"
     export function UVLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -641,7 +556,7 @@ namespace Stars {
     //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor
+    //% subcategory=Sensor group="Digital"
     export function Crash(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -666,11 +581,97 @@ namespace Stars {
         }
     }
     /**
+* get Ultrasonic distance
+*/
+    //% blockId=sonarbit block="Ultrasonic sensor %Rjpin distance %distance_unit"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% distance_unit.fieldEditor="gridpicker"
+    //% distance_unit.fieldOptions.columns=2
+    //% subcategory=Sensor group="Digital"
+    export function Ultrasoundsensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
+        let pinT = DigitalPin.P1
+        let pinE = DigitalPin.P2
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pinT = DigitalPin.P1
+                pinE = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                pinT = DigitalPin.P2
+                pinE = DigitalPin.P12
+                break;
+            case DigitalRJPin.J3:
+                pinT = DigitalPin.P13
+                pinE = DigitalPin.P14
+                break;
+            case DigitalRJPin.J4:
+                pinT = DigitalPin.P15
+                pinE = DigitalPin.P16
+                break;
+        }
+        pins.setPull(pinT, PinPullMode.PullNone)
+        pins.digitalWritePin(pinT, 0)
+        control.waitMicros(2)
+        pins.digitalWritePin(pinT, 1)
+        control.waitMicros(10)
+        pins.digitalWritePin(pinT, 0)
+
+        // read pulse
+        let d = pins.pulseIn(pinE, PulseValue.High, 25000)
+        let distance = d * 9 / 6 / 58
+
+        if (distance > 400) {
+            distance = 0
+        }
+        switch (distance_unit) {
+            case Distance_Unit_List.Distance_Unit_cm:
+                return Math.floor(distance)  //cm
+                break
+            case Distance_Unit_List.Distance_Unit_inch:
+                return Math.floor(distance / 254)   //inch
+                break
+            default:
+                return 0
+        }
+    }
+    /**
+* TODO: Detect soil moisture value(0~100%)
+* @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
+*/
+    //% blockId="PIR" block="PIR sensor %Rjpin detects motion"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Sensor group="Digital"
+    export function PIR(Rjpin: DigitalRJPin): boolean {
+        let pin = DigitalPin.P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                pin = DigitalPin.P12
+                break;
+            case DigitalRJPin.J3:
+                pin = DigitalPin.P14
+                break;
+            case DigitalRJPin.J4:
+                pin = DigitalPin.P16
+                break;
+        }
+        if (pins.digitalReadPin(pin) == 1) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    /**
     * TODO: line following
     */
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor 
+    //% subcategory=Sensor group="Digital"
     //% blockId=ringbitcar_tracking block="Line-tracking sensor %Rjpin is %state"
     export function tracking(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
@@ -714,7 +715,7 @@ namespace Stars {
     //% blockId="readdht11" block="DHT11 sensor %Rjpin value %dht11state"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
-    //% subcategory=Sensor 
+    //% subcategory=Sensor group="Digital"
     export function temperature(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -803,7 +804,7 @@ namespace Stars {
 
     //% block="BME280 sensor IIC port value %state"
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
-    //% subcategory=Sensor 
+    //% subcategory=Sensor color=#EA5532 group="IIC Port"
     export function octopus_BME280(state: BME280_state): number {
         switch (state) {
             case 0:
@@ -837,7 +838,7 @@ namespace Stars {
     */
     //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
-    //% subcategory=Sensor
+    //% subcategory=Sensor color=#EA5532 group="IIC Port"
     export function onGesture(gesture: gestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
         if (!paj7620) {
@@ -858,7 +859,7 @@ namespace Stars {
     //% blockId="potentiometer" block="Potentiometer %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Input
+    //% subcategory=Input color=#E2C438 group="Analog"
     export function potentiometer(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -876,7 +877,7 @@ namespace Stars {
     //% Rjpin.fieldOptions.columns=2
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=1
-    //% subcategory=Input
+    //% subcategory=Input group="Digital"
     export function buttonAB(Rjpin: DigitalRJPin, button: ButtonStateList): boolean {
         let pinA = DigitalPin.P1
         let pinB = DigitalPin.P2
@@ -914,7 +915,26 @@ namespace Stars {
         }
 
     }
-
+    /**
+    * toggle fans
+    */
+    //% blockId=fans block="Fan %Rjpin set speed to %speed \\%"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Output group="Analog" color=#E2C438
+    //% speed.min=0 speed.max=100
+    export function fans(Rjpin: AnalogRJPin, speed: number): void {
+        let pin = AnalogPin.P1
+        switch (Rjpin) {
+            case AnalogRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case AnalogRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+        }
+        pins.servoSetPulse(pin, speed * 10)
+    }
     /**
     * toggle laserSensor
     */
@@ -922,7 +942,7 @@ namespace Stars {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
-    //% subcategory=Output group="Basic"
+    //% subcategory=Output group="Digital"
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -942,30 +962,11 @@ namespace Stars {
         if (laserstate) {
             pins.digitalWritePin(pin, 1)
         }
-        else{
+        else {
             pins.digitalWritePin(pin, 0)
         }
     }
-    /**
-    * toggle fans
-    */
-    //% blockId=fans block="Fan %Rjpin set speed to %speed \\%"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Output group="Basic"
-    //% speed.min=0 speed.max=100
-    export function fans(Rjpin: AnalogRJPin, speed: number): void {
-        let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
-        pins.servoSetPulse(pin, speed * 10)
-    }
+
     /**
     * toggle Relay
     */
@@ -974,7 +975,7 @@ namespace Stars {
     //% Rjpin.fieldOptions.columns=2
     //% Relaystate.fieldEditor="gridpicker"
     //% Relaystate.fieldOptions.columns=1
-    //% subcategory=Output group="Basic"
+    //% subcategory=Output group="Digital"
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -1007,7 +1008,7 @@ namespace Stars {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% ledstate.shadow="toggleOnOff"
-    //% subcategory=Display group="LED"
+    //% subcategory=Display group="Digital"
     export function LED(Rjpin: DigitalRJPin, ledstate: boolean): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -1027,7 +1028,7 @@ namespace Stars {
         if (ledstate) {
             pins.digitalWritePin(pin, 1)
         }
-        else{
+        else {
             pins.digitalWritePin(pin, 0)
         }
     }

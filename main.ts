@@ -105,13 +105,6 @@ namespace Stars {
         //% block="inch"
         Distance_Unit_inch,
     }
-    export enum GeneralStateList {
-        //% block="On"
-        On,
-
-        //% block="Off"
-        Off
-    }
     export enum ButtonStateList {
         //% block="A"
         A,
@@ -928,10 +921,9 @@ namespace Stars {
     //% blockId=laserSensor block="Laser %Rjpin toggle to %laserstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% laserstate.fieldEditor="gridpicker"
-    //% laserstate.fieldOptions.columns=2
+    //% laserstate.shadow="toggleOnOff"
     //% subcategory=Output group="Basic"
-    export function laserSensor(Rjpin: DigitalRJPin, laserstate: GeneralStateList): void {
+    export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
@@ -947,13 +939,11 @@ namespace Stars {
                 pin = DigitalPin.P16
                 break;
         }
-        switch (laserstate) {
-            case GeneralStateList.On:
-                pins.digitalWritePin(pin, 1)
-                break;
-            case GeneralStateList.Off:
-                pins.digitalWritePin(pin, 0)
-                break;
+        if (laserstate) {
+            pins.digitalWritePin(pin, 1)
+        }
+        else{
+            pins.digitalWritePin(pin, 0)
         }
     }
     /**

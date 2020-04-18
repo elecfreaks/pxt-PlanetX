@@ -2,7 +2,7 @@
 * Functions to Stars sensor by ELECFREAKS Co.,Ltd.
 */
 //% color=#191970  icon="\uf005" block="Stars" blockId="Stars_A"
-//% groups='["Basic", "7-Seg 4-Dig LED Nixietube"]'
+//% groups='["LED", "7-Seg 4-Dig LED Nixietube","8*16 Matrix"]'
 namespace Stars {
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
@@ -651,7 +651,7 @@ namespace Stars {
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
     //% blockId=ringbitcar_tracking block="Line-tracking sensor %Rjpin is %state"
-    export function tracking(Rjpin: DigitalRJPin,state: TrackingStateType): boolean {
+    export function tracking(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
         let rpin = DigitalPin.P2
         switch (Rjpin) {
@@ -676,7 +676,7 @@ namespace Stars {
         pins.setPull(rpin, PinPullMode.PullUp)
         let lsensor = pins.digitalReadPin(lpin)
         let rsensor = pins.digitalReadPin(rpin)
-        if (lsensor == 0 && rsensor == 0 &&state == TrackingStateType.Tracking_State_0) {
+        if (lsensor == 0 && rsensor == 0 && state == TrackingStateType.Tracking_State_0) {
             return true;
         } else if (lsensor == 0 && rsensor == 1 && state == TrackingStateType.Tracking_State_1) {
             return true;
@@ -926,40 +926,6 @@ namespace Stars {
     }
 
     /**
-    * toggle led
-    */
-    //% blockId=LED block="LED %Rjpin toggle to %ledstate"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% ledstate.fieldEditor="gridpicker"
-    //% ledstate.fieldOptions.columns=2
-    //% subcategory=Output group="Basic"
-    export function LED(Rjpin: DigitalRJPin, ledstate: GeneralStateList): void {
-        let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
-        switch (ledstate) {
-            case GeneralStateList.On:
-                pins.digitalWritePin(pin, 1)
-                break;
-            case GeneralStateList.Off:
-                pins.digitalWritePin(pin, 0)
-                break;
-        }
-    }
-    /**
     * toggle laserSensor
     */
     //% blockId=laserSensor block="Laser %Rjpin toggle to %laserstate"
@@ -1048,13 +1014,46 @@ namespace Stars {
         }
     }
     /**
+    * toggle led
+    */
+    //% blockId=LED block="LED %Rjpin toggle to %ledstate"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% ledstate.fieldEditor="gridpicker"
+    //% ledstate.fieldOptions.columns=2
+    //% subcategory=Display group="Basic"
+    export function LED(Rjpin: DigitalRJPin, ledstate: GeneralStateList): void {
+        let pin = DigitalPin.P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                pin = DigitalPin.P12
+                break;
+            case DigitalRJPin.J3:
+                pin = DigitalPin.P14
+                break;
+            case DigitalRJPin.J4:
+                pin = DigitalPin.P16
+                break;
+        }
+        switch (ledstate) {
+            case GeneralStateList.On:
+                pins.digitalWritePin(pin, 1)
+                break;
+            case GeneralStateList.Off:
+                pins.digitalWritePin(pin, 0)
+                break;
+        }
+    }
+    /**
      * Create a new driver Grove - 4-Digit Display
      * @param clkPin value of clk pin number
      * @param dataPin value of data pin number
      */
     //% blockId=grove_tm1637_create block="connect 4-Digit Display |pin %pin|"
-    //% subcategory=Output group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display
-    //% weight = 1
+    //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display
     export function createDisplay(Rjpin: DigitalRJPin): TM1637 {
         let display = new TM1637()
         switch (Rjpin) {

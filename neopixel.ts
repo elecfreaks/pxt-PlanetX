@@ -36,13 +36,13 @@ enum NeoPixelMode {
     RGB_RGB = 2
 }
 enum DigitalRJPin {
-    //% block="J1 (P1,P8)"
+    //% block="J1"
     J1,
-    //% block="J2 (P2,P12)"
+    //% block="J2"
     J2,
-    //% block="J3 (P13,P14)"
+    //% block="J3"
     J3,
-    //% block="J4 (P15,P16)"
+    //% block="J4"
     J4
 }
 

@@ -33,8 +33,6 @@ namespace Stars {
     setreg(0xF5, 0x0C)
     setreg(0xF4, 0x2F)
 
-
-
     const initRegisterArray: number[] = [
         0xEF, 0x00, 0x32, 0x29, 0x33, 0x01, 0x34, 0x00, 0x35, 0x01, 0x36, 0x00, 0x37, 0x07, 0x38, 0x17,
         0x39, 0x06, 0x3A, 0x12, 0x3F, 0x00, 0x40, 0x02, 0x41, 0xFF, 0x42, 0x01, 0x46, 0x2D, 0x47, 0x0F,
@@ -645,6 +643,36 @@ namespace Stars {
         return Math.round(UVlevel)
     }
     /**
+    * check crash
+    */
+    //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Sensor
+    export function Crash(Rjpin: DigitalRJPin): boolean {
+        let pin = DigitalPin.P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                pin = DigitalPin.P12
+                break;
+            case DigitalRJPin.J3:
+                pin = DigitalPin.P14
+                break;
+            case DigitalRJPin.J4:
+                pin = DigitalPin.P16
+                break;
+        }
+        if (pins.digitalReadPin(pin) == 0) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    /**
     * TODO: line following
     */
     //% Rjpin.fieldEditor="gridpicker"
@@ -832,37 +860,6 @@ namespace Stars {
                 basic.pause(50);
             }
         })
-    }
-
-    /**
-    * check crash
-    */
-    //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor
-    export function Crash(Rjpin: DigitalRJPin): boolean {
-        let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
-        if (pins.digitalReadPin(pin) == 0) {
-            return true
-        }
-        else {
-            return false
-        }
     }
 
     //% blockId="potentiometer" block="Potentiometer %Rjpin analog value"

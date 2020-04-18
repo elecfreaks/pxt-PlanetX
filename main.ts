@@ -1,7 +1,7 @@
 /**
 * Functions to Stars sensor by ELECFREAKS Co.,Ltd.
 */
-//% color=#191970  icon="\uf005" block="Stars" blockId="Stars_A"
+//% color=#00AFEC  icon="\uf005" block="Stars" blockId="Stars_A"
 //% groups='["LED", "7-Seg 4-Dig LED Nixietube","8*16 Matrix"]'
 namespace Stars {
     ///////////////////////////// BME280 

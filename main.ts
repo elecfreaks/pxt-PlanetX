@@ -840,7 +840,7 @@ namespace Stars {
     //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Input
+    //% subcategory=Sensor
     export function Crash(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         switch (Rjpin) {

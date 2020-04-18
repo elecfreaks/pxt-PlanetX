@@ -122,18 +122,6 @@ namespace Stars {
         //% block="AB"
         AB
     }
-    export enum ADKeyList {
-        //% block="A"
-        A,
-        //% block="B"
-        B,
-        //% block="C"
-        C,
-        //% block="D"
-        D,
-        //% block="E"
-        E
-    }
     export enum RelayStateList {
         //% block="NC|Close NO|Open"
         On,

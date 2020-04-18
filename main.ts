@@ -71,7 +71,7 @@ namespace Stars {
     ]
     ///////////////////////////////
     export enum DigitalRJPin {
-        //% block="J1"
+        //% block="J1" 
         J1,
         //% block="J2"
         J2,
@@ -513,7 +513,7 @@ namespace Stars {
     * TODO: get light intensity(0~100%)
     * @param lightintensitypin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="LightSensor" block="light sensor %Rjpin light intensity(0~100)"
+    //% blockId="LightSensor" block="Light sensor %Rjpin light intensity(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -602,7 +602,7 @@ namespace Stars {
     * get water level value (0~100)
     * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="readWaterLevel" block="water level sensor %Rjpin value(0~100)"
+    //% blockId="readWaterLevel" block="Water level sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -662,7 +662,7 @@ namespace Stars {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
-    //% blockId=ringbitcar_tracking block="line-tracking sensor %Rjpin is %state"
+    //% blockId=ringbitcar_tracking block="Line-tracking sensor %Rjpin is %state"
     export function tracking(Rjpin: DigitalRJPin,state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
         let rpin = DigitalPin.P2
@@ -877,7 +877,7 @@ namespace Stars {
         }
     }
 
-    //% blockId="potentiometer" block="potentiometer %Rjpin analog value"
+    //% blockId="potentiometer" block="Potentiometer %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Input
@@ -974,7 +974,7 @@ namespace Stars {
     /**
     * toggle laserSensor
     */
-    //% blockId=laserSensor block="laser %Rjpin toggle to %laserstate"
+    //% blockId=laserSensor block="Laser %Rjpin toggle to %laserstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.fieldEditor="gridpicker"
@@ -1008,7 +1008,7 @@ namespace Stars {
     /**
     * toggle fans
     */
-    //% blockId=fans block="fan %Rjpin set speed to %speed \\%"
+    //% blockId=fans block="Fan %Rjpin set speed to %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Output group="Basic"

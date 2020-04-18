@@ -71,20 +71,33 @@ namespace Stars {
     ]
     ///////////////////////////////
     export enum DigitalRJPin {
-        //% block="J1 (P1,P8)"
+        //% block="J1"
         J1,
-        //% block="J2 (P2,P12)"
+        //% block="J2"
         J2,
-        //% block="J3 (P13,P14)"
+        //% block="J3"
         J3,
-        //% block="J4 (P15,P16)"
+        //% block="J4"
         J4
     }
     export enum AnalogRJPin {
-        //% block="J1 (P1,P8)"
+        //% block="J1"
         J1,
-        //% block="J2 (P2,P12)"
+        //% block="J2"
         J2
+    }
+    export enum TrackingStateType {
+        //% block="● ●" enumval=0
+        Tracking_State_0,
+
+        //% block="● ◌" enumval=1
+        Tracking_State_1,
+
+        //% block="◌ ●" enumval=2
+        Tracking_State_2,
+
+        //% block="◌ ◌" enumval=3
+        Tracking_State_3
     }
 
     export enum Distance_Unit_List {
@@ -324,7 +337,7 @@ namespace Stars {
     /**
     * get Ultrasonic distance
     */
-    //% blockId=sonarbit block="at pin %Rjpin Ultrasonic distance in unit %distance_unit "
+    //% blockId=sonarbit block="Ultrasonic sensor %Rjpin distance  %distance_unit"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% distance_unit.fieldEditor="gridpicker"
@@ -380,7 +393,7 @@ namespace Stars {
     * TODO: get noise(dB)
     * @param noisepin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="readnoise" block="at pin %Rjpin Noise sensor volume(dB)"
+    //% blockId="readnoise" block="Noise sensor %Rjpin loudness(dB)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor
@@ -500,7 +513,7 @@ namespace Stars {
     * TODO: get light intensity(0~100%)
     * @param lightintensitypin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="LightSensor" block="at pin %Rjpin light intensity(0~100)"
+    //% blockId="LightSensor" block="light sensor %Rjpin light intensity(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -529,7 +542,7 @@ namespace Stars {
     * TODO: get soil moisture(0~100%)
     * @param soilmoisturepin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="readsoilmoisture" block="at pin %Rjpin Soil moisture(0~100)"
+    //% blockId="readsoilmoisture" block="Soil moisture sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -558,7 +571,7 @@ namespace Stars {
     * TODO: Detect soil moisture value(0~100%)
     * @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
     */
-    //% blockId="PIR" block="at pin %Rjpin PIR detects motion"
+    //% blockId="PIR" block="PIR sensor %Rjpin detects motion"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -589,7 +602,7 @@ namespace Stars {
     * get water level value (0~100)
     * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="readWaterLevel" block="at pin %Rjpin water level(0~100)"
+    //% blockId="readWaterLevel" block="water level sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -619,7 +632,7 @@ namespace Stars {
     * get UV level value (0~15)
     * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="readUVLevel" block="at pin %Rjpin UV level(0~15)"
+    //% blockId="readUVLevel" block="UV sensor %Rjpin level(0~15)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor 
@@ -644,9 +657,52 @@ namespace Stars {
         return Math.round(UVlevel)
     }
     /**
+    * TODO: line following
+    */
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Sensor 
+    //% blockId=ringbitcar_tracking block="line-tracking sensor %Rjpin is %state"
+    export function tracking(Rjpin: DigitalRJPin,state: TrackingStateType): boolean {
+        let lpin = DigitalPin.P1
+        let rpin = DigitalPin.P2
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                lpin = DigitalPin.P8
+                rpin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                lpin = DigitalPin.P12
+                rpin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J3:
+                lpin = DigitalPin.P14
+                rpin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J4:
+                lpin = DigitalPin.P16
+                rpin = DigitalPin.P8
+                break;
+        }
+        pins.setPull(lpin, PinPullMode.PullUp)
+        pins.setPull(rpin, PinPullMode.PullUp)
+        let lsensor = pins.digitalReadPin(lpin)
+        let rsensor = pins.digitalReadPin(rpin)
+        if (lsensor == 0 && rsensor == 0 &&state == TrackingStateType.Tracking_State_0) {
+            return true;
+        } else if (lsensor == 0 && rsensor == 1 && state == TrackingStateType.Tracking_State_1) {
+            return true;
+        } else if (lsensor == 1 && rsensor == 0 && state == TrackingStateType.Tracking_State_2) {
+            return true;
+        } else if (lsensor == 1 && rsensor == 1 && state == TrackingStateType.Tracking_State_3) {
+            return true;
+        } else return false;
+    }
+
+    /**
     * get dht11 temperature and humidity Value
     * @param dht11pin describe parameter here, eg: DigitalPin.P15     */
-    //% blockId="readdht11" block="at pin %Rjpin dht11 value of %dht11state"
+    //% blockId="readdht11" block="DHT11 sensor %Rjpin value %dht11state"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor 
@@ -736,7 +792,7 @@ namespace Stars {
     }
 
 
-    //% block="at pin IIC BME280 %state value"
+    //% block="BME280 sensor IIC port value %state"
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
     //% subcategory=Sensor 
     export function octopus_BME280(state: BME280_state): number {
@@ -770,7 +826,7 @@ namespace Stars {
         * @param gesture type of gesture to detect
         * @param handler code to run
     */
-    //% blockId= gesture_create_event block="at pin IIC Gesture %gesture"
+    //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor
     export function onGesture(gesture: gestureType, handler: () => void) {
@@ -790,13 +846,10 @@ namespace Stars {
         })
     }
 
-    /**Input sensor*******************星宿传感器************************************* */
-
-
     /**
     * check crash
     */
-    //% blockId=Crash block="at pin %Rjpin Crash Sensor is pressed"
+    //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Input
@@ -824,7 +877,7 @@ namespace Stars {
         }
     }
 
-    //% blockId="potentiometer" block="at pin %Rjpin potentiometer value"
+    //% blockId="potentiometer" block="potentiometer %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Input
@@ -840,7 +893,7 @@ namespace Stars {
         }
         return pins.analogReadPin(pin)
     }
-    //% blockId=buttonab block="at pin %Rjpin Button %button is pressed"
+    //% blockId=buttonab block="Button %Rjpin %button is pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% button.fieldEditor="gridpicker"
@@ -884,13 +937,10 @@ namespace Stars {
 
     }
 
-
-    /**Output sensor*******************星宿传感器************************************* */
-
     /**
     * toggle led
     */
-    //% blockId=LED block="at pin %Rjpin LED toggle to %ledstate"
+    //% blockId=LED block="LED %Rjpin toggle to %ledstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% ledstate.fieldEditor="gridpicker"
@@ -924,7 +974,7 @@ namespace Stars {
     /**
     * toggle laserSensor
     */
-    //% blockId=laserSensor block="at pin %Rjpin laser toggle to %laserstate"
+    //% blockId=laserSensor block="laser %Rjpin toggle to %laserstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.fieldEditor="gridpicker"
@@ -958,7 +1008,7 @@ namespace Stars {
     /**
     * toggle fans
     */
-    //% blockId=fans block="at pin %Rjpin fans set power to %speed \\%"
+    //% blockId=fans block="fan %Rjpin set speed to %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Output group="Basic"
@@ -979,7 +1029,7 @@ namespace Stars {
     /**
     * toggle Relay
     */
-    //% blockId=Relay block="at pin %Rjpin Relay toggle to %Relaystate"
+    //% blockId=Relay block="Relay %Rjpin toggle to %Relaystate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% Relaystate.fieldEditor="gridpicker"

@@ -856,11 +856,11 @@ namespace PlanetX {
         })
     }
 
-    //% blockId="potentiometer" block="Potentiometer %Rjpin analog value"
+    //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Input color=#E2C438 group="Analog"
-    export function potentiometer(Rjpin: AnalogRJPin): number {
+    export function trimpot(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:
@@ -918,12 +918,12 @@ namespace PlanetX {
     /**
     * toggle fans
     */
-    //% blockId=fans block="Fan %Rjpin set speed to %speed \\%"
+    //% blockId=fans block="Motor fan %Rjpin set speed to %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Output group="Analog" color=#E2C438
     //% speed.min=0 speed.max=100
-    export function fans(Rjpin: AnalogRJPin, speed: number): void {
+    export function motorfan(Rjpin: AnalogRJPin, speed: number): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:

@@ -921,7 +921,7 @@ namespace PlanetX {
     //% blockId=fans block="Motor fan %Rjpin set speed to %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Output group="Analog" color=#E2C438
+    //% subcategory=Excute group="Analog" color=#E2C438
     //% speed.min=0 speed.max=100
     export function motorfan(Rjpin: AnalogRJPin, speed: number): void {
         let pin = AnalogPin.P1
@@ -942,7 +942,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
-    //% subcategory=Output group="Digital"
+    //% subcategory=Excute group="Digital"
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -975,7 +975,7 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2
     //% Relaystate.fieldEditor="gridpicker"
     //% Relaystate.fieldOptions.columns=1
-    //% subcategory=Output group="Digital"
+    //% subcategory=Excute group="Digital"
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {

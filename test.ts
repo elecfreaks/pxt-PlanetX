@@ -1,10 +1,10 @@
 OLED.init(128, 64)
 basic.forever(function () {
-    if (Stars.buttonAB(Stars.DigitalRJPin.J3, Stars.ButtonStateList.B)) {
-        OLED.writeNum(Stars.LightSensor(Stars.AnalogRJPin.J1))
-        OLED.writeNum(Stars.NoiseSensor(Stars.AnalogRJPin.J2))
+    if (PlanetX.buttonAB(PlanetX.DigitalRJPin.J3, PlanetX.ButtonStateList.B)) {
+        OLED.writeNum(PlanetX.LightSensor(PlanetX.AnalogRJPin.J1))
+        OLED.writeNum(PlanetX.NoiseSensor(PlanetX.AnalogRJPin.J2))
         basic.pause(1000)
-    } else if (Stars.buttonAB(Stars.DigitalRJPin.J3, Stars.ButtonStateList.B)) {
-        Stars.Relay(Stars.DigitalRJPin.J4, Stars.RelayStateList.On)
+    } else if (PlanetX.buttonAB(PlanetX.DigitalRJPin.J3, PlanetX.ButtonStateList.B)) {
+        PlanetX.Relay(PlanetX.DigitalRJPin.J4, PlanetX.RelayStateList.On)
     }
 })

@@ -1,7 +1,7 @@
 {
     "name": "pxt-PlanetX",
-    "version": "0.0.22",
-    "description": "",
+    "version": "0.0.24",
+    "description": "The micro:bit new sensor series PlanetX(行星X) with RJ11 connection port by ELECFREAKS Co.ltd",
     "dependencies": {
         "core": "*",
         "radio": "*",
@@ -20,5 +20,16 @@
     ],
     "public": false,
     "preferredEditor": "tsprj",
-    "installedVersion": "workspace:e3abacd1-d38f-4f7a-4474-dd8ccbc6ddbc"
+    "installedVersion": "workspace:e3abacd1-d38f-4f7a-4474-dd8ccbc6ddbc",
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "open": 1,
+                    "whitelist": 0,
+                    "security_level": null
+                }
+            }
+        }
+    }
 }

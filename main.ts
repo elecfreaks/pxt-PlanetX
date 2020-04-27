@@ -918,7 +918,7 @@ namespace PlanetX {
     /**
     * toggle fans
     */
-    //% blockId=fans block="Motor fan %Rjpin toggle to $fanstate || speed  %speed \\%"
+    //% blockId=fans block="Motor fan %Rjpin toggle to $fanstate || speed %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% fanstate.shadow="toggleOnOff"

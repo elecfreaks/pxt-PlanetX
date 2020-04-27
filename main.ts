@@ -940,7 +940,7 @@ namespace PlanetX {
         }
         if (fanstate) {
             pins.analogSetPeriod(pin, 100)
-            pins.analogWritePin(AnalogPin.P1, Math.map(speed, 0, 100, 0, 1023))
+            pins.analogWritePin(pin, Math.map(speed, 0, 100, 0, 1023))
         }
         else {
             pins.analogWritePin(pin, 0)
@@ -1021,7 +1021,7 @@ namespace PlanetX {
     //% ledstate.shadow="toggleOnOff"
     //% subcategory=Display group="Analog" color=#E2C438
     //% expandableArgumentMode="toggle"
-    export function LEDbrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness:number=100): void {
+    export function LEDbrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness: number = 100): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:
@@ -1033,9 +1033,9 @@ namespace PlanetX {
         }
         if (ledstate) {
             pins.analogSetPeriod(pin, 100)
-            pins.analogWritePin(AnalogPin.P1, Math.map(brightness, 0, 100, 0, 1023))
+            pins.analogWritePin(pin, Math.map(brightness, 0, 100, 0, 1023))
         }
-        else{
+        else {
             pins.analogWritePin(pin, 0)
         }
 

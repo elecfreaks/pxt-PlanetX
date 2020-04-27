@@ -933,7 +933,8 @@ namespace PlanetX {
                 pin = AnalogPin.P2
                 break;
         }
-        pins.servoSetPulse(pin, speed * 10)
+        pins.analogSetPeriod(pin, 100)
+        pins.analogWritePin(AnalogPin.P1, Math.map(speed, 0, 100, 0, 1023))
     }
     /**
     * toggle laserSensor

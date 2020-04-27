@@ -944,6 +944,7 @@ namespace PlanetX {
         }
         else {
             pins.analogWritePin(pin, 0)
+            speed=0
         }
     }
     /**
@@ -1037,6 +1038,7 @@ namespace PlanetX {
         }
         else {
             pins.analogWritePin(pin, 0)
+            brightness=0
         }
 
     }

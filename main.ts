@@ -573,6 +573,7 @@ namespace PlanetX {
                 pin = DigitalPin.P16
                 break;
         }
+        pins.setPull(pin, PinPullMode.PullUp)
         if (pins.digitalReadPin(pin) == 0) {
             return true
         }
@@ -899,6 +900,8 @@ namespace PlanetX {
                 pinB = DigitalPin.P16
                 break;
         }
+        pins.setPull(pinA, PinPullMode.PullUp)
+        pins.setPull(pinB, PinPullMode.PullUp)
         if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
             return true
         }
@@ -918,7 +921,7 @@ namespace PlanetX {
     /**
     * toggle fans
     */
-    //% blockId=fans block="Motor fan %Rjpin toggle to $fanstate || speed  %speed \\%"
+    //% blockId=fans block="Motor fan %Rjpin toggle to $fanstate || speed %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% fanstate.shadow="toggleOnOff"
@@ -1016,7 +1019,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% brightness.min=0 brightness.max=100
     //% ledstate.shadow="toggleOnOff"
-    //% subcategory=Display group="Analog"
+    //% subcategory=Display group="Analog" color=#E2C438
     //% expandableArgumentMode="toggle"
     export function LEDbrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness:number=100): void {
         let pin = AnalogPin.P1

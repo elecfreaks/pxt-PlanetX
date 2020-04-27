@@ -4,7 +4,6 @@
 //% color=#00B1ED  icon="\uf005" block="PlanetX" blockId="Planet_X"
 //% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube"]'
 namespace PlanetX {
-
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
     let dig_T1 = getUInt16LE(0x88)

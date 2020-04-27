@@ -1007,6 +1007,7 @@ namespace PlanetX {
     */
     //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness"
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
+    //% brightness.min=0 brightness.max=100
     //% ledstate.shadow="toggleOnOff"
     //% subcategory=Display group="Analog"
     //% expandableArgumentMode="toggle"

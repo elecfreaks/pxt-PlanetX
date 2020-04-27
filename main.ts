@@ -918,12 +918,14 @@ namespace PlanetX {
     /**
     * toggle fans
     */
-    //% blockId=fans block="Motor fan %Rjpin set speed to %speed \\%"
+    //% blockId=fans block="Motor fan %Rjpin toggle to $fanstate || speed  %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
+    //% fanstate.shadow="toggleOnOff"
     //% subcategory=Excute group="Analog" color=#E2C438
     //% speed.min=0 speed.max=100
-    export function motorfan(Rjpin: AnalogRJPin, speed: number): void {
+    //% expandableArgumentMode="toggle"
+    export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:
@@ -933,8 +935,13 @@ namespace PlanetX {
                 pin = AnalogPin.P2
                 break;
         }
-        pins.analogSetPeriod(pin, 100)
-        pins.analogWritePin(AnalogPin.P1, Math.map(speed, 0, 100, 0, 1023))
+        if (fanstate) {
+            pins.analogSetPeriod(pin, 100)
+            pins.analogWritePin(AnalogPin.P1, Math.map(speed, 0, 100, 0, 1023))
+        }
+        else {
+            pins.analogWritePin(pin, 0)
+        }
     }
     /**
     * toggle laserSensor
@@ -1005,7 +1012,7 @@ namespace PlanetX {
     /**
     * toggle led
     */
-    //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness"
+    //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness \\%"
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% brightness.min=0 brightness.max=100
     //% ledstate.shadow="toggleOnOff"

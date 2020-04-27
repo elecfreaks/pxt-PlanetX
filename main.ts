@@ -3,8 +3,8 @@
 */
 //% color=#00B1ED  icon="\uf005" block="PlanetX" blockId="Planet_X"
 //% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube"]'
-namespace PlanetX { 
-    
+namespace PlanetX {
+
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
     let dig_T1 = getUInt16LE(0x88)
@@ -929,7 +929,7 @@ namespace PlanetX {
     //% subcategory=Excute group="Analog" color=#E2C438
     //% speed.min=0 speed.max=100
     //% expandableArgumentMode="toggle"
-    export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number): void {
+    export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number=100): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:
@@ -945,7 +945,7 @@ namespace PlanetX {
         }
         else {
             pins.analogWritePin(pin, 0)
-            speed=0
+            speed = 0
         }
     }
     /**
@@ -1039,7 +1039,7 @@ namespace PlanetX {
         }
         else {
             pins.analogWritePin(pin, 0)
-            brightness=0
+            brightness = 0
         }
 
     }

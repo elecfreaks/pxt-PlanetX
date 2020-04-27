@@ -1005,33 +1005,51 @@ namespace PlanetX {
     /**
     * toggle led
     */
-    //% blockId=LED block="LED %Rjpin toggle to $ledstate"
+    //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% ledstate.shadow="toggleOnOff"
     //% subcategory=Display group="Digital"
-    export function LED(Rjpin: DigitalRJPin, ledstate: boolean): void {
-        let pin = DigitalPin.P1
+    //% expandableArgumentMode="toggle"
+    export function LED(Rjpin: AnalogRJPin, ledstate: boolean, brightness:number=100): void {
+        let pin = AnalogPin.P1
         switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
+            case AnalogRJPin.J1:
+                pin = AnalogPin.P1
                 break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
+            case AnalogRJPin.J2:
+                pin = AnalogPin.P2
                 break;
         }
         if (ledstate) {
-            pins.digitalWritePin(pin, 1)
+            pins.analogSetPeriod(pin, 100)
+            pins.analogWritePin(AnalogPin.P1, Math.map(brightness, 0, 100, 0, 1023))
         }
-        else {
-            pins.digitalWritePin(pin, 0)
+        else{
+            pins.analogWritePin(pin, 0)
         }
+
+    }
+    /**
+    * toggle fans
+    */
+    //% blockId=fans block="Motor fan %Rjpin set speed to %speed \\%"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Excute group="Analog" color=#E2C438
+    //% speed.min=0 speed.max=100
+    export function LEDbrightness(Rjpin: AnalogRJPin, speed: number): void {
+        let pin = AnalogPin.P1
+        switch (Rjpin) {
+            case AnalogRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case AnalogRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+        }
+        pins.analogSetPeriod(pin, 100)
+        pins.analogWritePin(AnalogPin.P1, Math.map(speed, 0, 100, 0, 1023))
     }
     /**
      * Create a new driver Grove - 4-Digit Display

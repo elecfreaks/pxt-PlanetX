@@ -573,6 +573,7 @@ namespace PlanetX {
                 pin = DigitalPin.P16
                 break;
         }
+        pins.setPull(pin, PinPullMode.PullUp)
         if (pins.digitalReadPin(pin) == 0) {
             return true
         }
@@ -899,6 +900,8 @@ namespace PlanetX {
                 pinB = DigitalPin.P16
                 break;
         }
+        pins.setPull(pinA, PinPullMode.PullUp)
+        pins.setPull(pinB, PinPullMode.PullUp)
         if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
             return true
         }

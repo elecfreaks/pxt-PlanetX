@@ -4,7 +4,7 @@
   "NeoPixelMode": "Different modes for RGB or RGB+W NeoPixel strips",
   "PlanetX": "Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.",
   "PlanetX.Crash": "check crash",
-  "PlanetX.LED": "toggle led",
+  "PlanetX.LEDbrightness": "toggle led",
   "PlanetX.LightSensor": "TODO: get light intensity(0~100%)",
   "PlanetX.NoiseSensor": "TODO: get noise(dB)",
   "PlanetX.PIR": "TODO: Detect soil moisture value(0~100%)",

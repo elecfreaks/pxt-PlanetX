@@ -45,7 +45,7 @@
   "PlanetX.DigitalRJPin.J4|block": "J4",
   "PlanetX.Distance_Unit_List.Distance_Unit_cm|block": "cm",
   "PlanetX.Distance_Unit_List.Distance_Unit_inch|block": "inch",
-  "PlanetX.LED|block": "LED %Rjpin toggle to $ledstate",
+  "PlanetX.LEDbrightness|block": "LED %Rjpin toggle to $ledstate || brightness %brightness \\%",
   "PlanetX.LightSensor|block": "Light sensor %Rjpin light intensity(0~100)",
   "PlanetX.NoiseSensor|block": "Noise sensor %Rjpin loudness(dB)",
   "PlanetX.PIR|block": "PIR sensor %Rjpin detects motion",
@@ -78,7 +78,7 @@
   "PlanetX.gestureType.Up|block": "Up",
   "PlanetX.gestureType.Wave|block": "Wave",
   "PlanetX.laserSensor|block": "Laser %Rjpin toggle to %laserstate",
-  "PlanetX.motorfan|block": "Motor fan %Rjpin set speed to %speed \\%",
+  "PlanetX.motorfan|block": "Motor fan %Rjpin toggle to $fanstate || speed %speed \\%",
   "PlanetX.octopus_BME280|block": "BME280 sensor IIC port value %state",
   "PlanetX.onGesture|block": "Gesture sensor IIC port is %gesture",
   "PlanetX.temperature|block": "DHT11 sensor %Rjpin value %dht11state",
@@ -115,7 +115,7 @@
   "{id:group}Digital": "Digital",
   "{id:group}IIC Port": "IIC Port",
   "{id:subcategory}Display": "Display",
+  "{id:subcategory}Excute": "Excute",
   "{id:subcategory}Input": "Input",
-  "{id:subcategory}Output": "Output",
   "{id:subcategory}Sensor": "Sensor"
 }

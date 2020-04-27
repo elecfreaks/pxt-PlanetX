@@ -1006,12 +1006,11 @@ namespace PlanetX {
     * toggle led
     */
     //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
+    //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% ledstate.shadow="toggleOnOff"
-    //% subcategory=Display group="Digital"
+    //% subcategory=Display group="Analog"
     //% expandableArgumentMode="toggle"
-    export function LED(Rjpin: AnalogRJPin, ledstate: boolean, brightness:number=100): void {
+    export function LEDbrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness:number=100): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:
@@ -1029,27 +1028,6 @@ namespace PlanetX {
             pins.analogWritePin(pin, 0)
         }
 
-    }
-    /**
-    * toggle fans
-    */
-    //% blockId=fans block="Motor fan %Rjpin set speed to %speed \\%"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Excute group="Analog" color=#E2C438
-    //% speed.min=0 speed.max=100
-    export function LEDbrightness(Rjpin: AnalogRJPin, speed: number): void {
-        let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
-        pins.analogSetPeriod(pin, 100)
-        pins.analogWritePin(AnalogPin.P1, Math.map(speed, 0, 100, 0, 1023))
     }
     /**
      * Create a new driver Grove - 4-Digit Display

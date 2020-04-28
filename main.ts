@@ -514,7 +514,7 @@ namespace PlanetX {
         voltage = pins.map(
             pins.analogReadPin(pin),
             0,
-            800,
+            850,
             0,
             100
         );
@@ -928,7 +928,7 @@ namespace PlanetX {
     //% subcategory=Excute group="Analog" color=#E2C438
     //% speed.min=0 speed.max=100
     //% expandableArgumentMode="toggle"
-    export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number=100): void {
+    export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
             case AnalogRJPin.J1:

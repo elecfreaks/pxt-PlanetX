@@ -679,20 +679,20 @@ namespace PlanetX {
         let rpin = DigitalPin.P2
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                lpin = DigitalPin.P8
+                lpin = DigitalPin.P1
                 rpin = DigitalPin.P8
                 break;
             case DigitalRJPin.J2:
-                lpin = DigitalPin.P12
-                rpin = DigitalPin.P8
+                lpin = DigitalPin.P2
+                rpin = DigitalPin.P12
                 break;
             case DigitalRJPin.J3:
-                lpin = DigitalPin.P14
-                rpin = DigitalPin.P8
+                lpin = DigitalPin.P13
+                rpin = DigitalPin.P14
                 break;
             case DigitalRJPin.J4:
-                lpin = DigitalPin.P16
-                rpin = DigitalPin.P8
+                lpin = DigitalPin.P15
+                rpin = DigitalPin.P16
                 break;
         }
         pins.setPull(lpin, PinPullMode.PullUp)

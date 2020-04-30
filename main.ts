@@ -4,7 +4,7 @@
 //% color=#00B1ED  icon="\uf005" block="PlanetX" blockId="Planet_X"
 //% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube", "OLED"]'
 namespace PlanetX {
-    
+
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
     let dig_T1 = getUInt16LE(0x88)
@@ -75,7 +75,7 @@ namespace PlanetX {
     let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
 
     ///////////////OELD///////////////////////////////
-    let firstoledinit= true
+    let firstoledinit = true
     const basicFont: string[] = [
         "\x00\x00\x00\x00\x00\x00\x00\x00", // " "
         "\x00\x00\x5F\x00\x00\x00\x00\x00", // "!"
@@ -188,7 +188,7 @@ namespace PlanetX {
         for (let i = 0; i < 8; i++) {
             writeData(c.charCodeAt(i));
         }
-    } 
+    }
     function setText(row: number, column: number) {
         let r = row;
         let c = column;
@@ -1264,7 +1264,7 @@ namespace PlanetX {
      */
     //% blockId=grove_tm1637_create block="connect 4-Digit Display |pin %pin|"
     //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display
-    export function create(Rjpin: DigitalRJPin, intensity: number=7, count: number=4): TM1637LEDs {
+    export function create(Rjpin: DigitalRJPin, intensity: number = 7, count: number = 4): TM1637LEDs {
         let display = new TM1637LEDs();
         switch (Rjpin) {
             case DigitalRJPin.J1:
@@ -1385,6 +1385,7 @@ namespace PlanetX {
         //% bitAddr.min=0 bitAddr.max=3
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showbit(num: number = 5, bit: number = 0) {
+            Math.map(bit, 0, 3, 1, 4)
             this.buf[bit % this.count] = _SEGMENTS[num % 16]
             this._dat(bit, _SEGMENTS[num % 16])
         }

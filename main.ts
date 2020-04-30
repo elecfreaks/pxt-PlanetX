@@ -326,7 +326,7 @@ namespace PlanetX {
     }
 
 
-    ///////////////////////////////
+    ///////////////////////////////enum
     export enum DigitalRJPin {
         //% block="J1" 
         J1,

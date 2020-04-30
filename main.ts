@@ -1464,24 +1464,39 @@ namespace PlanetX {
             this.bit(0x7f, 0x03)
         }
     }
+
     /**
- * create a TM1637 object.
- * @param clk the CLK pin for TM1637, eg: DigitalPin.P1
- * @param dio the DIO pin for TM1637, eg: DigitalPin.P2
- * @param intensity the brightness of the LED, eg: 7
- * @param count the count of the LED, eg: 4
- */
-    //% weight=200 blockGap=8
-    //% blockId="TM1637_create" block="CLK %clk|DIO %dio|intensity %intensity|LED count %count"
-    export function create(clk: DigitalPin, dio: DigitalPin, intensity: number, count: number): TM1637LEDs {
-        let tm = new TM1637LEDs();
-        tm.clk = clk;
-        tm.dio = dio;
+     * Create a new driver Grove - 4-Digit Display
+     * @param clkPin value of clk pin number
+     * @param dataPin value of data pin number
+     */
+    //% blockId=grove_tm1637_create block="connect 4-Digit Display |pin %pin|"
+    //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display
+    export function create(Rjpin: DigitalRJPin, intensity: number=7, count: number=4): TM1637LEDs {
+        let display = new TM1637LEDs();
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                display.clk = DigitalPin.P1
+                display.dio = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                display.clk = DigitalPin.P2
+                display.dio = DigitalPin.P12
+                break;
+            case DigitalRJPin.J3:
+                display.clk = DigitalPin.P13
+                display.dio = DigitalPin.P14
+                break;
+            case DigitalRJPin.J4:
+                display.clk = DigitalPin.P15
+                display.dio = DigitalPin.P16
+                break;
+        }
         if ((count < 1) || (count > 5)) count = 4;
-        tm.count = count;
-        tm.brightness = intensity;
-        tm.init();
-        return tm;
+        display.count = count;
+        display.brightness = intensity;
+        display.init();
+        return display;
     }
     export class TM1637LEDs {
         buf: Buffer;

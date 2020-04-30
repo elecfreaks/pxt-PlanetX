@@ -1205,7 +1205,7 @@ namespace PlanetX {
 
     //% line.min=0 line.max=7
     //% block="OLED show line %line|text %text"
-    //% subcategory=Display group="OLED"
+    //% subcategory=Display group="OLED" color=#EA5532
     export function showUserText(line: number, text: string) {
         if (firstoledinit) {
             oledinit()
@@ -1223,7 +1223,7 @@ namespace PlanetX {
     }
     //% line.min=0 line.max=7
     //% block="OLED show line %line|number %n"
-    //% subcategory=Display group="OLED"
+    //% subcategory=Display group="OLED" color=#EA5532
     export function showUserNumber(line: number, n: number) {
         if (firstoledinit) {
             oledinit()
@@ -1232,7 +1232,7 @@ namespace PlanetX {
         showUserText(line, "" + n)
     }
     //% block="clear display"
-    //% subcategory=Display group="OLED"
+    //% subcategory=Display group="OLED" color=#EA5532
     export function oledclear() {
         //oledcmd(DISPLAY_OFF);   //display off
         if (firstoledinit) {

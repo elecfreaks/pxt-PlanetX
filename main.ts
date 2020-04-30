@@ -69,6 +69,7 @@ namespace PlanetX {
     ]
 
     ///////////////OELD///////////////////////////////
+    let firstoledinit= true
     const basicFont: string[] = [
         "\x00\x00\x00\x00\x00\x00\x00\x00", // " "
         "\x00\x00\x5F\x00\x00\x00\x00\x00", // "!"
@@ -1175,9 +1176,7 @@ namespace PlanetX {
         }
 
     }
-    //% blockId=oled_init block="OLED init"
-    //% subcategory=Display group="OLED"
-    export function initDisplay(): void {
+    function oledinit(): void {
         oledcmd(0xAE);  // Set display OFF
         oledcmd(0xD5);  // Set Display Clock Divide Ratio / OSC Frequency 0xD4
         oledcmd(0x80);  // Display Clock Divide Ratio / OSC Frequency 
@@ -1208,6 +1207,10 @@ namespace PlanetX {
     //% subcategory=Display group="OLED"
     export function oledclear() {
         //oledcmd(DISPLAY_OFF);   //display off
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
         for (let j = 0; j < 8; j++) {
             setText(j, 0);
             {
@@ -1225,7 +1228,10 @@ namespace PlanetX {
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED"
     export function showUserText(line: number, text: string) {
-
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
         setText(line, 0);
         for (let c of text) {
             putChar(c);
@@ -1240,7 +1246,10 @@ namespace PlanetX {
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED"
     export function showUserNumber(line: number, n: number) {
-
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
         showUserText(line, "" + n)
     }
 

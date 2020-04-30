@@ -1376,25 +1376,25 @@ namespace PlanetX {
         }
 
         /**
-         * show a number in given position. 
-         * @param num number will show, eg: 5
-         * @param bit the position of the LED, eg: 0
+         * Show a single number from 0 to 9 at a specified digit of Grove - 4-Digit Display
+         * @param dispData value of number
+         * @param bitAddr value of bit number
          */
-        //% blockId="TM1637_showbit" block="%tm|show digit %num |at %bit"
-        //% weight=90 blockGap=8
-        //% parts="TM1637"
+        //% blockId=grove_tm1637_display_bit block="%display|show single number|%num|at digit|%bit"
+        //% dispData.min=0 dispData.max=9
+        //% bitAddr.min=0 bitAddr.max=3
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showbit(num: number = 5, bit: number = 0) {
             this.buf[bit % this.count] = _SEGMENTS[num % 16]
             this._dat(bit, _SEGMENTS[num % 16])
         }
 
         /**
-          * show a number. 
-          * @param num is a number, eg: 0
-          */
-        //% blockId="TM1637_shownum" block="%tm|show number %num"
-        //% weight=91 blockGap=8
-        //% parts="TM1637"
+         * Show a 4 digits number on display
+         * @param dispData value of number
+         */
+        //% blockId=grove_tm1637_display_number block="%display|show number|%num"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showNumber(num: number) {
             if (num < 0) {
                 this._dat(0, 0x40) // '-'
@@ -1413,8 +1413,7 @@ namespace PlanetX {
          * @param show is show/hide dp, eg: true
          */
         //% blockId="TM1637_showDP" block="%tm|DotPoint at %bit|show %show"
-        //% weight=70 blockGap=8
-        //% parts="TM1637"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showDP(bit: number = 1, show: boolean = true) {
             bit = bit % this.count
             if (show) this._dat(bit, this.buf[bit] | 0x80)
@@ -1425,8 +1424,7 @@ namespace PlanetX {
          * clear LED. 
          */
         //% blockId="TM1637_clear" block="clear %tm"
-        //% weight=80 blockGap=8
-        //% parts="TM1637"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         clear() {
             for (let i = 0; i < this.count; i++) {
                 this._dat(i, 0)

@@ -1385,7 +1385,7 @@ namespace PlanetX {
         //% bitAddr.min=0 bitAddr.max=3
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showbit(num: number = 5, bit: number = 0) {
-            Math.map(bit, 0, 3, 1, 4)
+            Math.map(bit, 0, 3, 4, 1)
             this.buf[bit % this.count] = _SEGMENTS[num % 16]
             this._dat(bit, _SEGMENTS[num % 16])
         }

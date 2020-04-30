@@ -1084,6 +1084,7 @@ namespace PlanetX {
     }
     //% block="Color sensor IIC port detects %color"
     //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    //% color.fieldEditor="gridpicker" color.fieldOptions.columns=3
     export function checkColor(color: colorList): boolean {
         let hue = ReadColor()
         switch (color) {

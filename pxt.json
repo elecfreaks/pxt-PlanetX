@@ -10,7 +10,6 @@
     "files": [
         "README.md",
         "main.ts",
-        "oled.ts",
         "neopixel.ts",
         "_locales/zh-cn/pxt-PlanetX-jsdoc-strings.json",
         "_locales/zh-cn/pxt-PlanetX-strings.json"

@@ -32,6 +32,57 @@ namespace PlanetX {
     setreg(0xF4, 0x2F)
     setreg(0xF5, 0x0C)
     setreg(0xF4, 0x2F)
+    function setreg(reg: number, dat: number): void {
+        let buf = pins.createBuffer(2);
+        buf[0] = reg;
+        buf[1] = dat;
+        pins.i2cWriteBuffer(BME280_I2C_ADDR, buf);
+    }
+    function getreg(reg: number): number {
+        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
+        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.UInt8BE);
+    }
+    function getInt8LE(reg: number): number {
+        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
+        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int8LE);
+    }
+    function getUInt16LE(reg: number): number {
+        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
+        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.UInt16LE);
+    }
+    function getInt16LE(reg: number): number {
+        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
+        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int16LE);
+    }
+    function get(): void {
+        let adc_T = (getreg(0xFA) << 12) + (getreg(0xFB) << 4) + (getreg(0xFC) >> 4)
+        let var1 = (((adc_T >> 3) - (dig_T1 << 1)) * dig_T2) >> 11
+        let var2 = (((((adc_T >> 4) - dig_T1) * ((adc_T >> 4) - dig_T1)) >> 12) * dig_T3) >> 14
+        let t = var1 + var2
+        T = ((t * 5 + 128) >> 8) / 100
+        var1 = (t >> 1) - 64000
+        var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * dig_P6
+        var2 = var2 + ((var1 * dig_P5) << 1)
+        var2 = (var2 >> 2) + (dig_P4 << 16)
+        var1 = (((dig_P3 * ((var1 >> 2) * (var1 >> 2)) >> 13) >> 3) + (((dig_P2) * var1) >> 1)) >> 18
+        var1 = ((32768 + var1) * dig_P1) >> 15
+        if (var1 == 0)
+            return; // avoid exception caused by division by zero
+        let adc_P = (getreg(0xF7) << 12) + (getreg(0xF8) << 4) + (getreg(0xF9) >> 4)
+        let _p = ((1048576 - adc_P) - (var2 >> 12)) * 3125
+        _p = (_p / var1) * 2;
+        var1 = (dig_P9 * (((_p >> 3) * (_p >> 3)) >> 13)) >> 12
+        var2 = (((_p >> 2)) * dig_P8) >> 13
+        P = _p + ((var1 + var2 + dig_P7) >> 4)
+        let adc_H = (getreg(0xFD) << 8) + getreg(0xFE)
+        var1 = t - 76800
+        var2 = (((adc_H << 14) - (dig_H4 << 20) - (dig_H5 * var1)) + 16384) >> 15
+        var1 = var2 * (((((((var1 * dig_H6) >> 10) * (((var1 * dig_H3) >> 11) + 32768)) >> 10) + 2097152) * dig_H2 + 8192) >> 14)
+        var2 = var1 - (((((var1 >> 15) * (var1 >> 15)) >> 7) * dig_H1) >> 4)
+        if (var2 < 0) var2 = 0
+        if (var2 > 419430400) var2 = 419430400
+        H = (var2 >> 12) / 1024
+    }
     ////////////////////////paj7620//////////////////////
     const initRegisterArray: number[] = [
         0xEF, 0x00, 0x32, 0x29, 0x33, 0x01, 0x34, 0x00, 0x35, 0x01, 0x36, 0x00, 0x37, 0x07, 0x38, 0x17,
@@ -391,128 +442,6 @@ namespace PlanetX {
         yellow,
         //block = "White"
         white
-    }
-    export class PAJ7620 {
-        private paj7620WriteReg(addr: number, cmd: number) {
-            let buf: Buffer = pins.createBuffer(2);
-            buf[0] = addr;
-            buf[1] = cmd;
-            pins.i2cWriteBuffer(0x73, buf, false);
-        }
-        private paj7620ReadReg(addr: number): number {
-            let buf: Buffer = pins.createBuffer(1);
-            buf[0] = addr;
-            pins.i2cWriteBuffer(0x73, buf, false);
-            buf = pins.i2cReadBuffer(0x73, 1, false);
-            return buf[0];
-        }
-        private paj7620SelectBank(bank: number) {
-            if (bank == 0) this.paj7620WriteReg(0xEF, 0);
-            else if (bank == 1) this.paj7620WriteReg(0xEF, 1);
-        }
-        private paj7620Init() {
-            let temp = 0;
-            this.paj7620SelectBank(0);
-            temp = this.paj7620ReadReg(0);
-            if (temp == 0x20) {
-                for (let i = 0; i < 438; i += 2) {
-                    this.paj7620WriteReg(initRegisterArray[i], initRegisterArray[i + 1]);
-                }
-            }
-            this.paj7620SelectBank(0);
-        }
-        init() {
-            this.paj7620Init();
-            basic.pause(200);
-        }
-        read(): number {
-            let data = 0, result = 0;
-            data = this.paj7620ReadReg(0x43);
-            switch (data) {
-                case 0x01:
-                    result = gestureType.Right;
-                    break;
-                case 0x02:
-                    result = gestureType.Left;
-                    break;
-                case 0x04:
-                    result = gestureType.Up;
-                    break;
-                case 0x08:
-                    result = gestureType.Down;
-                    break;
-                case 0x10:
-                    result = gestureType.Forward;
-                    break;
-                case 0x20:
-                    result = gestureType.Backward;
-                    break;
-                case 0x40:
-                    result = gestureType.Clockwise;
-                    break;
-                case 0x80:
-                    result = gestureType.Anticlockwise;
-                    break;
-                default:
-                    data = this.paj7620ReadReg(0x44);
-                    if (data == 0x01)
-                        result = gestureType.Wave;
-                    break;
-            }
-            return result;
-        }
-    }
-
-    function setreg(reg: number, dat: number): void {
-        let buf = pins.createBuffer(2);
-        buf[0] = reg;
-        buf[1] = dat;
-        pins.i2cWriteBuffer(BME280_I2C_ADDR, buf);
-    }
-    function getreg(reg: number): number {
-        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.UInt8BE);
-    }
-    function getInt8LE(reg: number): number {
-        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int8LE);
-    }
-    function getUInt16LE(reg: number): number {
-        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.UInt16LE);
-    }
-    function getInt16LE(reg: number): number {
-        pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int16LE);
-    }
-    function get(): void {
-        let adc_T = (getreg(0xFA) << 12) + (getreg(0xFB) << 4) + (getreg(0xFC) >> 4)
-        let var1 = (((adc_T >> 3) - (dig_T1 << 1)) * dig_T2) >> 11
-        let var2 = (((((adc_T >> 4) - dig_T1) * ((adc_T >> 4) - dig_T1)) >> 12) * dig_T3) >> 14
-        let t = var1 + var2
-        T = ((t * 5 + 128) >> 8) / 100
-        var1 = (t >> 1) - 64000
-        var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * dig_P6
-        var2 = var2 + ((var1 * dig_P5) << 1)
-        var2 = (var2 >> 2) + (dig_P4 << 16)
-        var1 = (((dig_P3 * ((var1 >> 2) * (var1 >> 2)) >> 13) >> 3) + (((dig_P2) * var1) >> 1)) >> 18
-        var1 = ((32768 + var1) * dig_P1) >> 15
-        if (var1 == 0)
-            return; // avoid exception caused by division by zero
-        let adc_P = (getreg(0xF7) << 12) + (getreg(0xF8) << 4) + (getreg(0xF9) >> 4)
-        let _p = ((1048576 - adc_P) - (var2 >> 12)) * 3125
-        _p = (_p / var1) * 2;
-        var1 = (dig_P9 * (((_p >> 3) * (_p >> 3)) >> 13)) >> 12
-        var2 = (((_p >> 2)) * dig_P8) >> 13
-        P = _p + ((var1 + var2 + dig_P7) >> 4)
-        let adc_H = (getreg(0xFD) << 8) + getreg(0xFE)
-        var1 = t - 76800
-        var2 = (((adc_H << 14) - (dig_H4 << 20) - (dig_H5 * var1)) + 16384) >> 15
-        var1 = var2 * (((((((var1 * dig_H6) >> 10) * (((var1 * dig_H3) >> 11) + 32768)) >> 10) + 2097152) * dig_H2 + 8192) >> 14)
-        var2 = var1 - (((((var1 >> 15) * (var1 >> 15)) >> 7) * dig_H1) >> 4)
-        if (var2 < 0) var2 = 0
-        if (var2 > 419430400) var2 = 419430400
-        H = (var2 >> 12) / 1024
     }
 
     /** 
@@ -1031,6 +960,76 @@ namespace PlanetX {
         }
         return 0;
     }
+    export class PAJ7620 {
+        private paj7620WriteReg(addr: number, cmd: number) {
+            let buf: Buffer = pins.createBuffer(2);
+            buf[0] = addr;
+            buf[1] = cmd;
+            pins.i2cWriteBuffer(0x73, buf, false);
+        }
+        private paj7620ReadReg(addr: number): number {
+            let buf: Buffer = pins.createBuffer(1);
+            buf[0] = addr;
+            pins.i2cWriteBuffer(0x73, buf, false);
+            buf = pins.i2cReadBuffer(0x73, 1, false);
+            return buf[0];
+        }
+        private paj7620SelectBank(bank: number) {
+            if (bank == 0) this.paj7620WriteReg(0xEF, 0);
+            else if (bank == 1) this.paj7620WriteReg(0xEF, 1);
+        }
+        private paj7620Init() {
+            let temp = 0;
+            this.paj7620SelectBank(0);
+            temp = this.paj7620ReadReg(0);
+            if (temp == 0x20) {
+                for (let i = 0; i < 438; i += 2) {
+                    this.paj7620WriteReg(initRegisterArray[i], initRegisterArray[i + 1]);
+                }
+            }
+            this.paj7620SelectBank(0);
+        }
+        init() {
+            this.paj7620Init();
+            basic.pause(200);
+        }
+        read(): number {
+            let data = 0, result = 0;
+            data = this.paj7620ReadReg(0x43);
+            switch (data) {
+                case 0x01:
+                    result = gestureType.Right;
+                    break;
+                case 0x02:
+                    result = gestureType.Left;
+                    break;
+                case 0x04:
+                    result = gestureType.Up;
+                    break;
+                case 0x08:
+                    result = gestureType.Down;
+                    break;
+                case 0x10:
+                    result = gestureType.Forward;
+                    break;
+                case 0x20:
+                    result = gestureType.Backward;
+                    break;
+                case 0x40:
+                    result = gestureType.Clockwise;
+                    break;
+                case 0x80:
+                    result = gestureType.Anticlockwise;
+                    break;
+                default:
+                    data = this.paj7620ReadReg(0x44);
+                    if (data == 0x01)
+                        result = gestureType.Wave;
+                    break;
+            }
+            return result;
+        }
+    }
     const gestureEventId = 3100;
     let lastGesture = gestureType.None;
     let paj7620 = new PAJ7620();
@@ -1058,6 +1057,95 @@ namespace PlanetX {
             }
         })
     }
+    //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
+    //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    export function ReadColor(): number {
+        if (color_first_init == false) {
+            InitModule()
+            ColorMode()
+        }
+        let tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
+        while (!tmp) {
+            basic.pause(5);
+            tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
+        }
+        let c = i2cread_color(APDS9960_ADDR, APDS9960_CDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_CDATAH) * 256;
+        let r = i2cread_color(APDS9960_ADDR, APDS9960_RDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_RDATAH) * 256;
+        let g = i2cread_color(APDS9960_ADDR, APDS9960_GDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_GDATAH) * 256;
+        let b = i2cread_color(APDS9960_ADDR, APDS9960_BDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_BDATAH) * 256;
+        // map to rgb based on clear channel
+        let avg = c / 3;
+        r = r * 255 / avg;
+        g = g * 255 / avg;
+        b = b * 255 / avg;
+        //let hue = rgb2hue(r, g, b);
+        let hue = rgb2hsl(r, g, b)
+        return hue
+    }
+    //% block="Color sensor IIC port detects %color"
+    //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    export function checkColor(color: colorList): boolean {
+        let hue = ReadColor()
+        switch (color) {
+            case colorList.red:
+                if (hue > 300 && 350 > hue) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+            case colorList.green:
+                if (hue > 150 && 180 > hue) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+            case colorList.blue:
+                if (hue > 210 && 220 > hue) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+            case colorList.cyan:
+                if (hue > 180 && 210 > hue) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+            case colorList.magenta:
+                if (hue > 240 && 280 > hue) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+            case colorList.yellow:
+                if (hue > 80 && 150 > hue) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+            case colorList.white:
+                if (hue == 180) {
+                    return true
+                }
+                else {
+                    return false
+                }
+                break
+        }
+    }
+
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"

@@ -1412,7 +1412,7 @@ namespace PlanetX {
          * @param bit is the position, eg: 1
          * @param show is show/hide dp, eg: true
          */
-        //% blockId="TM1637_showDP" block="%tm|DotPoint at %bit|show %show"
+        //% blockId="TM1637_showDP" block="%display|DotPoint at %bit|show %show"
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showDP(bit: number = 1, show: boolean = true) {
             bit = bit % this.count
@@ -1423,7 +1423,7 @@ namespace PlanetX {
         /**
          * clear LED. 
          */
-        //% blockId="TM1637_clear" block="clear %tm"
+        //% blockId="TM1637_clear" block="clear display %display"
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         clear() {
             for (let i = 0; i < this.count; i++) {

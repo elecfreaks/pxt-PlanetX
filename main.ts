@@ -32,7 +32,7 @@ namespace PlanetX {
     setreg(0xF4, 0x2F)
     setreg(0xF5, 0x0C)
     setreg(0xF4, 0x2F)
-
+    ////////////////////////paj7620//////////////////////
     const initRegisterArray: number[] = [
         0xEF, 0x00, 0x32, 0x29, 0x33, 0x01, 0x34, 0x00, 0x35, 0x01, 0x36, 0x00, 0x37, 0x07, 0x38, 0x17,
         0x39, 0x06, 0x3A, 0x12, 0x3F, 0x00, 0x40, 0x02, 0x41, 0xFF, 0x42, 0x01, 0x46, 0x2D, 0x47, 0x0F,
@@ -63,17 +63,88 @@ namespace PlanetX {
         0x6F, 0x32, 0x71, 0x00, 0x72, 0x01, 0x73, 0x35, 0x74, 0x00, 0x75, 0x33, 0x76, 0x31, 0x77, 0x01,
         0x7C, 0x84, 0x7D, 0x03, 0x7E, 0x01
     ];
-    let TubeTab: number[] = [
-        0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07,
-        0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71
-    ]
     ////////////////////////////////TM 1637//////////////////////////////////////////////////
     let TM1637_CMD1 = 0x40;
     let TM1637_CMD2 = 0xC0;
     let TM1637_CMD3 = 0x80;
     let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
 
-    ///////////////OELD///////////////////////////////
+    /////////////////////////color/////////////////////////
+    const APDS9960_ADDR = 0x39
+    const APDS9960_ENABLE = 0x80
+    const APDS9960_ATIME = 0x81
+    const APDS9960_CONTROL = 0x8F
+    const APDS9960_STATUS = 0x93
+    const APDS9960_CDATAL = 0x94
+    const APDS9960_CDATAH = 0x95
+    const APDS9960_RDATAL = 0x96
+    const APDS9960_RDATAH = 0x97
+    const APDS9960_GDATAL = 0x98
+    const APDS9960_GDATAH = 0x99
+    const APDS9960_BDATAL = 0x9A
+    const APDS9960_BDATAH = 0x9B
+    const APDS9960_GCONF4 = 0xAB
+    const APDS9960_AICLEAR = 0xE7
+    let color_first_init = false
+
+    function i2cwrite_color(addr: number, reg: number, value: number) {
+        let buf = pins.createBuffer(2)
+        buf[0] = reg
+        buf[1] = value
+        pins.i2cWriteBuffer(addr, buf)
+    }
+    function i2cread_color(addr: number, reg: number) {
+        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE);
+        let val = pins.i2cReadNumber(addr, NumberFormat.UInt8BE);
+        return val;
+    }
+    function rgb2hsl(color_r: number, color_g: number, color_b: number): number {
+        let Hue = 0
+        // normalizes red-green-blue values  把RGB值转成【0，1】中数值。
+        let R = color_r * 100 / 255;   //由于H25不支持浮点运算，放大100倍在计算，下面的运算也放大100倍
+        let G = color_g * 100 / 255;
+        let B = color_b * 100 / 255;
+
+        let maxVal = Math.max(R, Math.max(G, B))//找出R,G和B中的最大值。
+        let minVal = Math.min(R, Math.min(G, B)) //找出R,G和B中的最小值。
+
+        let Delta = maxVal - minVal;  //△ = Max - Min
+
+        /***********   计算Hue  **********/
+        if (Delta < 0) {
+            Hue = 0;
+        }
+        else if (maxVal == R && G >= B) //最大值为红色
+        {
+            Hue = (60 * ((G - B) * 100 / Delta)) / 100;  //放大100倍
+        }
+        else if (maxVal == R && G < B) {
+            Hue = (60 * ((G - B) * 100 / Delta) + 360 * 100) / 100;
+        }
+        else if (maxVal == G) //最大值为绿色
+        {
+            Hue = (60 * ((B - R) * 100 / Delta) + 120 * 100) / 100;
+        }
+        else if (maxVal == B) {
+            Hue = (60 * ((R - G) * 100 / Delta) + 240 * 100) / 100;
+        }
+        return Hue
+    }
+    function InitModule(): void {
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
+        i2cwrite_color(APDS9960_ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x00) // put everything off
+        i2cwrite_color(APDS9960_ADDR, APDS9960_GCONF4, 0x00) // disable gesture mode
+        i2cwrite_color(APDS9960_ADDR, APDS9960_AICLEAR, 0x00) // clear all interrupt
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x01) // clear all interrupt
+        color_first_init = true
+    }
+    function ColorMode(): void {
+        let tmp = i2cread_color(APDS9960_ADDR, APDS9960_ENABLE) | 0x2;
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, tmp);
+    }
+
+    ///////////////OLED///////////////////////////////
     let firstoledinit = true
     const basicFont: string[] = [
         "\x00\x00\x00\x00\x00\x00\x00\x00", // " "
@@ -172,7 +243,6 @@ namespace PlanetX {
         "\x00\x41\x36\x08\x00\x00\x00\x00", // "}"
         "\x00\x02\x01\x01\x02\x01\x00\x00"  // "~"
     ];
-
     function oledcmd(c: number) {
         pins.i2cWriteNumber(0x3c, c, NumberFormat.UInt16BE);
     }
@@ -180,7 +250,6 @@ namespace PlanetX {
         let b = n;
         if (n < 0) { n = 0 }
         if (n > 255) { n = 255 }
-
         pins.i2cWriteNumber(0x3c, 0x4000 + b, NumberFormat.UInt16BE);
     }
     function writeCustomChar(c: string) {
@@ -307,6 +376,22 @@ namespace PlanetX {
         //% block=Wave
         Wave = 9
     }
+    export enum colorList {
+        //block = "Red"
+        red,
+        //block = "Green"
+        green,
+        //block = "Blue"
+        blue,
+        //block = "Cyan"
+        cyan,
+        //block = "Magenta"
+        magenta,
+        //block = "Yellow"
+        yellow,
+        //block = "White"
+        white
+    }
     export class PAJ7620 {
         private paj7620WriteReg(addr: number, cmd: number) {
             let buf: Buffer = pins.createBuffer(2);
@@ -314,24 +399,17 @@ namespace PlanetX {
             buf[1] = cmd;
             pins.i2cWriteBuffer(0x73, buf, false);
         }
-
         private paj7620ReadReg(addr: number): number {
             let buf: Buffer = pins.createBuffer(1);
-
             buf[0] = addr;
-
             pins.i2cWriteBuffer(0x73, buf, false);
-
             buf = pins.i2cReadBuffer(0x73, 1, false);
-
             return buf[0];
         }
-
         private paj7620SelectBank(bank: number) {
             if (bank == 0) this.paj7620WriteReg(0xEF, 0);
             else if (bank == 1) this.paj7620WriteReg(0xEF, 1);
         }
-
         private paj7620Init() {
             let temp = 0;
             this.paj7620SelectBank(0);
@@ -354,46 +432,36 @@ namespace PlanetX {
                 case 0x01:
                     result = gestureType.Right;
                     break;
-
                 case 0x02:
                     result = gestureType.Left;
                     break;
-
                 case 0x04:
                     result = gestureType.Up;
                     break;
-
                 case 0x08:
                     result = gestureType.Down;
                     break;
-
                 case 0x10:
                     result = gestureType.Forward;
                     break;
-
                 case 0x20:
                     result = gestureType.Backward;
                     break;
-
                 case 0x40:
                     result = gestureType.Clockwise;
                     break;
-
                 case 0x80:
                     result = gestureType.Anticlockwise;
                     break;
-
                 default:
                     data = this.paj7620ReadReg(0x44);
                     if (data == 0x01)
                         result = gestureType.Wave;
                     break;
             }
-
             return result;
         }
     }
-
 
     function setreg(reg: number, dat: number): void {
         let buf = pins.createBuffer(2);
@@ -401,22 +469,18 @@ namespace PlanetX {
         buf[1] = dat;
         pins.i2cWriteBuffer(BME280_I2C_ADDR, buf);
     }
-
     function getreg(reg: number): number {
         pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.UInt8BE);
     }
-
     function getInt8LE(reg: number): number {
         pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int8LE);
     }
-
     function getUInt16LE(reg: number): number {
         pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.UInt16LE);
     }
-
     function getInt16LE(reg: number): number {
         pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int16LE);
@@ -450,7 +514,6 @@ namespace PlanetX {
         if (var2 > 419430400) var2 = 419430400
         H = (var2 >> 12) / 1024
     }
-
 
     /** 
     * TODO: get noise(dB)

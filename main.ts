@@ -1203,27 +1203,6 @@ namespace PlanetX {
         oledclear();
     }
 
-    //% block="clear display"
-    //% subcategory=Display group="OLED"
-    export function oledclear() {
-        //oledcmd(DISPLAY_OFF);   //display off
-        if (firstoledinit) {
-            oledinit()
-            firstoledinit = false
-        }
-        for (let j = 0; j < 8; j++) {
-            setText(j, 0);
-            {
-                for (let i = 0; i < 16; i++)  //clear all columns
-                {
-                    putChar(' ');
-                }
-            }
-        }
-        //oledcmd(DISPLAY_ON);    //display on
-        setText(0, 0);
-    }
-
     //% line.min=0 line.max=7
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED"
@@ -1252,7 +1231,26 @@ namespace PlanetX {
         }
         showUserText(line, "" + n)
     }
-
+    //% block="clear display"
+    //% subcategory=Display group="OLED"
+    export function oledclear() {
+        //oledcmd(DISPLAY_OFF);   //display off
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
+        for (let j = 0; j < 8; j++) {
+            setText(j, 0);
+            {
+                for (let i = 0; i < 16; i++)  //clear all columns
+                {
+                    putChar(' ');
+                }
+            }
+        }
+        //oledcmd(DISPLAY_ON);    //display on
+        setText(0, 0);
+    }
     /**
      * Create a new driver Grove - 4-Digit Display
      * @param clkPin value of clk pin number

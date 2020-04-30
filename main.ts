@@ -1411,7 +1411,8 @@ namespace PlanetX {
          * @param bit is the position, eg: 1
          * @param show is show/hide dp, eg: true
          */
-        //% blockId="TM1637_showDP" block="%display|DotPoint at %bit|show %show"
+        //% blockId="TM1637_showDP" block="%display|DotPoint at %bit|show $show"
+        //% show.shadow="toggleOnOff"
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showDP(bit: number = 1, show: boolean = true) {
             bit = Math.map(bit, 4, 1, 0, 3)

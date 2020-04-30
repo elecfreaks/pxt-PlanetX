@@ -1381,8 +1381,6 @@ namespace PlanetX {
          * @param bitAddr value of bit number
          */
         //% blockId=grove_tm1637_display_bit block="%display|show single number|%num|at digit|%bit"
-        //% dispData.min=0 dispData.max=9
-        //% bitAddr.min=0 bitAddr.max=3
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
         showbit(num: number = 5, bit: number = 0) {
             Math.map(bit, 4, 1, 0, 3)

@@ -2,7 +2,7 @@
 * Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
 */
 //% color=#00B1ED  icon="\uf005" block="PlanetX" blockId="Planet_X"
-//% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube"]'
+//% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube", "OLED"]'
 namespace PlanetX {
     ///////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
@@ -1175,11 +1175,8 @@ namespace PlanetX {
         }
 
     }
-    /**
-    * Init display
-    */
-    //% weight=200
-    //% block="init display"
+    //% blockId=oled_init block="OLED init"
+    //% subcategory=Display group="OLED"
     export function initDisplay(): void {
         oledcmd(0xAE);  // Set display OFF
         oledcmd(0xD5);  // Set Display Clock Divide Ratio / OSC Frequency 0xD4
@@ -1206,12 +1203,9 @@ namespace PlanetX {
         oledcmd(0xAF);  // Set display On
         oledclear();
     }
-    /**
-     * Clear display
-     */
-    //% weight=85
-    //% blockId=OLED_Clear
+
     //% block="clear display"
+    //% subcategory=Display group="OLED"
     export function oledclear() {
         //oledcmd(DISPLAY_OFF);   //display off
         for (let j = 0; j < 8; j++) {
@@ -1226,14 +1220,10 @@ namespace PlanetX {
         //oledcmd(DISPLAY_ON);    //display on
         setText(0, 0);
     }
-    /**
-     * OLED 12864 shows the string
-     */
-    //% weight=90
-    //% blockId=OLED_String
-    //% text.defl="DFRobot"
+
     //% line.min=0 line.max=7
     //% block="OLED show line %line|text %text"
+    //% subcategory=Display group="OLED"
     export function showUserText(line: number, text: string) {
 
         setText(line, 0);
@@ -1246,15 +1236,9 @@ namespace PlanetX {
             putChar(" ");
         }
     }
-	/**
-     * OLED 12864 shows the number
-     * @param line line num (8 pixels per line), eg: 0
-     * @param n value , eg: 2019
-     */
-    //% weight=90
-    //% blockId=OLED_number
     //% line.min=0 line.max=7
     //% block="OLED show line %line|number %n"
+    //% subcategory=Display group="OLED"
     export function showUserNumber(line: number, n: number) {
 
         showUserText(line, "" + n)

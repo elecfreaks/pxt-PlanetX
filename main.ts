@@ -1147,7 +1147,6 @@ namespace PlanetX {
         }
     }
 
-
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2

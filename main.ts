@@ -1362,6 +1362,10 @@ namespace PlanetX {
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserText(line: number, text: string) {
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
         setText(line, 0);
         for (let c of text) {
             putChar(c);

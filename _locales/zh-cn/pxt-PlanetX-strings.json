@@ -101,7 +101,7 @@
   "neopixel.rgb|block": "RGB（红%red|绿%green|蓝%blue|）",
   "neopixel|block": "流光溢彩灯",
   "{id:category}Neopixel": "流光溢彩灯",
-  "{id:category}PlanetX": "行星X",
+  "{id:category}PlanetX": "行星X_基础",
   "{id:group}7-Seg 4-Dig LED Nixietube": "七段四位数码管",
   "{id:group}Analog": "模拟接口",
   "{id:group}Digital": "数字接口",

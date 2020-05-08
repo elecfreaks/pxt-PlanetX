@@ -1329,6 +1329,8 @@ namespace PlanetX {
         }
 
     }
+    //% block="OLED INIT"
+    //% subcategory=Display group="OLED" color=#EA5532
     function oledinit(): void {
         oledcmd(0xAE);  // Set display OFF
         oledcmd(0xD5);  // Set Display Clock Divide Ratio / OSC Frequency 0xD4
@@ -1360,10 +1362,6 @@ namespace PlanetX {
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserText(line: number, text: string) {
-        if (firstoledinit) {
-            oledinit()
-            firstoledinit = false
-        }
         setText(line, 0);
         for (let c of text) {
             putChar(c);
@@ -1378,20 +1376,12 @@ namespace PlanetX {
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserNumber(line: number, n: number) {
-        if (firstoledinit) {
-            oledinit()
-            firstoledinit = false
-        }
         showUserText(line, "" + n)
     }
     //% block="clear display"
     //% subcategory=Display group="OLED" color=#EA5532
     export function oledclear() {
         //oledcmd(DISPLAY_OFF);   //display off
-        if (firstoledinit) {
-            oledinit()
-            firstoledinit = false
-        }
         for (let j = 0; j < 8; j++) {
             setText(j, 0);
             {

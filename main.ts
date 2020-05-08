@@ -452,19 +452,19 @@ namespace PlanetX {
         Wave = 9
     }
     export enum colorList {
-        //% block = "Red"
+        //% block="Red"
         red,
-        //% block = "Green"
+        //% block="Green"
         green,
-        //% block = "Blue"
+        //% block="Blue"
         blue,
-        //% block = "Cyan"
+        //% block="Cyan"
         cyan,
-        //% block = "Magenta"
+        //% block="Magenta"
         magenta,
-        //% block = "Yellow"
+        //% block="Yellow"
         yellow,
-        //% block = "White"
+        //% block="White"
         white
     } 
     export enum emojiList {

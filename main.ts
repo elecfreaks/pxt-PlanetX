@@ -1378,11 +1378,19 @@ namespace PlanetX {
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserNumber(line: number, n: number) {
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
         showUserText(line, "" + n)
     }
     //% block="clear display"
     //% subcategory=Display group="OLED" color=#EA5532
     export function oledclear() {
+        if (firstoledinit) {
+            oledinit()
+            firstoledinit = false
+        }
         //oledcmd(DISPLAY_OFF);   //display off
         for (let j = 0; j < 8; j++) {
             setText(j, 0);

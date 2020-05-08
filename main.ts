@@ -1353,7 +1353,7 @@ namespace PlanetX {
         oledcmd(0xA4);  // Set all pixels OFF
         oledcmd(0xA6);  // Set display not inverted
         oledcmd(0xAF);  // Set display On
-        //oledclear();
+        oledclear();
     }
 
     //% line.min=0 line.max=7

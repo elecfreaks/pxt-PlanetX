@@ -430,41 +430,41 @@ namespace PlanetX {
     *  Gestures
     */
     export enum gestureType {
-        //% block=None
+        //% block="None"
         None = 0,
-        //% block=Right
+        //% block="Right"
         Right = 1,
-        //% block=Left
+        //% block="Left"
         Left = 2,
-        //% block=Up
+        //% block="Up"
         Up = 3,
-        //% block=Down
+        //% block="Down"
         Down = 4,
-        //% block=Forward
+        //% block="Forward"
         Forward = 5,
-        //% block=Backward
+        //% block="Backward"
         Backward = 6,
-        //% block=Clockwise
+        //% block="Clockwise"
         Clockwise = 7,
-        //% block=Anticlockwise
+        //% block="Anticlockwise"
         Anticlockwise = 8,
-        //% block=Wave
+        //% block="Wave"
         Wave = 9
     }
     export enum colorList {
-        //%block = "Red"
+        //% block = "Red"
         red,
-        //%block = "Green"
+        //% block = "Green"
         green,
-        //%block = "Blue"
+        //% block = "Blue"
         blue,
-        //%block = "Cyan"
+        //% block = "Cyan"
         cyan,
-        //%block = "Magenta"
+        //% block = "Magenta"
         magenta,
-        //%block = "Yellow"
+        //% block = "Yellow"
         yellow,
-        //%block = "White"
+        //% block = "White"
         white
     } 
     export enum emojiList {

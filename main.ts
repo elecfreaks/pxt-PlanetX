@@ -1195,18 +1195,15 @@ namespace PlanetX {
         if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
             return true
         }
-        else {
-            if (pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.A) {
-                return true
-            }
-            else if (pins.digitalReadPin(pinB) == 0 && button == ButtonStateList.B) {
-                return true
-            }
-            else {
-                return false
-            }
+        else if (pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.A) {
+            return true
         }
-
+        else if (pins.digitalReadPin(pinB) == 0 && button == ButtonStateList.B) {
+            return true
+        }
+        else{
+            return false
+        }
     }
     /**
     * toggle fans

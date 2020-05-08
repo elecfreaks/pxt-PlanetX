@@ -1,7 +1,7 @@
 /**
 * Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
 */
-//% color=#00B1ED  icon="\uf005" block="PlanetX" blockId="Planet_X"
+//% color=#00B1ED  icon="\uf005" block="PlanetX_Base" blockId="PlanetX_Base"
 //% groups='["LED", "8*16 Matrix", "Digital", "Analog", "IIC Port", "7-Seg 4-Dig LED Nixietube", "OLED"]'
 namespace PlanetX {
     ///////////////////////////// BME280 

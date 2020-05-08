@@ -1195,10 +1195,10 @@ namespace PlanetX {
         if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
             return true
         }
-        else if (pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.A) {
+        else if (pins.digitalReadPin(pinA) == 0 && pins.digitalReadPin(pinB) == 1 && button == ButtonStateList.A) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 0 && button == ButtonStateList.B) {
+        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 1 && button == ButtonStateList.B) {
             return true
         }
         else{

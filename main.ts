@@ -1329,8 +1329,6 @@ namespace PlanetX {
         }
 
     }
-    //% block="OLED INIT"
-    //% subcategory=Display group="OLED" color=#EA5532
     export function oledinit(): void {
         oledcmd(0xAE);  // Set display OFF
         oledcmd(0xD5);  // Set Display Clock Divide Ratio / OSC Frequency 0xD4

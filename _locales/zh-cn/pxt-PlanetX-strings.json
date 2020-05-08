@@ -78,7 +78,7 @@
   "PlanetX.temperature|block": "DHT11传感器 %Rjpin %dht11state 值",
   "PlanetX.tracking|block": "巡线传感器 %Rjpin 识别到 %state",
   "PlanetX.trimpot|block": "电位器 %Rjpin 模拟值",
-  "PlanetX|block": "行星X",
+  "PlanetX|block": "行星X_基础",
   "neopixel.Strip.clear|block": "%strip|清除显示",
   "neopixel.Strip.easeBrightness|block": "%strip|减小亮度",
   "neopixel.Strip.length|block": "%strip|LED的数目",

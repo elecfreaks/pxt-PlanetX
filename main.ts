@@ -1490,6 +1490,7 @@ namespace PlanetX {
     }
 
     //% line.min=1 line.max=8 line.defl=1
+    //% text.defl="Hello ELECFREAKS!"
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserText(line: number, text: string) {
@@ -1509,6 +1510,7 @@ namespace PlanetX {
         }
     }
     //% line.min=1 line.max=8 line.defl=2
+    //% n.defl=20200508
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserNumber(line: number, n: number) {

@@ -1489,7 +1489,7 @@ namespace PlanetX {
         oledclear();
     }
 
-    //% line.min=1 line.max=8
+    //% line.min=1 line.max=8 line.defl=1
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserText(line: number, text: string) {
@@ -1508,7 +1508,7 @@ namespace PlanetX {
             putChar(" ");
         }
     }
-    //% line.min=1 line.max=8
+    //% line.min=1 line.max=8 line.defl=2
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED" color=#EA5532
     export function showUserNumber(line: number, n: number) {

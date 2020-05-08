@@ -380,16 +380,16 @@ namespace PlanetX {
         Off
     }
     export enum BME280_state {
-        //% block="temperature(℃)" enumval=0
+        //% block="temperature(℃)"
         BME280_temperature_C,
 
-        //% block="humidity(0~100)" enumval=1
+        //% block="humidity(0~100)"
         BME280_humidity,
 
-        //% block="pressure(hPa)" enumval=2
+        //% block="pressure(hPa)"
         BME280_pressure,
 
-        //% block="altitude(M)" enumval=3
+        //% block="altitude(M)"
         BME280_altitude,
     }
     export enum DHT11_state {
@@ -939,19 +939,19 @@ namespace PlanetX {
     //% subcategory=Sensor color=#EA5532 group="IIC Port"
     export function octopus_BME280(state: BME280_state): number {
         switch (state) {
-            case 0:
+            case BME280_state.BME280_temperature_C:
                 get();
                 return Math.round(T);
                 break;
-            case 1:
+            case BME280_state.BME280_humidity:
                 get();
                 return Math.round(H);
                 break;
-            case 2:
+            case BME280_state.BME280_pressure:
                 get();
                 return Math.round(P / 100);
                 break;
-            case 3:
+            case BME280_state.BME280_altitude:
                 get();
                 return Math.round(1015 - (P / 100)) * 9
                 break;
@@ -1201,7 +1201,7 @@ namespace PlanetX {
         else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 1 && button == ButtonStateList.B) {
             return true
         }
-        else{
+        else {
             return false
         }
     }

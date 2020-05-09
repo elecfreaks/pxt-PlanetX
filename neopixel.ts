@@ -49,7 +49,7 @@ enum DigitalRJPin {
 /**
  * Functions to operate NeoPixel strips.
  */
-//% color=#00B1ED icon="\uf110" block="PlanetX_Neopixel"
+//% color=#EA5532 icon="\uf110" block="PlanetX_Neopixel"
 namespace neopixel {
     /**
      * A NeoPixel strip

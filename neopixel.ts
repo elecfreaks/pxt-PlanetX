@@ -45,7 +45,6 @@ enum DigitalRJPin {
     //% block="J4"
     J4
 }
-
 /**
  * Functions to operate NeoPixel strips.
  */

@@ -466,7 +466,7 @@ namespace PlanetX {
         yellow,
         //% block="White"
         white
-    } 
+    }
     export enum emojiList {
         //% block="😆"
         Grinning_Squinting_Face,
@@ -723,7 +723,7 @@ namespace PlanetX {
     //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor group="Digital"
+    //% subcategory=Sensor group="Digital" color=#EA5532 
     export function Crash(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -756,7 +756,7 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2
     //% distance_unit.fieldEditor="gridpicker"
     //% distance_unit.fieldOptions.columns=2
-    //% subcategory=Sensor group="Digital"
+    //% subcategory=Sensor group="Digital" color=#EA5532
     export function Ultrasoundsensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
         let pinT = DigitalPin.P1
         let pinE = DigitalPin.P2
@@ -810,7 +810,7 @@ namespace PlanetX {
     //% blockId="PIR" block="PIR sensor %Rjpin detects motion"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor group="Digital"
+    //% subcategory=Sensor group="Digital"  color=#EA5532
     export function PIR(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -839,7 +839,7 @@ namespace PlanetX {
     */
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor group="Digital"
+    //% subcategory=Sensor group="Digital" color=#EA5532
     //% blockId=ringbitcar_tracking block="Line-tracking sensor %Rjpin is %state"
     export function tracking(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
@@ -883,7 +883,7 @@ namespace PlanetX {
     //% blockId="readdht11" block="DHT11 sensor %Rjpin value %dht11state"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
-    //% subcategory=Sensor group="Digital"
+    //% subcategory=Sensor group="Digital" color=#EA5532
     export function temperature(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -972,7 +972,7 @@ namespace PlanetX {
 
     //% block="BME280 sensor IIC port value %state"
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
-    //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    //% subcategory=Sensor  group="IIC Port"
     export function octopus_BME280(state: BME280_state): number {
         switch (state) {
             case BME280_state.BME280_temperature_C:
@@ -1076,7 +1076,7 @@ namespace PlanetX {
     */
     //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
-    //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    //% subcategory=Sensor group="IIC Port"
     export function onGesture(gesture: gestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
         if (!paj7620) {
@@ -1094,7 +1094,7 @@ namespace PlanetX {
         })
     }
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
-    //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    //% subcategory=Sensor group="IIC Port"
     export function ReadColor(): number {
         if (color_first_init == false) {
             InitModule()
@@ -1119,7 +1119,7 @@ namespace PlanetX {
         return hue
     }
     //% block="Color sensor IIC port detects %color"
-    //% subcategory=Sensor color=#EA5532 group="IIC Port"
+    //% subcategory=Sensor group="IIC Port"
     //% color.fieldEditor="gridpicker" color.fieldOptions.columns=3
     export function checkColor(color: colorList): boolean {
         let hue = ReadColor()
@@ -1204,7 +1204,7 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=1
-    //% subcategory=Input group="Digital"
+    //% subcategory=Input group="Digital" color=#EA5532
     export function buttonAB(Rjpin: DigitalRJPin, button: ButtonStateList): boolean {
         let pinA = DigitalPin.P1
         let pinB = DigitalPin.P2
@@ -1277,7 +1277,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
-    //% subcategory=Excute group="Digital"
+    //% subcategory=Excute group="Digital" color=#EA5532
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -1310,7 +1310,7 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2
     //% Relaystate.fieldEditor="gridpicker"
     //% Relaystate.fieldOptions.columns=1
-    //% subcategory=Excute group="Digital"
+    //% subcategory=Excute group="Digital" color=#EA5532
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
         switch (Rjpin) {
@@ -1498,7 +1498,7 @@ namespace PlanetX {
             oledinit()
             firstoledinit = false
         }
-        line = line -1
+        line = line - 1
         setText(line, 0);
         for (let c of text) {
             putChar(c);
@@ -1542,7 +1542,7 @@ namespace PlanetX {
      * @param dataPin value of data pin number
      */
     //% blockId=grove_tm1637_create block="connect 4-Digit Display |pin %pin|"
-    //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display
+    //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display color=#EA5532
     export function create(Rjpin: DigitalRJPin, intensity: number = 7, count: number = 4): TM1637LEDs {
         let display = new TM1637LEDs();
         switch (Rjpin) {
@@ -1660,7 +1660,8 @@ namespace PlanetX {
          * @param bitAddr value of bit number
          */
         //% blockId=grove_tm1637_display_bit block="%display|show single number|%num|at digit|%bit"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
+        //% bit.defl=1
         showbit(num: number = 5, bit: number = 0) {
             bit = Math.map(bit, 4, 1, 0, 3)
             this.buf[bit % this.count] = _SEGMENTS[num % 16]
@@ -1672,7 +1673,7 @@ namespace PlanetX {
          * @param dispData value of number
          */
         //% blockId=grove_tm1637_display_number block="%display|show number|%num"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
         showNumber(num: number) {
             if (num < 0) {
                 num = -num
@@ -1698,7 +1699,7 @@ namespace PlanetX {
          */
         //% blockId="TM1637_showDP" block="%display|DotPoint at %bit|show $show"
         //% show.shadow="toggleOnOff"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
         showDP(bit: number = 1, show: boolean = true) {
             bit = Math.map(bit, 4, 1, 0, 3)
             bit = bit % this.count
@@ -1710,7 +1711,7 @@ namespace PlanetX {
          * clear LED. 
          */
         //% blockId="TM1637_clear" block="clear display %display"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube"
+        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
         clear() {
             for (let i = 0; i < this.count; i++) {
                 this._dat(i, 0)

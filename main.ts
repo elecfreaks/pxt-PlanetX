@@ -2,7 +2,7 @@
 * Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
 */
 //% color=#00B1ED  icon="\uf005" block="PlanetX_Base" blockId="PlanetX_Base"
-//% groups='["LED", "Digital", "Analog", "IIC Port", "8*16 Matrix", "7-Seg 4-Dig LED Nixietube", "OLED"]'
+//% groups='["LED", "Digital", "Analog", "IIC Port", "OLED""8*16 Matrix", "7-Seg 4-Dig LED Nixietube"]'
 namespace PlanetX {
     /////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76

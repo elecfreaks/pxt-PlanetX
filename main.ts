@@ -711,7 +711,7 @@ namespace PlanetX {
         UVlevel = pins.map(
             pins.analogReadPin(pin),
             0,
-            1023,
+            600,
             0,
             15
         );

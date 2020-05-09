@@ -1366,8 +1366,8 @@ namespace PlanetX {
 
     }
 
-    //% subcategory=Display group="8*16 Matrix" color=#EA5532
-    //% blockId=robotbit_matrix_refresh block="Matrix Refresh"
+    //% subcategory=Display group="8*16 Matrix"
+    //% blockId= matrix_refresh block="Matrix Refresh"
     export function MatrixRefresh(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -1375,8 +1375,8 @@ namespace PlanetX {
         }
         matrixShow();
     }
-    //% subcategory=Display group="8*16 Matrix" color=#EA5532
-    //% blockId=robotbit_matrix_clear block="Matrix Clear"
+    //% subcategory=Display group="8*16 Matrix" 
+    //% blockId= matrix_clear block="Matrix Clear"
     export function MatrixClear(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -1387,8 +1387,8 @@ namespace PlanetX {
         }
         matrixShow();
     }
-    //% blockId=robotbit_matrix_draw block="Matrix Draw|X %x|Y %y"
-    //% subcategory=Display group="8*16 Matrix" color=#EA5532
+    //% blockId= matrix_draw block="Matrix Draw|X %x|Y %y"
+    //% subcategory=Display group="8*16 Matrix" 
     export function MatrixDraw(x: number, y: number): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -1404,7 +1404,7 @@ namespace PlanetX {
         matBuf[idx + 1] = tmp;
     }
     //% block="Matrix show emoji %ID"
-    //% subcategory=Display group="8*16 Matrix" color=#EA5532
+    //% subcategory=Display group="8*16 Matrix" 
     export function MatrixEmoji(ID: emojiList) {
         MatrixClear();
         let point;
@@ -1492,7 +1492,7 @@ namespace PlanetX {
     //% line.min=1 line.max=8 line.defl=1
     //% text.defl="Hello,ELECFREAKS"
     //% block="OLED show line %line|text %text"
-    //% subcategory=Display group="OLED" color=#EA5532
+    //% subcategory=Display group="OLED"
     export function showUserText(line: number, text: string) {
         if (firstoledinit) {
             oledinit()
@@ -1512,7 +1512,7 @@ namespace PlanetX {
     //% line.min=1 line.max=8 line.defl=2
     //% n.defl=20200508
     //% block="OLED show line %line|number %n"
-    //% subcategory=Display group="OLED" color=#EA5532
+    //% subcategory=Display group="OLED"
     export function showUserNumber(line: number, n: number) {
         if (firstoledinit) {
             oledinit()
@@ -1521,7 +1521,7 @@ namespace PlanetX {
         showUserText(line, "" + n)
     }
     //% block="clear display"
-    //% subcategory=Display group="OLED" color=#EA5532
+    //% subcategory=Display group="OLED"
     export function oledclear() {
         //oledcmd(DISPLAY_OFF);   //display off
         for (let j = 0; j < 8; j++) {

@@ -1079,9 +1079,7 @@ namespace PlanetX {
     //% subcategory=Sensor group="IIC Port"
     export function onGesture(gesture: gestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
-        if (!paj7620) {
-            paj7620.init();
-        }
+        paj7620.init();
         control.inBackground(() => {
             while (true) {
                 const gesture = paj7620.read();

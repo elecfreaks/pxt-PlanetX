@@ -9,22 +9,14 @@ This extension is designed to programme and drive the NeZha micro:bit expansion 
 ## Code Example
 ```JavaScript
 
-input.onButtonPressed(Button.A, function () {
-    neZha.setMotorSpeed(neZha.MotorList.M1, 100)
-    neZha.setMotorSpeed(neZha.MotorList.M2, 100)
-    neZha.setMotorSpeed(neZha.MotorList.M3, 100)
-    neZha.setMotorSpeed(neZha.MotorList.M4, 100)
-})
-input.onButtonPressed(Button.B, function () {
-    neZha.setServoAngel(neZha.ServoList.S1, 119)
-    neZha.setServoSpeed(neZha.ServoList.S2, -58)
-})
-input.onButtonPressed(Button.AB, function () {
-    neZha.stopAllMotor()
-})
 basic.forever(function () {
-	
+    PlanetX.showUserText(1, "Temp:" + PlanetX.octopus_BME280(PlanetX.BME280_state.BME280_temperature_C))
+    PlanetX.showUserText(2, "Distance:" + PlanetX.Ultrasoundsensor(PlanetX.DigitalRJPin.J1, PlanetX.Distance_Unit_List.Distance_Unit_cm))
+    if (PlanetX.buttonAB(PlanetX.DigitalRJPin.J1, PlanetX.ButtonStateList.A)) {
+        PlanetX.motorfan(PlanetX.AnalogRJPin.J1, true, 80)
+    }
 })
+
 
 ```
 ## Supported targets

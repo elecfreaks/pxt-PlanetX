@@ -1,20 +1,36 @@
-# pxt-stars
+![](https://img.shields.io/badge/Plantfrom-Micro%3Abit-red) ![](https://img.shields.io/travis/com/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/v/release/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/last-commit/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/languages/top/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/issues/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/license/elecfreaks/pxt-PlanetX) 
 
+# PlanetX Package
 
+![](/PlanetX.png/)
 
-## TODO
+This extension is designed to programme and drive the NeZha micro:bit expansion board, You can [get NeZha from the Elecfreaks store](https://www.elecfreaks.com/store/nezha-breakout-board-for-micro-bit.html)
 
-- [ ] Add a reference for your blocks here
-- [ ] Add "icon.png" image (300x200) in the root folder
-- [ ] Add "- beta" to the GitHub project description if you are still iterating it.
-- [ ] Turn on your automated build on https://travis-ci.org
-- [ ] Use "pxt bump" to create a tagged release on GitHub
-- [ ] On GitHub, create a new file named LICENSE. Select the MIT License template.
-- [ ] Get your package reviewed and approved https://makecode.microbit.org/extensions/approval
+## Code Example
+```JavaScript
 
-Read more at https://makecode.microbit.org/extensions
+input.onButtonPressed(Button.A, function () {
+    neZha.setMotorSpeed(neZha.MotorList.M1, 100)
+    neZha.setMotorSpeed(neZha.MotorList.M2, 100)
+    neZha.setMotorSpeed(neZha.MotorList.M3, 100)
+    neZha.setMotorSpeed(neZha.MotorList.M4, 100)
+})
+input.onButtonPressed(Button.B, function () {
+    neZha.setServoAngel(neZha.ServoList.S1, 119)
+    neZha.setServoSpeed(neZha.ServoList.S2, -58)
+})
+input.onButtonPressed(Button.AB, function () {
+    neZha.stopAllMotor()
+})
+basic.forever(function () {
+	
+})
 
+```
 ## Supported targets
 
 * for PXT/microbit
-(The metadata above is needed for package search.)
+
+## License
+MIT
+

@@ -36,7 +36,7 @@
   "PlanetX.Distance_Unit_List.Distance_Unit_cm|block": "厘米",
   "PlanetX.Distance_Unit_List.Distance_Unit_inch|block": "英尺",
   "PlanetX.LEDbrightness|block": "LED %Rjpin 切换到 $ledstate || 亮度 %brightness \\%",
-  "PlanetX.LightSensor|block": "光线传感器 %Rjpin 光线强度(0~100)",
+  "PlanetX.LightSensor|block": "光线传感器 %Rjpin 光线强度(lux)",
   "PlanetX.MatrixClear|block": "点阵显示屏清屏",
   "PlanetX.MatrixDraw|block": "点阵显示屏 点亮|X %x|Y %y 点",
   "PlanetX.MatrixEmoji|block": "点阵显示屏显示emoji表情 %ID",

@@ -707,11 +707,14 @@ namespace PlanetX {
                 pin = AnalogPin.P2
                 break;
         }
-        let UVlevel = 0;
+        let UVlevel = pins.analogReadPin(pin);
+        if (UVlevel > 625) {
+            UVlevel = 625
+        }
         UVlevel = pins.map(
-            pins.analogReadPin(pin),
+            UVlevel,
             0,
-            600,
+            625,
             0,
             15
         );

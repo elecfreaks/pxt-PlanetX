@@ -624,10 +624,10 @@ namespace PlanetX {
         }
         voltage = voltage / 100
         if (voltage < 200) {
-            voltage = Math.map(voltage, 0, 200, 0, 1600)
+            voltage = Math.map(voltage, 45, 200, 0, 1600)
         }
-        if (voltage > 200) {
-            voltage = pins.map(voltage, 200, 1023, 1600, 14000)
+        else {
+            voltage = Math.map(voltage, 200, 1023, 1600, 14000)
         }
         lightintensity = voltage;
         return Math.round(lightintensity);

@@ -601,10 +601,10 @@ namespace PlanetX {
         return Math.round(noise)
     }
     /**
-    * TODO: get light intensity(0~100%)
+    * TODO: get light intensity(lux)
     * @param lightintensitypin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="LightSensor" block="Light sensor %Rjpin light intensity(0~100)"
+    //% blockId="LightSensor" block="Light sensor %Rjpin light intensity(lux)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
@@ -619,13 +619,16 @@ namespace PlanetX {
                 break;
         }
         let voltage = 0, lightintensity = 0;
-        voltage = pins.map(
-            pins.analogReadPin(pin),
-            0,
-            1023,
-            0,
-            100
-        );
+        for (let index = 0; index < 100; index++) {
+            voltage = voltage + pins.analogReadPin(pin)
+        }
+        voltage = voltage / 100
+        if (voltage < 200) {
+            voltage = Math.map(voltage, 0, 200, 0, 1600)
+        }
+        if (voltage > 200) {
+            voltage = pins.map(voltage, 200, 1023, 1600, 14000)
+        }
         lightintensity = voltage;
         return Math.round(lightintensity);
     }

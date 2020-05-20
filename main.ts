@@ -810,14 +810,15 @@ namespace PlanetX {
         }
     }
     /**
-* TODO: Detect soil moisture value(0~100%)
-* @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
-*/
+    * TODO: Detect soil moisture value(0~100%)
+    * @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
+    */
     //% blockId="PIR" block="PIR sensor %Rjpin detects motion"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital"  color=#EA5532
     export function PIR(Rjpin: DigitalRJPin): boolean {
+
         let pin = DigitalPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
@@ -891,6 +892,7 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function temperature(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
+        basic.pause(1000)  //两次请求之间必须间隔2000ms以上
         let pin = DigitalPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:

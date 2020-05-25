@@ -130,9 +130,10 @@ namespace ESP8266_IoT {
     /**
     * Connect to ThingSpeak and set data. 
     */
-    //% block="set data to send ThingSpeak|Write API key = %write_api_key|Field 1 = %n1|Field 2 = %n2|Field 3 = %n3|Field 4 = %n4|Field 5 = %n5|Field 6 = %n6|Field 7 = %n7|Field 8 = %n8"
+    //% block="set data to send ThingSpeak|Write API key = %write_api_key|Field 1 = %n1||Field 2 = %n2||Field 3 = %n3||Field 4 = %n4||Field 5 = %n5||Field 6 = %n6||Field 7 = %n7||Field 8 = %n8"
     //% write_api_key.defl=your_write_api_key
     //% subcategory="ThingSpeak"
+    //% expandableArgumentMode="enabled"
     export function setdata(write_api_key: string, n1: number, n2: number, n3: number, n4: number, n5: number, n6: number, n7: number, n8: number) {
         if (thingspeak_connected) {
             toSendStr = "GET /update?api_key="

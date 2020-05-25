@@ -12,6 +12,7 @@
         "main.ts",
         "neopixel.ts",
         "wifi.ts",
+        "ds18b20.cpp",
         "_locales/zh-cn/pxt-PlanetX-jsdoc-strings.json",
         "_locales/zh-cn/pxt-PlanetX-strings.json"
     ],

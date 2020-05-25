@@ -1626,7 +1626,6 @@ namespace PlanetX {
         _ON: number;
         brightness: number;
         count: number;  // number of LEDs
-
         /**
          * initial TM1637
          */
@@ -1637,7 +1636,6 @@ namespace PlanetX {
             this.buf = pins.createBuffer(this.count);
             this.clear();
         }
-
         /**
          * Start 
          */
@@ -1645,7 +1643,6 @@ namespace PlanetX {
             pins.digitalWritePin(this.dio, 0);
             pins.digitalWritePin(this.clk, 0);
         }
-
         /**
          * Stop
          */
@@ -1654,7 +1651,6 @@ namespace PlanetX {
             pins.digitalWritePin(this.clk, 1);
             pins.digitalWritePin(this.dio, 1);
         }
-
         /**
          * send command1
          */
@@ -1663,7 +1659,6 @@ namespace PlanetX {
             this._write_byte(TM1637_CMD1);
             this._stop();
         }
-
         /**
          * send command3
          */
@@ -1672,7 +1667,6 @@ namespace PlanetX {
             this._write_byte(TM1637_CMD3 | this._ON | this.brightness);
             this._stop();
         }
-
         /**
          * send a byte to 2-wire interface
          */
@@ -1691,7 +1685,6 @@ namespace PlanetX {
             this._write_data_cmd();
             this._write_dsp_ctrl();
         }
-
         /**
          * set data to TM1637, with given bit
          */
@@ -1703,7 +1696,6 @@ namespace PlanetX {
             this._stop();
             this._write_dsp_ctrl();
         }
-
         /**
          * Show a single number from 0 to 9 at a specified digit of Grove - 4-Digit Display
          * @param dispData value of number
@@ -1717,7 +1709,6 @@ namespace PlanetX {
             this.buf[bit % this.count] = _SEGMENTS[num % 16]
             this._dat(bit, _SEGMENTS[num % 16])
         }
-
         /**
          * Show a 4 digits number on display
          * @param dispData value of number
@@ -1739,9 +1730,7 @@ namespace PlanetX {
                 this.showbit(Math.idiv(num, 10) % 10, 2)
                 this.showbit(Math.idiv(num, 100) % 10, 3)
             }
-
         }
-
         /**
          * show or hide dot point. 
          * @param bit is the position, eg: 1
@@ -1756,7 +1745,6 @@ namespace PlanetX {
             if (show) this._dat(bit, this.buf[bit] | 0x80)
             else this._dat(bit, this.buf[bit] & 0x7F)
         }
-
         /**
          * clear LED. 
          */
@@ -1768,9 +1756,5 @@ namespace PlanetX {
                 this.buf[i] = 0
             }
         }
-
-
     }
-
-
 }

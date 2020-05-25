@@ -485,10 +485,7 @@ namespace PlanetX {
         //% block="temperature(℃)" enumval=0
         DHT11_temperature_C,
 
-        //% block="temperature(℉)" enumval=1
-        DHT11_temperature_F,
-
-        //% block="humidity(0~100)" enumval=2
+        //% block="humidity(0~100)" enumval=1
         DHT11_humidity,
     }
     /**
@@ -929,7 +926,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
-    export function temperatureDHT11(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
+    export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         basic.pause(1000)  //两次请求之间必须间隔2000ms以上
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -959,26 +956,6 @@ namespace PlanetX {
                 return ((dhtvalue1 & 0x0000ff00) >> 8);
                 break;
             case 1:
-                while (pins.digitalReadPin(pin) == 1);
-                while (pins.digitalReadPin(pin) == 0);
-                while (pins.digitalReadPin(pin) == 1);
-                let dhtvalue = 0;
-                let dhtcounter = 0;
-                for (let i = 0; i <= 32 - 1; i++) {
-                    while (pins.digitalReadPin(pin) == 0);
-                    dhtcounter = 0
-                    while (pins.digitalReadPin(pin) == 1) {
-                        dhtcounter += 1;
-                    }
-                    if (i > 15) {
-                        if (dhtcounter > 2) {
-                            dhtvalue = dhtvalue + (1 << (31 - i));
-                        }
-                    }
-                }
-                return Math.round((((dhtvalue & 0x0000ff00) >> 8) * 9 / 5) + 32);
-                break;
-            case 2:
                 while (pins.digitalReadPin(pin) == 1);
                 while (pins.digitalReadPin(pin) == 0);
                 while (pins.digitalReadPin(pin) == 1);

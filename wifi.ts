@@ -20,6 +20,16 @@ namespace ESP8266_IoT {
         //% block="Fail"
         Fail
     }
+    enum DigitalRJPin {
+        //% block="J1"
+        J1,
+        //% block="J2"
+        J2,
+        //% block="J3"
+        J3,
+        //% block="J4"
+        J4
+    }
 
     // write AT command with CR+LF ending
     function sendAT(command: string, wait: number = 0) {
@@ -52,15 +62,35 @@ namespace ESP8266_IoT {
     /**
     * Initialize ESP8266 module 
     */
-    //% block="set ESP8266|RX %tx|TX %rx|Baud rate %baudrate"
+    //% block="set ESP8266 %Rjpin Baud rate %baudrate"
     //% tx.defl=SerialPin.P8
     //% rx.defl=SerialPin.P12
     //% ssid.defl=your_ssid
     //% pw.defl=your_password
-    export function initWIFI(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
+    export function initWIFI(Rjpin: DigitalRJPin, baudrate: BaudRate) {
+        let pin_tx = SerialPin.P1
+        let pin_rx = SerialPin.P8
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin_tx = SerialPin.P1
+                pin_rx = SerialPin.P8
+                break;
+            case DigitalRJPin.J2:
+                pin_tx = SerialPin.P2
+                pin_rx = SerialPin.P12
+                break;
+            case DigitalRJPin.J3:
+                pin_tx = SerialPin.P13
+                pin_rx = SerialPin.P14
+                break;
+            case DigitalRJPin.J4:
+                pin_tx = SerialPin.P15
+                pin_rx = SerialPin.P16
+                break;
+        }
         serial.redirect(
-            tx,
-            rx,
+            pin_tx,
+            pin_rx,
             baudrate
         )
         sendAT("AT+RESTORE", 1000) // restore to factory settings

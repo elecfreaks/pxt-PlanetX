@@ -20,16 +20,5 @@
     ],
     "public": false,
     "preferredEditor": "tsprj",
-    "installedVersion": "workspace:2919d898-20d2-4083-cb67-4f728152b273",
-    "yotta": {
-        "config": {
-            "microbit-dal": {
-                "bluetooth": {
-                    "open": 1,
-                    "whitelist": 0,
-                    "security_level": null
-                }
-            }
-        }
-    }
+    "installedVersion": "workspace:2919d898-20d2-4083-cb67-4f728152b273"
 }

@@ -1007,7 +1007,7 @@ namespace PlanetX {
         }
         let temp = Temperature_read(pin)
         temp = temp / 100
-        return Math.round(temp)
+        return temp
     }
     //% blockID="set_all_data" block="RTC IIC port set %data | %num"
     //% subcategory=Sensor group="IIC Port"

@@ -983,8 +983,8 @@ namespace PlanetX {
                 return 0;
         }
     }
-    //% blockID="set_all_data" block="RTC set %data | %num"
-    //% subcategory=Sensor  group="IIC Port"
+    //% blockID="set_all_data" block="RTC IIC port set %data | %num"
+    //% subcategory=Sensor group="IIC Port"
     export function setData(data: Data_Unit, num: number): void {
         switch (data) {
             case Data_Unit.Year:
@@ -1013,7 +1013,7 @@ namespace PlanetX {
         }
         start();
     }
-    //% blockID="get_one_data" block="RTC get %data"
+    //% blockID="get_one_data" block="RTC IIC port get %data"
     //% subcategory=Sensor  group="IIC Port"
     export function readData(data: Data_Unit): number {
         switch (data) {

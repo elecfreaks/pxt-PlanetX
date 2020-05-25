@@ -706,7 +706,7 @@ namespace PlanetX {
         );
         return Math.round(UVlevel)
     }
-    //% blockId="gas" block="gas sensor %gas %Rjpin value"
+    //% blockId="gas" block="gas %sensor sensor %Rjpin value"
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"

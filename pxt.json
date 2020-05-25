@@ -11,6 +11,7 @@
         "README.md",
         "main.ts",
         "neopixel.ts",
+        "wifi.ts",
         "_locales/zh-cn/pxt-PlanetX-jsdoc-strings.json",
         "_locales/zh-cn/pxt-PlanetX-strings.json"
     ],

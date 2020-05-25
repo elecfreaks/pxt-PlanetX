@@ -54,7 +54,7 @@ namespace PlanetX {
         pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int16LE);
     }
-    function get(): void {
+    function getBme280Value(): void {
         let adc_T = (getreg(0xFA) << 12) + (getreg(0xFB) << 4) + (getreg(0xFC) >> 4)
         let var1 = (((adc_T >> 3) - (dig_T1 << 1)) * dig_T2) >> 11
         let var2 = (((((adc_T >> 4) - dig_T1) * ((adc_T >> 4) - dig_T1)) >> 12) * dig_T3) >> 14
@@ -181,7 +181,7 @@ namespace PlanetX {
         }
         return Hue
     }
-    function InitModule(): void {
+    function initModule(): void {
         i2cwrite_color(APDS9960_ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
         i2cwrite_color(APDS9960_ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
         i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x00) // put everything off
@@ -190,7 +190,7 @@ namespace PlanetX {
         i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x01) // clear all interrupt
         color_first_init = true
     }
-    function ColorMode(): void {
+    function colorMode(): void {
         let tmp = i2cread_color(APDS9960_ADDR, APDS9960_ENABLE) | 0x2;
         i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, tmp);
     }
@@ -385,12 +385,32 @@ namespace PlanetX {
     ///////////////////////////////////////////////////////RJpin_to_pin
     function RJpin_to_analog(Rjpin: AnalogRJPin): any {
         let pin = AnalogPin.P1
-        pin = RJpin_to_analog(Rjpin)
+        switch (Rjpin) {
+            case AnalogRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case AnalogRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+        }
         return pin
     }
     function RJpin_to_digital(Rjpin: DigitalRJPin): any {
         let pin = DigitalPin.P1
-        pin = RJpin_to_digital(Rjpin)
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = DigitalPin.P8
+                break;
+            case DigitalRJPin.J2:
+                pin = DigitalPin.P12
+                break;
+            case DigitalRJPin.J3:
+                pin = DigitalPin.P14
+                break;
+            case DigitalRJPin.J4:
+                pin = DigitalPin.P16
+                break;
+        }
         return pin
     }
 
@@ -474,7 +494,7 @@ namespace PlanetX {
     /**
     *  Gestures
     */
-    export enum gestureType {
+    export enum GestureType {
         //% block="None"
         None = 0,
         //% block="Right"
@@ -496,7 +516,7 @@ namespace PlanetX {
         //% block="Wave"
         Wave = 9
     }
-    export enum colorList {
+    export enum ColorList {
         //% block="Red"
         red,
         //% block="Green"
@@ -512,7 +532,7 @@ namespace PlanetX {
         //% block="White"
         white
     }
-    export enum emojiList {
+    export enum EmojiList {
         //% block="😆"
         Grinning_Squinting_Face,
         //% block="😐"
@@ -524,7 +544,7 @@ namespace PlanetX {
         //% block="😠"
         Angry_Face
     }
-    export enum gaslist {
+    export enum GasList {
         //% block="Co"
         Co,
         //% block="Co2"
@@ -534,7 +554,7 @@ namespace PlanetX {
         //% block="Alcohol"
         Alcohol
     }
-    export enum Data_Unit {
+    export enum DataUnit {
         //% block="Year"
         Year,
         //% block="Month"
@@ -559,7 +579,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
-    export function NoiseSensor(Rjpin: AnalogRJPin): number {
+    export function noiseSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         let level = 0, voltage = 0, noise = 0, h = 0, l = 0, sumh = 0, suml = 0
@@ -668,11 +688,11 @@ namespace PlanetX {
     * TODO: get light intensity(lux)
     * @param lightintensitypin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="LightSensor" block="Light sensor %Rjpin light intensity(lux)"
+    //% blockId="lightSensor" block="Light sensor %Rjpin light intensity(lux)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
-    export function LightSensor(Rjpin: AnalogRJPin): number {
+    export function lightSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         let voltage = 0, lightintensity = 0;
@@ -697,7 +717,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
-    export function SoilHumidity(Rjpin: AnalogRJPin): number {
+    export function soilHumidity(Rjpin: AnalogRJPin): number {
         let voltage = 0, soilmoisture = 0;
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -716,11 +736,11 @@ namespace PlanetX {
     * get water level value (0~100)
     * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
     */
-    //% blockId="readWaterLevel" block="Water level sensor %Rjpin value(0~100)"
+    //% blockId="readwaterLevel" block="Water level sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
-    export function WaterLevel(Rjpin: AnalogRJPin): number {
+    export function waterLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         let voltage = 0, waterlevel = 0;
@@ -759,11 +779,11 @@ namespace PlanetX {
         );
         return Math.round(UVlevel)
     }
-    //% blockId="gas" block="gas %sensor sensor %Rjpin value"
+    //% blockId="gasValue" block="Gas %sensor sensor %Rjpin value"
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
-    export function gas(sensor: gaslist, Rjpin: AnalogRJPin): number {
+    export function gasValue(sensor: GasList, Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         return pins.analogReadPin(pin)
@@ -795,7 +815,7 @@ namespace PlanetX {
     //% distance_unit.fieldEditor="gridpicker"
     //% distance_unit.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
-    export function Ultrasoundsensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
+    export function ultrasoundSensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
         let pinT = DigitalPin.P1
         let pinE = DigitalPin.P2
         switch (Rjpin) {
@@ -850,7 +870,6 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital"  color=#EA5532
     export function PIR(Rjpin: DigitalRJPin): boolean {
-
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
         if (pins.digitalReadPin(pin) == 1) {
@@ -867,7 +886,7 @@ namespace PlanetX {
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
     //% blockId=ringbitcar_tracking block="Line-tracking sensor %Rjpin is %state"
-    export function tracking(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
+    export function trackingSensor(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
         let rpin = DigitalPin.P2
         switch (Rjpin) {
@@ -910,7 +929,7 @@ namespace PlanetX {
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
-    export function temperature(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
+    export function temperatureDHT11(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         basic.pause(1000)  //两次请求之间必须间隔2000ms以上
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -982,29 +1001,60 @@ namespace PlanetX {
                 return 0;
         }
     }
+    //% shim=DS18B20::Temperature
+    export function Temperature_read(p: number): number {
+        // Fake function for simulator
+        return 0
+    }
+
+    //% block="DS18B20 sensor %Rjpin Temperature(℃) value"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Sensor group="Digital" color=#EA5532
+    export function ds18b20Sensor(Rjpin: DigitalRJPin): number {
+        // Fake function for simulator
+        let pin
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = 8
+                break;
+            case DigitalRJPin.J2:
+                pin = 12
+                break;
+            case DigitalRJPin.J3:
+                pin = 14
+                break;
+            case DigitalRJPin.J4:
+                pin = 16
+                break;
+        }
+        let temp = Temperature_read(pin)
+        temp = temp / 100
+        return Math.round(temp)
+    }
     //% blockID="set_all_data" block="RTC IIC port set %data | %num"
     //% subcategory=Sensor group="IIC Port"
-    export function setData(data: Data_Unit, num: number): void {
+    export function setData(data: DataUnit, num: number): void {
         switch (data) {
-            case Data_Unit.Year:
+            case DataUnit.Year:
                 rtc_setReg(DS1307_REG_YEAR, DecToHex(num % 100));
                 break;
-            case Data_Unit.Month:
+            case DataUnit.Month:
                 rtc_setReg(DS1307_REG_MONTH, DecToHex(num % 13));
                 break;
-            case Data_Unit.Day:
+            case DataUnit.Day:
                 rtc_setReg(DS1307_REG_DAY, DecToHex(num % 32));
                 break;
-            case Data_Unit.Weekday:
+            case DataUnit.Weekday:
                 rtc_setReg(DS1307_REG_WEEKDAY, DecToHex(num % 8))
                 break;
-            case Data_Unit.Hour:
+            case DataUnit.Hour:
                 rtc_setReg(DS1307_REG_HOUR, DecToHex(num % 24));
                 break;
-            case Data_Unit.Minute:
+            case DataUnit.Minute:
                 rtc_setReg(DS1307_REG_MINUTE, DecToHex(num % 60));
                 break;
-            case Data_Unit.Second:
+            case DataUnit.Second:
                 rtc_setReg(DS1307_REG_SECOND, DecToHex(num % 60))
                 break;
             default:
@@ -1014,27 +1064,27 @@ namespace PlanetX {
     }
     //% blockID="get_one_data" block="RTC IIC port get %data"
     //% subcategory=Sensor  group="IIC Port"
-    export function readData(data: Data_Unit): number {
+    export function readData(data: DataUnit): number {
         switch (data) {
-            case Data_Unit.Year:
+            case DataUnit.Year:
                 return Math.min(HexToDec(rtc_getReg(DS1307_REG_YEAR)), 99) + 2000
                 break;
-            case Data_Unit.Month:
+            case DataUnit.Month:
                 return Math.max(Math.min(HexToDec(rtc_getReg(DS1307_REG_MONTH)), 12), 1)
                 break;
-            case Data_Unit.Day:
+            case DataUnit.Day:
                 return Math.max(Math.min(HexToDec(rtc_getReg(DS1307_REG_DAY)), 31), 1)
                 break;
-            case Data_Unit.Weekday:
+            case DataUnit.Weekday:
                 return Math.max(Math.min(HexToDec(rtc_getReg(DS1307_REG_WEEKDAY)), 7), 1)
                 break;
-            case Data_Unit.Hour:
+            case DataUnit.Hour:
                 return Math.min(HexToDec(rtc_getReg(DS1307_REG_HOUR)), 23)
                 break;
-            case Data_Unit.Minute:
+            case DataUnit.Minute:
                 return Math.min(HexToDec(rtc_getReg(DS1307_REG_MINUTE)), 59)
                 break;
-            case Data_Unit.Second:
+            case DataUnit.Second:
                 return Math.min(HexToDec(rtc_getReg(DS1307_REG_SECOND)), 59)
                 break;
             default:
@@ -1045,22 +1095,22 @@ namespace PlanetX {
     //% block="BME280 sensor IIC port value %state"
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
     //% subcategory=Sensor  group="IIC Port"
-    export function octopus_BME280(state: BME280_state): number {
+    export function bme280Sensor(state: BME280_state): number {
         switch (state) {
             case BME280_state.BME280_temperature_C:
-                get();
+                getBme280Value();
                 return Math.round(T);
                 break;
             case BME280_state.BME280_humidity:
-                get();
+                getBme280Value();
                 return Math.round(H);
                 break;
             case BME280_state.BME280_pressure:
-                get();
+                getBme280Value();
                 return Math.round(P / 100);
                 break;
             case BME280_state.BME280_altitude:
-                get();
+                getBme280Value();
                 return Math.round(1015 - (P / 100)) * 9
                 break;
             default:
@@ -1106,40 +1156,40 @@ namespace PlanetX {
             data = this.paj7620ReadReg(0x43);
             switch (data) {
                 case 0x01:
-                    result = gestureType.Right;
+                    result = GestureType.Right;
                     break;
                 case 0x02:
-                    result = gestureType.Left;
+                    result = GestureType.Left;
                     break;
                 case 0x04:
-                    result = gestureType.Up;
+                    result = GestureType.Up;
                     break;
                 case 0x08:
-                    result = gestureType.Down;
+                    result = GestureType.Down;
                     break;
                 case 0x10:
-                    result = gestureType.Forward;
+                    result = GestureType.Forward;
                     break;
                 case 0x20:
-                    result = gestureType.Backward;
+                    result = GestureType.Backward;
                     break;
                 case 0x40:
-                    result = gestureType.Clockwise;
+                    result = GestureType.Clockwise;
                     break;
                 case 0x80:
-                    result = gestureType.Anticlockwise;
+                    result = GestureType.Anticlockwise;
                     break;
                 default:
                     data = this.paj7620ReadReg(0x44);
                     if (data == 0x01)
-                        result = gestureType.Wave;
+                        result = GestureType.Wave;
                     break;
             }
             return result;
         }
     }
     const gestureEventId = 3100;
-    let lastGesture = gestureType.None;
+    let lastGesture = GestureType.None;
     let paj7620 = new PAJ7620();
     /**
         * Do something when a gesture is detected
@@ -1149,7 +1199,7 @@ namespace PlanetX {
     //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor group="IIC Port"
-    export function onGesture(gesture: gestureType, handler: () => void) {
+    export function onGesture(gesture: GestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
         paj7620.init();
         control.inBackground(() => {
@@ -1165,10 +1215,10 @@ namespace PlanetX {
     }
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
     //% subcategory=Sensor group="IIC Port"
-    export function ReadColor(): number {
+    export function readColor(): number {
         if (color_first_init == false) {
-            InitModule()
-            ColorMode()
+            initModule()
+            colorMode()
         }
         let tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
         while (!tmp) {
@@ -1191,10 +1241,10 @@ namespace PlanetX {
     //% block="Color sensor IIC port detects %color"
     //% subcategory=Sensor group="IIC Port"
     //% color.fieldEditor="gridpicker" color.fieldOptions.columns=3
-    export function checkColor(color: colorList): boolean {
-        let hue = ReadColor()
+    export function checkColor(color: ColorList): boolean {
+        let hue = readColor()
         switch (color) {
-            case colorList.red:
+            case ColorList.red:
                 if (hue > 300 && 350 > hue) {
                     return true
                 }
@@ -1202,7 +1252,7 @@ namespace PlanetX {
                     return false
                 }
                 break
-            case colorList.green:
+            case ColorList.green:
                 if (hue > 150 && 180 > hue) {
                     return true
                 }
@@ -1210,7 +1260,7 @@ namespace PlanetX {
                     return false
                 }
                 break
-            case colorList.blue:
+            case ColorList.blue:
                 if (hue > 210 && 220 > hue) {
                     return true
                 }
@@ -1218,7 +1268,7 @@ namespace PlanetX {
                     return false
                 }
                 break
-            case colorList.cyan:
+            case ColorList.cyan:
                 if (hue > 180 && 210 > hue) {
                     return true
                 }
@@ -1226,7 +1276,7 @@ namespace PlanetX {
                     return false
                 }
                 break
-            case colorList.magenta:
+            case ColorList.magenta:
                 if (hue > 240 && 280 > hue) {
                     return true
                 }
@@ -1234,7 +1284,7 @@ namespace PlanetX {
                     return false
                 }
                 break
-            case colorList.yellow:
+            case ColorList.yellow:
                 if (hue > 80 && 150 > hue) {
                     return true
                 }
@@ -1242,7 +1292,7 @@ namespace PlanetX {
                     return false
                 }
                 break
-            case colorList.white:
+            case ColorList.white:
                 if (hue == 180) {
                     return true
                 }
@@ -1314,7 +1364,7 @@ namespace PlanetX {
     //% subcategory=Excute group="Analog" color=#E2C438
     //% speed.min=0 speed.max=100
     //% expandableArgumentMode="toggle"
-    export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number = 100): void {
+    export function motorFan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         if (fanstate) {
@@ -1375,7 +1425,7 @@ namespace PlanetX {
     //% ledstate.shadow="toggleOnOff"
     //% subcategory=Display group="Analog" color=#E2C438
     //% expandableArgumentMode="toggle"
-    export function LEDbrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness: number = 100): void {
+    export function ledBrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness: number = 100): void {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         if (ledstate) {
@@ -1391,7 +1441,7 @@ namespace PlanetX {
 
     //% subcategory=Display group="8*16 Matrix"
     //% blockId= matrix_refresh block="Matrix Refresh"
-    export function MatrixRefresh(): void {
+    export function matrixRefresh(): void {
         if (!initializedMatrix) {
             matrixInit();
             initializedMatrix = true;
@@ -1400,7 +1450,7 @@ namespace PlanetX {
     }
     //% subcategory=Display group="8*16 Matrix" 
     //% blockId= matrix_clear block="Matrix Clear"
-    export function MatrixClear(): void {
+    export function matrixClear(): void {
         if (!initializedMatrix) {
             matrixInit();
             initializedMatrix = true;
@@ -1412,7 +1462,7 @@ namespace PlanetX {
     }
     //% blockId= matrix_draw block="Matrix Draw|X %x|Y %y"
     //% subcategory=Display group="8*16 Matrix" 
-    export function MatrixDraw(x: number, y: number): void {
+    export function matrixDraw(x: number, y: number): void {
         if (!initializedMatrix) {
             matrixInit();
             initializedMatrix = true;
@@ -1428,8 +1478,8 @@ namespace PlanetX {
     }
     //% block="Matrix show emoji %ID"
     //% subcategory=Display group="8*16 Matrix" 
-    export function MatrixEmoji(ID: emojiList) {
-        MatrixClear();
+    export function matrixEmoji(ID: EmojiList) {
+        matrixClear();
         let point;
         switch (ID) {
             case 0:
@@ -1479,9 +1529,9 @@ namespace PlanetX {
         }
         let index_max = point.length
         for (let index = 0; index < index_max; index++) {
-            MatrixDraw(point[index][0], point[index][1])
+            matrixDraw(point[index][0], point[index][1])
         }
-        MatrixRefresh();
+        matrixRefresh();
     }
 
     //-----------------------------------
@@ -1509,7 +1559,7 @@ namespace PlanetX {
         oledcmd(0xA4);  // Set all pixels OFF
         oledcmd(0xA6);  // Set display not inverted
         oledcmd(0xAF);  // Set display On
-        oledclear();
+        oledClear();
     }
 
     //% line.min=1 line.max=8 line.defl=1
@@ -1545,7 +1595,7 @@ namespace PlanetX {
     }
     //% block="clear display"
     //% subcategory=Display group="OLED"
-    export function oledclear() {
+    export function oledClear() {
         //oledcmd(DISPLAY_OFF);   //display off
         for (let j = 0; j < 8; j++) {
             setText(j, 0);

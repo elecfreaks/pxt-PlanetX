@@ -1013,8 +1013,7 @@ namespace PlanetX {
         }
         start();
     }
-
-    //% blockID="get_all_data" block="%data"
+    //% blockID="get_one_data" block="get %data"
     //% subcategory=Sensor  group="IIC Port"
     export function readData(data: Data_Unit): number {
         switch (data) {
@@ -1043,33 +1042,6 @@ namespace PlanetX {
                 return 0
 
         }
-    }
-
-
-    /**
-     * set Date and Time
-     * @param year is the Year will be set, eg: 2018
-     * @param month is the Month will be set, eg: 2
-     * @param day is the Day will be set, eg: 15
-     * @param weekday is the Weekday will be set, eg: 4
-     * @param hour is the Hour will be set, eg: 0
-     * @param minute is the Minute will be set, eg: 0
-     * @param second is the Second will be set, eg: 0
-     */
-    //% blockId="DS1307_SET_DATETIME" block="set year %year|month %month|day %day|weekday %weekday|hour %hour|minute %minute|second %second"
-    //% subcategory=Sensor  group="IIC Port"
-    export function setDateTime(year: number, month: number, day: number, weekday: number, hour: number, minute: number, second: number): void {
-        let buf = pins.createBuffer(8);
-        buf[0] = DS1307_REG_SECOND;
-        buf[1] = DecToHex(second % 60);
-        buf[2] = DecToHex(minute % 60);
-        buf[3] = DecToHex(hour % 24);
-        buf[4] = DecToHex(weekday % 8);
-        buf[5] = DecToHex(day % 32);
-        buf[6] = DecToHex(month % 13);
-        buf[7] = DecToHex(year % 100);
-        pins.i2cWriteBuffer(DS1307_I2C_ADDR, buf);
-        start();
     }
     //% block="BME280 sensor IIC port value %state"
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1

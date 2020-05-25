@@ -487,6 +487,16 @@ namespace PlanetX {
         //% block="😠"
         Angry_Face
     }
+    export enum gaslist {
+        //% block="Co"
+        Co,
+        //% block="Co2"
+        Co2,
+        //% block="Smoke"
+        Smoke,
+        //% block="Alcohol"
+        Alcohol
+    }
     ///////////////////////////////////blocks/////////////////////////////
     /** 
     * TODO: get noise(dB)
@@ -695,6 +705,15 @@ namespace PlanetX {
             15
         );
         return Math.round(UVlevel)
+    }
+    //% blockId="gas" block="gas sensor %gas %Rjpin value"
+    //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
+    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=2
+    //% subcategory=Sensor color=#E2C438 group="Analog"
+    export function gas(Rjpin: AnalogRJPin,sensor:gaslist): number {
+        let pin = AnalogPin.P1
+        pin = RJpin_to_analog(Rjpin)
+        return  pins.analogReadPin(pin)
     }
     /**
     * check crash

@@ -315,7 +315,6 @@ namespace PlanetX {
         if (column < 0) { c = 0 }
         if (row > 7) { r = 7 }
         if (column > 15) { c = 15 }
-
         oledcmd(0xB0 + r);            //set page address
         oledcmd(0x00 + (8 * c & 0x0F));  //set column lower address
         oledcmd(0x10 + ((8 * c >> 4) & 0x0F));   //set column higher address

@@ -345,9 +345,17 @@ namespace PlanetX {
         matBuf[0] = 0x00;
         pins.i2cWriteBuffer(HT16K33_ADDRESS, matBuf);
     }
-
-
-
+    //////////////////////////////RJpin_to_pin
+    function RJpin_to_analog(Rjpin: AnalogRJPin): any {
+        let pin = AnalogPin.P1
+        pin = RJpin_to_analog(Rjpin)
+        return pin
+    }
+    function RJpin_to_digital(Rjpin: DigitalRJPin): any {
+        let pin = DigitalPin.P1
+        pin = RJpin_to_digital(Rjpin)
+        return pin
+    }
 
 
     ///////////////////////////////enum
@@ -490,14 +498,7 @@ namespace PlanetX {
     //% subcategory=Sensor color=#E2C438 group="Analog"
     export function NoiseSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         let level = 0, voltage = 0, noise = 0, h = 0, l = 0, sumh = 0, suml = 0
         for (let i = 0; i < 1000; i++) {
             level = level + pins.analogReadPin(pin)
@@ -610,14 +611,7 @@ namespace PlanetX {
     //% subcategory=Sensor color=#E2C438 group="Analog"
     export function LightSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         let voltage = 0, lightintensity = 0;
         for (let index = 0; index < 100; index++) {
             voltage = voltage + pins.analogReadPin(pin)
@@ -643,14 +637,7 @@ namespace PlanetX {
     export function SoilHumidity(Rjpin: AnalogRJPin): number {
         let voltage = 0, soilmoisture = 0;
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         voltage = pins.map(
             pins.analogReadPin(pin),
             0,
@@ -672,14 +659,7 @@ namespace PlanetX {
     //% subcategory=Sensor color=#E2C438 group="Analog"
     export function WaterLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         let voltage = 0, waterlevel = 0;
         voltage = pins.map(
             pins.analogReadPin(pin),
@@ -702,14 +682,7 @@ namespace PlanetX {
     //% subcategory=Sensor color=#E2C438 group="Analog"
     export function UVLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         let UVlevel = pins.analogReadPin(pin);
         if (UVlevel > 625) {
             UVlevel = 625
@@ -732,20 +705,7 @@ namespace PlanetX {
     //% subcategory=Sensor group="Digital" color=#EA5532 
     export function Crash(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
+        pin = RJpin_to_digital(Rjpin)
         pins.setPull(pin, PinPullMode.PullUp)
         if (pins.digitalReadPin(pin) == 0) {
             return true
@@ -820,20 +780,7 @@ namespace PlanetX {
     export function PIR(Rjpin: DigitalRJPin): boolean {
 
         let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
+        pin = RJpin_to_digital(Rjpin)
         if (pins.digitalReadPin(pin) == 1) {
             return true
         }
@@ -894,20 +841,7 @@ namespace PlanetX {
     export function temperature(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         basic.pause(1000)  //两次请求之间必须间隔2000ms以上
         let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
+        pin = RJpin_to_digital(Rjpin)
         pins.digitalWritePin(pin, 0)
         basic.pause(18)
         let i = pins.digitalReadPin(pin)
@@ -1195,14 +1129,7 @@ namespace PlanetX {
     //% subcategory=Input color=#E2C438 group="Analog"
     export function trimpot(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         return pins.analogReadPin(pin)
     }
     //% blockId=buttonab block="Button %Rjpin %button is pressed"
@@ -1259,14 +1186,7 @@ namespace PlanetX {
     //% expandableArgumentMode="toggle"
     export function motorfan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         if (fanstate) {
             pins.analogSetPeriod(pin, 100)
             pins.analogWritePin(pin, Math.map(speed, 0, 100, 0, 1023))
@@ -1286,20 +1206,7 @@ namespace PlanetX {
     //% subcategory=Excute group="Digital" color=#EA5532
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
+        pin = RJpin_to_digital(Rjpin)
         if (laserstate) {
             pins.digitalWritePin(pin, 1)
         }
@@ -1319,20 +1226,7 @@ namespace PlanetX {
     //% subcategory=Excute group="Digital" color=#EA5532
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = DigitalPin.P8
-                break;
-            case DigitalRJPin.J2:
-                pin = DigitalPin.P12
-                break;
-            case DigitalRJPin.J3:
-                pin = DigitalPin.P14
-                break;
-            case DigitalRJPin.J4:
-                pin = DigitalPin.P16
-                break;
-        }
+        pin = RJpin_to_digital(Rjpin)
         switch (Relaystate) {
             case RelayStateList.On:
                 pins.digitalWritePin(pin, 0)
@@ -1353,14 +1247,7 @@ namespace PlanetX {
     //% expandableArgumentMode="toggle"
     export function LEDbrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness: number = 100): void {
         let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case AnalogRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case AnalogRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-        }
+        pin = RJpin_to_analog(Rjpin)
         if (ledstate) {
             pins.analogSetPeriod(pin, 100)
             pins.analogWritePin(pin, Math.map(brightness, 0, 100, 0, 1023))

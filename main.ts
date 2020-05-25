@@ -921,8 +921,9 @@ namespace PlanetX {
 
     /**
     * get dht11 temperature and humidity Value
-    * @param dht11pin describe parameter here, eg: DigitalPin.P15     */
-    //% blockId="readdht11" block="DHT11 sensor %Rjpin value %dht11state"
+    * @param dht11pin describe parameter here, eg: DigitalPin.P15     
+    */
+    //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532

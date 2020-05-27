@@ -267,8 +267,8 @@ namespace PlanetX_Display {
             brightness = 0
         }
     }
-    //% subcategory=Display group="8*16 Matrix"
-    //% blockId= matrix_refresh block="Matrix Refresh"
+    //% subcategory=Display group="8*16 Matrix" color=#00B1ED
+    //% blockId= matrix_refresh block="Matrix Refresh" 
     export function matrixRefresh(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -276,7 +276,7 @@ namespace PlanetX_Display {
         }
         matrixShow();
     }
-    //% subcategory=Display group="8*16 Matrix" 
+    //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     //% blockId= matrix_clear block="Matrix Clear"
     export function matrixClear(): void {
         if (!initializedMatrix) {
@@ -289,7 +289,7 @@ namespace PlanetX_Display {
         matrixShow();
     }
     //% blockId= matrix_draw block="Matrix Draw|X %x|Y %y"
-    //% subcategory=Display group="8*16 Matrix" 
+    //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     export function matrixDraw(x: number, y: number): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -304,7 +304,7 @@ namespace PlanetX_Display {
         tmp |= (1 << (x % 8));
         matBuf[idx + 1] = tmp;
     }
-    //% block="Matrix show emoji %ID"
+    //% block="Matrix show emoji %ID" color=#00B1ED
     //% subcategory=Display group="8*16 Matrix" 
     export function matrixEmoji(ID: EmojiList) {
         matrixClear();
@@ -381,10 +381,10 @@ namespace PlanetX_Display {
             putChar(" ");
         }
     }
-    //% line.min=1 line.max=8 line.defl=2
+    //% line.min=1 line.max=8 line.defl=2 
     //% n.defl=20200508
     //% block="OLED show line %line|number %n"
-    //% subcategory=Display group="OLED"
+    //% subcategory=Display group="OLED" color=#00B1ED
     export function showUserNumber(line: number, n: number) {
         if (firstoledinit) {
             oledinit()
@@ -392,7 +392,7 @@ namespace PlanetX_Display {
         }
         showUserText(line, "" + n)
     }
-    //% block="clear display"
+    //% block="clear display" color=#00B1ED
     //% subcategory=Display group="OLED"
     export function oledClear() {
         //oledcmd(DISPLAY_OFF);   //display off

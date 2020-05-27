@@ -1,6 +1,6 @@
 //% color=#4ca630 icon="\uf1eb"
 //% block="PlanetX_IoT" blockId="PlanetX_IoT"
-namespace ESP8266_IoT {
+namespace PlanetX_IOT {
     let wifi_connected: boolean = false
     let thingspeak_connected: boolean = false
     let kitsiot_connected: boolean = false

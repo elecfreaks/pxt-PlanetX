@@ -14,12 +14,6 @@ namespace ESP8266_IoT {
     const EVENT_OFF_Value = 210
     let toSendStr = ""
 
-    export enum State {
-        //% block="Success"
-        Success,
-        //% block="Fail"
-        Fail
-    }
     export enum DigitalRJPin {
         //% block="J1"
         J1,

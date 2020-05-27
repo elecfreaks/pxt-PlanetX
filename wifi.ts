@@ -20,7 +20,7 @@ namespace ESP8266_IoT {
         //% block="Fail"
         Fail
     }
-    enum DigitalRJPin {
+    export enum DigitalRJPin {
         //% block="J1"
         J1,
         //% block="J2"

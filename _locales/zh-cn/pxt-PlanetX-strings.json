@@ -145,7 +145,7 @@
   "PlanetX_Display.tm1637Create|block": "连接至 |%pin|的7段4位数码管",
   "PlanetX_Display|block": "行星X_显示",
   "PlanetX_Basic|block": "行星X_基础",
-  "{id:category}PlanetX_IOT": "ESP8266_IoT",
+  "{id:category}PlanetX_IOT": "行星X_IoT",
   "{id:category}PlanetX_Basic": "行星X",
   "{id:category}PlanetX_Display": "行星X_显示",
   "{id:group}7-Seg 4-Dig LED Nixietube": "七段四位数码管",

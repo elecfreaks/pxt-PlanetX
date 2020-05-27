@@ -1,6 +1,6 @@
 {
     "name": "pxt-PlanetX",
-    "version": "0.1.6",
+    "version": "0.2.1",
     "description": "The micro:bit new sensor series PlanetX(行星X) with RJ11 connection port by ELECFREAKS Co.ltd",
     "dependencies": {
         "core": "*",
@@ -21,5 +21,5 @@
     ],
     "public": false,
     "preferredEditor": "tsprj",
-    "installedVersion": "workspace:69ff47ce-c36a-490b-5e92-1cda709398eb"
+    "installedVersion": "workspace:2a5c8a9d-1659-429a-7e8a-7fc82e916c98"
 }

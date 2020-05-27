@@ -13,7 +13,6 @@ namespace PlanetX_IOT {
     const EVENT_OFF_ID = 110
     const EVENT_OFF_Value = 210
     let toSendStr = ""
-
     export enum DigitalRJPin {
         //% block="J1"
         J1,
@@ -24,13 +23,11 @@ namespace PlanetX_IOT {
         //% block="J4"
         J4
     }
-
     // write AT command with CR+LF ending
     function sendAT(command: string, wait: number = 0) {
         serial.writeString(command + "\u000D\u000A")
         basic.pause(wait)
     }
-
     // wait for certain response from ESP8266
     function waitResponse(): boolean {
         let serial_str: string = ""

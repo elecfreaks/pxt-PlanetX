@@ -364,7 +364,7 @@ namespace PlanetX_Display {
     //% line.min=1 line.max=8 line.defl=1
     //% text.defl="Hello,ELECFREAKS"
     //% block="OLED show line %line|text %text"
-    //% subcategory=Display group="OLED"
+    //% subcategory=Display group="OLED" color=#00B1ED
     export function showUserText(line: number, text: string) {
         if (firstoledinit) {
             oledinit()

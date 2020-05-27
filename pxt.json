@@ -10,12 +10,12 @@
     "files": [
         "README.md",
         "main.ts",
+        "display.ts",
         "neopixel.ts",
         "wifi.ts",
         "ds18b20.cpp",
         "_locales/zh-cn/pxt-PlanetX-jsdoc-strings.json",
-        "_locales/zh-cn/pxt-PlanetX-strings.json",
-        "display.ts"
+        "_locales/zh-cn/pxt-PlanetX-strings.json"
     ],
     "testFiles": [
         "test.ts"

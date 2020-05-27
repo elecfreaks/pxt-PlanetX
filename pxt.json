@@ -14,12 +14,13 @@
         "wifi.ts",
         "ds18b20.cpp",
         "_locales/zh-cn/pxt-PlanetX-jsdoc-strings.json",
-        "_locales/zh-cn/pxt-PlanetX-strings.json"
+        "_locales/zh-cn/pxt-PlanetX-strings.json",
+        "display.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": false,
     "preferredEditor": "tsprj",
-    "installedVersion": "workspace:256ebe6e-3d42-4c3c-2abd-d8738f3747e5"
+    "installedVersion": "workspace:4089e1b3-bc61-429e-e8e7-e952fceccf39"
 }

@@ -75,7 +75,7 @@ namespace neopixel {
          * @param rgb RGB color of the LED
          */
         //% blockId="neopixel_set_strip_color" block="%strip|show color %rgb=neopixel_colors"
-        //% weight=85 blockGap=8
+        //% weight=85 
         //% parts="neopixel"
         showColor(rgb: number) {
             rgb = rgb >> 0;
@@ -89,7 +89,7 @@ namespace neopixel {
          * @param endHue the end hue value for the rainbow, eg: 360
          */
         //% blockId="neopixel_set_strip_rainbow" block="%strip|show rainbow from %startHue|to %endHue"
-        //% weight=85 blockGap=8
+        //% weight=85 
         //% parts="neopixel"
         showRainbow(startHue: number = 1, endHue: number = 360) {
             if (this._length <= 0) return;
@@ -160,7 +160,6 @@ namespace neopixel {
          */
         //% weight=84
         //% blockId=neopixel_show_bar_graph block="%strip|show bar graph of %value|up to %high"
-        //% icon="\uf080"
         //% parts="neopixel"
         showBarGraph(value: number, high: number): void {
             if (high <= 0) {
@@ -198,7 +197,6 @@ namespace neopixel {
          * @param rgb RGB color of the LED
          */
         //% blockId="neopixel_set_pixel_color" block="%strip|set pixel color at %pixeloffset|to %rgb=neopixel_colors"
-        //% blockGap=8
         //% weight=80
         //% parts="neopixel" 
         setPixelColor(pixeloffset: number, rgb: number): void {
@@ -208,7 +206,7 @@ namespace neopixel {
         /**
          * Send all the changes to the strip.
          */
-        //% blockId="neopixel_show" block="%strip|show" blockGap=8
+        //% blockId="neopixel_show" block="%strip|show" 
         //% weight=79
         //% parts="neopixel"
         show() {
@@ -231,7 +229,7 @@ namespace neopixel {
          * Set the brightness of the strip. This flag only applies to future operation.
          * @param brightness a measure of LED brightness in 0-255. eg: 255
          */
-        //% blockId="neopixel_set_brightness" block="%strip|set brightness %brightness" blockGap=8
+        //% blockId="neopixel_set_brightness" block="%strip|set brightness %brightness" 
         //% weight=59
         //% parts="neopixel" 
         setBrightness(brightness: number): void {
@@ -266,7 +264,7 @@ namespace neopixel {
          * You need to call ``show`` to make the changes visible.
          * @param offset number of pixels to shift forward, eg: 1
          */
-        //% blockId="neopixel_shift" block="%strip|shift pixels by %offset" blockGap=8
+        //% blockId="neopixel_shift" block="%strip|shift pixels by %offset" 
         //% weight=40
         //% parts="neopixel"
         shift(offset: number = 1): void {
@@ -280,7 +278,7 @@ namespace neopixel {
          * You need to call ``show`` to make the changes visible.
          * @param offset number of pixels to rotate forward, eg: 1
          */
-        //% blockId="neopixel_rotate" block="%strip|rotate pixels by %offset" blockGap=8
+        //% blockId="neopixel_rotate" block="%strip|rotate pixels by %offset" 
         //% weight=39
         //% parts="neopixel"
         rotate(offset: number = 1): void {
@@ -389,7 +387,7 @@ namespace neopixel {
      * @param numleds number of leds in the strip, eg: 24,30,60,64
      */
     //% blockId="neopixel_create" block="NeoPixel at pin %Rjpin|with %numleds|leds as %mode"
-    //% weight=90 blockGap=8
+    //% weight=90
     //% parts="neopixel"
     //% trackArgs=0,2
     //% blockSetVariable=strip
@@ -429,7 +427,6 @@ namespace neopixel {
      */
     //% weight=1
     //% blockId="neopixel_rgb" block="red %red|green %green|blue %blue"
-    //% 
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
@@ -437,9 +434,8 @@ namespace neopixel {
     /**
      * Gets the RGB value of a known color
     */
-    //% weight=2 blockGap=8
+    //% weight=2
     //% blockId="neopixel_colors" block="%color"
-    //% 
     export function colors(color: NeoPixelColors): number {
         return color;
     }

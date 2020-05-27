@@ -244,7 +244,7 @@ namespace PlanetX_Display {
         }
         return pin
     }
-    /////////////////////////////function//////////////////
+    /////////////////////////////User_function//////////////////
 
     /**
     * toggle led
@@ -408,7 +408,6 @@ namespace PlanetX_Display {
         //oledcmd(DISPLAY_ON);    //display on
         setText(0, 0);
     }
-
     /**
    * Create a new driver Grove - 4-Digit Display
    * @param clkPin value of clk pin number

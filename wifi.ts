@@ -134,7 +134,7 @@ namespace ESP8266_IoT {
     //% write_api_key.defl=your_write_api_key
     //% expandableArgumentMode="enabled"
     //% subcategory="ThingSpeak"
-    export function setdata(write_api_key: string, n1: number = 0, n2: number = 0, n3: number = 0, n4: number = 0, n5: number = 0, n6: number = 0, n7: number = 0, n8: number = 0) {
+    export function setData(write_api_key: string, n1: number = 0, n2: number = 0, n3: number = 0, n4: number = 0, n5: number = 0, n6: number = 0, n7: number = 0, n8: number = 0) {
         if (thingspeak_connected) {
             toSendStr = "GET /update?api_key="
                 + write_api_key
@@ -282,7 +282,7 @@ namespace ESP8266_IoT {
 */
     //% block="When switch on"
     //% subcategory=KidsIot
-    export function iotswitchon(handler: () => void) {
+    export function iotSwitchon(handler: () => void) {
         recevice_kitiot()
         control.onEvent(EVENT_ON_ID, EVENT_ON_Value, handler)
     }
@@ -291,7 +291,7 @@ namespace ESP8266_IoT {
      */
     //% block="When switch off"
     //% subcategory=KidsIot
-    export function iotswitchoff(handler: () => void) {
+    export function iotSwitchoff(handler: () => void) {
         recevice_kitiot()
         control.onEvent(EVENT_OFF_ID, EVENT_OFF_Value, handler)
     }

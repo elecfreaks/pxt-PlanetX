@@ -213,6 +213,40 @@ namespace PlanetX_Display {
         //% block="😠"
         Angry_Face
     }
+    export enum NeoPixelColors {
+        //% block=red
+        Red = 0xFF0000,
+        //% block=orange
+        Orange = 0xFFA500,
+        //% block=yellow
+        Yellow = 0xFFFF00,
+        //% block=green
+        Green = 0x00FF00,
+        //% block=blue
+        Blue = 0x0000FF,
+        //% block=indigo
+        Indigo = 0x4b0082,
+        //% block=violet
+        Violet = 0x8a2be2,
+        //% block=purple
+        Purple = 0xFF00FF,
+        //% block=white
+        White = 0xFFFFFF,
+        //% block=black
+        Black = 0x000000
+    }
+
+    /**
+     * Different modes for RGB or RGB+W NeoPixel strips
+     */
+    export enum NeoPixelMode {
+        //% block="RGB (GRB format)"
+        RGB = 0,
+        //% block="RGB+W"
+        RGBW = 1,
+        //% block="RGB (RGB format)"
+        RGB_RGB = 2
+    }
     ///////////////////////////////////////////////////////RJpin_to_pin
     function RJpin_to_analog(Rjpin: AnalogRJPin): any {
         let pin = AnalogPin.P1
@@ -674,44 +708,6 @@ namespace PlanetX_Display {
                     this.setPixelColor(i, hsl(h, s, l));
                 }
                 this.setPixelColor(steps - 1, hsl(endHue, saturation, luminance));
-            }
-            this.show();
-        }
-
-        /**
-         * Displays a vertical bar graph based on the `value` and `high` value.
-         * If `high` is 0, the chart gets adjusted automatically.
-         * @param value current value to plot
-         * @param high maximum value, eg: 255
-         */
-        //% weight=84 color=#EA5532
-        //% blockId=neopixel_show_bar_graph block="%strip|show bar graph of %value|up to %high"
-        //% parts="neopixel" subcategory=Neopixel
-        showBarGraph(value: number, high: number): void {
-            if (high <= 0) {
-                this.clear();
-                this.setPixelColor(0, NeoPixelColors.Yellow);
-                this.show();
-                return;
-            }
-
-            value = Math.abs(value);
-            const n = this._length;
-            const n1 = n - 1;
-            let v = Math.idiv((value * n), high);
-            if (v == 0) {
-                this.setPixelColor(0, 0x666600);
-                for (let i = 1; i < n; ++i)
-                    this.setPixelColor(i, 0);
-            }
-            else {
-                for (let i = 0; i < n; ++i) {
-                    if (i <= v) {
-                        const b = Math.idiv(i * 255, n1);
-                        this.setPixelColor(i, neopixel.rgb(b, 0, 255 - b));
-                    }
-                    else this.setPixelColor(i, 0);
-                }
             }
             this.show();
         }

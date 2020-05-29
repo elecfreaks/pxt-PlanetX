@@ -580,7 +580,7 @@ namespace PlanetX_Basic {
         voltage = pins.map(
             pins.analogReadPin(pin),
             0,
-            700,
+            600,
             0,
             100
         );

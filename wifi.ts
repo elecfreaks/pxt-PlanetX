@@ -61,20 +61,20 @@ namespace PlanetX_IOT {
         let pin_rx = SerialPin.P8
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                pin_tx = SerialPin.P1
-                pin_rx = SerialPin.P8
+                pin_tx = SerialPin.P8
+                pin_rx = SerialPin.P1
                 break;
             case DigitalRJPin.J2:
-                pin_tx = SerialPin.P2
-                pin_rx = SerialPin.P12
+                pin_tx = SerialPin.P12
+                pin_rx = SerialPin.P2
                 break;
             case DigitalRJPin.J3:
-                pin_tx = SerialPin.P13
-                pin_rx = SerialPin.P14
+                pin_tx = SerialPin.P14
+                pin_rx = SerialPin.P13
                 break;
             case DigitalRJPin.J4:
-                pin_tx = SerialPin.P15
-                pin_rx = SerialPin.P16
+                pin_tx = SerialPin.P16
+                pin_rx = SerialPin.P15
                 break;
         }
         serial.redirect(

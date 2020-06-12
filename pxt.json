@@ -13,8 +13,8 @@
         "display.ts",
         "wifi.ts",
         "ds18b20.cpp",
-        "_locales/zh-cn/pxt-PlanetX-jsdoc-strings.json",
-        "_locales/zh-cn/pxt-PlanetX-strings.json"
+        "_locales/zh/pxt-PlanetX-jsdoc-strings.json",
+        "_locales/zh/pxt-PlanetX-strings.json"
     ],
     "testFiles": [
         "test.ts"

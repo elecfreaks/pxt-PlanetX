@@ -736,8 +736,7 @@ namespace PlanetX_Basic {
     }
     /**
      * get dust value (μg/m³) 
-     * @param vLED_pin describe parameter here, eg: DigitalPin.P16
-     * @param vo_pin describe parameter here, eg: AnalogPin.P1
+     * @param Rjpin describe parameter here, eg: Rjpin.J1
      */
     //% blockId="readdust" block="Dust sensor %Rjpin value (μg/m³)"
     export function Dust(Rjpin: AnalogRJPin): number {

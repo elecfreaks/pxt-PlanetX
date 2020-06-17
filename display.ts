@@ -287,11 +287,24 @@ namespace PlanetX_Display {
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% brightness.min=0 brightness.max=100
     //% ledstate.shadow="toggleOnOff"
-    //% subcategory=Display group="Analog" color=#E2C438
+    //% subcategory=Display group="Digital" color=#EA5532
     //% expandableArgumentMode="toggle"
-    export function ledBrightness(Rjpin: AnalogRJPin, ledstate: boolean, brightness: number = 100): void {
+    export function ledBrightness(Rjpin: DigitalRJPin, ledstate: boolean, brightness: number = 100): void {
         let pin = AnalogPin.P1
-        pin = RJpin_to_analog(Rjpin)
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin = AnalogPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin = AnalogPin.P14
+                break;
+        }
         if (ledstate) {
             pins.analogSetPeriod(pin, 100)
             pins.analogWritePin(pin, Math.map(brightness, 0, 100, 0, 1023))

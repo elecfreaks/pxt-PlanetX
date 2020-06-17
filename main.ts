@@ -616,7 +616,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
-    export function gasValue(sensor: GasList, Rjpin: AnalogRJPin): number {
+    export function gasValue(Rjpin: AnalogRJPin, sensor: GasList): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
         return pins.analogReadPin(pin)

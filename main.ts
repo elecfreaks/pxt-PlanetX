@@ -735,6 +735,47 @@ namespace PlanetX_Basic {
         return pm25
     }
     /**
+     * get dust value (μg/m³) 
+     * @param vLED_pin describe parameter here, eg: DigitalPin.P16
+     * @param vo_pin describe parameter here, eg: AnalogPin.P1
+     */
+    //% blockId="readdust" block="Dust sensor %Rjpin value (μg/m³)"
+    export function Dust(Rjpin: AnalogRJPin): number {
+        let voltage = 0
+        let dust = 0
+        let vo_pin = AnalogPin.P1
+        let vLED_pin = DigitalPin.P2
+        switch (Rjpin) {
+            case AnalogRJPin.J1:
+                vo_pin = AnalogPin.P1
+                vLED_pin = DigitalPin.P8
+                break;
+            case AnalogRJPin.J2:
+                vo_pin = AnalogPin.P2
+                vLED_pin = DigitalPin.P12
+                break;
+
+        }
+        pins.digitalWritePin(vLED_pin, 0);
+        control.waitMicros(160);
+        voltage = pins.analogReadPin(vo_pin);
+        control.waitMicros(100);
+        pins.digitalWritePin(vLED_pin, 1);
+        voltage = pins.map(
+            voltage,
+            0,
+            1023,
+            0,
+            3100 / 2 * 3
+        );
+        dust = (voltage - 380) * 5 / 29;
+        if (dust < 0) {
+            dust = 0
+        }
+        return Math.round(dust)
+
+    }
+    /**
     * TODO: line following
     */
     //% Rjpin.fieldEditor="gridpicker"

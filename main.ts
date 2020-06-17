@@ -2,7 +2,7 @@
 * Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
 */
 //% color=#00B1ED  icon="\uf005" block="PlanetX_Base" blockId="PlanetX_Base"
-//% groups='["LED", "Digital", "Analog", "IIC Port", "OLED", "8*16 Matrix", "7-Seg 4-Dig LED Nixietube"]'
+//% groups='["Digital", "Analog", "IIC Port"]'
 namespace PlanetX_Basic {
     /////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
@@ -1175,12 +1175,25 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% fanstate.shadow="toggleOnOff"
-    //% subcategory=Excute group="Analog" color=#E2C438
+    //% subcategory=Excute group="Digital" color=#EA5532
     //% speed.min=0 speed.max=100
     //% expandableArgumentMode="toggle"
-    export function motorFan(Rjpin: AnalogRJPin, fanstate: boolean, speed: number = 100): void {
+    export function motorFan(Rjpin: DigitalRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
-        pin = RJpin_to_analog(Rjpin)
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin = AnalogPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin = AnalogPin.P14
+                break;
+        }
         if (fanstate) {
             pins.analogSetPeriod(pin, 100)
             pins.analogWritePin(pin, Math.map(speed, 0, 100, 0, 1023))

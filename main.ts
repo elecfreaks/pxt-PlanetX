@@ -739,6 +739,9 @@ namespace PlanetX_Basic {
      * @param Rjpin describe parameter here, eg: Rjpin.J1
      */
     //% blockId="readdust" block="Dust sensor %Rjpin value (μg/m³)"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Sensor color=#E2C438 group="Analog"
     export function Dust(Rjpin: AnalogRJPin): number {
         let voltage = 0
         let dust = 0

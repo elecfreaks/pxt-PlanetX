@@ -302,7 +302,7 @@ namespace PlanetX_Display {
                 pin = AnalogPin.P13
                 break;
             case DigitalRJPin.J4:
-                pin = AnalogPin.P14
+                pin = AnalogPin.P15
                 break;
         }
         if (ledstate) {

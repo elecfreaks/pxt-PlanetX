@@ -1191,7 +1191,7 @@ namespace PlanetX_Basic {
                 pin = AnalogPin.P13
                 break;
             case DigitalRJPin.J4:
-                pin = AnalogPin.P14
+                pin = AnalogPin.P15
                 break;
         }
         if (fanstate) {

@@ -712,6 +712,28 @@ namespace PlanetX_Basic {
             return false
         }
     }
+     /**
+    * TODO: get pm2.5 value (μg/m³) 
+    * @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
+    */
+    //% blockId="PM25" block="PM2.5 sensor %Rjpin value (μg/m³)"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Sensor group="Digital" color=#EA5532
+    export function PM25(Rjpin: DigitalRJPin): number {
+        let pin = DigitalPin.P1
+        let pm25 = 0
+        pin = RJpin_to_digital(Rjpin)
+        while (pins.digitalReadPin(pin) != 0) {
+        }
+        while (pins.digitalReadPin(pin) != 1) {
+        }
+        pm25 = input.runningTime()
+        while (pins.digitalReadPin(pin) != 0) {
+        }
+        pm25 = input.runningTime() - pm25
+        return pm25
+    }
     /**
     * TODO: line following
     */

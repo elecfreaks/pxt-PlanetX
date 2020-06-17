@@ -1,8 +1,11 @@
 {
   "PlanetX_Basic": "Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.",
   "PlanetX_Basic.Crash": "check crash",
+  "PlanetX_Basic.Dust": "get dust value (μg/m³)",
+  "PlanetX_Basic.Dust|param|Rjpin": "describe parameter here, eg: Rjpin.J1",
   "PlanetX_Basic.GestureType": "Gestures",
   "PlanetX_Basic.PIR": "TODO: Detect soil moisture value(0~100%)",
+  "PlanetX_Basic.PM25": "TODO: get pm2.5 value (μg/m³)",
   "PlanetX_Basic.Relay": "toggle Relay",
   "PlanetX_Basic.UVLevel": "get UV level value (0~15)",
   "PlanetX_Basic.dht11Sensor": "get dht11 temperature and humidity Value",

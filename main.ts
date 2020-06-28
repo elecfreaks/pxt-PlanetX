@@ -453,45 +453,45 @@ namespace PlanetX_Basic {
         //% block="Hello,Shaun"
         Hello_Shaun = 1,
         //% block="Turn on the lights" 
-        Turn_on_the_lights = 10,
+        Turn_on_the_lights = 16,
         //% block="Turn off lights"
-        Turn_off_lights = 11,
+        Turn_off_lights = 17,
         //% block="Turn left"
-        Turn_left = 12,
+        Turn_left = 18,
         //% block="Turn right"
-        Turn_right = 13,
+        Turn_right = 19,
         //% block="Move forward"
-        Move_forward = 14,
+        Move_forward = 20,
         //% block="Backwards"
-        Backwards = 15,
+        Backwards = 21,
         //% block="Patrolling mode"
-        Patrolling_mode = 16,
+        Patrolling_mode = 22,
         //% block="Obstacle avoidance mode"
-        Obstacle_avoidance_mode = 17,
+        Obstacle_avoidance_mode = 23,
         //% block="Parking"
-        Parking = 18,
+        Parking = 24,
         //% block="Open device"
-        Open_device = 20,
+        Open_device = 32,
         //% block="Close device"
-        Close_device = 21,
+        Close_device = 33,
         //% block="Suspend operation"
-        Suspend_operation = 22,
+        Suspend_operation = 34,
         //% block="Continue operation"
-        Continue_operation = 23,
+        Continue_operation = 35,
         //% block="One level up"
-        One_level_up = 24,
+        One_level_up = 36,
         //% block="One level down"
-        One_level_down = 25,
+        One_level_down = 37,
         //% block="Play music"
-        Run_function_one = 26,
+        Play_music = 38,
         //% block="Turn off music"
-        Run_function_two = 27,
+        Turn_off_music = 39,
         //% block="Switch music"
-        Run_function_three = 28,
+        Switch_music = 40,
         //% block="Run function one"
-        Run_function_four = 32,
+        Run_function_one = 49,
         //% block="Run function two"
-        Run_function_five = 32
+        Run_function_two = 50
     }
     ///////////////////////////////////blocks/////////////////////////////
     /** 
@@ -1490,7 +1490,7 @@ namespace PlanetX_Basic {
      * TODO: Perform playback or other
      * @param myType Left wheel speed , eg: playType.Play
      */
-    //% blockId=MP3execute block="set MP3 execute procedure:%myType"
+    //% blockId=MP3execute block="Set MP3 execute procedure:%myType"
     //% myType.fieldEditor="gridpicker"
     //% myType.fieldOptions.columns=2
     //% subcategory=Excute group="MP3" color=#EA5532
@@ -1508,7 +1508,7 @@ namespace PlanetX_Basic {
      * TODO: Set volume
      * @param Sound Volume, eg: 48
      */
-    //% blockId="setVolume" block="set volume(0~30):%volume"
+    //% blockId="setVolume" block="Set volume(0~30):%volume"
     //% volume.min=0 volume.max=30
     //% subcategory=Excute group="MP3" color=#EA5532
     export function setVolume(volume: number): void {

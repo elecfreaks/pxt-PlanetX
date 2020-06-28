@@ -1317,7 +1317,7 @@ namespace PlanetX_Basic {
     /**
     * toggle laserSensor
     */
-    //% blockId=laserSensor block="Laser %Rjpin toggle to %laserstate"
+    //% blockId=laserSensor block="Laser %Rjpin toggle to $laserstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
@@ -1355,30 +1355,6 @@ namespace PlanetX_Basic {
         }
     }
 
-
-    /**
-     * TODO: Specify a song to play
-     * @param tracking Specify a song , eg: 0
-     * @param myAns repeat , eg: repeatList.Yes
-     */
-    //% blockId="setTracking" 
-    //% block="play the mp3 on the track:%tracking || repeatList:$myAns"
-    //% weight=85 tracking.min=1 tracking.max=255
-    //% expandableArgumentMode="toggle"
-    //% subcategory=Excute group="MP3" color=#EA5532
-    export function setTracking(tracking: number, myAns: boolean): void {
-        CMD = 0x03
-        para1 = 0x00
-        para2 = tracking
-        dataArr[3] = CMD
-        dataArr[5] = para1
-        dataArr[6] = para2
-        mp3_checkSum()
-        mp3_sendData()
-        execute(0x0D)
-        if (myAns)
-            execute(0x19)
-    }
     /**
      * TODO: Loop songs in folders
      * @param folderNum Specify a floder , eg: 0
@@ -1403,7 +1379,7 @@ namespace PlanetX_Basic {
     * @param myAns repeat , eg: repeatList.Yes
     */
     //% blockId="folderPlay" 
-    //% block="play the mp3 in the folder:%folderNum filename:%fileNum || repeatList:$myAns"
+    //% block="play the mp3 in the folder:%folderNum filename:%fileNum || repeatList: $myAns"
     //% folderNum.min=1 folderNum.max=99 fileNum.min=1 fileNum.max=255
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
@@ -1433,6 +1409,29 @@ namespace PlanetX_Basic {
         dataArr[6] = para2
         mp3_checkSum()
         mp3_sendData()
+    }
+    /**
+     * TODO: Specify a song to play
+     * @param tracking Specify a song , eg: 0
+     * @param myAns repeat , eg: repeatList.Yes
+     */
+    //% blockId="setTracking" 
+    //% block="play the mp3 on the track:%tracking || repeatList: $myAns"
+    //% weight=85 tracking.min=1 tracking.max=255
+    //% expandableArgumentMode="toggle"
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function setTracking(tracking: number, myAns: boolean): void {
+        CMD = 0x03
+        para1 = 0x00
+        para2 = tracking
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
+        execute(0x0D)
+        if (myAns)
+            execute(0x19)
     }
     /**
      * TODO: Perform playback or other

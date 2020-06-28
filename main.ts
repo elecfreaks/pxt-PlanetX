@@ -1360,8 +1360,6 @@ namespace PlanetX_Basic {
     //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% Relaystate.fieldEditor="gridpicker"
-    //% Relaystate.fieldOptions.columns=1
     //% subcategory=Excute group="MP3" color=#EA5532
     export function MP3SetPort(Rjpin: DigitalRJPin): void {
         let pin = SerialPin.USB_RX
@@ -1385,6 +1383,23 @@ namespace PlanetX_Basic {
             BaudRate.BaudRate9600
         )
         basic.pause(100)
+    }
+    /**
+    * MP3 set Port
+    */
+    //% blockId=MP3execute block="set MP3 execute procedure:%myType"
+    //% myType.fieldEditor="gridpicker"
+    //% myType.fieldOptions.columns=2
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function execute(myType: playType): void {
+        CMD = myType
+        para1 = 0x00
+        para2 = 0x00
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
     }
 
 

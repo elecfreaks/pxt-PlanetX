@@ -1355,8 +1355,9 @@ namespace PlanetX_Basic {
         }
     }
     /**
-    * MP3 set Port
-    */
+     * TODO: Initializing the MP3 connection port as a serial port
+     * @param pinRX Serial port TX pin of micro:bit
+     */
     //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -1385,8 +1386,9 @@ namespace PlanetX_Basic {
         basic.pause(100)
     }
     /**
-    * MP3 set Port
-    */
+     * TODO: Perform playback or other
+     * @param myType Left wheel speed , eg: playType.Play
+     */
     //% blockId=MP3execute block="set MP3 execute procedure:%myType"
     //% myType.fieldEditor="gridpicker"
     //% myType.fieldOptions.columns=2
@@ -1400,6 +1402,28 @@ namespace PlanetX_Basic {
         dataArr[6] = para2
         mp3_checkSum()
         mp3_sendData()
+    }
+    /**
+     * TODO: Specify a song to play
+     * @param tracking Specify a song , eg: 0
+     * @param myAns repeat , eg: repeatList.Yes
+     */
+    //% blockId="setTracking" 
+    //% block="play the mp3 on the track:%tracking || repeatList:$myAns"
+    //% weight=85 tracking.min=1 tracking.max=255
+    //% expandableArgumentMode="toggle"
+    export function setTracking(tracking: number, myAns: boolean): void {
+        CMD = 0x03
+        para1 = 0x00
+        para2 = tracking
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
+        execute(0x0D)
+        if (myAns)
+            execute(0x19)
     }
 
 

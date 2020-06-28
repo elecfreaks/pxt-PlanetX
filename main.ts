@@ -1411,29 +1411,6 @@ namespace PlanetX_Basic {
         mp3_sendData()
     }
     /**
-     * TODO: Specify a song to play
-     * @param tracking Specify a song , eg: 0
-     * @param myAns repeat , eg: repeatList.Yes
-     */
-    //% blockId="setTracking" 
-    //% block="play the mp3 on the track:%tracking || repeatList: $myAns"
-    //% weight=85 tracking.min=1 tracking.max=255
-    //% expandableArgumentMode="toggle"
-    //% subcategory=Excute group="MP3" color=#EA5532
-    export function setTracking(tracking: number, myAns: boolean): void {
-        CMD = 0x03
-        para1 = 0x00
-        para2 = tracking
-        dataArr[3] = CMD
-        dataArr[5] = para1
-        dataArr[6] = para2
-        mp3_checkSum()
-        mp3_sendData()
-        execute(0x0D)
-        if (myAns)
-            execute(0x19)
-    }
-    /**
      * TODO: Perform playback or other
      * @param myType Left wheel speed , eg: playType.Play
      */

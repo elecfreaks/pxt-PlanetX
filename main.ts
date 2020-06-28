@@ -1271,12 +1271,23 @@ namespace PlanetX_Basic {
                 break
         }
     }
+    let asrEventId = 3500
+    let lastvoc = 0
     //% block="ASR sensor IIC port hear %vocabulary"
     //% subcategory=Sensor group="IIC Port"
     //% vocabulary.fieldEditor="gridpicker" vocabulary.fieldOptions.columns=3
-    export function asrmain(vocabulary: vocabularyList): boolean {
-        let buffer = pins.i2cReadNumber(0x0B, 1)
-        return buffer == vocabulary
+    export function onASR(vocabulary: vocabularyList, handler: () => void) {
+        control.onEvent(asrEventId, vocabulary, handler);
+        control.inBackground(() => {
+            while (true) {
+                const voc = pins.i2cReadNumber(0x0B, 1)
+                if (voc != lastvoc) {
+                    lastvoc = voc
+                    control.raiseEvent(asrEventId, lastvoc);
+                }
+                basic.pause(50);
+            }
+        })
     }
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"

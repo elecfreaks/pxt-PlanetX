@@ -449,6 +449,50 @@ namespace PlanetX_Basic {
         //% block="Second"
         Second
     }
+    export enum vocabularyList {
+        //% block="Hello,Shaun"
+        Hello_Shaun = 1,
+        //% block="Turn on the lights" 
+        Turn_on_the_lights = 10,
+        //% block="Turn off lights"
+        Turn_off_lights = 11,
+        //% block="Turn left"
+        Turn_left = 12,
+        //% block="Turn right"
+        Turn_right = 13,
+        //% block="Move forward"
+        Move_forward = 14,
+        //% block="Backwards"
+        Backwards = 15,
+        //% block="Patrolling mode"
+        Patrolling_mode = 16,
+        //% block="Obstacle avoidance mode"
+        Obstacle_avoidance_mode = 17,
+        //% block="Parking"
+        Parking = 18,
+        //% block="Open device"
+        Open_device = 20,
+        //% block="Close device"
+        Close_device = 21,
+        //% block="Suspend operation"
+        Suspend_operation = 22,
+        //% block="Continue operation"
+        Continue_operation = 23,
+        //% block="One level up"
+        One_level_up = 24,
+        //% block="One level down"
+        One_level_down = 25,
+        //% block="Play music"
+        Run_function_one = 26,
+        //% block="Turn off music"
+        Run_function_two = 27,
+        //% block="Switch music"
+        Run_function_three = 28,
+        //% block="Run function one"
+        Run_function_four = 32,
+        //% block="Run function two"
+        Run_function_five = 32
+    }
     ///////////////////////////////////blocks/////////////////////////////
     /** 
     * TODO: get noise(dB)
@@ -988,7 +1032,7 @@ namespace PlanetX_Basic {
         start();
     }
     //% blockID="get_one_data" block="RTC IIC port get %data"
-    //% subcategory=Sensor  group="IIC Port"
+    //% subcategory=Sensor group="IIC Port"
     export function readData(data: DataUnit): number {
         switch (data) {
             case DataUnit.Year:
@@ -1226,6 +1270,13 @@ namespace PlanetX_Basic {
                 }
                 break
         }
+    }
+    //% block="ASR sensor IIC port hear %vocabulary"
+    //% subcategory=Sensor group="IIC Port"
+    //% asr.fieldEditor="gridpicker" color.fieldOptions.columns=3
+    export function asrmain(vocabulary: vocabularyList): boolean {
+        let buffer = pins.i2cReadNumber(0x0B, 1)
+        return buffer == vocabulary
     }
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"

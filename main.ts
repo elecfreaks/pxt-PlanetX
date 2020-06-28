@@ -351,7 +351,7 @@ namespace PlanetX_Basic {
         A,
         //% block="B"
         B,
-        //% block="AB"
+        //% block="A+B"
         AB
     }
     export enum RelayStateList {

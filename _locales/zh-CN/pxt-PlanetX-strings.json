@@ -5,7 +5,7 @@
   "PlanetX_Basic.BME280_state.BME280_humidity|block": "湿度(0~100%)",
   "PlanetX_Basic.BME280_state.BME280_pressure|block": "气压(hPa)",
   "PlanetX_Basic.BME280_state.BME280_temperature_C|block": "温度(℃)",
-  "PlanetX_Basic.ButtonStateList.AB|block": "AB",
+  "PlanetX_Basic.ButtonStateList.AB|block": "A+B",
   "PlanetX_Basic.ButtonStateList.A|block": "A",
   "PlanetX_Basic.ButtonStateList.B|block": "B",
   "PlanetX_Basic.ColorList.blue|block": "蓝色",

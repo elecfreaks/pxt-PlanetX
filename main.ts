@@ -1412,6 +1412,7 @@ namespace PlanetX_Basic {
     //% block="play the mp3 on the track:%tracking || repeatList:$myAns"
     //% weight=85 tracking.min=1 tracking.max=255
     //% expandableArgumentMode="toggle"
+    //% subcategory=Excute group="MP3" color=#EA5532
     export function setTracking(tracking: number, myAns: boolean): void {
         CMD = 0x03
         para1 = 0x00
@@ -1424,6 +1425,78 @@ namespace PlanetX_Basic {
         execute(0x0D)
         if (myAns)
             execute(0x19)
+    }
+    /**
+     * TODO: Loop songs in folders
+     * @param folderNum Specify a floder , eg: 0
+     */
+    //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:%folderNum"
+    //% folderNum.min=1 folderNum.max=99
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function setLoopFolder(folderNum: number): void {
+        CMD = 0x17
+        para1 = 0
+        para2 = folderNum
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
+    }
+    /**
+    * TODO: Specify songs in the play folder
+    * @param folderNum Specify a floder , eg: 0
+    * @param fileNum Specify a song , eg: 0
+    * @param myAns repeat , eg: repeatList.Yes
+    */
+    //% blockId="folderPlay" 
+    //% block="play the mp3 in the folder:%folderNum filename:%fileNum || repeatList:$myAns"
+    //% folderNum.min=1 folderNum.max=99 fileNum.min=1 fileNum.max=255
+    //% expandableArgumentMode="toggle"
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function folderPlay(folderNum: number, fileNum: number, myAns: boolean): void {
+        CMD = 0x0F
+        para1 = folderNum
+        para2 = fileNum
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
+        if (myAns)
+            execute(0x19)
+    }
+    /**
+     * TODO: Set Random play
+     */
+    //% blockId="setRandomPlay" block="Play all tracks at random"
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function setRandomPlay(): void {
+        CMD = 0x18
+        para1 = 0
+        para2 = 0
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
+    }
+    /**
+     * TODO: Set volume
+     * @param Sound Volume, eg: 48
+     */
+    //% blockId="setVolume" block="set volume(0~30):%volume"
+    //% volume.min=0 volume.max=30
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function setVolume(volume: number): void {
+        CMD = 0x06
+        para1 = 0
+        para2 = volume
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
     }
 
 

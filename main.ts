@@ -229,6 +229,52 @@ namespace PlanetX_Basic {
     export function getSecond(): number {
         return Math.min(HexToDec(rtc_getReg(DS1307_REG_SECOND)), 59)
     }
+    ///////////////////////////////////////////////////////MP3
+    let Start_Byte = 0x7E
+    let Version_Byte = 0xFF
+    let Command_Length = 0x06
+    let End_Byte = 0xEF
+    let Acknowledge = 0x00
+    let CMD = 0x00
+    let para1 = 0x00
+    let para2 = 0x00
+    let highByte = 0x00
+    let lowByte = 0x00
+    let dataArr: number[] = [Start_Byte, Version_Byte, Command_Length, CMD, Acknowledge, para1, para2, highByte, lowByte, End_Byte]
+	/*
+	* Play status selection button list
+	*/
+    export enum playType {
+        //% block="Play"
+        Play = 0x0D,
+        //% block="Stop"
+        Stop = 0x16,
+        //% block="PlayNext"
+        PlayNext = 0x01,
+        //% block="PlayPrevious"
+        PlayPrevious = 0x02,
+        //% block="Pause"
+        Pause = 0x0E
+    }
+    function mp3_sendData(): void {
+        let myBuff = pins.createBuffer(10);
+        for (let i = 0; i < 10; i++) {
+            myBuff.setNumber(NumberFormat.UInt8BE, i, dataArr[i])
+        }
+        serial.writeBuffer(myBuff)
+        basic.pause(100)
+    }
+    function mp3_checkSum(): void {
+        let total = 0;
+        for (let i = 1; i < 7; i++) {
+            total += dataArr[i]
+        }
+        total = 65536 - total
+        lowByte = total & 0xFF;
+        highByte = total >> 8;
+        dataArr[7] = highByte
+        dataArr[8] = lowByte
+    }
     ///////////////////////////////////////////////////////RJpin_to_pin
     function RJpin_to_analog(Rjpin: AnalogRJPin): any {
         let pin = AnalogPin.P1
@@ -1307,6 +1353,38 @@ namespace PlanetX_Basic {
                 pins.digitalWritePin(pin, 1)
                 break;
         }
+    }
+    /**
+    * toggle Relay
+    */
+    //% blockId=Relay block="Set the MP3 port to %Rjpin"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% Relaystate.fieldEditor="gridpicker"
+    //% Relaystate.fieldOptions.columns=1
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function MP3SetPort(Rjpin: DigitalRJPin): void {
+        let pin = SerialPin.USB_RX
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = SerialPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin = SerialPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin = SerialPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin = SerialPin.P15
+                break;
+        }
+        serial.redirect(
+            pin,
+            SerialPin.USB_TX,
+            BaudRate.BaudRate9600
+        )
+        basic.pause(100)
     }
 
 

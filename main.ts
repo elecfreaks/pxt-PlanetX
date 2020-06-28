@@ -1533,16 +1533,16 @@ namespace PlanetX_Basic {
         let pin = SerialPin.USB_RX
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                pin = SerialPin.P1
+                pin = SerialPin.P8
                 break;
             case DigitalRJPin.J2:
-                pin = SerialPin.P2
+                pin = SerialPin.P12
                 break;
             case DigitalRJPin.J3:
-                pin = SerialPin.P13
+                pin = SerialPin.P14
                 break;
             case DigitalRJPin.J4:
-                pin = SerialPin.P15
+                pin = SerialPin.P16
                 break;
         }
         serial.redirect(

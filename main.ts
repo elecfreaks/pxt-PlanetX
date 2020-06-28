@@ -1354,55 +1354,8 @@ namespace PlanetX_Basic {
                 break;
         }
     }
-    /**
-     * TODO: Initializing the MP3 connection port as a serial port
-     * @param pinRX Serial port TX pin of micro:bit
-     */
-    //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Excute group="MP3" color=#EA5532
-    export function MP3SetPort(Rjpin: DigitalRJPin): void {
-        let pin = SerialPin.USB_RX
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = SerialPin.P1
-                break;
-            case DigitalRJPin.J2:
-                pin = SerialPin.P2
-                break;
-            case DigitalRJPin.J3:
-                pin = SerialPin.P13
-                break;
-            case DigitalRJPin.J4:
-                pin = SerialPin.P15
-                break;
-        }
-        serial.redirect(
-            pin,
-            SerialPin.USB_TX,
-            BaudRate.BaudRate9600
-        )
-        basic.pause(100)
-    }
-    /**
-     * TODO: Perform playback or other
-     * @param myType Left wheel speed , eg: playType.Play
-     */
-    //% blockId=MP3execute block="set MP3 execute procedure:%myType"
-    //% myType.fieldEditor="gridpicker"
-    //% myType.fieldOptions.columns=2
-    //% subcategory=Excute group="MP3" color=#EA5532
-    export function execute(myType: playType): void {
-        CMD = myType
-        para1 = 0x00
-        para2 = 0x00
-        dataArr[3] = CMD
-        dataArr[5] = para1
-        dataArr[6] = para2
-        mp3_checkSum()
-        mp3_sendData()
-    }
+
+
     /**
      * TODO: Specify a song to play
      * @param tracking Specify a song , eg: 0
@@ -1482,6 +1435,24 @@ namespace PlanetX_Basic {
         mp3_sendData()
     }
     /**
+     * TODO: Perform playback or other
+     * @param myType Left wheel speed , eg: playType.Play
+     */
+    //% blockId=MP3execute block="set MP3 execute procedure:%myType"
+    //% myType.fieldEditor="gridpicker"
+    //% myType.fieldOptions.columns=2
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function execute(myType: playType): void {
+        CMD = myType
+        para1 = 0x00
+        para2 = 0x00
+        dataArr[3] = CMD
+        dataArr[5] = para1
+        dataArr[6] = para2
+        mp3_checkSum()
+        mp3_sendData()
+    }
+    /**
      * TODO: Set volume
      * @param Sound Volume, eg: 48
      */
@@ -1498,7 +1469,37 @@ namespace PlanetX_Basic {
         mp3_checkSum()
         mp3_sendData()
     }
-
+    /**
+     * TODO: Initializing the MP3 connection port as a serial port
+     * @param pinRX Serial port TX pin of micro:bit
+     */
+    //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% subcategory=Excute group="MP3" color=#EA5532
+    export function MP3SetPort(Rjpin: DigitalRJPin): void {
+        let pin = SerialPin.USB_RX
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = SerialPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin = SerialPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin = SerialPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin = SerialPin.P15
+                break;
+        }
+        serial.redirect(
+            pin,
+            SerialPin.USB_TX,
+            BaudRate.BaudRate9600
+        )
+        basic.pause(100)
+    }
 
 
 }

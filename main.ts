@@ -1273,7 +1273,7 @@ namespace PlanetX_Basic {
     }
     //% block="ASR sensor IIC port hear %vocabulary"
     //% subcategory=Sensor group="IIC Port"
-    //% asr.fieldEditor="gridpicker" color.fieldOptions.columns=3
+    //% vocabulary.fieldEditor="gridpicker" vocabulary.fieldOptions.columns=3
     export function asrmain(vocabulary: vocabularyList): boolean {
         let buffer = pins.i2cReadNumber(0x0B, 1)
         return buffer == vocabulary

@@ -1381,7 +1381,7 @@ namespace PlanetX_Basic {
     //% blockId="folderPlay" 
     //% block="play the mp3 in the folder:%folderNum filename:%fileNum || repeatList: $myAns"
     //% folderNum.min=1 folderNum.max=99 fileNum.min=1 fileNum.max=255
-    //% myAns.shadow="toggleOnOff"
+    //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
     export function folderPlay(folderNum: number, fileNum: number, myAns: boolean): void {
@@ -1418,7 +1418,7 @@ namespace PlanetX_Basic {
      */
     //% blockId="setTracking" 
     //% block="play the mp3 on the track:%tracking || repeatList: $myAns"
-    //% myAns.shadow="toggleOnOff"
+    //% myAns.shadow="toggleYesNo"
     //% tracking.min=1 tracking.max=255
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532

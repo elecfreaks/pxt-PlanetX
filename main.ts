@@ -1355,9 +1355,9 @@ namespace PlanetX_Basic {
         }
     }
     /**
-    * toggle Relay
+    * MP3 set Port
     */
-    //% blockId=Relay block="Set the MP3 port to %Rjpin"
+    //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% Relaystate.fieldEditor="gridpicker"

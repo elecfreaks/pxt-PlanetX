@@ -630,8 +630,10 @@ namespace PlanetX_Basic {
         else {
             voltage = Math.map(voltage, 200, 1023, 1600, 14000)
         }
-        lightintensity = voltage;
-        return Math.round(lightintensity);
+        if(voltage < 0){
+            voltage = 0
+        }
+        return Math.round(voltage)
     }
     /**
     * TODO: get soil moisture(0~100%)
@@ -1447,7 +1449,7 @@ namespace PlanetX_Basic {
     //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
-    export function folderPlay(folderNum: number, fileNum: number, myAns: boolean): void {
+    export function folderPlay(folderNum: number, fileNum: number, myAns: boolean=false): void {
         CMD = 0x0F
         para1 = folderNum
         para2 = fileNum
@@ -1485,7 +1487,7 @@ namespace PlanetX_Basic {
     //% tracking.min=1 tracking.max=255
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
-    export function setTracking(tracking: number, myAns: boolean): void {
+    export function setTracking(tracking: number, myAns: boolean=false): void {
         CMD = 0x03
         para1 = 0x00
         para2 = tracking

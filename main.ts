@@ -1523,7 +1523,7 @@ namespace PlanetX_Basic {
      * @param Sound Volume, eg: 48
      */
     //% blockId="setVolume" block="Set volume(0~30):%volume"
-    //% volume.min=0 volume.max=30
+    //% volume.min=0 volume.max=25
     //% subcategory=Excute group="MP3" color=#EA5532
     export function setVolume(volume: number): void {
         CMD = 0x06

@@ -37,7 +37,7 @@ namespace PlanetX_IOT {
             serial_str += serial.readString()
             if (serial_str.length > 200)
                 serial_str = serial_str.substr(serial_str.length - 200)
-            if (serial_str.includes("OK") || serial_str.includes("ALREADY CONNECTED") || serial_str.includes("WIFI GOT IP") || serial_str.includes("CONNECT")) {
+            if (serial_str.includes("OK") || serial_str.includes("WIFI GOT IP") || serial_str.includes("SEND OK")) {
                 result = true
                 break
             }
@@ -84,7 +84,6 @@ namespace PlanetX_IOT {
         )
         sendAT("AT+RESTORE", 1000) // restore to factory settings
         sendAT("AT+CWMODE=1") // set to STA mode
-        sendAT("AT+RST", 1000) // reset
         basic.pause(100)
     }
     /**

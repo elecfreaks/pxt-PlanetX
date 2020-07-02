@@ -35,8 +35,8 @@ namespace PlanetX_IOT {
         let time: number = input.runningTime()
         while (true) {
             serial_str += serial.readString()
-            if (serial_str.length > 200)
-                serial_str = serial_str.substr(serial_str.length - 200)
+            if (serial_str.length > 100)
+                serial_str = serial_str.substr(serial_str.length - 100)
             if (serial_str.includes("OK") || serial_str.includes("WIFI GOT IP") || serial_str.includes("SEND OK")) {
                 result = true
                 break
@@ -44,7 +44,7 @@ namespace PlanetX_IOT {
             if (serial_str.includes("ERROR") || serial_str.includes("FAIL")) {
                 break
             }
-            if (input.runningTime() - time > 5000) {
+            if (input.runningTime() - time > 10000) {
                 break
             }
         }

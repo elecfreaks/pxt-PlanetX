@@ -572,7 +572,7 @@ namespace PlanetX_Display {
          */
         //% blockId=grove_tm1637_display_bit block="%display|show single number|%num|at digit|%bit"
         //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
-        //% bit.defl=1
+        //% bit.defl=1 bit.min=0 bit.max=9
         showbit(num: number = 5, bit: number = 0) {
             bit = Math.map(bit, 4, 1, 0, 3)
             this.buf[bit % this.count] = _SEGMENTS[num % 16]

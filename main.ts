@@ -348,12 +348,12 @@ namespace PlanetX_Basic {
         Distance_Unit_inch,
     }
     export enum ButtonStateList {
-        //% block="A"
-        A,
-        //% block="B"
-        B,
-        //% block="A+B"
-        AB
+        //% block="C"
+        C,
+        //% block="D"
+        D,
+        //% block="C+D"
+        CD
     }
     export enum RelayStateList {
         //% block="NC|Close NO|Open"
@@ -1331,13 +1331,13 @@ namespace PlanetX_Basic {
         }
         pins.setPull(pinA, PinPullMode.PullUp)
         pins.setPull(pinB, PinPullMode.PullUp)
-        if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.AB) {
+        if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.CD) {
             return true
         }
-        else if (pins.digitalReadPin(pinA) == 0 && pins.digitalReadPin(pinB) == 1 && button == ButtonStateList.A) {
+        else if (pins.digitalReadPin(pinA) == 0 && pins.digitalReadPin(pinB) == 1 && button == ButtonStateList.C) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 1 && button == ButtonStateList.B) {
+        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 1 && button == ButtonStateList.D) {
             return true
         }
         else {

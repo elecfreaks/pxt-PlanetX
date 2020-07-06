@@ -906,7 +906,7 @@ namespace PlanetX_Display {
         strip._length = numleds;
         strip._mode = mode;
         strip._matrixWidth = 0;
-        strip.setBrightness(128)
+        strip.setBrightness(50)
         strip.setPin(pin)
         return strip;
     }

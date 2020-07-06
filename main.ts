@@ -85,6 +85,7 @@ namespace PlanetX_Basic {
         H = (var2 >> 12) / 1024
     }
     ////////////////////////paj7620//////////////////////
+    let gesture_first_init = true
     const initRegisterArray: number[] = [
         0xEF, 0x00, 0x32, 0x29, 0x33, 0x01, 0x34, 0x00, 0x35, 0x01, 0x36, 0x00, 0x37, 0x07, 0x38, 0x17,
         0x39, 0x06, 0x3A, 0x12, 0x3F, 0x00, 0x40, 0x02, 0x41, 0xFF, 0x42, 0x01, 0x46, 0x2D, 0x47, 0x0F,
@@ -133,6 +134,7 @@ namespace PlanetX_Basic {
     const APDS9960_GCONF4 = 0xAB
     const APDS9960_AICLEAR = 0xE7
     let color_first_init = false
+    
 
     function i2cwrite_color(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -1179,7 +1181,10 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="IIC Port"
     export function onGesture(gesture: GestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
-        paj7620.init();
+        if(gesture_first_init){
+            paj7620.init();
+            gesture_first_init = false
+        }
         control.inBackground(() => {
             while (true) {
                 const gesture = paj7620.read();

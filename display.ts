@@ -627,21 +627,14 @@ namespace PlanetX_Display {
         }
     }
     export class Strip {
-        buf:
-        Buffer;
-        pin:
-        DigitalPin;
+        buf:Buffer;
+        pin:DigitalPin;
         // TODO: encode as bytes instead of 32bit
-        brightness:
-        number;
-        start:
-        number; // start offset in LED strip
-        _length:
-        number; // number of LEDs
-        _mode:
-        NeoPixelMode;
-        _matrixWidth:
-        number; // number of leds in a matrix - if any
+        brightness:number;
+        start:number; // start offset in LED strip
+        _length:number; // number of LEDs
+        _mode:NeoPixelMode;
+        _matrixWidth:number; // number of leds in a matrix - if any
 
         /**
          * Shows all LEDs to a given color (range 0-255 for r, g, b).

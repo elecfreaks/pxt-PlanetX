@@ -712,6 +712,9 @@ namespace PlanetX_Basic {
     export function gasValue(sensor: GasList, Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
+        if(sensor==GasList.Co2){
+            return 1024-pins.analogReadPin(pin)
+        }
         return pins.analogReadPin(pin)
     }
     /**

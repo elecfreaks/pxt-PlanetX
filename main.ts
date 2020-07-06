@@ -1192,7 +1192,7 @@ namespace PlanetX_Basic {
                     lastGesture = gesture;
                     control.raiseEvent(gestureEventId, lastGesture);
                 }
-                basic.pause(50);
+                basic.pause(100);
             }
         })
     }

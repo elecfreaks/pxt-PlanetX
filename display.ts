@@ -674,15 +674,12 @@ namespace PlanetX_Display {
             const hStepCW = Math.idiv((hDistCW * 100), steps);
             const hDistCCW = ((h1 + 360) - h2) % 360;
             const hStepCCW = Math.idiv(-(hDistCCW * 100), steps);
-            let hStep:
-                number;
+            let hStep: number;
             if (direction === HueInterpolationDirection.Clockwise) {
                 hStep = hStepCW;
-            }
-            else if (direction === HueInterpolationDirection.CounterClockwise) {
+            } else if (direction === HueInterpolationDirection.CounterClockwise) {
                 hStep = hStepCCW;
-            }
-            else {
+            } else {
                 hStep = hDistCW < hDistCCW ? hStepCW : hStepCCW;
             }
             const h1_100 = h1 * 100; //we multiply by 100 so we keep more accurate results while doing interpolation
@@ -704,8 +701,7 @@ namespace PlanetX_Display {
             //interpolate
             if (steps === 1) {
                 this.setPixelColor(0, hsl(h1 + hStep, s1 + sStep, l1 + lStep))
-            }
-            else {
+            } else {
                 this.setPixelColor(0, hsl(startHue, saturation, luminance));
                 for (let i = 1; i < steps - 1; i++) {
                     const h = Math.idiv((h1_100 + i * hStep), 100) + 360;
@@ -830,8 +826,7 @@ namespace PlanetX_Display {
             if (this._mode === NeoPixelMode.RGB_RGB) {
                 this.buf[offset + 0] = red;
                 this.buf[offset + 1] = green;
-            }
-            else {
+            } else {
                 this.buf[offset + 0] = green;
                 this.buf[offset + 1] = red;
             }
@@ -855,21 +850,6 @@ namespace PlanetX_Display {
                 this.setBufferRGB(i * stride, red, green, blue)
             }
         }
-        private setAllW(white: number) {
-            if (this._mode !== NeoPixelMode.RGBW)
-                return;
-
-            let br = this.brightness;
-            if (br < 255) {
-                white = (white * br) >> 8;
-            }
-            let buf = this.buf;
-            let end = this.start + this._length;
-            for (let i = this.start; i < end; ++i) {
-                let ledoffset = i * 4;
-                buf[ledoffset + 3] = white;
-            }
-        }
         private setPixelRGB(pixeloffset: number, rgb: number): void {
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
@@ -890,23 +870,7 @@ namespace PlanetX_Display {
             }
             this.setBufferRGB(pixeloffset, red, green, blue)
         }
-        private setPixelW(pixeloffset: number, white: number): void {
-            if (this._mode !== NeoPixelMode.RGBW)
-                return;
 
-            if (pixeloffset < 0
-                || pixeloffset >= this._length)
-                return;
-
-            pixeloffset = (pixeloffset + this.start) * 4;
-
-            let br = this.brightness;
-            if (br < 255) {
-                white = (white * br) >> 8;
-            }
-            let buf = this.buf;
-            buf[pixeloffset + 3] = white;
-        }
     }
 
     /**

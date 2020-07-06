@@ -672,11 +672,14 @@ namespace PlanetX_Basic {
         let voltage = 0, waterlevel = 0;
         voltage = pins.map(
             pins.analogReadPin(pin),
-            100,
+            50,
             600,
             0,
             100
         );
+        if(voltage<0){
+            voltage = 0
+        }
         waterlevel = voltage;
         return Math.round(waterlevel)
     }

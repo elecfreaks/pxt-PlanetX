@@ -1314,36 +1314,36 @@ namespace PlanetX_Basic {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=1
     //% subcategory=Input group="Digital" color=#EA5532
-    export function buttonAB(Rjpin: DigitalRJPin, button: ButtonStateList): boolean {
-        let pinA = DigitalPin.P1
-        let pinB = DigitalPin.P2
+    export function buttonCD(Rjpin: DigitalRJPin, button: ButtonStateList): boolean {
+        let pinC = DigitalPin.P1
+        let pinD = DigitalPin.P2
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                pinA = DigitalPin.P1
-                pinB = DigitalPin.P8
+                pinC = DigitalPin.P1
+                pinD = DigitalPin.P8
                 break;
             case DigitalRJPin.J2:
-                pinA = DigitalPin.P2
-                pinB = DigitalPin.P12
+                pinC = DigitalPin.P2
+                pinD = DigitalPin.P12
                 break;
             case DigitalRJPin.J3:
-                pinA = DigitalPin.P13
-                pinB = DigitalPin.P14
+                pinC = DigitalPin.P13
+                pinD = DigitalPin.P14
                 break;
             case DigitalRJPin.J4:
-                pinA = DigitalPin.P15
-                pinB = DigitalPin.P16
+                pinC = DigitalPin.P15
+                pinD = DigitalPin.P16
                 break;
         }
-        pins.setPull(pinA, PinPullMode.PullUp)
-        pins.setPull(pinB, PinPullMode.PullUp)
-        if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 0 && button == ButtonStateList.CD) {
+        pins.setPull(pinC, PinPullMode.PullUp)
+        pins.setPull(pinD, PinPullMode.PullUp)
+        if (pins.digitalReadPin(pinD) == 0 && pins.digitalReadPin(pinC) == 0 && button == ButtonStateList.CD) {
             return true
         }
-        else if (pins.digitalReadPin(pinA) == 0 && pins.digitalReadPin(pinB) == 1 && button == ButtonStateList.C) {
+        else if (pins.digitalReadPin(pinC) == 0 && pins.digitalReadPin(pinD) == 1 && button == ButtonStateList.C) {
             return true
         }
-        else if (pins.digitalReadPin(pinB) == 0 && pins.digitalReadPin(pinA) == 1 && button == ButtonStateList.D) {
+        else if (pins.digitalReadPin(pinD) == 0 && pins.digitalReadPin(pinC) == 1 && button == ButtonStateList.D) {
             return true
         }
         else {

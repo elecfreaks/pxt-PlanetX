@@ -55,7 +55,7 @@ namespace PlanetX_IOT {
     */
     //% block="set ESP8266 %Rjpin Baud rate %baudrate"
     //% ssid.defl=your_ssid
-    //% pw.defl=your_password
+    //% pw.defl=your_password weight=100
     export function initWIFI(Rjpin: DigitalRJPin, baudrate: BaudRate) {
         let pin_tx = SerialPin.P1
         let pin_rx = SerialPin.P8
@@ -91,7 +91,7 @@ namespace PlanetX_IOT {
     */
     //% block="connect Wifi SSID = %ssid|KEY = %pw"
     //% ssid.defl=your_ssid
-    //% pw.defl=your_pw
+    //% pw.defl=your_pw weight=95
     export function connectWifi(ssid: string, pw: string) {
         wifi_connected = false
         thingspeak_connected = false
@@ -105,7 +105,7 @@ namespace PlanetX_IOT {
     */
     //% block="connect thingspeak"
     //% write_api_key.defl=your_write_api_key
-    //% subcategory="ThingSpeak"
+    //% subcategory="ThingSpeak" weight=80
     export function connectThingSpeak() {
         if (wifi_connected && kitsiot_connected == false) {
             thingspeak_connected = false
@@ -121,7 +121,7 @@ namespace PlanetX_IOT {
     //% block="set data to send ThingSpeak | Write API key = %write_api_key|Field 1 = %n1||Field 2 = %n2|Field 3 = %n3|Field 4 = %n4|Field 5 = %n5|Field 6 = %n6|Field 7 = %n7|Field 8 = %n8"
     //% write_api_key.defl=your_write_api_key
     //% expandableArgumentMode="enabled"
-    //% subcategory="ThingSpeak"
+    //% subcategory="ThingSpeak" weight=75
     export function setData(write_api_key: string, n1: number = 0, n2: number = 0, n3: number = 0, n4: number = 0, n5: number = 0, n6: number = 0, n7: number = 0, n8: number = 0) {
         if (thingspeak_connected) {
             toSendStr = "GET /update?api_key="
@@ -148,7 +148,7 @@ namespace PlanetX_IOT {
     * upload data. It would not upload anything if it failed to connect to Wifi or ThingSpeak.
     */
     //% block="Upload data to ThingSpeak"
-    //% subcategory="ThingSpeak"
+    //% subcategory="ThingSpeak" weight=70
     export function uploadData() {
         if (thingspeak_connected) {
             last_upload_successful = false
@@ -163,7 +163,7 @@ namespace PlanetX_IOT {
     * Wait between uploads
     */
     //% block="Wait %delay ms"
-    //% delay.min=0 delay.defl=5000
+    //% delay.min=0 delay.defl=5000 
     export function wait(delay: number) {
         if (delay > 0) basic.pause(delay)
     }
@@ -171,7 +171,7 @@ namespace PlanetX_IOT {
     /**
     * Check if ESP8266 successfully connected to Wifi
     */
-    //% block="Wifi connected %State"
+    //% block="Wifi connected %State" weight=65
     export function wifiState(state: boolean) {
         if (wifi_connected == state) {
             return true
@@ -185,7 +185,7 @@ namespace PlanetX_IOT {
     * Check if ESP8266 successfully connected to ThingSpeak
     */
     //% block="ThingSpeak connected %State"
-    //% subcategory="ThingSpeak"
+    //% subcategory="ThingSpeak" weight=60
     export function thingSpeakState(state: boolean) {
         if (thingspeak_connected == state) {
             return true
@@ -200,7 +200,7 @@ namespace PlanetX_IOT {
     * Check if ESP8266 successfully uploaded data to ThingSpeak
     */
     //% block="ThingSpeak Last data upload %State"
-    //% subcategory="ThingSpeak"
+    //% subcategory="ThingSpeak" weight=55
     export function tsLastUploadState(state: boolean) {
         if (last_upload_successful == state) {
             return true
@@ -213,7 +213,7 @@ namespace PlanetX_IOT {
     /**
     * Connect to kitsiot
     */
-    //% subcategory=KidsIot
+    //% subcategory=KidsIot weight=50
     //% blockId=initkitiot block="Connect KidsIot with userToken: %userToken Topic: %topic"
     export function connectKidsiot(userToken: string, topic: string): void {
         if (wifi_connected && thingspeak_connected == false) {
@@ -229,7 +229,7 @@ namespace PlanetX_IOT {
     /**
     * upload data to kitsiot
     */
-    //% subcategory=KidsIot
+    //% subcategory=KidsIot weight=45
     //% blockId=uploadkitsiot block="Upload data %data to kidsiot"
     export function uploadKidsiot(data: number): void {
         if (kitsiot_connected) {
@@ -242,7 +242,7 @@ namespace PlanetX_IOT {
     /**
     * disconnect from kitsiot
     */
-    //% subcategory=KidsIot
+    //% subcategory=KidsIot weight=40
     //% blockId=Disconnect block="Disconnect with kidsiot"
     export function disconnectKidsiot(): void {
         if (kitsiot_connected) {
@@ -256,7 +256,7 @@ namespace PlanetX_IOT {
     * Check if ESP8266 successfully connected to KidsIot
     */
     //% block="KidsIot connection %State"
-    //% subcategory="KidsIot"
+    //% subcategory="KidsIot" weight=35
     export function kidsiotState(state: boolean) {
         if (kitsiot_connected == state) {
             return true
@@ -269,7 +269,7 @@ namespace PlanetX_IOT {
 * recevice value from kidsiot
 */
     //% block="When switch on"
-    //% subcategory=KidsIot
+    //% subcategory=KidsIot weight=30
     export function iotSwitchon(handler: () => void) {
         recevice_kitiot()
         control.onEvent(EVENT_ON_ID, EVENT_ON_Value, handler)
@@ -278,7 +278,7 @@ namespace PlanetX_IOT {
      * recevice value from kidsiot
      */
     //% block="When switch off"
-    //% subcategory=KidsIot
+    //% subcategory=KidsIot weight=25
     export function iotSwitchoff(handler: () => void) {
         recevice_kitiot()
         control.onEvent(EVENT_OFF_ID, EVENT_OFF_Value, handler)

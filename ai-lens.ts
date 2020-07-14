@@ -1,7 +1,7 @@
 /**
  * This extension is designed to programme and drive the Smart AI Lens(二郎神)
  */
-//% weight=0 color=#0031AF icon="\uf06e"
+//% color=#0031AF icon="\uf06e"
 //% groups='["Basic", "Ball", "Face", "Card", "Color", "Tracking", "Learn"]'
 //% block="PlanetX_AI-Lens"
 namespace PlanetX_AILens {

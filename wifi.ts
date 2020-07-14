@@ -1,4 +1,4 @@
-//% color=#4ca630 icon="\uf1eb" weight=2
+//% color=#4ca630 icon="\uf1eb"
 //% block="PlanetX_IoT" blockId="PlanetX_IoT"
 namespace PlanetX_IOT {
     let wifi_connected: boolean = false

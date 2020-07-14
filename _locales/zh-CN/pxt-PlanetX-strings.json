@@ -127,7 +127,7 @@
   "PlanetX_AILens.trafficCards.turnleft|block": "向左转",
   "PlanetX_AILens.trafficCards.turnright|block": "向右转",
   "PlanetX_AILens.trafficCard|block": "图像中包含 %status 交通符号卡片",
-  "PlanetX_AILens|block": "PlanetX_AI摄像头",
+  "PlanetX_AILens|block": "行星X_AI摄像头",
   "PlanetX_Basic.AnalogRJPin.J1|block": "J1",
   "PlanetX_Basic.AnalogRJPin.J2|block": "J2",
   "PlanetX_Basic.BME280_state.BME280_altitude|block": "海拔(M)",

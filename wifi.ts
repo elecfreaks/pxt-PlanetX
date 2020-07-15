@@ -352,10 +352,12 @@ namespace PlanetX_IOT {
                 recevice_kidiot_text = serial.readLine()
                 recevice_kidiot_text += serial.readString()
                 if (recevice_kidiot_text.includes("switchon")) {
+                    recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text=""
                     control.raiseEvent(KidsIoTButtonEventID, state);
                 }
                 if (recevice_kidiot_text.includes("switchoff")) {
+                    recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text=""
                     control.raiseEvent(KidsIoTButtonEventID, state);
                 }

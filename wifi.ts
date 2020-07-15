@@ -28,28 +28,6 @@ namespace PlanetX_IOT {
         serial.writeString(command + "\u000D\u000A")
         basic.pause(wait)
     }
-    // wait for certain response from ESP8266
-    function waitResponse(): boolean {
-        let serial_str: string = ""
-        let result: boolean = false
-        let time: number = input.runningTime()
-        while (true) {
-            serial_str += serial.readString()
-            if (serial_str.length > 100)
-                serial_str = serial_str.substr(serial_str.length - 100)
-            if (serial_str.includes("OK") || serial_str.includes("WIFI GOT IP") || serial_str.includes("SEND OK")) {
-                result = true
-                break
-            }
-            if (serial_str.includes("ERROR") || serial_str.includes("FAIL")) {
-                break
-            }
-            if (input.runningTime() - time > 10000) {
-                break
-            }
-        }
-        return result
-    }
     /**
     * Initialize ESP8266 module 
     */
@@ -97,8 +75,32 @@ namespace PlanetX_IOT {
         thingspeak_connected = false
         kitsiot_connected = false
         sendAT("AT+CWJAP=\"" + ssid + "\",\"" + pw + "\"", 0) // connect to Wifi router
-        wifi_connected = waitResponse()
-        basic.pause(100)
+
+        let serial_str: string = ""
+        let time: number = input.runningTime()
+        while (true) {
+            serial_str += serial.readString()
+            if (serial_str.length > 50)
+                serial_str = serial_str.substr(serial_str.length - 50)
+            if (serial_str.includes("WIFI GOT IP") || serial_str.includes("OK")) {
+                serial_str=""
+                wifi_connected = true
+                break
+            }
+            if (serial_str.includes("FAIL")) {
+                serial_str=""
+                wifi_connected = false
+                connectWifi(ssid,pw)
+                break
+            }
+            if (serial_str.includes("WIFI CONNECTED")){}
+            else if(input.runningTime() - time > 10000) {
+                wifi_connected = false
+                connectWifi(ssid,pw)
+                break
+            }
+        }
+        basic.pause(2000)
     }
     /**
     * Connect to ThingSpeak
@@ -111,8 +113,30 @@ namespace PlanetX_IOT {
             thingspeak_connected = false
             let text = "AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80"
             sendAT(text, 0) // connect to website server
-            thingspeak_connected = waitResponse()
-            basic.pause(100)
+            basic.pause(2000)
+            thingspeak_connected=true
+            /*
+            let serial_str: string = ""
+            let time: number = input.runningTime()
+            while (true) {
+                serial_str += serial.readString()
+                if (serial_str.length > 100)
+                    serial_str = serial_str.substr(serial_str.length - 100)
+                if (serial_str.includes("CONNECT") || serial_str.includes("OK")){
+                    thingspeak_connected = true
+                    break
+                }
+                if (serial_str.includes("ERROR") || serial_str.includes("CLOSED")) {
+                    thingspeak_connected = false
+                    break
+                }
+                if (input.runningTime() - time > 10000) {
+                    thingspeak_connected = false
+                    break
+                }
+            }
+            */
+            //basic.pause(1000)
         }
     }
     /**
@@ -123,7 +147,6 @@ namespace PlanetX_IOT {
     //% expandableArgumentMode="enabled"
     //% subcategory="ThingSpeak" weight=75
     export function setData(write_api_key: string, n1: number = 0, n2: number = 0, n3: number = 0, n4: number = 0, n5: number = 0, n6: number = 0, n7: number = 0, n8: number = 0) {
-        if (thingspeak_connected) {
             toSendStr = "GET /update?api_key="
                 + write_api_key
                 + "&field1="
@@ -142,7 +165,6 @@ namespace PlanetX_IOT {
                 + n7
                 + "&field8="
                 + n8
-        }
     }
     /**
     * upload data. It would not upload anything if it failed to connect to Wifi or ThingSpeak.
@@ -153,8 +175,27 @@ namespace PlanetX_IOT {
         if (thingspeak_connected) {
             last_upload_successful = false
             sendAT("AT+CIPSEND=" + (toSendStr.length + 2), 100)
+            basic.pause(1000)
             sendAT(toSendStr, 100) // upload data
-            last_upload_successful = waitResponse()
+            let serial_str: string = ""
+            let time: number = input.runningTime()
+            while (true) {
+                serial_str += serial.readString()
+                if (serial_str.length > 100)
+                    serial_str = serial_str.substr(serial_str.length - 100)
+                if (serial_str.includes("SEND OK") || serial_str.includes("+IPD")){
+                    last_upload_successful = true
+                    break
+                }
+                if (serial_str.includes("ERROR")) {
+                    last_upload_successful = false
+                    break
+                }
+                if (input.runningTime() - time > 10000) {
+                    last_upload_successful = false
+                    break
+                }
+            }
             basic.pause(100)
         }
     }
@@ -173,12 +214,7 @@ namespace PlanetX_IOT {
     */
     //% block="Wifi connected %State" weight=65
     export function wifiState(state: boolean) {
-        if (wifi_connected == state) {
-            return true
-        }
-        else {
-            return false
-        }
+        return wifi_connected == state
     }
 
     /**
@@ -187,14 +223,8 @@ namespace PlanetX_IOT {
     //% block="ThingSpeak connected %State"
     //% subcategory="ThingSpeak" weight=60
     export function thingSpeakState(state: boolean) {
-        if (thingspeak_connected == state) {
-            return true
-        }
-        else {
-            return false
-        }
+        return thingspeak_connected == state
     }
-
 
     /**
     * Check if ESP8266 successfully uploaded data to ThingSpeak
@@ -202,13 +232,13 @@ namespace PlanetX_IOT {
     //% block="ThingSpeak Last data upload %State"
     //% subcategory="ThingSpeak" weight=55
     export function tsLastUploadState(state: boolean) {
-        if (last_upload_successful == state) {
-            return true
-        }
-        else {
-            return false
-        }
+        return last_upload_successful == state
     }
+
+    
+    /*-----------------------------------kitsiot---------------------------------*/
+    /*-----------------------------------kitsiot---------------------------------*/
+    /*-----------------------------------kitsiot---------------------------------*/
     /*-----------------------------------kitsiot---------------------------------*/
     /**
     * Connect to kitsiot
@@ -220,10 +250,39 @@ namespace PlanetX_IOT {
             userToken_def = userToken
             topic_def = topic
             sendAT("AT+CIPSTART=\"TCP\",\"139.159.161.57\",5555", 0) // connect to website server
-            let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
-            sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-            sendAT(text_one, 0)
-            kitsiot_connected = waitResponse()
+            /*
+            let serial_str: string = ""
+            let time: number = input.runningTime()
+            while (true) {
+                serial_str += serial.readString()
+                if (serial_str.length > 100)
+                    serial_str = serial_str.substr(serial_str.length - 100)
+                if (serial_str.includes("CONNECT") ||serial_str.includes("OK")){
+                    kitsiot_connected = true
+                    break
+                }
+                if (serial_str.includes("ERROR") || serial_str.includes("CLOSED")) {
+                    kitsiot_connected = false
+                    break
+                }
+                if (input.runningTime() - time > 10000) {
+                    kitsiot_connected = false
+                    break
+                }
+            }
+            */
+            kitsiot_connected=true
+            basic.pause(2000)
+            if(kitsiot_connected){
+                let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
+                sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
+                basic.pause(1000)
+                sendAT(text_one, 0)
+                basic.pause(1000)
+            }
+            else{
+                connectKidsiot(userToken_def,topic_def)
+            }
         }
     }
     /**
@@ -237,6 +296,7 @@ namespace PlanetX_IOT {
             let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"up\",\"data\":\"" + data + "\"}"
             sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
             sendAT(text_one, 0)
+            basic.pause(1000)
         }
     }
     /**
@@ -249,7 +309,21 @@ namespace PlanetX_IOT {
             let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"close\"}"
             sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
             sendAT(text_one, 0)
-            kitsiot_connected = !waitResponse()
+            let serial_str: string = ""
+            let time: number = input.runningTime()
+            while (true) {
+                serial_str += serial.readString()
+                if (serial_str.length > 100)
+                    serial_str = serial_str.substr(serial_str.length - 100)
+                if (serial_str.includes("CLOSED")){
+                    kitsiot_connected = false
+                    break
+                }
+                if (input.runningTime() - time > 10000) {
+                    kitsiot_connected = false
+                    break
+                }
+            }
         }
     }
     /**
@@ -258,50 +332,34 @@ namespace PlanetX_IOT {
     //% block="KidsIot connection %State"
     //% subcategory="KidsIot" weight=35
     export function kidsiotState(state: boolean) {
-        if (kitsiot_connected == state) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-    /**
-* recevice value from kidsiot
-*/
-    //% block="When switch on"
-    //% subcategory=KidsIot weight=30
-    export function iotSwitchon(handler: () => void) {
-        recevice_kitiot()
-        control.onEvent(EVENT_ON_ID, EVENT_ON_Value, handler)
-    }
-    /**
-     * recevice value from kidsiot
-     */
-    //% block="When switch off"
-    //% subcategory=KidsIot weight=25
-    export function iotSwitchoff(handler: () => void) {
-        recevice_kitiot()
-        control.onEvent(EVENT_OFF_ID, EVENT_OFF_Value, handler)
+        return kitsiot_connected == state
     }
 
-    export function recevice_kitiot() {
-        control.inBackground(function () {
-            while (kidsiotState) {
+    export enum stateList {
+        //% block="on"
+        on = 10,
+        //% block="off"
+        off = 50
+    }
+    let KidsIoTButtonEventID = 3800
+    //% block="When switch %vocabulary"
+    //% subcategory="KidsIot" weight=30
+    //% state.fieldEditor="gridpicker" state.fieldOptions.columns=3
+    export function iotSwitchEvent(state: stateList, handler: () => void) {
+        control.onEvent(KidsIoTButtonEventID, state, handler)
+        control.inBackground(() => {
+            while (true) {
                 recevice_kidiot_text = serial.readLine()
                 recevice_kidiot_text += serial.readString()
-                if (recevice_kidiot_text.includes("CLOSED")) {
-                    recevice_kidiot_text = ""
-                    kitsiot_connected = false
-                }
                 if (recevice_kidiot_text.includes("switchon")) {
-                    recevice_kidiot_text = ""
-                    control.raiseEvent(EVENT_ON_ID, EVENT_ON_Value, EventCreationMode.CreateAndFire)
+                    recevice_kidiot_text=""
+                    control.raiseEvent(KidsIoTButtonEventID, state);
                 }
-                if (recevice_kidiot_text.includes("switchof")) {
-                    recevice_kidiot_text = ""
-                    control.raiseEvent(EVENT_OFF_ID, EVENT_OFF_Value, EventCreationMode.CreateAndFire)
+                if (recevice_kidiot_text.includes("switchoff")) {
+                    recevice_kidiot_text=""
+                    control.raiseEvent(KidsIoTButtonEventID, state);
                 }
-                basic.pause(20)
+                basic.pause(50);
             }
         })
     }

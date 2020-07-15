@@ -125,8 +125,6 @@
   "PlanetX_IOT.connectWifi": "connect to Wifi router",
   "PlanetX_IOT.disconnectKidsiot": "disconnect from kitsiot",
   "PlanetX_IOT.initWIFI": "Initialize ESP8266 module",
-  "PlanetX_IOT.iotSwitchoff": "recevice value from kidsiot",
-  "PlanetX_IOT.iotSwitchon": "recevice value from kidsiot",
   "PlanetX_IOT.kidsiotState": "Check if ESP8266 successfully connected to KidsIot",
   "PlanetX_IOT.setData": "Connect to ThingSpeak and set data.",
   "PlanetX_IOT.thingSpeakState": "Check if ESP8266 successfully connected to ThingSpeak",

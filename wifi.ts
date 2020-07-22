@@ -8,10 +8,6 @@ namespace PlanetX_IOT {
     let userToken_def: string = ""
     let topic_def: string = ""
     let recevice_kidiot_text = ""
-    const EVENT_ON_ID = 100
-    const EVENT_ON_Value = 200
-    const EVENT_OFF_ID = 110
-    const EVENT_OFF_Value = 210
     let toSendStr = ""
     export enum DigitalRJPin {
         //% block="J1"
@@ -337,31 +333,30 @@ namespace PlanetX_IOT {
 
     export enum stateList {
         //% block="on"
-        on = 10,
+        on = 1,
         //% block="off"
-        off = 50
+        off = 2
     }
     let KidsIoTButtonEventID = 3800
     //% block="When switch %vocabulary"
     //% subcategory="KidsIot" weight=30
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=3
     export function iotSwitchEvent(state: stateList, handler: () => void) {
+        recevice_kidiot_text=""
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
             while (true) {
                 recevice_kidiot_text = serial.readLine()
                 recevice_kidiot_text += serial.readString()
                 if (recevice_kidiot_text.includes("switchon")) {
-                    recevice_kidiot_text = serial.readLine()
-                    recevice_kidiot_text=""
-                    control.raiseEvent(KidsIoTButtonEventID, state);
+                    recevice_kidiot_text = ""
+                    control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)
                 }
-                if (recevice_kidiot_text.includes("switchoff")) {
-                    recevice_kidiot_text = serial.readLine()
-                    recevice_kidiot_text=""
-                    control.raiseEvent(KidsIoTButtonEventID, state);
+                if (recevice_kidiot_text.includes("switchof")) {
+                    recevice_kidiot_text = ""
+                    control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
                 }
-                basic.pause(50);
+                basic.pause(20)
             }
         })
     }

@@ -1429,7 +1429,6 @@ namespace PlanetX_Basic {
                 break;
         }
     }
-
     /**
      * TODO: Loop songs in folders
      * @param folderNum Specify a floder , eg: 0
@@ -1437,10 +1436,10 @@ namespace PlanetX_Basic {
     //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:%folderNum"
     //% folderNum.min=1 folderNum.max=99
     //% subcategory=Excute group="MP3" color=#EA5532
-    export function setLoopFolder(folderNum: number): void {
+    export function setLoopFolder(folderNum: string): void {
         CMD = 0x17
         para1 = 0
-        para2 = folderNum
+        para2 = parseInt(folderNum)
         dataArr[3] = CMD
         dataArr[5] = para1
         dataArr[6] = para2
@@ -1459,10 +1458,10 @@ namespace PlanetX_Basic {
     //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
-    export function folderPlay(folderNum: number, fileNum: number, myAns: boolean=false): void {
+    export function folderPlay(folderNum: string, fileNum: string, myAns: boolean=false): void {
         CMD = 0x0F
-        para1 = folderNum
-        para2 = fileNum
+        para1 = parseInt(folderNum)
+        para2 = parseInt(fileNum)
         dataArr[3] = CMD
         dataArr[5] = para1
         dataArr[6] = para2
@@ -1482,10 +1481,10 @@ namespace PlanetX_Basic {
     //% tracking.min=1 tracking.max=255
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
-    export function setTracking(tracking: number, myAns: boolean=false): void {
+    export function setTracking(tracking: string, myAns: boolean=false): void {
         CMD = 0x03
         para1 = 0x00
-        para2 = tracking
+        para2 = parseInt(tracking)
         dataArr[3] = CMD
         dataArr[5] = para1
         dataArr[6] = para2
@@ -1495,6 +1494,7 @@ namespace PlanetX_Basic {
         if (myAns)
             execute(0x19)
     }
+	
     /**
      * TODO: Perform playback or other
      * @param myType Left wheel speed , eg: playType.Play

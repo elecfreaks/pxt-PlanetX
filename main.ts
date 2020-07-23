@@ -1433,8 +1433,8 @@ namespace PlanetX_Basic {
      * TODO: Loop songs in folders
      * @param folderNum Specify a floder , eg: 0
      */
-    //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:%folderNum"
-    //% folderNum.min=1 folderNum.max=99
+    //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:$folderNum"
+    //% folderNum.defl="01"
     //% subcategory=Excute group="MP3" color=#EA5532
     export function setLoopFolder(folderNum: string): void {
         CMD = 0x17
@@ -1453,8 +1453,8 @@ namespace PlanetX_Basic {
     * @param myAns repeat , eg: repeatList.Yes
     */
     //% blockId="folderPlay" 
-    //% block="play the mp3 in the folder:%folderNum filename:%fileNum || repeatList: $myAns"
-    //% folderNum.min=1 folderNum.max=99 fileNum.min=1 fileNum.max=255
+    //% block="play the mp3 in the folder:$folderNum filename:$fileNum || repeatList: $myAns"
+    //% folderNum.defl="01" fileNum.defl="001"
     //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
@@ -1476,9 +1476,9 @@ namespace PlanetX_Basic {
      * @param myAns repeat , eg: repeatList.Yes
      */
     //% blockId="setTracking" 
-    //% block="play the mp3 in order of:%tracking || repeatList: $myAns"
+    //% block="play the mp3 in order of:$tracking || repeatList: $myAns"
     //% myAns.shadow="toggleYesNo"
-    //% tracking.min=1 tracking.max=255
+    //% tracking.defl="01"
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
     export function setTracking(tracking: string, myAns: boolean=false): void {
@@ -1561,6 +1561,5 @@ namespace PlanetX_Basic {
         )
         basic.pause(100)
     }
-
 
 }

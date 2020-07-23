@@ -1492,7 +1492,7 @@ namespace PlanetX_Basic {
      * @param myAns repeat , eg: repeatList.Yes
      */
     //% blockId="setTracking" 
-    //% block="play the mp3 on the track:%tracking || repeatList: $myAns"
+    //% block="play the mp3 in order of:%tracking || repeatList: $myAns"
     //% myAns.shadow="toggleYesNo"
     //% tracking.min=1 tracking.max=255
     //% expandableArgumentMode="toggle"

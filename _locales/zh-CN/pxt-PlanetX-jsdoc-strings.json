@@ -63,7 +63,6 @@
   "PlanetX_Basic.onGesture|param|handler": "code to run",
   "PlanetX_Basic.setLoopFolder": "TODO: Loop songs in folders",
   "PlanetX_Basic.setLoopFolder|param|folderNum": "Specify a floder , eg: 0",
-  "PlanetX_Basic.setRandomPlay": "TODO: Set Random play",
   "PlanetX_Basic.setTracking": "TODO: Specify a song to play",
   "PlanetX_Basic.setTracking|param|myAns": "repeat , eg: repeatList.Yes",
   "PlanetX_Basic.setTracking|param|tracking": "Specify a song , eg: 0",

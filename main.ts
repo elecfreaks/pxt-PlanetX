@@ -1472,21 +1472,6 @@ namespace PlanetX_Basic {
             execute(0x19)
     }
     /**
-     * TODO: Set Random play
-     */
-    //% blockId="setRandomPlay" block="Play all tracks at random"
-    //% subcategory=Excute group="MP3" color=#EA5532
-    export function setRandomPlay(): void {
-        CMD = 0x18
-        para1 = 0
-        para2 = 0
-        dataArr[3] = CMD
-        dataArr[5] = para1
-        dataArr[6] = para2
-        mp3_checkSum()
-        mp3_sendData()
-    }
-    /**
      * TODO: Specify a song to play
      * @param tracking Specify a song , eg: 0
      * @param myAns repeat , eg: repeatList.Yes

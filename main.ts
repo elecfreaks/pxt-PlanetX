@@ -1476,15 +1476,15 @@ namespace PlanetX_Basic {
      * @param myAns repeat , eg: repeatList.Yes
      */
     //% blockId="setTracking" 
-    //% block="play the mp3 in order of:$tracking || repeatList: $myAns"
+    //% block="play the mp3 in order of:%tracking || repeatList: $myAns"
     //% myAns.shadow="toggleYesNo"
-    //% tracking.defl="01"
+    //% tracking.defl=1
     //% expandableArgumentMode="toggle"
     //% subcategory=Excute group="MP3" color=#EA5532
-    export function setTracking(tracking: string, myAns: boolean=false): void {
+    export function setTracking(tracking: number, myAns: boolean=false): void {
         CMD = 0x03
         para1 = 0x00
-        para2 = parseInt(tracking)
+        para2 = tracking
         dataArr[3] = CMD
         dataArr[5] = para1
         dataArr[6] = para2

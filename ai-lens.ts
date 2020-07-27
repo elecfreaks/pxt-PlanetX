@@ -319,7 +319,7 @@ namespace PlanetX_AILens {
     //% group="Basic" weight=90
     export function cameraImage(): void {
         DataBuff = pins.i2cReadBuffer(CameraAdd, 9)
-        basic.pause(10)
+        basic.pause(30)
     }
 
     /**

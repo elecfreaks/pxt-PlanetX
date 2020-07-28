@@ -662,8 +662,21 @@ namespace PlanetX_AILens {
     //% block="In the image get learnt object ID"
     //% group="Learn" weight=15
     export function objectID(): number {
-        if (DataBuff[0] == 10 && DataBuff[2] < 10) {
+        if (DataBuff[0] == 10 && DataBuff[2] < 50) {
             return DataBuff[1]
+        }
+        else{
+            return null
+        }
+    }
+    /**
+    * TODO: Judge whether there are any learned objects in the picture
+    */
+    //% block="In the image get learnt object Confidence"
+    //% group="Learn" weight=10
+    export function objectConfidence(): number{
+        if (DataBuff[0] == 10 && DataBuff[2] < 50) {
+            return 100-DataBuff[2]
         }
         else{
             return null

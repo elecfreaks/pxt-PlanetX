@@ -100,6 +100,7 @@
   "PlanetX_AILens.numberCards.two|block": "2",
   "PlanetX_AILens.numberCards.zero|block": "0",
   "PlanetX_AILens.numberCard|block": "图像中包含 %status 数字卡片",
+  "PlanetX_AILens.objectConfidence|block": "从图像中获取已学习物品的置信度",
   "PlanetX_AILens.objectID|block": "从图像中获取已学习物品的 ID 值",
   "PlanetX_AILens.otherCards.airplane|block": "飞机",
   "PlanetX_AILens.otherCards.apple|block": "苹果",

@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Plantfrom-Micro%3Abit-red) ![](https://img.shields.io/travis/com/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/v/release/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/last-commit/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/languages/top/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/issues/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/license/elecfreaks/pxt-PlanetX) 
+![](https://img.shields.io/badge/Platform-micro%3Abit-red) ![](https://img.shields.io/travis/com/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/v/release/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/last-commit/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/languages/top/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/issues/elecfreaks/pxt-PlanetX) ![](https://img.shields.io/github/license/elecfreaks/pxt-PlanetX) 
 
 # PlanetX Package
 

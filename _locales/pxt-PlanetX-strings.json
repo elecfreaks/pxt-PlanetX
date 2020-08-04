@@ -100,7 +100,7 @@
   "PlanetX_AILens.numberCards.two|block": "2",
   "PlanetX_AILens.numberCards.zero|block": "0",
   "PlanetX_AILens.numberCard|block": "Image contains number card(s): %status",
-  "PlanetX_AILens.objectConfidence|block": "In the image get learnt object Confidence",
+  "PlanetX_AILens.objectConfidence|block": "In the image get learn object %thingsID Confidence",
   "PlanetX_AILens.objectID|block": "In the image get learnt object ID",
   "PlanetX_AILens.otherCards.airplane|block": "Airplane",
   "PlanetX_AILens.otherCards.apple|block": "Apple",

@@ -255,7 +255,6 @@ namespace PlanetX_AILens {
         rectangle = 3,
 		//% block="Triangle"
         triangle = 5,
-
 		//% block="Airplane"
         airplane = 6,
 		//% block="Apple"
@@ -282,6 +281,13 @@ namespace PlanetX_AILens {
         strawberry = 17,
 		//% block="Umbrella"
         umbrella = 18
+    }
+    export enum learnID{
+        ID1,
+        ID2,
+        ID3,
+        ID4,
+        ID5
     }
     /**
     * TODO: Waiting for module initialize.
@@ -356,7 +362,7 @@ namespace PlanetX_AILens {
                     return DataBuff[5]
                     break
                 case Ballstatus.Confidence:
-                    return DataBuff[6]
+                    return 100-DataBuff[6]
                     break
                 case Ballstatus.BallTotalNum:
                     return DataBuff[7]
@@ -405,7 +411,7 @@ namespace PlanetX_AILens {
                     return DataBuff[5]
                     break
                 case Facestatus.Confidence:
-                    return DataBuff[6]
+                    return 100 - DataBuff[6]
                     break
                 case Facestatus.FaceTotalNum:
                     return DataBuff[7]
@@ -505,7 +511,7 @@ namespace PlanetX_AILens {
                     return DataBuff[5]
                     break
                 case Cardstatus.Confidence:
-                    return DataBuff[6]
+                    return 100-DataBuff[6]
                     break
                 case Cardstatus.CardTotalNum:
                     return DataBuff[7]
@@ -619,7 +625,7 @@ namespace PlanetX_AILens {
                     return DataBuff[5]
                     break
                 case Colorstatus.Confidence:
-                    return DataBuff[6]
+                    return 100-DataBuff[6]
                     break
                 case Colorstatus.ColorTotalNum:
                     return DataBuff[7]
@@ -641,16 +647,31 @@ namespace PlanetX_AILens {
     */
     //% block="Learn an object with ID: %thingsID"
     //% group="Learn" weight=20 
-    //% thingsID.del=1
-    export function learnObject(thingsID: number): void {
+    export function learnObject(thingsID: learnID): void {
         let thingsBuf = pins.createBuffer(9)
         let timeout = 0
         thingsBuf[0] = 10
-        thingsBuf[1] = thingsID
+        switch(thingsID){
+            case learnID.ID1:
+                thingsBuf[1] = 1
+                break
+            case learnID.ID2:
+                thingsBuf[1] = 2
+                break
+            case learnID.ID3:
+                thingsBuf[1] = 3
+                break
+            case learnID.ID4:
+                thingsBuf[1] = 4
+                break
+            case learnID.ID5:
+                thingsBuf[1] = 5
+                break
+        }
         pins.i2cWriteBuffer(CameraAdd, thingsBuf)
         while (timeout > 10000) {
             cameraImage()
-            if (DataBuff[0] == 9 && DataBuff[1] == thingsID) {
+            if (DataBuff[0] == 10) {
                 break
             }
             timeout++
@@ -662,7 +683,7 @@ namespace PlanetX_AILens {
     //% block="In the image get learnt object ID"
     //% group="Learn" weight=15
     export function objectID(): number {
-        if (DataBuff[0] == 10 && DataBuff[2] < 50) {
+        if (DataBuff[0] == 10 && DataBuff[2] < 30) {
             return DataBuff[1]
         }
         else{
@@ -672,14 +693,59 @@ namespace PlanetX_AILens {
     /**
     * TODO: Judge whether there are any learned objects in the picture
     */
-    //% block="In the image get learnt object Confidence"
+    //% block="In the image get learn object %thingsID Confidence"
     //% group="Learn" weight=10
-    export function objectConfidence(): number{
-        if (DataBuff[0] == 10 && DataBuff[2] < 50) {
-            return 100-DataBuff[2]
+    export function objectConfidence(thingsID: learnID): number{
+        if (DataBuff[0] == 10 && DataBuff[2] < 30) {
+            switch(thingsID){
+                case learnID.ID1:
+                    if(DataBuff[1]==1){
+                        return 100-DataBuff[2]
+                        break
+                    }
+                    else{
+                        return null
+                    }
+                case learnID.ID2:
+                    if(DataBuff[1]==2){
+                        return 100-DataBuff[2]
+                        break
+                    }
+                    else{
+                        return null
+                    } 
+                case learnID.ID3:
+                    if(DataBuff[1]==3){
+                        return 100-DataBuff[2]
+                        break
+                    }
+                    else{
+                        return null
+                    } 
+                case learnID.ID4:
+                    if(DataBuff[1]==4){
+                        return 100-DataBuff[2]
+                        break
+                    }
+                    else{
+                        return null
+                    } 
+                case learnID.ID5:
+                    if(DataBuff[1]==5){
+                        return 100-DataBuff[2]
+                        break
+                    }
+                    else{
+                        return null
+                    }   
+                default:
+                    return null
+            }
         }
         else{
             return null
         }
+    return null
     }
-}
+}  
+

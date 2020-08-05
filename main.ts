@@ -153,8 +153,8 @@ namespace PlanetX_Basic {
         let G = color_g * 100 / 255;
         let B = color_b * 100 / 255;
 
-        let maxVal = Math.max(R, Math.max(G, B))//找出R,G和B中的最大值。
-        let minVal = Math.min(R, Math.min(G, B)) //找出R,G和B中的最小值。
+        let maxVal = Math.max(R, Math.max(G, B))//找出R,G和B中的最大值
+        let minVal = Math.min(R, Math.min(G, B)) //找出R,G和B中的最小值
 
         let Delta = maxVal - minVal;  //△ = Max - Min
 

@@ -206,7 +206,7 @@
   "PlanetX_Basic.playType.PlayPrevious|block": "上一首",
   "PlanetX_Basic.playType.Play|block": "播放",
   "PlanetX_Basic.playType.Stop|block": "停止",
-  "PlanetX_Basic.readColor|block": "颜色识别传感器 IIC接口 色调(0~360)",
+  "PlanetX_Basic.readColor|block": "颜色识别传感器 IIC接口 色相(0~360)",
   "PlanetX_Basic.readData|block": "实时时钟 IIC接口 获取 %data",
   "PlanetX_Basic.setData|block": "实时时钟 IIC接口 设置 %data | %num",
   "PlanetX_Basic.setLoopFolder|block": "循环播放文件夹: %folderNum 中所有歌曲",

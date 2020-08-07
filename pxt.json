@@ -3,9 +3,7 @@
     "version": "0.8.14",
     "description": "The micro:bit new sensor series PlanetX(行星X) with RJ11 connection port by ELECFREAKS Co.ltd",
     "dependencies": {
-        "core": "*",
-        "radio": "*",
-        "ws2812b": "github:Microsoft/pxt-ws2812b"
+        "core": "*"
     },
     "files": [
         "README.md",
@@ -13,6 +11,7 @@
         "display.ts",
         "wifi.ts",
         "ds18b20.cpp",
+        "sendBuffer.asm",
         "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json",
         "_locales/zh-CN/pxt-PlanetX-strings.json",
         "_locales/pxt-PlanetX-jsdoc-strings.json",

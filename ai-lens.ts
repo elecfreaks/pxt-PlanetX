@@ -53,10 +53,8 @@ namespace PlanetX_AILens {
         H = 5,
         //% block="Confidence level "
         Confidence = 6,
-        //% block="Face TotalNum"
-        FaceTotalNum = 7,
-        //% block="Face order"
-        Faceorder = 8
+        //% block="Face ID"
+        ID = 8
     }
     /**
     * Status List of Card
@@ -66,16 +64,12 @@ namespace PlanetX_AILens {
         X = 2,
         //% block="Y"
         Y = 3,
-        //% block="W"
-        W = 4,
-        //% block="H"
-        H = 5,
+        //% block="Size"
+        Size = 4,
         //% block="Confidence level "
         Confidence = 6,
-        //% block="Card TotalNum"
-        CardTotalNum = 7,
-        //% block="Card order"
-        Cardorder = 8
+        //% block="Card ID"
+        ID = 8
     }
     /**
     * Status List of Color
@@ -401,6 +395,16 @@ namespace PlanetX_AILens {
     export function checkFace(): boolean {
         return DataBuff[0] == 6
     }
+    //% block="In the image get face(s)' total"
+    //% group="Ball" weight=74
+    export function faceTotalNum():number{
+        if (DataBuff[0] == 6) {
+            return DataBuff[7]
+        }
+        else{
+            return null
+        }
+    }
     /**
     * TODO: Judge whether there is a face in the picture
     * @param status Facestatus, eg: Facestatus.X
@@ -427,10 +431,7 @@ namespace PlanetX_AILens {
                 case Facestatus.Confidence:
                     return 100 - DataBuff[6]
                     break
-                case Facestatus.FaceTotalNum:
-                    return DataBuff[7]
-                    break
-                case Facestatus.Faceorder:
+                case Facestatus.ID:
                     return DataBuff[8]
                     break
                 default:
@@ -501,6 +502,16 @@ namespace PlanetX_AILens {
         else
             return false
     }
+    //% block="In the image get Cardstatus(s)' total"
+    //% group="Ball" weight=49
+    export function cardTotalNum():number{
+        if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4 || DataBuff[0] == 5) {
+            return DataBuff[7]
+        }
+        else{
+            return null
+        }
+    }
     /**
     * TODO: Card parameters in the screen
     * @param status otherCards, eg: Cardstatus.X
@@ -518,19 +529,13 @@ namespace PlanetX_AILens {
                 case Cardstatus.Y:
                     return DataBuff[3]
                     break
-                case Cardstatus.W:
+                case Cardstatus.Size:
                     return DataBuff[4]
-                    break
-                case Cardstatus.H:
-                    return DataBuff[5]
                     break
                 case Cardstatus.Confidence:
                     return 100-DataBuff[6]
                     break
-                case Cardstatus.CardTotalNum:
-                    return DataBuff[7]
-                    break
-                case Cardstatus.Cardorder:
+                case Cardstatus.ID:
                     return DataBuff[8]
                     break
                 default:

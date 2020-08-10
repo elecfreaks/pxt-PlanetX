@@ -79,16 +79,12 @@ namespace PlanetX_AILens {
         X = 2,
         //% block="Y"
         Y = 3,
-        //% block="W"
-        W = 4,
-        //% block="H"
-        H = 5,
+        //% block="Size"
+        Size = 4,
         //% block="Confidence level "
         Confidence = 6,
-        //% block="Color TotalNum"
-        ColorTotalNum = 7,
-        //% block="Color order"
-        Colororder = 8
+        //% block="Color ID"
+        ID = 8
     }
     /**
     * Status List of Color
@@ -502,7 +498,7 @@ namespace PlanetX_AILens {
         else
             return false
     }
-    //% block="In the image get Cardstatus(s)' total"
+    //% block="In the image get Card(s)' total"
     //% group="Card" weight=49
     export function cardTotalNum():number{
         if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4 || DataBuff[0] == 5) {
@@ -544,6 +540,65 @@ namespace PlanetX_AILens {
         }
         else
             return null
+    }
+    /**
+    * TODO: Judge whether there is a color in the screen
+    * @param status ColorLs, eg: ColorLs.red
+    */
+    //% block="Image contains color card(s): %status"
+    //% status.fieldEditor="gridpicker"
+    //% status.fieldOptions.columns=3
+    //% group="Color" weight=30
+    export function colorCheck(status: ColorLs): boolean {
+        if (DataBuff[0] == 9) {
+            return status == DataBuff[0]
+        }
+        else
+            return false
+    }
+    //% block="In the image get Color(s)' total"
+    //% group="Color" weight=29
+    export function colorTotalNum():number{
+        if (DataBuff[0] == 9) {
+            return DataBuff[7]
+        }
+        else{
+            return null
+        }
+    }
+    /**
+    * TODO: color parameters in the screen
+    * @param status Colorstatus, eg: Colorstatus.X
+    */
+    //% block="In the image get color card(s)' info: %status"
+    //% status.fieldEditor="gridpicker"
+    //% status.fieldOptions.columns=3
+    //% group="Color" weight=25
+    export function colorData(status: Colorstatus): number {
+        if (DataBuff[0] == 9) {
+            switch (status) {
+                case Colorstatus.X:
+                    return DataBuff[2]
+                    break
+                case Colorstatus.Y:
+                    return DataBuff[3]
+                    break
+                case Colorstatus.Size:
+                    return DataBuff[4]
+                    break
+                case Colorstatus.Confidence:
+                    return 100-DataBuff[6]
+                    break
+                case Colorstatus.ID:
+                    return DataBuff[8]
+                    break
+                default:
+                    return null
+            }
+        }
+        else {
+            return null
+        }
     }
     /**
     * TODO: line parameters in the screen
@@ -605,61 +660,7 @@ namespace PlanetX_AILens {
         }
         return false
     }
-    /**
-    * TODO: Judge whether there is a color in the screen
-    * @param status ColorLs, eg: ColorLs.red
-    */
-    //% block="Image contains color card(s): %status"
-    //% status.fieldEditor="gridpicker"
-    //% status.fieldOptions.columns=3
-    //% group="Color" weight=30
-    export function colorCheck(status: ColorLs): boolean {
-        if (DataBuff[0] == 9) {
-            return status == DataBuff[1] - 1
-        }
-        else
-            return false
-    }
-    /**
-    * TODO: color parameters in the screen
-    * @param status Colorstatus, eg: Colorstatus.X
-    */
-    //% block="In the image get color card(s)' info: %status"
-    //% status.fieldEditor="gridpicker"
-    //% status.fieldOptions.columns=3
-    //% group="Color" weight=25
-    export function colorData(status: Colorstatus): number {
-        if (DataBuff[0] == 9) {
-            switch (status) {
-                case Colorstatus.X:
-                    return DataBuff[2]
-                    break
-                case Colorstatus.Y:
-                    return DataBuff[3]
-                    break
-                case Colorstatus.W:
-                    return DataBuff[4]
-                    break
-                case Colorstatus.H:
-                    return DataBuff[5]
-                    break
-                case Colorstatus.Confidence:
-                    return 100-DataBuff[6]
-                    break
-                case Colorstatus.ColorTotalNum:
-                    return DataBuff[7]
-                    break
-                case Colorstatus.Colororder:
-                    return DataBuff[8]
-                    break
-                default:
-                    return null
-            }
-        }
-        else {
-            return null
-        }
-    }
+    
     /**
     * TODO: Learn an object in a picture
     * @param thingsID Edit a label for the object, eg: 1

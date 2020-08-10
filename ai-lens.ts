@@ -28,22 +28,16 @@ namespace PlanetX_AILens {
     * Status List of Ball
     */
     export enum Ballstatus {
-        //% block="Color"
-        Color = 1,
         //% block="X"
         X = 2,
         //% block="Y"
         Y = 3,
-        //% block="W"
-        W = 4,
-        //% block="H"
-        H = 5,
+        //% block="Size"
+        Size = 4,
         //% block="Confidence level "
         Confidence = 6,
-        //% block="Ball TotalNum"
-        BallTotalNum = 7,
-        //% block="Ball order"
-        Ballorder = 8
+        //% block="Ball ID"
+        ID = 8
     }
     /**
     * Status List of Face
@@ -289,6 +283,12 @@ namespace PlanetX_AILens {
         ID4,
         ID5
     }
+    export enum ballColorList{
+        //% block="Red"
+        Red = 3,
+		//% block="Blue"
+        Blue = 2
+    }
     /**
     * TODO: Waiting for module initialize.
     */
@@ -336,6 +336,16 @@ namespace PlanetX_AILens {
     export function checkBall(): boolean {
         return DataBuff[0] == 7
     }
+    //% block="Image contains %ballcolor ball"
+    //% group="Ball" weight=84
+    export function ballColor(ballcolor:ballColorList):boolean {
+        if (DataBuff[0] == 7) {
+            return ballcolor == DataBuff[1]
+        }
+        else{
+            return false
+        }
+    }
     /**
     * TODO: In the image get ball(s)' info
     */
@@ -346,28 +356,19 @@ namespace PlanetX_AILens {
     export function ballData(status: Ballstatus): number {
         if (DataBuff[0] == 7) {
             switch (status) {
-                case Ballstatus.Color:
-                    return DataBuff[1]
-                    break
                 case Ballstatus.X:
                     return DataBuff[2]
                     break
                 case Ballstatus.Y:
                     return DataBuff[3]
                     break
-                case Ballstatus.W:
+                case Ballstatus.Size:
                     return DataBuff[4]
-                    break
-                case Ballstatus.H:
-                    return DataBuff[5]
                     break
                 case Ballstatus.Confidence:
                     return 100-DataBuff[6]
                     break
-                case Ballstatus.BallTotalNum:
-                    return DataBuff[7]
-                    break
-                case Ballstatus.Ballorder:
+                case Ballstatus.ID:
                     return DataBuff[8]
                     break
                 default:
@@ -375,6 +376,16 @@ namespace PlanetX_AILens {
             }
         }
         else {
+            return null
+        }
+    }
+    //% block="In the image get ball(s)' total"
+    //% group="Ball" weight=83
+    export function BallTotalNum():number{
+        if (DataBuff[0] == 7) {
+            return DataBuff[7]
+        }
+        else{
             return null
         }
     }

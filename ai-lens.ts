@@ -338,6 +338,8 @@ namespace PlanetX_AILens {
     }
     //% block="Image contains %ballcolor ball"
     //% group="Ball" weight=84
+    //% ballcolor.fieldEditor="gridpicker"
+    //% ballcolor.fieldOptions.columns=2
     export function ballColor(ballcolor:ballColorList):boolean {
         if (DataBuff[0] == 7) {
             return ballcolor == DataBuff[1]

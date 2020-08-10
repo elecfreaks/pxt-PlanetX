@@ -60,7 +60,7 @@
   "PlanetX_AILens.faceData|block": "从图像中获取人脸的 %status 值",
   "PlanetX_AILens.faceTotalNum|block": "从图像中获取人脸的总个数",
   "PlanetX_AILens.initModule|block": "通过 IIC 初始化 AI摄像头",
-  "PlanetX_AILens.learnObject|block": "学习画面中的物体为: %thingsID",
+  "PlanetX_AILens.learnObject|block": "学习画面中的对象为: %thingsID",
   "PlanetX_AILens.letterCards.A|block": "A",
   "PlanetX_AILens.letterCards.B|block": "B",
   "PlanetX_AILens.letterCards.C|block": "C",

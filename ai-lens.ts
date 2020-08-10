@@ -396,7 +396,7 @@ namespace PlanetX_AILens {
         return DataBuff[0] == 6
     }
     //% block="In the image get face(s)' total"
-    //% group="Ball" weight=74
+    //% group="Face" weight=74
     export function faceTotalNum():number{
         if (DataBuff[0] == 6) {
             return DataBuff[7]
@@ -503,7 +503,7 @@ namespace PlanetX_AILens {
             return false
     }
     //% block="In the image get Cardstatus(s)' total"
-    //% group="Ball" weight=49
+    //% group="Card" weight=49
     export function cardTotalNum():number{
         if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4 || DataBuff[0] == 5) {
             return DataBuff[7]

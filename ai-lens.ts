@@ -271,11 +271,11 @@ namespace PlanetX_AILens {
         umbrella = 18
     }
     export enum learnID{
-        ID1,
-        ID2,
-        ID3,
-        ID4,
-        ID5
+        ID1 = 1,
+        ID2 = 2,
+        ID3 = 3,
+        ID4 = 4,
+        ID5 = 5
     }
     export enum ballColorList{
         //% block="Red"
@@ -684,37 +684,13 @@ namespace PlanetX_AILens {
     * TODO: Learn an object in a picture
     * @param thingsID Edit a label for the object, eg: 1
     */
-    //% block="Learn an object with ID: %thingsID"
+    //% block="Learn an object with: %thingsID"
     //% group="Learn" weight=20 
     export function learnObject(thingsID: learnID): void {
         let thingsBuf = pins.createBuffer(9)
-        let timeout = 0
         thingsBuf[0] = 10
-        switch(thingsID){
-            case learnID.ID1:
-                thingsBuf[1] = 1
-                break
-            case learnID.ID2:
-                thingsBuf[1] = 2
-                break
-            case learnID.ID3:
-                thingsBuf[1] = 3
-                break
-            case learnID.ID4:
-                thingsBuf[1] = 4
-                break
-            case learnID.ID5:
-                thingsBuf[1] = 5
-                break
-        }
+        thingsBuf[1] = thingsID
         pins.i2cWriteBuffer(CameraAdd, thingsBuf)
-        while (timeout > 10000) {
-            cameraImage()
-            if (DataBuff[0] == 10) {
-                break
-            }
-            timeout++
-        }
     }
     /**
     * TODO: Judge whether there are any learned objects in the picture
@@ -736,55 +712,14 @@ namespace PlanetX_AILens {
     //% group="Learn" weight=10
     export function objectConfidence(thingsID: learnID): number{
         if (DataBuff[0] == 10 && DataBuff[2] < 30) {
-            switch(thingsID){
-                case learnID.ID1:
-                    if(DataBuff[1]==1){
-                        return 100-DataBuff[2]
-                        break
-                    }
-                    else{
-                        return null
-                    }
-                case learnID.ID2:
-                    if(DataBuff[1]==2){
-                        return 100-DataBuff[2]
-                        break
-                    }
-                    else{
-                        return null
-                    } 
-                case learnID.ID3:
-                    if(DataBuff[1]==3){
-                        return 100-DataBuff[2]
-                        break
-                    }
-                    else{
-                        return null
-                    } 
-                case learnID.ID4:
-                    if(DataBuff[1]==4){
-                        return 100-DataBuff[2]
-                        break
-                    }
-                    else{
-                        return null
-                    } 
-                case learnID.ID5:
-                    if(DataBuff[1]==5){
-                        return 100-DataBuff[2]
-                        break
-                    }
-                    else{
-                        return null
-                    }   
-                default:
-                    return null
+            if(DataBuff[1] == thingsID){
+                return 100-DataBuff[2]
+            }
+            else
+            {
+                return null
             }
         }
-        else{
-            return null
-        }
     return null
-    }
-}  
-
+    } 
+}

@@ -512,7 +512,7 @@ namespace PlanetX_AILens {
     * TODO: Card parameters in the screen
     * @param status otherCards, eg: Cardstatus.X
     */
-    //% block="In the image get card(s)' info: %status"
+    //% block="In the image get Card(s)' info: %status"
     //% status.fieldEditor="gridpicker"
     //% status.fieldOptions.columns=3
     //% group="Card" weight=45
@@ -556,7 +556,7 @@ namespace PlanetX_AILens {
         else
             return false
     }
-    //% block="In the image get Color(s)' total"
+    //% block="In the image get color card(s)' total"
     //% group="Color" weight=29
     export function colorTotalNum():number{
         if (DataBuff[0] == 9) {

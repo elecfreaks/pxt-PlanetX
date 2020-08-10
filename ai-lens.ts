@@ -126,7 +126,11 @@ namespace PlanetX_AILens {
         //% block="Left"
         left,
         //% block="Right"
-        right
+        right,
+        //% block="Front"
+        front,
+        //% block="None"
+        none
     }
     /**
     * Number Cards List
@@ -640,6 +644,9 @@ namespace PlanetX_AILens {
     export function lineDirection(status: LineTrend):boolean{
         if (DataBuff[0] == 8) {
             switch (status) {
+                case LineTrend.none:
+                    return false
+                    break
                 case LineTrend.left:
                     if(DataBuff[2] < 90){
                         return true
@@ -656,7 +663,19 @@ namespace PlanetX_AILens {
                         return false
                     }
                     break
+                case LineTrend.front:
+                    if(DataBuff[2] > 90 && DataBuff[2] < 130){
+                        return true
+                    }
+                    else{
+                        return false
+                    }
+                    break
             }
+        }
+        else{
+            if(status==LineTrend.none)
+                return true
         }
         return false
     }

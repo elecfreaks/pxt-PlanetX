@@ -695,15 +695,16 @@ namespace PlanetX_AILens {
     /**
     * TODO: Judge whether there are any learned objects in the picture
     */
-    //% block="In the image get learnt object ID"
-    //% group="Learn" weight=15
-    export function objectID(): number {
-        if (DataBuff[0] == 10 && DataBuff[2] < 30) {
-            return DataBuff[1]
+    //% block="Image contains learned objects: %status"
+    //% status.fieldEditor="gridpicker"
+    //% status.fieldOptions.columns=3
+    //% group="Learn" weight=14
+    export function objectCheck(status: learnID): boolean {
+        if (DataBuff[0] == 10) {
+            return status == DataBuff[1]
         }
-        else{
-            return null
-        }
+        else
+            return false
     }
     /**
     * TODO: Judge whether there are any learned objects in the picture

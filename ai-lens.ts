@@ -685,6 +685,8 @@ namespace PlanetX_AILens {
     * @param thingsID Edit a label for the object, eg: 1
     */
     //% block="Learn an object with: %thingsID"
+    //% status.fieldEditor="gridpicker"
+    //% status.fieldOptions.columns=3
     //% group="Learn" weight=20 
     export function learnObject(thingsID: learnID): void {
         let thingsBuf = pins.createBuffer(9)

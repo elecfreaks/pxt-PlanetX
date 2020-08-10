@@ -12,8 +12,6 @@
         "wifi.ts",
         "ds18b20.cpp",
         "sendBuffer.asm",
-        "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json",
-        "_locales/zh-CN/pxt-PlanetX-strings.json",
         "_locales/pxt-PlanetX-jsdoc-strings.json",
         "_locales/pxt-PlanetX-strings.json",
         "ai-lens.ts"

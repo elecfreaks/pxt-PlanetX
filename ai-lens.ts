@@ -346,6 +346,16 @@ namespace PlanetX_AILens {
             return false
         }
     }
+    //% block="In the image get ball(s)' total"
+    //% group="Ball" weight=83
+    export function BallTotalNum():number{
+        if (DataBuff[0] == 7) {
+            return DataBuff[7]
+        }
+        else{
+            return null
+        }
+    }
     /**
     * TODO: In the image get ball(s)' info
     */
@@ -379,16 +389,7 @@ namespace PlanetX_AILens {
             return null
         }
     }
-    //% block="In the image get ball(s)' total"
-    //% group="Ball" weight=83
-    export function BallTotalNum():number{
-        if (DataBuff[0] == 7) {
-            return DataBuff[7]
-        }
-        else{
-            return null
-        }
-    }
+
 
     /**
     * TODO: Judge whether there is a face in the picture

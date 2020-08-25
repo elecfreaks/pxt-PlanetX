@@ -1227,7 +1227,7 @@ namespace PlanetX_Basic {
         let hue = readColor()
         switch (color) {
             case ColorList.red:
-                if (hue > 300 && 350 > hue) {
+                if (hue > 300 || hue < 20) {
                     return true
                 }
                 else {
@@ -1235,7 +1235,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.green:
-                if (hue > 150 && 180 > hue) {
+                if (hue > 120 && 180 > hue) {
                     return true
                 }
                 else {
@@ -1243,7 +1243,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.blue:
-                if (hue > 210 && 220 > hue) {
+                if (hue > 220 && 260 > hue) {
                     return true
                 }
                 else {
@@ -1251,7 +1251,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.cyan:
-                if (hue > 180 && 210 > hue) {
+                if (hue > 170 && 190 > hue) {
                     return true
                 }
                 else {
@@ -1259,7 +1259,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.magenta:
-                if (hue > 240 && 280 > hue) {
+                if (hue > 280 && 300 > hue) {
                     return true
                 }
                 else {
@@ -1267,7 +1267,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.yellow:
-                if (hue > 80 && 150 > hue) {
+                if (hue > 50 && 80 > hue) {
                     return true
                 }
                 else {

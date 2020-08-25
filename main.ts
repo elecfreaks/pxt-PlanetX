@@ -1243,7 +1243,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.blue:
-                if (hue > 190 && 270 > hue) {
+                if (hue > 200 && 270 > hue) {
                     return true
                 }
                 else {
@@ -1275,7 +1275,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.white:
-                if (hue >= 180 && 190 > hue) {
+                if (hue >= 180 && 200 > hue) {
                     return true
                 }
                 else {

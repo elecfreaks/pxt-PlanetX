@@ -1227,7 +1227,7 @@ namespace PlanetX_Basic {
         let hue = readColor()
         switch (color) {
             case ColorList.red:
-                if (hue > 300 || hue < 20) {
+                if (hue > 330 || hue < 20) {
                     return true
                 }
                 else {
@@ -1235,7 +1235,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.green:
-                if (hue > 120 && 180 > hue) {
+                if (hue > 110 && 150 > hue) {
                     return true
                 }
                 else {
@@ -1243,7 +1243,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.blue:
-                if (hue > 220 && 260 > hue) {
+                if (hue > 190 && 270 > hue) {
                     return true
                 }
                 else {
@@ -1251,7 +1251,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.cyan:
-                if (hue > 170 && 190 > hue) {
+                if (hue > 160 && 180 > hue) {
                     return true
                 }
                 else {
@@ -1259,7 +1259,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.magenta:
-                if (hue > 280 && 300 > hue) {
+                if (hue > 260 && 330 > hue) {
                     return true
                 }
                 else {
@@ -1267,7 +1267,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.yellow:
-                if (hue > 50 && 80 > hue) {
+                if (hue > 30 && 90 > hue) {
                     return true
                 }
                 else {
@@ -1275,7 +1275,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.white:
-                if (hue == 180) {
+                if (hue >= 180 && 190 > hue) {
                     return true
                 }
                 else {

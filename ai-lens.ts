@@ -152,57 +152,15 @@ namespace PlanetX_AILens {
     */
     export enum letterCards{
         //% block="A"
-        A = 0,
+        A = 1,
         //% block="B"
-        B = 1,
+        B = 2,
         //% block="C"
-        C = 2,
+        C = 3,
         //% block="D"
-        D = 3,
+        D = 4,
         //% block="E"
-        E = 4,
-        //% block="F"
-        F = 5,
-        //% block="G"
-        G = 6,
-        //% block="H"
-        H = 7,
-        //% block="I"
-        I = 8,
-        //% block="J"
-        J = 9,
-        //% block="K"
-        K = 10,
-        //% block="L"
-        L = 11,
-        //% block="M"
-        M = 12,
-        //% block="N"
-        N = 13,
-        //% block="O"
-        O = 14,
-        //% block="P"
-        P = 15,
-        //% block="Q"
-        Q = 16,
-        //% block="R"
-        R = 17,
-        //% block="S"
-        S = 18,
-        //% block="T"
-        T = 19,
-        //% block="U"
-        U = 20,
-        //% block="V"
-        V = 21,
-        //% block="W"
-        W = 22,
-        //% block="X"
-        X = 23,
-        //% block="Y"
-        Y = 24,
-        //% block="Z"
-        Z = 25
+        E = 5
     }
     /*
     * Traffic Cards List
@@ -456,8 +414,8 @@ namespace PlanetX_AILens {
     //% status.fieldOptions.columns=3
     //% group="Card" weight=60
     export function letterCard(status:letterCards): boolean{
-        if (DataBuff[0] == 3) {
-            return status == DataBuff[1] - 1
+        if (DataBuff[0] == 4) {
+            return status == DataBuff[1]
         }
         else
             return false
@@ -471,7 +429,7 @@ namespace PlanetX_AILens {
     //% status.fieldOptions.columns=3
     //% group="Card" weight=55
     export function trafficCard(status:trafficCards): boolean{
-        if (DataBuff[0] == 4) {
+        if (DataBuff[0] == 3) {
             return status == DataBuff[1] - 1
         }
         else

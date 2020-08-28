@@ -127,25 +127,25 @@ namespace PlanetX_AILens {
     */
     export enum numberCards{
         //% block="0"
-        zero = 0,
+        zero = 1,
         //% block="1"
-        one = 1,
+        one = 2,
         //% block="2"
-        two = 2,
+        two = 3,
         //% block="3"
-        three = 3,
+        three = 4,
         //% block="4"
-        four = 4,
+        four = 5,
         //% block="5"
-        five = 5,
+        five = 6,
         //% block="6"
-        six = 6,
+        six = 7,
         //% block="7"
-        seven = 7,
+        seven = 8,
         //% block="8"
-        eight = 8,
+        eight = 9,
         //% block="9"
-        nine = 9
+        nine = 10
     }
     /*
     * Letters Cards List
@@ -167,15 +167,15 @@ namespace PlanetX_AILens {
     */
     export enum trafficCards{
         //% block="Forward"
-        forward = 1,
+        forward = 18,
 		//% block="Back"
-        back = 0,
+        back = 20,
 		//% block="Stop"
-        stop = 4,
+        stop = 19,
 		//% block="Turn left"
-        turnleft = 2,
+        turnleft = 16,
 		//% block="Turn right"
-        turnright = 3
+        turnright = 17
     }
     /*
     * Other Cards List
@@ -400,7 +400,7 @@ namespace PlanetX_AILens {
     //% group="Card" weight=65
     export function numberCard(status:numberCards): boolean{
         if (DataBuff[0] == 2) {
-            return status == DataBuff[1] - 1
+            return status == DataBuff[1]
         }
         else
             return false
@@ -430,7 +430,7 @@ namespace PlanetX_AILens {
     //% group="Card" weight=55
     export function trafficCard(status:trafficCards): boolean{
         if (DataBuff[0] == 3) {
-            return status == DataBuff[1] - 1
+            return status == DataBuff[1]
         }
         else
             return false

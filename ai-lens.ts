@@ -438,8 +438,8 @@ namespace PlanetX_AILens {
     //% status.fieldOptions.columns=3
     //% group="Card" weight=50
     export function otherCard(status:otherCards): boolean{
-        if (DataBuff[0] == 5) {
-            return status == DataBuff[1] - 1 
+        if (DataBuff[0] == 3) {
+            return status == DataBuff[1]
         }
         else
             return false
@@ -447,7 +447,7 @@ namespace PlanetX_AILens {
     //% block="In the image get Card(s)' total"
     //% group="Card" weight=49
     export function cardTotalNum():number{
-        if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4 || DataBuff[0] == 5) {
+        if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4) {
             return DataBuff[7]
         }
         else{
@@ -463,7 +463,7 @@ namespace PlanetX_AILens {
     //% status.fieldOptions.columns=3
     //% group="Card" weight=45
     export function CardData(status: Cardstatus): number {
-        if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4 || DataBuff[0] == 5) {
+        if (DataBuff[0] == 2 || DataBuff[0] == 3 || DataBuff[0] == 4) {
             switch (status) {
                 case Cardstatus.X:
                     return DataBuff[2]

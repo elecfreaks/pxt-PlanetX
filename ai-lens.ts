@@ -497,7 +497,7 @@ namespace PlanetX_AILens {
     //% group="Color" weight=30
     export function colorCheck(status: ColorLs): boolean {
         if (DataBuff[0] == 9) {
-            return status == DataBuff[0]
+            return status == DataBuff[1]
         }
         else
             return false

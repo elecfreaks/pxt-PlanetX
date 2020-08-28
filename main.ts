@@ -309,7 +309,6 @@ namespace PlanetX_Basic {
         return pin
     }
 
-
     ///////////////////////////////enum
     export enum DigitalRJPin {
         //% block="J1" 

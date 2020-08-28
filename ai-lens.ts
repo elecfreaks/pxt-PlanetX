@@ -91,27 +91,17 @@ namespace PlanetX_AILens {
     */
     export enum ColorLs {
         //% block="Black"
-        black = 0,
+        black = 4,
         //% block="Blue"
-        blue = 1,
-        //% block="Brown"
-        brown = 2,
+        blue = 2,
         //% block="Green"
-        green = 3,
-        //% block="Orange"
-        orange = 4,
-        //% block="Pink"
-        pink = 5,
-        //% block="Purple"
-        purple = 6,
+        green = 1,
         //% block="Red"
-        red = 7,
-        //% block="Rose"
-        rose = 8,
+        red = 5,
         //% block="White"
-        white = 9,
+        white = 6,
         //% block="Yellow"
-        yellow = 10
+        yellow = 3
     }
 
     export enum Linestatus {

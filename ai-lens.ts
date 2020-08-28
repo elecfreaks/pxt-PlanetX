@@ -181,42 +181,36 @@ namespace PlanetX_AILens {
     * Other Cards List
     */
     export enum otherCards{
-        //% block="Circle"
-        circle = 0,
-		//% block="Hexagon"
-        hexagon = 1,
-		//% block="Pentagon"
-        pentagon = 2,
-		//% block="Rectangle"
-        rectangle = 3,
-		//% block="Triangle"
-        triangle = 5,
-		//% block="Airplane"
-        airplane = 6,
+        //% block="Mouse"
+        mouse = 1,
+		//% block="micro:bit"
+        microbit = 2,
+		//% block="Ruler"
+        ruler = 3,
+		//% block="Cat"
+        cat = 4,
+		//% block="Peer"
+        peer = 5,
+		//% block="Ship"
+        ship = 6,
 		//% block="Apple"
         apple = 7,
-		//% block="Ship"
-        ship = 8,
-		//% block="Bread"
-        bread = 9,
 		//% block="Car"
-        car = 10,
-		//% block="Cat"
-        cat = 11,
-		//% block="Cup"
-        cup = 12,
+        car = 8,
+		//% block="Pan"
+        pan = 9,
 		//% block="Dog"
-        dog = 13,
-		//% block="Egg"
-        egg = 14,
-		//% block="Grape"
-        grape = 15,
-		//% block="Pear"
-        pear = 16,
-		//% block="Strawberry"
-        strawberry = 17,
+        dog = 10,
 		//% block="Umbrella"
-        umbrella = 18
+        umbrella = 11,
+		//% block="Airplane"
+        airplane = 12,
+		//% block="Clock"
+        clock = 13,
+		//% block="Grape"
+        grape = 14,
+		//% block="Cup"
+        cup = 15
     }
     export enum learnID{
         ID1 = 1,

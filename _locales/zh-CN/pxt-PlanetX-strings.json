@@ -183,7 +183,7 @@
   "PlanetX_Basic.setData|block": "实时时钟 IIC接口 设置 %data | %num",
   "PlanetX_Basic.setLoopFolder|block": "循环播放文件夹: %folderNum 中所有歌曲",
   "PlanetX_Basic.setTracking|block": "播放指定歌曲 拷贝顺序为:%tracking || 重复播放: $myAns",
-  "PlanetX_Basic.setVolume|block": "设置音量大小(0~30):%volume",
+  "PlanetX_Basic.setVolume|block": "设置音量大小(0~25):%volume",
   "PlanetX_Basic.soilHumidity|block": "土壤湿度传感器 %Rjpin 湿度值(0~100)",
   "PlanetX_Basic.trackingSensor|block": "巡线传感器 %Rjpin 识别到 %state",
   "PlanetX_Basic.trimpot|block": "电位器 %Rjpin 模拟值",

@@ -418,7 +418,7 @@ namespace PlanetX_Display {
             firstoledinit = false
         }
         if(text.length > 16){
-            text=text.substr(0, 15)
+            text=text.substr(0, 16)
         }
         line = line - 1
         setText(line, 0);

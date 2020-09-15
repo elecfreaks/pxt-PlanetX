@@ -417,6 +417,9 @@ namespace PlanetX_Display {
             oledinit()
             firstoledinit = false
         }
+        if(text.length > 16){
+            text=text.substr(0, 15)
+        }
         line = line - 1
         setText(line, 0);
         for (let c of text) {

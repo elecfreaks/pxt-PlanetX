@@ -231,6 +231,37 @@ namespace PlanetX_Basic {
     export function getSecond(): number {
         return Math.min(HexToDec(rtc_getReg(DS1307_REG_SECOND)), 59)
     }
+    //////////////////////////////////////////////////////MLX90615
+    const MLX90615Addr = 0x5B
+    const humanbody_Addr = 0x27
+    const environment_Addr = 0x26
+    /**
+    * List of detected targets
+    */
+    export enum targetList {
+        //% block="Human body"
+        human_body,
+        //% block="Environment"
+        environment
+    }
+    /**
+    * Unit of temperature
+    */
+    export enum UnitList {
+        //% block="℃"
+        Centigrade,
+        //% block="℉"
+        Fahrenheit
+    }
+    function readdata(reg: NumberFormat.UInt8BE): number {
+        pins.i2cWriteNumber(MLX90615Addr, reg, NumberFormat.UInt8BE, true);
+        let temp = pins.i2cReadNumber(MLX90615Addr, NumberFormat.UInt16LE, true);
+        temp *= .02
+        temp -= 273.15
+        return temp
+    }
+
+
     ///////////////////////////////////////////////////////MP3
     let Start_Byte = 0x7E
     let Version_Byte = 0xFF
@@ -1193,6 +1224,34 @@ namespace PlanetX_Basic {
                 basic.pause(100);
             }
         })
+    }
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Infra Temp sensor IIC port %target Unit %Unit"
+    export function MLX90615tempe(target: targetList, Unit: UnitList): number {
+        let retemp = 0
+        switch (target) {
+            case targetList.human_body:
+                if (Unit == 0) {
+                    retemp = readdata(humanbody_Addr) + 3;
+                }
+                else {
+                    retemp = readdata(humanbody_Addr) + 3;
+                    retemp = retemp * 9 / 5 + 32
+                }
+                break;
+            case targetList.environment:
+                if (Unit == 0) {
+                    retemp = readdata(environment_Addr) - 5;
+                }
+                else {
+                    retemp = readdata(environment_Addr) - 5;
+                    retemp = retemp * 9 / 5 + 32
+                }
+                break;
+            default:
+                retemp = 0;
+        }
+        return Math.round(retemp * 100) / 100
     }
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
     //% subcategory=Sensor group="IIC Port"

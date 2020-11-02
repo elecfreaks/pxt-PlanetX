@@ -164,7 +164,7 @@
   "PlanetX_Basic.bme280Sensor|block": "BME280 传感器 IIC接口  %state 值",
   "PlanetX_Basic.buttonCD|block": "按钮模块 %Rjpin 按键 %button 被按下",
   "PlanetX_Basic.checkColor|block": "颜色识别传感器 IIC接口 检测到 %color",
-  "PlanetX_Basic.dht11Sensor|block": "DHT11温湿度传感器 %Rjpin %dht11state 值",
+  "PlanetX_Basic.dht11Sensor|block": "DHT11 温湿度传感器 %Rjpin %dht11state 值",
   "PlanetX_Basic.checkCard|block": "RFID 传感器 IIC接口 检测到卡片",
   "PlanetX_Basic.ds18b20Sensor|block": "DS18B20 温度模块 %Rjpin 摄氏度(℃)",
   "PlanetX_Basic.execute|block": "执行程序:%myType",

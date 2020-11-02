@@ -1341,7 +1341,7 @@ namespace PlanetX_Basic {
         })
     }
     //% subcategory=Sensor group="IIC Port"
-    //% block="Infra Temp sensor IIC port %target Unit %Unit"
+    //% block="MLX90615 Infra Temp sensor IIC port %target Unit %Unit"
     export function MLX90615tempe(target: targetList, Unit: UnitList): number {
         let retemp = 0
         switch (target) {

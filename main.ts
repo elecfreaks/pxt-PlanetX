@@ -1475,32 +1475,6 @@ namespace PlanetX_Basic {
             }
         })
     }
-    //% block="RFID sensor IIC port Detect Card"
-    //% subcategory=Sensor group="IIC Port"
-    export function checkCard(): boolean {
-        if (NFC_ENABLE === 0) {
-            wakeup();
-        }
-        let buf: number[] = [];
-        buf = [0x00, 0x00, 0xFF, 0x04, 0xFC, 0xD4, 0x4A, 0x01, 0x00, 0xE1, 0x00];
-        let cmdUid = pins.createBufferFromArray(buf);
-        writeAndReadBuf(cmdUid, 24);
-        for (let i = 0; i < 4; i++) {
-            if (recvAck[1 + i] != ackBuf[i]) {
-                return false;
-            }
-        }
-        if ((recvBuf[6] != 0xD5) || (!checkDcs(24 - 4))) {
-            return false;
-        }
-        for (let i = 0; i < uId.length; i++) {
-            uId[i] = recvBuf[14 + i];
-        }
-        if (uId[0] === uId[1] && uId[1] === uId[2] && uId[2] === uId[3] && uId[3] === 0xFF) {
-            return false;
-        }
-        return true;
-    }
     //% block="RFID sensor IIC port read data from card"
     //% subcategory=Sensor group="IIC Port"
     export function readDataBlock(): string {
@@ -1554,7 +1528,32 @@ namespace PlanetX_Basic {
         }
         writeblock(blockData);
     }
-
+    //% block="RFID sensor IIC port Detect Card"
+    //% subcategory=Sensor group="IIC Port"
+    export function checkCard(): boolean {
+        if (NFC_ENABLE === 0) {
+            wakeup();
+        }
+        let buf: number[] = [];
+        buf = [0x00, 0x00, 0xFF, 0x04, 0xFC, 0xD4, 0x4A, 0x01, 0x00, 0xE1, 0x00];
+        let cmdUid = pins.createBufferFromArray(buf);
+        writeAndReadBuf(cmdUid, 24);
+        for (let i = 0; i < 4; i++) {
+            if (recvAck[1 + i] != ackBuf[i]) {
+                return false;
+            }
+        }
+        if ((recvBuf[6] != 0xD5) || (!checkDcs(24 - 4))) {
+            return false;
+        }
+        for (let i = 0; i < uId.length; i++) {
+            uId[i] = recvBuf[14 + i];
+        }
+        if (uId[0] === uId[1] && uId[1] === uId[2] && uId[2] === uId[3] && uId[3] === 0xFF) {
+            return false;
+        }
+        return true;
+    }
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2

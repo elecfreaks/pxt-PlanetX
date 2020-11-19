@@ -637,6 +637,8 @@ namespace PlanetX_Basic {
         Switch_music = 40,
         //% block="Run function one"
         Run_function_one = 49,
+        //% block="Run function two"
+        Run_function_two = 50,
         //% block="Learning entry 1"
         Learning_entry_1 = 80,
         //% block="Learning entry 2"

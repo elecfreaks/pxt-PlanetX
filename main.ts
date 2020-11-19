@@ -1444,6 +1444,16 @@ namespace PlanetX_Basic {
             }
         })
     }
+    //% block="ASR sensor IIC port enter learning-model"
+    //% subcategory=Sensor group="IIC Port"
+    export function setASRLearn(): void {
+        pins.i2cWriteNumber(0x0B, 0x50, NumberFormat.Int8LE)
+    }
+    //% block="ASR sensor IIC port factory reset"
+    //% subcategory=Sensor group="IIC Port"
+    export function delASRLearn():void{
+        pins.i2cWriteNumber(0x0B, 0x60, NumberFormat.Int8LE)
+    }
     //% block="RFID sensor IIC port read data from card"
     //% subcategory=Sensor group="IIC Port"
     export function readDataBlock(): string {

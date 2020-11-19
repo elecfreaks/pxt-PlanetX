@@ -637,8 +637,26 @@ namespace PlanetX_Basic {
         Switch_music = 40,
         //% block="Run function one"
         Run_function_one = 49,
-        //% block="Run function two"
-        Run_function_two = 50
+        //% block="Learning entry 1"
+        Learning_entry_1 = 80,
+        //% block="Learning entry 2"
+        Learning_entry_2 = 81,
+        //% block="Learning entry 3"
+        Learning_entry_3 = 82,
+        //% block="Learning entry 4"
+        Learning_entry_4 = 83,
+        //% block="Learning entry 5"
+        Learning_entry_5 = 84,
+        //% block="Learning entry 6"
+        Learning_entry_6 = 85,
+        //% block="Learning entry 7"
+        Learning_entry_7 = 86,
+        //% block="Learning entry 8"
+        Learning_entry_8 = 87,
+        //% block="Learning entry 9"
+        Learning_entry_9 = 88,
+        //% block="Learning entry 10"
+        Learning_entry_10 = 89
     }
     ///////////////////////////////////blocks/////////////////////////////
     /** 

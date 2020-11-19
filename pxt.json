@@ -10,7 +10,6 @@
         "main.ts",
         "display.ts",
         "wifi.ts",
-        "ds18b20.cpp",
         "sendBuffer.asm",
         "ai-lens.ts",
         "_locales/pxt-PlanetX-jsdoc-strings.json",

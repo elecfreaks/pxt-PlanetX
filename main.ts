@@ -1125,37 +1125,6 @@ namespace PlanetX_Basic {
                 return 0;
         }
     }
-    //% shim=DS18B20::Temperature
-    export function Temperature_read(p: number): number {
-        // Fake function for simulator
-        return 0
-    }
-
-    //% block="DS18B20 sensor %Rjpin Temperature(℃) value"
-    //% Rjpin.fieldEditor="gridpicker"
-    //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Sensor group="Digital" color=#EA5532
-    export function ds18b20Sensor(Rjpin: DigitalRJPin): number {
-        // Fake function for simulator
-        let pin
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = 8
-                break;
-            case DigitalRJPin.J2:
-                pin = 12
-                break;
-            case DigitalRJPin.J3:
-                pin = 14
-                break;
-            case DigitalRJPin.J4:
-                pin = 16
-                break;
-        }
-        let temp = Temperature_read(pin)
-        temp = temp / 100
-        return Math.round(temp)
-    }
     //% blockID="set_all_data" block="RTC IIC port set %data | %num"
     //% subcategory=Sensor group="IIC Port"
     export function setData(data: DataUnit, num: number): void {

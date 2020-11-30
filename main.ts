@@ -1481,10 +1481,12 @@ namespace PlanetX_Basic {
             wakeup();
         }
         if (checkCard() === false) {
-            return "No NFC Card!";
+            serial.writeLine("No NFC Card!")
+            return ""
         }
         if (!passwdCheck(uId, passwdBuf)) {
-            return "passwd error!";
+            serial.writeLine("passwd error!")
+            return "";
         }
         let cmdRead: number[] = []
         cmdRead = [0x00, 0x00, 0xff, 0x05, 0xfb, 0xD4, 0x40, 0x01, 0x30, 0x07, 0xB4, 0x00];
@@ -1501,7 +1503,8 @@ namespace PlanetX_Basic {
         writeAndReadBuf(buf, 31);
         for (let i = 0; i < 4; i++) {
             if (recvAck[1 + i] != ackBuf[i]) {
-                return "ACK error!"
+                serial.writeLine("ACK error!")
+                return ""
             }
         }
         let ret = "";
@@ -1513,7 +1516,8 @@ namespace PlanetX_Basic {
             }
             return ret;
         }
-        return "read error!";
+        serial.writeLine("read error!")
+        return ""
     }
     //% block="RFID sensor IIC port write %data to card"
     //% subcategory=Sensor group="IIC Port"

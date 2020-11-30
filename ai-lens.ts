@@ -291,7 +291,7 @@ namespace PlanetX_AILens {
             return DataBuff[7]
         }
         else{
-            return null
+            return 0
         }
     }
     /**
@@ -324,7 +324,7 @@ namespace PlanetX_AILens {
             }
         }
         else {
-            return null
+            return 0
         }
     }
 
@@ -344,7 +344,7 @@ namespace PlanetX_AILens {
             return DataBuff[7]
         }
         else{
-            return null
+            return 0
         }
     }
     /**
@@ -377,11 +377,11 @@ namespace PlanetX_AILens {
                     return DataBuff[8]
                     break
                 default:
-                    return null
+                    return 0
             }
         }
         else {
-            return null
+            return 0
         }
     }
     /**
@@ -451,7 +451,7 @@ namespace PlanetX_AILens {
             return DataBuff[7]
         }
         else{
-            return null
+            return 0
         }
     }
     /**
@@ -481,11 +481,11 @@ namespace PlanetX_AILens {
                     return DataBuff[8]
                     break
                 default:
-                    return null
+                    return 0
             }
         }
         else
-            return null
+            return 0
     }
     /**
     * TODO: Judge whether there is a color in the screen
@@ -509,7 +509,7 @@ namespace PlanetX_AILens {
             return DataBuff[7]
         }
         else{
-            return null
+            return 0
         }
     }
     /**
@@ -539,11 +539,11 @@ namespace PlanetX_AILens {
                     return DataBuff[8]
                     break
                 default:
-                    return null
+                    return 0
             }
         }
         else {
-            return null
+            return 0
         }
     }
     /**
@@ -572,7 +572,7 @@ namespace PlanetX_AILens {
             }
         }
         else
-            return null
+            return 0
     }
     /**
     * TODO: line parameters in the screen
@@ -662,9 +662,9 @@ namespace PlanetX_AILens {
             }
             else
             {
-                return null
+                return 0
             }
         }
-    return null
+    return 0
     } 
 }

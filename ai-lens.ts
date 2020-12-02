@@ -221,9 +221,9 @@ namespace PlanetX_AILens {
     }
     export enum ballColorList{
         //% block="Red"
-        Red = 3,
+        Red = 2,
 		//% block="Blue"
-        Blue = 2
+        Blue = 1
     }
     /**
     * TODO: Waiting for module initialize.

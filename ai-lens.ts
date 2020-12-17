@@ -234,7 +234,7 @@ namespace PlanetX_AILens {
         let timeout = 0
         while (!(pins.i2cReadNumber(CameraAdd, NumberFormat.Int8LE))) {
             timeout++
-            if(timeout > 100){
+            if(timeout > 10000){
                 basic.showString("Init AILens Error!")
             }
         }   

@@ -231,10 +231,10 @@ namespace PlanetX_AILens {
     //% block="Initialize AI-Lens via IIC port"
     //% group="Basic" weight=100
     export function initModule():void{
-        let timeout = 0
+        let timeout = input.runningTime()
         while (!(pins.i2cReadNumber(CameraAdd, NumberFormat.Int8LE))) {
             timeout++
-            if(timeout > 10000){
+            if(input.runningTime() - timeout > 6000){
                 basic.showString("Init AILens Error!")
             }
         }   

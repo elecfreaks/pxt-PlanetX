@@ -233,9 +233,10 @@ namespace PlanetX_AILens {
     export function initModule():void{
         let timeout = input.runningTime()
         while (!(pins.i2cReadNumber(CameraAdd, NumberFormat.Int8LE))) {
-            timeout++
-            if(input.runningTime() - timeout > 6000){
-                basic.showString("Init AILens Error!")
+            if(input.runningTime() - timeout > 6000){ 
+                while(true){
+                    basic.showString("Init AILens Error!")
+                }
             }
         }   
     }

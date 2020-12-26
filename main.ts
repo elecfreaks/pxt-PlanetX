@@ -612,7 +612,7 @@ namespace PlanetX_Basic {
         //% block="Go Backwards"
         Go_Backwards = 21,
         //% block="Line Tracking"
-        Patrolling_mode = 22,
+        Line_racking = 22,
         //% block="Avoid object"
         Avoid_object = 23,
         //% block="Stop car"
@@ -624,7 +624,7 @@ namespace PlanetX_Basic {
         //% block="Pause device"
         Pause_device = 34,
         //% block="Keep going"
-        Continue_operation = 35,
+        Keep_going = 35,
         //% block="Add a level"
         Add_a_level = 36,
         //% block="Lower a level"

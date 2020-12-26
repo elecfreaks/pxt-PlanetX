@@ -599,7 +599,7 @@ namespace PlanetX_Basic {
     export enum vocabularyList {
         //% block="Hi,Shaun"
         Hi_Shaun = 1,
-        //% block="Turn on  lights" 
+        //% block="Turn on lights" 
         Turn_on_lights = 16,
         //% block="Turn off lights"
         Turn_off_lights = 17,

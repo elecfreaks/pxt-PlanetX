@@ -612,7 +612,7 @@ namespace PlanetX_Basic {
         //% block="Go Backwards"
         Go_Backwards = 21,
         //% block="Line Tracking"
-        Line_racking = 22,
+        Line_tacking = 22,
         //% block="Avoid object"
         Avoid_object = 23,
         //% block="Stop car"

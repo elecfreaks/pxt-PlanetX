@@ -1224,7 +1224,7 @@ namespace PlanetX_Basic {
                 break;
             case BME280_state.BME280_altitude:
                 getBme280Value();
-                return Math.round(1015 - (P / 100)) * 9
+                return Math.round(1022 - (P / 100)) * 9
                 break;
             default:
                 return 0

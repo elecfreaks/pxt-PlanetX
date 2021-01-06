@@ -255,10 +255,10 @@ namespace PlanetX_Basic {
     }
     function readdata(reg: NumberFormat.UInt8BE): number {
         pins.i2cWriteNumber(MLX90615Addr, reg, NumberFormat.UInt8BE, true);
-        let temp = pins.i2cReadBuffer(MLX90615Addr,1);
-        temp[0] *= .02
-        temp[0] -= 273.15
-        return temp[0]
+        let temp = pins.i2cReadNumber(BME280_I2C_ADDR,NumberFormat.Int8LE);
+        temp *= .02
+        temp -= 273.15
+        return temp
     }
 
 

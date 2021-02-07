@@ -4,6 +4,7 @@
   "PlanetX_AILens.CardData": "TODO: Card parameters in the screen",
   "PlanetX_AILens.CardData|param|status": "otherCards, eg: Cardstatus.X",
   "PlanetX_AILens.Cardstatus": "Status List of Card",
+  "PlanetX_AILens.ClearlearnObject": "TODO: Clear Learned Objects",
   "PlanetX_AILens.ColorLs": "Status List of Color",
   "PlanetX_AILens.Colorstatus": "Status List of Color",
   "PlanetX_AILens.Facestatus": "Status List of Face",

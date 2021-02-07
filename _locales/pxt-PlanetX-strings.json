@@ -11,6 +11,7 @@
   "PlanetX_AILens.Cardstatus.Size|block": "Size",
   "PlanetX_AILens.Cardstatus.X|block": "X",
   "PlanetX_AILens.Cardstatus.Y|block": "Y",
+  "PlanetX_AILens.ClearlearnObject|block": "Clear learned objects",
   "PlanetX_AILens.ColorLs.black|block": "Black",
   "PlanetX_AILens.ColorLs.blue|block": "Blue",
   "PlanetX_AILens.ColorLs.green|block": "Green",

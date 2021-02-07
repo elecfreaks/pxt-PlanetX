@@ -11,6 +11,7 @@
   "PlanetX_AILens.Cardstatus.Size|block": "尺寸",
   "PlanetX_AILens.Cardstatus.X|block": "X坐标",
   "PlanetX_AILens.Cardstatus.Y|block": "Y坐标",
+  "PlanetX_AILens.ClearlearnObject|block": "清除已学习的对象",
   "PlanetX_AILens.ColorLs.black|block": "黑色",
   "PlanetX_AILens.ColorLs.blue|block": "蓝色",
   "PlanetX_AILens.ColorLs.green|block": "绿色",

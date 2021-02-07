@@ -638,6 +638,17 @@ namespace PlanetX_AILens {
         pins.i2cWriteBuffer(CameraAdd, thingsBuf)
     }
     /**
+    * TODO: Clear Learned Objects
+    */
+    //% block="Clear learned objects"
+    //% group="Learn" weight=15
+    export function ClearlearnObject(): void {
+        let thingsBuf = pins.createBuffer(9)
+        thingsBuf[0] = 10
+        thingsBuf[1] = 10
+        pins.i2cWriteBuffer(CameraAdd, thingsBuf)
+    }
+    /**
     * TODO: Judge whether there are any learned objects in the picture
     */
     //% block="Image contains learned objects: %status"

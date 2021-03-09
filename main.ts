@@ -1816,7 +1816,7 @@ namespace PlanetX_Basic {
             SerialPin.USB_TX,
             BaudRate.BaudRate9600
         )
-        basic.pause(100)
+        basic.pause(1000)
         setVolume(20)
     }
 

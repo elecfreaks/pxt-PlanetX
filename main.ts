@@ -1144,10 +1144,44 @@ namespace PlanetX_Basic {
     //% channel.fieldEditor="gridpicker"
     //% channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
-    //% block="Get channel %e gray value"
+    //% block="Trackbit channel %channel gray value"
     export function TrackbitgetGray(channel: TrackbitChannel): number {
         pins.i2cWriteNumber(0x1a,channel, NumberFormat.Int8LE)
         return pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+    }
+    //% State.fieldEditor="gridpicker"
+    //% State.fieldOptions.columns=4
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Trackbit is %State"
+    export function TrackbitState(State: TrackingStateType): boolean {
+        let TempVal:number = 0
+        pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
+        TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+        return TempVal == State
+    }
+    //% State.fieldEditor="gridpicker" State.fieldOptions.columns=4
+    //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Trackbit channel %channel is %state"
+    export function getTrack(channel: TrackbitChannel,state:TrackbitType): boolean {
+        let TempVal:number = 0
+        pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
+        TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+        if(state == TrackbitType.State_1)
+            if (TempVal & 1<<channel) {
+                return true
+            }
+            else{
+                return false
+            }
+        else{
+            if (TempVal & 1<<channel) {
+                return false
+            }
+            else{
+                return true
+            }
+        }
     }
     /**
     * get dht11 temperature and humidity Value

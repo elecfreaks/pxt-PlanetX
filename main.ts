@@ -1158,8 +1158,8 @@ namespace PlanetX_Basic {
         TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         return TempVal == State
     }
-    //% State.fieldEditor="gridpicker" State.fieldOptions.columns=4
-    //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=2
+    //% state.fieldEditor="gridpicker" state.fieldOptions.columns=2
+    //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel is %state"
     export function getTrack(channel: TrackbitChannel,state:TrackbitType): boolean {

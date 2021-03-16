@@ -1162,7 +1162,7 @@ namespace PlanetX_Basic {
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel is %state"
-    export function getTrack(channel: TrackbitChannel,state:TrackbitType): boolean {
+    export function TrackbitChannelState(channel: TrackbitChannel,state:TrackbitType): boolean {
         let TempVal:number = 0
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
         TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)

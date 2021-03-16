@@ -485,6 +485,60 @@ namespace PlanetX_Basic {
         //% block="◌ ◌" enumval=3
         Tracking_State_3
     }
+    export enum TrackbitStateType{
+        //% block="◌ ◌ ◌ ◌" 
+        Tracking_State_0 = 0,
+        //% block="◌ ● ● ◌" 
+        Tracking_State_1 = 6,
+        //% block="◌ ◌ ● ◌" 
+        Tracking_State_2 = 2,
+        //% block="◌ ● ◌ ◌" 
+        Tracking_State_3 = 4,
+
+
+        //% block="● ◌ ◌ ●" 
+        Tracking_State_4 = 9,
+        //% block="● ● ● ●" 
+        Tracking_State_5 = 15,
+        //% block="● ◌ ● ●" 
+        Tracking_State_6 = 11,
+        //% block="● ● ◌ ●" 
+        Tracking_State_7 = 13,
+
+        //% block="● ◌ ◌ ◌" 
+        Tracking_State_8 = 8,
+        //% block="● ● ● ◌" 
+        Tracking_State_9 = 14,
+        //% block="● ◌ ● ◌" 
+        Tracking_State_10 = 10,
+        //% block="● ● ◌ ◌" 
+        Tracking_State_11 = 12,
+
+        //% block="◌ ◌ ◌ ●" 
+        Tracking_State_12 = 1,
+        //% block="◌ ● ● ●" 
+        Tracking_State_13 = 7,
+        //% block="◌ ◌ ● ●" 
+        Tracking_State_14 = 3,
+        //% block="◌ ● ◌ ●" 
+        Tracking_State_15 = 5
+    }
+    export enum TrackbitType{
+        //% block="◌" 
+        State_0 = 0,
+        //% block="●" 
+        State_1 = 1
+    }
+    export enum TrackbitChannel{
+        //% block="1"
+        One = 0,
+        //% block="2"
+        Two = 1,
+        //% block="3"
+        Three = 2,
+        //% block="4"
+        Four = 3
+    }
 
     export enum Distance_Unit_List {
         //% block="cm" 
@@ -1048,7 +1102,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
-    //% blockId=ringbitcar_tracking block="Line-tracking sensor %Rjpin is %state"
+    //% blockId=tracking_sensor block="Line-tracking sensor %Rjpin is %state"
     export function trackingSensor(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
         let rpin = DigitalPin.P2
@@ -1084,7 +1138,17 @@ namespace PlanetX_Basic {
             return true;
         } else return false;
     }
-
+    /**
+    * TODO: 4 line following
+    */
+    //% channel.fieldEditor="gridpicker"
+    //% channel.fieldOptions.columns=4
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Get channel %e gray value"
+    export function TrackbitgetGray(channel: TrackbitChannel): number {
+        pins.i2cWriteNumber(0x1a,channel, NumberFormat.Int8LE)
+        return pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+    }
     /**
     * get dht11 temperature and humidity Value
     * @param dht11pin describe parameter here, eg: DigitalPin.P15     

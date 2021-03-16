@@ -1141,8 +1141,7 @@ namespace PlanetX_Basic {
     /**
     * TODO: 4 line following
     */
-    //% channel.fieldEditor="gridpicker"
-    //% channel.fieldOptions.columns=4
+    //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel gray value"
     export function TrackbitgetGray(channel: TrackbitChannel): number {
@@ -1153,7 +1152,7 @@ namespace PlanetX_Basic {
     //% State.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit is %State"
-    export function TrackbitState(State: TrackingStateType): boolean {
+    export function TrackbitState(State: TrackbitStateType): boolean {
         let TempVal:number = 0
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
         TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)

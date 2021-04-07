@@ -1409,9 +1409,9 @@ namespace PlanetX_Basic {
     export function onGesture(gesture: GestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
         if(gesture_first_init){
-            basic.pause(100)
+            
             paj7620.init();
-            gesture_first_init = false
+            //gesture_first_init = false
         }
         control.inBackground(() => {
             while (true) {

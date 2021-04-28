@@ -1891,7 +1891,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Excute group="MP3" color=#EA5532
     export function MP3SetPort(Rjpin: DigitalRJPin): void {
-        let pin = SerialPin.USB_RX
+        let pin = SerialPin.USB_TX
         switch (Rjpin) {
             case DigitalRJPin.J1:
                 pin = SerialPin.P8
@@ -1908,11 +1908,10 @@ namespace PlanetX_Basic {
         }
         serial.redirect(
             pin,
-            SerialPin.USB_TX,
+            SerialPin.USB_RX,
             BaudRate.BaudRate9600
         )
-        basic.pause(1000)
-        setVolume(20)
+        setVolume(25)
     }
 
 }

@@ -1,7 +1,7 @@
 /**
 * Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
 */
-//% color=#EA5532 icon="\uf110" block="PlanetX_Display" blockId="PlanetX_Display" weight=81
+//% color=#EA5532 icon="\uf110" block="PlanetX_Display" blockId="PlanetX_Display" 
 //% groups='["LED", "Digital", "Analog", "IIC Port", "OLED", "8*16 Matrix", "7-Seg 4-Dig LED Nixietube"]'
 namespace PlanetX_Display {
     ////////////////////////////////TM 1637/////////////////

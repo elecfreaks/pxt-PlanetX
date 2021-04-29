@@ -1,7 +1,7 @@
 /**
  * This extension is designed to programme and drive the Smart AI Lens(二郎神)
  */
-//% color=#0031AF icon="\uf06e" weight=50
+//% color=#0031AF icon="\uf06e" weight=83
 //% groups='["Basic", "Ball", "Face", "Card", "Color", "Tracking", "Learn"]'
 //% block="PlanetX_AI-Lens"
 namespace PlanetX_AILens {
@@ -437,7 +437,7 @@ namespace PlanetX_AILens {
     //% block="Image contains other card(s): %status"
     //% status.fieldEditor="gridpicker"
     //% status.fieldOptions.columns=3
-    //% group="Card" weight=50
+    //% group="Card"
     export function otherCard(status:otherCards): boolean{
         if (DataBuff[0] == 3) {
             return status == DataBuff[1]

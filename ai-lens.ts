@@ -197,8 +197,8 @@ namespace PlanetX_AILens {
         apple = 7,
 		//% block="Car"
         car = 8,
-		//% block="Pan"
-        pan = 9,
+		//% block="Pen"
+        pen = 9,
 		//% block="Dog"
         dog = 10,
 		//% block="Umbrella"

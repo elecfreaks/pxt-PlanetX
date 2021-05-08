@@ -4,7 +4,7 @@
 
 ![](/PlanetX.png/)
 
-This extension is designed to programme and drive the sensor series PlanetX(行星X) micro:bit expansion sensor, You can [get PlanetX from the Elecfreaks store](https://www.elecfreaks.com/store/sensor-kit-compatible-with-fischertechnik.html)
+This extension is designed to programme and drive the sensor series PlanetX(行星X) micro:bit expansion sensor, You can [get PlanetX from the Elecfreaks store](https://www.elecfreaks.com/)
 
 ## Code Example
 ```JavaScript

@@ -3,7 +3,8 @@
 namespace PlanetX_IOT {
     let wifi_connected: boolean = false
     let thingspeak_connected: boolean = false
-    let kitsiot_connected: boolean = false
+    let kidsiot_connected: boolean = false
+    let kidsiot_init: boolean = false
     let last_upload_successful: boolean = false
     let userToken_def: string = ""
     let topic_def: string = ""
@@ -69,7 +70,7 @@ namespace PlanetX_IOT {
     export function connectWifi(ssid: string, pw: string) {
         wifi_connected = false
         thingspeak_connected = false
-        kitsiot_connected = false
+        kidsiot_connected = false
         sendAT("AT+CWJAP=\"" + ssid + "\",\"" + pw + "\"", 0) // connect to Wifi router
 
         let serial_str: string = ""
@@ -105,7 +106,7 @@ namespace PlanetX_IOT {
     //% write_api_key.defl=your_write_api_key
     //% subcategory="ThingSpeak" weight=80
     export function connectThingSpeak() {
-        if (wifi_connected && kitsiot_connected == false) {
+        if (wifi_connected && kidsiot_connected == false) {
             thingspeak_connected = false
             let text = "AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80"
             sendAT(text, 0) // connect to website server
@@ -232,12 +233,12 @@ namespace PlanetX_IOT {
     }
 
     
-    /*-----------------------------------kitsiot---------------------------------*/
+    /*-----------------------------------kidsiot---------------------------------*/
     /**
-    * Connect to kitsiot
+    * Connect to kidsiot
     */
     //% subcategory=KidsIot weight=50
-    //% blockId=initkitiot block="Connect KidsIot with userToken: %userToken Topic: %topic"
+    //% blockId=initkidiot block="Connect KidsIot with userToken: %userToken Topic: %topic"
     export function connectKidsiot(userToken: string, topic: string): void {
         if (wifi_connected && thingspeak_connected == false) {
             userToken_def = userToken
@@ -250,32 +251,33 @@ namespace PlanetX_IOT {
                 if (serial_str.length > 100)
                     serial_str = serial_str.substr(serial_str.length - 100)
                 if (serial_str.includes("CONNECT") ||serial_str.includes("OK")){
-                    kitsiot_connected = true
+                    kidsiot_connected = true
                     break
                 }
                 if (input.runningTime() - time > 10000) {
-                    kitsiot_connected = false
+                    kidsiot_connected = false
                     break
                 }
             }
-            if(kitsiot_connected){
+            if(kidsiot_connected){
                 let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
                 sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
                 basic.pause(1000)
                 sendAT(text_one, 0)
                 basic.pause(1000)
+                kidsiot_init = true
             }
 
 
         }
     }
     /**
-    * upload data to kitsiot
+    * upload data to kidsiot
     */
     //% subcategory=KidsIot weight=45
-    //% blockId=uploadkitsiot block="Upload data %data to kidsiot"
+    //% blockId=uploadkidsiot block="Upload data %data to kidsiot"
     export function uploadKidsiot(data: number): void {
-        if (kitsiot_connected) {
+        if (kidsiot_connected) {
             data = Math.floor(data)
             let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"up\",\"data\":\"" + data + "\"}"
             sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
@@ -284,12 +286,12 @@ namespace PlanetX_IOT {
         }
     }
     /**
-    * disconnect from kitsiot
+    * disconnect from kidsiot
     */
     //% subcategory=KidsIot weight=40
     //% blockId=Disconnect block="Disconnect with kidsiot"
     export function disconnectKidsiot(): void {
-        if (kitsiot_connected) {
+        if (kidsiot_connected) {
             let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"close\"}"
             sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
             sendAT(text_one, 0)
@@ -300,11 +302,11 @@ namespace PlanetX_IOT {
                 if (serial_str.length > 100)
                     serial_str = serial_str.substr(serial_str.length - 100)
                 if (serial_str.includes("CLOSED")){
-                    kitsiot_connected = false
+                    kidsiot_connected = false
                     break
                 }
                 if (input.runningTime() - time > 10000) {
-                    kitsiot_connected = false
+                    kidsiot_connected = false
                     break
                 }
             }
@@ -316,7 +318,7 @@ namespace PlanetX_IOT {
     //% block="KidsIot connection %State"
     //% subcategory="KidsIot" weight=35
     export function kidsiotState(state: boolean) {
-        return kitsiot_connected == state
+        return kidsiot_init == state
     }
 
     export enum stateList {
@@ -334,7 +336,7 @@ namespace PlanetX_IOT {
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
             while (true) {
-                if(kitsiot_connected){
+                if(kidsiot_init){
                     recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text += serial.readString()
                     if (recevice_kidiot_text.includes("switchon")) {

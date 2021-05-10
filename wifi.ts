@@ -291,9 +291,7 @@ namespace PlanetX_IOT {
             data = Math.floor(data)
             let jsonText = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"up\",\"data\":\"" + data + "\"}"
             sendAT("AT+CIPSEND=" + (jsonText.length + 2), 0)
-            while(!waitFeedBack()){
-                basic.pause(500)
-            }
+            basic.pause(1000)
             sendAT(jsonText, 0)
             basic.pause(1000)
         }
@@ -307,11 +305,9 @@ namespace PlanetX_IOT {
         if (kidsiot_connected) {
             let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"close\"}"
             sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-            while(!waitFeedBack()){
-                basic.pause(500)
-            }
+            basic.pause(1000)
             sendAT(text_one, 0)
-            kidsiot_connected = waitFeedBack()
+            kidsiot_connected = false
         }
     }
     /**

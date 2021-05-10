@@ -324,7 +324,6 @@ namespace PlanetX_IOT {
             while (true) {
                 if(kidsiot_connected){
                     recevice_kidiot_text = serial.readLine()
-                    recevice_kidiot_text += serial.readLine()
                     recevice_kidiot_text += serial.readString()
                     if (recevice_kidiot_text.includes("switchon")) {
                         recevice_kidiot_text = ""

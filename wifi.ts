@@ -95,7 +95,6 @@ namespace PlanetX_IOT {
             }
 
         }
-        serial.readBuffer(0)
         basic.pause(1000)
     }
     /**
@@ -241,11 +240,11 @@ namespace PlanetX_IOT {
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
-                serial.readBuffer(0)
+
                 return true
             }
             if (input.runningTime() - time > 10000) {
-                serial.readBuffer(0)
+
                 return false
             }
         }
@@ -325,7 +324,9 @@ namespace PlanetX_IOT {
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
             while (true) {
+                basic.showNumber(1)
                 if(kidsiot_connected){
+                    basic.showNumber(0)
                     recevice_kidiot_text = serial.readLine()
                     PlanetX_Display.showUserText(1, recevice_kidiot_text)
                     if (recevice_kidiot_text.includes("switchon")) {
@@ -340,7 +341,7 @@ namespace PlanetX_IOT {
                         kidsiot_connected = false
                     }
                 }
-                basic.pause(100)
+                basic.pause(20)
             }
         })
     }

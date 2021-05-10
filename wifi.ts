@@ -325,7 +325,7 @@ namespace PlanetX_IOT {
                 if(kidsiot_connected){
                     recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text += serial.readLine()
-                    recevice_kidiot_text += serial.readString()()
+                    recevice_kidiot_text += serial.readString()
                     if (recevice_kidiot_text.includes("switchon")) {
                         recevice_kidiot_text = ""
                         control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)

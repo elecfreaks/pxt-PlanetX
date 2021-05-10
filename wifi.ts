@@ -60,6 +60,7 @@ namespace PlanetX_IOT {
         sendAT("AT+RESTORE", 1000) // restore to factory settings
         sendAT("ATE0") // disable echo
         sendAT("AT+CWMODE=1") // set to STA mode
+        sendAT("AT+CIPDINFO=0") // disable DPinfo
         serial.readBuffer(0)
         basic.pause(100)
     }
@@ -97,6 +98,7 @@ namespace PlanetX_IOT {
         }
         basic.pause(1000)
     }
+    
     /**
     * Connect to ThingSpeak
     */
@@ -316,13 +318,14 @@ namespace PlanetX_IOT {
     let KidsIoTButtonEventID = 3800
     //% block="When switch %vocabulary"
     //% subcategory="KidsIot" weight=30
-    //% state.fieldEditor="gridpicker" state.fieldOptions.columns=3
+    //% state.fieldEditor="gridpicker" state.fieldOptions.columns=2
     export function iotSwitchEvent(state: stateList, handler: () => void) {
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
             while (true) {
                 if(kidsiot_connected){
                     recevice_kidiot_text = serial.readLine()
+                    recevice_kidiot_text += serial.readString()
                     PlanetX_Display.showUserText(1, recevice_kidiot_text)
                     if (recevice_kidiot_text.includes("switchon")) {
                         recevice_kidiot_text = ""
@@ -333,6 +336,7 @@ namespace PlanetX_IOT {
                         control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
                     }
                     if (recevice_kidiot_text.includes("CLOSED")){
+                        recevice_kidiot_text = ""
                         kidsiot_connected = false
                     }
                 }

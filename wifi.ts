@@ -60,7 +60,6 @@ namespace PlanetX_IOT {
         sendAT("AT+RESTORE", 1000) // restore to factory settings
         sendAT("ATE0") // disable echo
         sendAT("AT+CWMODE=1") // set to STA mode
-        sendAT("AT+CIPDINFO=0") // disable DPinfo
         serial.readBuffer(0)
         basic.pause(100)
     }
@@ -325,8 +324,8 @@ namespace PlanetX_IOT {
             while (true) {
                 if(kidsiot_connected){
                     recevice_kidiot_text = serial.readLine()
-                    recevice_kidiot_text += serial.readString()
-                    PlanetX_Display.showUserText(1, recevice_kidiot_text)
+                    recevice_kidiot_text += serial.readLine()
+                    recevice_kidiot_text += serial.readString()()
                     if (recevice_kidiot_text.includes("switchon")) {
                         recevice_kidiot_text = ""
                         control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)
@@ -341,6 +340,7 @@ namespace PlanetX_IOT {
                     }
                 }
                 basic.pause(20)
+                
             }
         })
     }

@@ -233,9 +233,6 @@ namespace PlanetX_IOT {
 
     
     /*-----------------------------------kitsiot---------------------------------*/
-    /*-----------------------------------kitsiot---------------------------------*/
-    /*-----------------------------------kitsiot---------------------------------*/
-    /*-----------------------------------kitsiot---------------------------------*/
     /**
     * Connect to kitsiot
     */
@@ -267,18 +264,12 @@ namespace PlanetX_IOT {
                 }
             }
             */
+            let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
+            sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
+            basic.pause(1000)
+            sendAT(text_one, 0)
+            basic.pause(1000)
             kitsiot_connected=true
-            basic.pause(2000)
-            if(kitsiot_connected){
-                let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
-                sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-                basic.pause(1000)
-                sendAT(text_one, 0)
-                basic.pause(1000)
-            }
-            else{
-                connectKidsiot(userToken_def,topic_def)
-            }
         }
     }
     /**
@@ -345,16 +336,18 @@ namespace PlanetX_IOT {
         recevice_kidiot_text=""
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
-            while (kitsiot_connected) {
-                recevice_kidiot_text = serial.readLine()
-                recevice_kidiot_text += serial.readString()
-                if (recevice_kidiot_text.includes("switchon")) {
-                    recevice_kidiot_text = ""
-                    control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)
-                }
-                if (recevice_kidiot_text.includes("switchof")) {
-                    recevice_kidiot_text = ""
-                    control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
+            while (true) {
+                if(kitsiot_connected){
+                    recevice_kidiot_text = serial.readLine()
+                    recevice_kidiot_text += serial.readString()
+                    if (recevice_kidiot_text.includes("switchon")) {
+                        recevice_kidiot_text = ""
+                        control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)
+                    }
+                    if (recevice_kidiot_text.includes("switchof")) {
+                        recevice_kidiot_text = ""
+                        control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
+                    }
                 }
                 basic.pause(100)
             }

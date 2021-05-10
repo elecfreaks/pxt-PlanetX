@@ -267,8 +267,6 @@ namespace PlanetX_IOT {
                 basic.pause(1000)
                 kidsiot_init = true
             }
-
-
         }
     }
     /**

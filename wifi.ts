@@ -261,15 +261,15 @@ namespace PlanetX_IOT {
             userToken_def = userToken
             topic_def = topic
             sendAT("AT+CIPSTART=\"TCP\",\"139.159.161.57\",5555", 0) // connect to website server
-            kidsiot_connected =  waitFeedBack()
-            if(kidsiot_connected){
+            kidsiot_init =  waitFeedBack()
+            if(kidsiot_init){
                 let jsonText = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
                 sendAT("AT+CIPSEND=" + (jsonText.length + 2), 0)
                 while(!waitFeedBack()){
                     basic.pause(500)
                 }
                 sendAT(jsonText, 0)
-                kidsiot_init = waitFeedBack()
+                kidsiot_connected = waitFeedBack()
             }
         }
     }
@@ -341,7 +341,7 @@ namespace PlanetX_IOT {
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
             while (true) {
-                if(kidsiot_init){
+                if(kidsiot_connected){
                     recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text += serial.readString()
                     if (recevice_kidiot_text.includes("switchon")) {

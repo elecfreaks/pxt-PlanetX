@@ -356,7 +356,7 @@ namespace PlanetX_IOT {
                     recevice_kidiot_text = ""
                     control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
                 }
-                basic.pause(20)
+                basic.pause(100)
             }
         })
     }

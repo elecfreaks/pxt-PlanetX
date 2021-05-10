@@ -244,12 +244,14 @@ namespace PlanetX_IOT {
             if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
                 return true
             }
+            if (serial_str.includes("CLOSED")){
+                kidsiot_connected = false
+                return false
+            }
             if (input.runningTime() - time > 10000) {
                 return false
             }
         }
-
-
     }
     /**
     * Connect to kidsiot
@@ -299,22 +301,11 @@ namespace PlanetX_IOT {
         if (kidsiot_connected) {
             let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"close\"}"
             sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-            sendAT(text_one, 0)
-            let serial_str: string = ""
-            let time: number = input.runningTime()
-            while (true) {
-                serial_str += serial.readString()
-                if (serial_str.length > 100)
-                    serial_str = serial_str.substr(serial_str.length - 100)
-                if (serial_str.includes("CLOSED")){
-                    kidsiot_connected = false
-                    break
-                }
-                if (input.runningTime() - time > 10000) {
-                    kidsiot_connected = false
-                    break
-                }
+            while(!waitFeedBack()){
+                basic.pause(500)
             }
+            sendAT(text_one, 0)
+            kidsiot_connected = waitFeedBack()
         }
     }
     /**
@@ -323,7 +314,7 @@ namespace PlanetX_IOT {
     //% block="KidsIot connection %State"
     //% subcategory="KidsIot" weight=35
     export function kidsiotState(state: boolean) {
-        return kidsiot_init == state
+        return kidsiot_connected == state
     }
 
     export enum stateList {

@@ -79,7 +79,7 @@ namespace PlanetX_IOT {
             serial_str += serial.readString()
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
-            if (serial_str.includes("WIFI GOT IP") || serial_str.includes("OK")) {
+            if (serial_str.includes("WIFI GOT IP")) {
                 serial_str=""
                 wifi_connected = true
                 break
@@ -90,12 +90,10 @@ namespace PlanetX_IOT {
                 connectWifi(ssid,pw)
                 break
             }
-            if (serial_str.includes("WIFI CONNECTED")){}
-            else if(input.runningTime() - time > 10000) {
-                wifi_connected = false
-                connectWifi(ssid,pw)
-                break
+            if (serial_str.includes("WIFI CONNECTED")){
+                time = input.runningTime()
             }
+
         }
         basic.pause(2000)
     }
@@ -238,9 +236,10 @@ namespace PlanetX_IOT {
         let serial_str: string = ""
         let time: number = input.runningTime()
         while (true) {
+            serial_str = serial.readLine()
             serial_str += serial.readString()
-            if (serial_str.length > 100)
-                serial_str = serial_str.substr(serial_str.length - 100)
+            if (serial_str.length > 50)
+                serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
                 return true
             }

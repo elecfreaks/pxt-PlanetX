@@ -240,11 +240,9 @@ namespace PlanetX_IOT {
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
-
                 return true
             }
             if (input.runningTime() - time > 10000) {
-
                 return false
             }
         }

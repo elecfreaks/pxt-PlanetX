@@ -234,6 +234,23 @@ namespace PlanetX_IOT {
 
     
     /*-----------------------------------kidsiot---------------------------------*/
+    export function waitFeedBack(): boolean{
+        let serial_str: string = ""
+        let time: number = input.runningTime()
+        while (true) {
+            serial_str += serial.readString()
+            if (serial_str.length > 100)
+                serial_str = serial_str.substr(serial_str.length - 100)
+            if (serial_str.includes("CONNECT") ||serial_str.includes("OK")){
+                return true
+            }
+            if (input.runningTime() - time > 10000) {
+                return false
+            }
+        }
+
+
+    }
     /**
     * Connect to kidsiot
     */
@@ -244,28 +261,15 @@ namespace PlanetX_IOT {
             userToken_def = userToken
             topic_def = topic
             sendAT("AT+CIPSTART=\"TCP\",\"139.159.161.57\",5555", 0) // connect to website server
-            let serial_str: string = ""
-            let time: number = input.runningTime()
-            while (true) {
-                serial_str += serial.readString()
-                if (serial_str.length > 100)
-                    serial_str = serial_str.substr(serial_str.length - 100)
-                if (serial_str.includes("CONNECT") ||serial_str.includes("OK")){
-                    kidsiot_connected = true
-                    break
-                }
-                if (input.runningTime() - time > 10000) {
-                    kidsiot_connected = false
-                    break
-                }
-            }
+            kidsiot_connected =  waitFeedBack()
             if(kidsiot_connected){
-                let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
-                sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-                basic.pause(1000)
-                sendAT(text_one, 0)
-                basic.pause(1000)
-                kidsiot_init = true
+                let jsonText = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
+                sendAT("AT+CIPSEND=" + (jsonText.length + 2), 0)
+                while(!waitFeedBack()){
+                    basic.pause(500)
+                }
+                sendAT(jsonText, 0)
+                kidsiot_init = waitFeedBack()
             }
         }
     }

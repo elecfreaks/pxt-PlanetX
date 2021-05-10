@@ -238,7 +238,7 @@ namespace PlanetX_IOT {
         let time: number = input.runningTime()
         while (true) {
             serial_str = serial.readLine()
-            serial_str += serial.readString()
+            PlanetX_Display.showUserText(1, serial_str)
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
@@ -340,9 +340,8 @@ namespace PlanetX_IOT {
         recevice_kidiot_text=""
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
-            while (false) {
+            while (true) {
                 if(kidsiot_init){
-                    
                     recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text += serial.readString()
                     if (recevice_kidiot_text.includes("switchon")) {

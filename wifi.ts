@@ -78,7 +78,6 @@ namespace PlanetX_IOT {
         let time: number = input.runningTime()
         while (true) {
             serial_str = serial.readLine()
-            PlanetX_Display.showUserText(1, serial_str)
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("WIFI GOT IP")) {
@@ -89,7 +88,6 @@ namespace PlanetX_IOT {
             if (serial_str.includes("FAIL")) {
                 serial_str=""
                 wifi_connected = false
-                connectWifi(ssid,pw)
                 break
             }
             if (serial_str.includes("WIFI CONNECTED")){
@@ -97,7 +95,8 @@ namespace PlanetX_IOT {
             }
 
         }
-        basic.pause(2000)
+        serial.readBuffer(0)
+        basic.pause(1000)
     }
     /**
     * Connect to ThingSpeak

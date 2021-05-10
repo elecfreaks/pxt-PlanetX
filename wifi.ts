@@ -78,6 +78,7 @@ namespace PlanetX_IOT {
         let time: number = input.runningTime()
         while (true) {
             serial_str = serial.readLine()
+            PlanetX_Display.showUserText(1, serial_str)
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("WIFI GOT IP")) {
@@ -94,7 +95,6 @@ namespace PlanetX_IOT {
             if (serial_str.includes("WIFI CONNECTED")){
                 time = input.runningTime()
             }
-            basic.showString(serial_str)
 
         }
         basic.pause(2000)

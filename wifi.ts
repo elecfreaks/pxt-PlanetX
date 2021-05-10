@@ -58,7 +58,9 @@ namespace PlanetX_IOT {
             baudrate
         )
         sendAT("AT+RESTORE", 1000) // restore to factory settings
+        sendAT("ATE0") // disable echo
         sendAT("AT+CWMODE=1") // set to STA mode
+        serial.readBuffer(64)
         basic.pause(100)
     }
     /**
@@ -72,7 +74,6 @@ namespace PlanetX_IOT {
         thingspeak_connected = false
         kidsiot_connected = false
         sendAT("AT+CWJAP=\"" + ssid + "\",\"" + pw + "\"", 0) // connect to Wifi router
-
         let serial_str: string = ""
         let time: number = input.runningTime()
         while (true) {
@@ -93,6 +94,8 @@ namespace PlanetX_IOT {
             if (serial_str.includes("WIFI CONNECTED")){
                 time = input.runningTime()
             }
+
+            PlanetX_Display.showUserText(1, serial_str)
 
         }
         basic.pause(2000)
@@ -341,6 +344,7 @@ namespace PlanetX_IOT {
         control.inBackground(() => {
             while (false) {
                 if(kidsiot_init){
+                    
                     recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text += serial.readString()
                     if (recevice_kidiot_text.includes("switchon")) {

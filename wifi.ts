@@ -241,7 +241,7 @@ namespace PlanetX_IOT {
             PlanetX_Display.showUserText(1, serial_str)
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
-            if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
+            if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")||serial_str.includes("K")){
                 return true
             }
             if (serial_str.includes("CLOSED")){

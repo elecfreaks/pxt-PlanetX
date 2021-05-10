@@ -339,7 +339,7 @@ namespace PlanetX_IOT {
         recevice_kidiot_text=""
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
-            while (true) {
+            while (false) {
                 if(kidsiot_init){
                     recevice_kidiot_text = serial.readLine()
                     recevice_kidiot_text += serial.readString()

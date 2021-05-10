@@ -238,23 +238,14 @@ namespace PlanetX_IOT {
         let time: number = input.runningTime()
         while (true) {
             serial_str = serial.readLine()
-            PlanetX_Display.showUserText(1, serial_str)
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
-            if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")||serial_str.includes("K")){
+            if (serial_str.includes("CONNECT") ||serial_str.includes("OK")||serial_str.includes("SEND OK")){
+                serial.readBuffer(0)
                 return true
             }
-            if (serial_str.includes("CLOSED")){
-                kidsiot_connected = false
-                return false
-            }
-            if (serial_str.includes("switchon")) {
-                control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)
-            }
-            if (serial_str.includes("switchof")) {
-                control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
-            }
             if (input.runningTime() - time > 10000) {
+                serial.readBuffer(0)
                 return false
             }
         }
@@ -336,8 +327,7 @@ namespace PlanetX_IOT {
             while (true) {
                 if(kidsiot_connected){
                     recevice_kidiot_text = serial.readLine()
-                    recevice_kidiot_text += serial.readString()()
-                    PlanetX_Display.showUserText(2, recevice_kidiot_text)
+                    PlanetX_Display.showUserText(1, recevice_kidiot_text)
                     if (recevice_kidiot_text.includes("switchon")) {
                         recevice_kidiot_text = ""
                         control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)

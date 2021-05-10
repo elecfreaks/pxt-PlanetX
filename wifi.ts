@@ -248,6 +248,12 @@ namespace PlanetX_IOT {
                 kidsiot_connected = false
                 return false
             }
+            if (serial_str.includes("switchon")) {
+                control.raiseEvent(KidsIoTButtonEventID, 1, EventCreationMode.CreateAndFire)
+            }
+            if (serial_str.includes("switchof")) {
+                control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
+            }
             if (input.runningTime() - time > 10000) {
                 return false
             }
@@ -342,6 +348,9 @@ namespace PlanetX_IOT {
                     if (recevice_kidiot_text.includes("switchof")) {
                         recevice_kidiot_text = ""
                         control.raiseEvent(KidsIoTButtonEventID, 2, EventCreationMode.CreateAndFire)
+                    }
+                    if (recevice_kidiot_text.includes("CLOSED")){
+                        kidsiot_connected = false
                     }
                 }
                 basic.pause(100)

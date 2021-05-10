@@ -345,7 +345,7 @@ namespace PlanetX_IOT {
         recevice_kidiot_text=""
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
-            while (true) {
+            while (kitsiot_connected) {
                 recevice_kidiot_text = serial.readLine()
                 recevice_kidiot_text += serial.readString()
                 if (recevice_kidiot_text.includes("switchon")) {

@@ -280,9 +280,12 @@ namespace PlanetX_IOT {
     export function uploadKidsiot(data: number): void {
         if (kidsiot_connected) {
             data = Math.floor(data)
-            let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"up\",\"data\":\"" + data + "\"}"
-            sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-            sendAT(text_one, 0)
+            let jsonText = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"up\",\"data\":\"" + data + "\"}"
+            sendAT("AT+CIPSEND=" + (jsonText.length + 2), 0)
+            while(!waitFeedBack()){
+                basic.pause(500)
+            }
+            sendAT(jsonText, 0)
             basic.pause(1000)
         }
     }

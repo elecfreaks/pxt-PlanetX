@@ -60,7 +60,7 @@ namespace PlanetX_IOT {
         sendAT("AT+RESTORE", 1000) // restore to factory settings
         sendAT("ATE0") // disable echo
         sendAT("AT+CWMODE=1") // set to STA mode
-        serial.readBuffer(64)
+        serial.readBuffer(0)
         basic.pause(100)
     }
     /**

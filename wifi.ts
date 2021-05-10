@@ -320,13 +320,10 @@ namespace PlanetX_IOT {
     //% subcategory="KidsIot" weight=30
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=3
     export function iotSwitchEvent(state: stateList, handler: () => void) {
-        recevice_kidiot_text=""
         control.onEvent(KidsIoTButtonEventID, state, handler)
         control.inBackground(() => {
             while (true) {
-                basic.showNumber(1)
                 if(kidsiot_connected){
-                    basic.showNumber(0)
                     recevice_kidiot_text = serial.readLine()
                     PlanetX_Display.showUserText(1, recevice_kidiot_text)
                     if (recevice_kidiot_text.includes("switchon")) {

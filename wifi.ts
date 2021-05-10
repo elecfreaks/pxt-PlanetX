@@ -243,7 +243,6 @@ namespace PlanetX_IOT {
             userToken_def = userToken
             topic_def = topic
             sendAT("AT+CIPSTART=\"TCP\",\"139.159.161.57\",5555", 0) // connect to website server
-            /*
             let serial_str: string = ""
             let time: number = input.runningTime()
             while (true) {
@@ -254,22 +253,20 @@ namespace PlanetX_IOT {
                     kitsiot_connected = true
                     break
                 }
-                if (serial_str.includes("ERROR") || serial_str.includes("CLOSED")) {
-                    kitsiot_connected = false
-                    break
-                }
                 if (input.runningTime() - time > 10000) {
                     kitsiot_connected = false
                     break
                 }
             }
-            */
-            let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
-            sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
-            basic.pause(1000)
-            sendAT(text_one, 0)
-            basic.pause(1000)
-            kitsiot_connected=true
+            if(kitsiot_connected){
+                let text_one = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
+                sendAT("AT+CIPSEND=" + (text_one.length + 2), 0)
+                basic.pause(1000)
+                sendAT(text_one, 0)
+                basic.pause(1000)
+            }
+
+
         }
     }
     /**

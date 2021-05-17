@@ -1007,7 +1007,7 @@ namespace PlanetX_Basic {
                 return Math.floor(distance)  //cm
                 break
             case Distance_Unit_List.Distance_Unit_inch:
-                return Math.floor(distance / 254)   //inch
+                return Math.floor(distance / 30.48)   //inch
                 break
             default:
                 return 0

@@ -39,7 +39,7 @@
   "PlanetX_AILens.LineTrend.left|block": "左",
   "PlanetX_AILens.LineTrend.none|block": "无",
   "PlanetX_AILens.LineTrend.right|block": "右",
-  "PlanetX_AILens.Linestatus.angel|block": "偏移角度",
+  "PlanetX_AILens.Linestatus.angle|block": "偏移角度",
   "PlanetX_AILens.Linestatus.len|block": "线段长度",
   "PlanetX_AILens.Linestatus.width|block": "偏移距离",
   "PlanetX_AILens.ballColorList.Blue|block": "蓝色",

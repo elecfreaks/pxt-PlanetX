@@ -105,8 +105,8 @@ namespace PlanetX_AILens {
     }
 
     export enum Linestatus {
-        //% block="Angel"
-        angel = 1,
+        //% block="Angle"
+        angle = 1,
         //% block="Width"
         width = 2,
         //% block="Len"
@@ -559,7 +559,7 @@ namespace PlanetX_AILens {
     export function lineData(status: Linestatus): number {
         if (DataBuff[0] == 8) {
             switch (status) {
-                case Linestatus.angel:
+                case Linestatus.angle:
                     return DataBuff[1]
                     break
                 case Linestatus.width:

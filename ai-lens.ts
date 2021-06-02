@@ -189,8 +189,8 @@ namespace PlanetX_AILens {
         ruler = 3,
 		//% block="Cat"
         cat = 4,
-		//% block="Peer"
-        peer = 5,
+		//% block="Pear"
+        pear = 5,
 		//% block="Ship"
         ship = 6,
 		//% block="Apple"

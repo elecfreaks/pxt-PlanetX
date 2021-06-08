@@ -90,8 +90,10 @@ namespace PlanetX_IOT {
                 wifi_connected = false
                 break
             }
-            if (serial_str.includes("WIFI CONNECTED")){
-                time = input.runningTime()
+            if (input.runningTime() - time > 10000){
+                serial_str=""
+                wifi_connected = false
+                break
             }
 
         }

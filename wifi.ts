@@ -171,11 +171,12 @@ namespace PlanetX_IOT {
     //% subcategory="ThingSpeak" weight=70
     export function uploadData() {
         if (thingspeak_connected) {
+            let serial_str: string = ""
+            serial_str = serial.readString()
             last_upload_successful = false
             sendAT("AT+CIPSEND=" + (toSendStr.length + 2), 100)
             basic.pause(1000)
             sendAT(toSendStr, 100) // upload data
-            let serial_str: string = ""
             let time: number = input.runningTime()
             while (true) {
                 serial_str += serial.readString()
@@ -255,6 +256,7 @@ namespace PlanetX_IOT {
     /*-----------------------------------kidsiot---------------------------------*/
     export function waitFeedBack(): boolean{
         let serial_str: string = ""
+        serial_str = serial.readString()
         let time: number = input.runningTime()
         while (true) {
             serial_str = serial.readLine()

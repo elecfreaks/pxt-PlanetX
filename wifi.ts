@@ -70,7 +70,6 @@ namespace PlanetX_IOT {
     //% ssid.defl=your_ssid
     //% pw.defl=your_pw weight=95
     export function connectWifi(ssid: string, pw: string) {
-        wifi_connected = false
         thingspeak_connected = false
         kidsiot_connected = false
         sendAT("AT+CWJAP=\"" + ssid + "\",\"" + pw + "\"", 0) // connect to Wifi router
@@ -212,6 +211,25 @@ namespace PlanetX_IOT {
     */
     //% block="Wifi connected %State" weight=65
     export function wifiState(state: boolean) {
+        sendAT("AT+CWJAP=？", 0) // connect to Wifi router
+        let serial_str: string = ""
+        let time: number = input.runningTime()
+        while (true) {
+            serial_str = serial.readLine()
+            if (serial_str.length > 50)
+                serial_str = serial_str.substr(serial_str.length - 50)
+            if (serial_str.includes("No AP")) {
+                serial_str=""
+                wifi_connected = false
+                break
+            }
+            if (input.runningTime() - time > 2000){
+                serial_str=""
+                wifi_connected = true
+                break
+            }
+
+        }
         return wifi_connected == state
     }
 

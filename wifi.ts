@@ -60,7 +60,6 @@ namespace PlanetX_IOT {
         sendAT("AT+RESTORE", 1000) // restore to factory settings
         sendAT("ATE0") // disable echo
         sendAT("AT+CWMODE=1") // set to STA mode
-        serial.readBuffer(0)
         basic.pause(100)
     }
     /**
@@ -70,10 +69,11 @@ namespace PlanetX_IOT {
     //% ssid.defl=your_ssid
     //% pw.defl=your_pw weight=95
     export function connectWifi(ssid: string, pw: string) {
+        let serial_str: string = ""
+        serial_str = serial.readString()
         thingspeak_connected = false
         kidsiot_connected = false
         sendAT("AT+CWJAP=\"" + ssid + "\",\"" + pw + "\"", 0) // connect to Wifi router
-        let serial_str: string = ""
         let time: number = input.runningTime()
         while (true) {
             serial_str = serial.readLine()
@@ -96,7 +96,8 @@ namespace PlanetX_IOT {
             }
 
         }
-        basic.pause(1000)
+        basic.pause(3000)
+        serial_str = serial.readString()
     }
     
     /**
@@ -193,6 +194,7 @@ namespace PlanetX_IOT {
                     break
                 }
             }
+            
             basic.pause(100)
         }
     }
@@ -211,26 +213,24 @@ namespace PlanetX_IOT {
     */
     //% block="Wifi connected %State" weight=65
     export function wifiState(state: boolean) {
-        sendAT("AT+CWJAP=？", 0) // connect to Wifi router
         let serial_str: string = ""
+        serial_str = serial.readString()
+        sendAT("AT+CWJAP?", 0) // connect to Wifi router
         let time: number = input.runningTime()
         while (true) {
-            serial_str = serial.readLine()
+            serial_str = serial.readString()
             if (serial_str.length > 50)
                 serial_str = serial_str.substr(serial_str.length - 50)
             if (serial_str.includes("No AP")) {
-                serial_str=""
-                wifi_connected = false
-                break
+                return false
             }
-            if (input.runningTime() - time > 2000){
-                serial_str=""
-                wifi_connected = true
-                break
+            if (serial_str.includes("+CWJAP")) {
+                return true
             }
-
+            if (input.runningTime() - time > 5000){
+                return false
+            }
         }
-        return wifi_connected == state
     }
 
     /**

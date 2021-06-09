@@ -195,7 +195,6 @@ namespace PlanetX_IOT {
                     break
                 }
             }
-            
             basic.pause(100)
         }
     }

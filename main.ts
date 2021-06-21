@@ -491,9 +491,9 @@ namespace PlanetX_Basic {
         //% block="◌ ● ● ◌" 
         Tracking_State_1 = 6,
         //% block="◌ ◌ ● ◌" 
-        Tracking_State_2 = 2,
+        Tracking_State_2 = 4,
         //% block="◌ ● ◌ ◌" 
-        Tracking_State_3 = 4,
+        Tracking_State_3 = 2,
 
 
         //% block="● ◌ ◌ ●" 
@@ -501,27 +501,27 @@ namespace PlanetX_Basic {
         //% block="● ● ● ●" 
         Tracking_State_5 = 15,
         //% block="● ◌ ● ●" 
-        Tracking_State_6 = 11,
+        Tracking_State_6 = 13,
         //% block="● ● ◌ ●" 
-        Tracking_State_7 = 13,
+        Tracking_State_7 = 11,
 
         //% block="● ◌ ◌ ◌" 
-        Tracking_State_8 = 8,
+        Tracking_State_8 = 1,
         //% block="● ● ● ◌" 
-        Tracking_State_9 = 14,
+        Tracking_State_9 = 7,
         //% block="● ◌ ● ◌" 
-        Tracking_State_10 = 10,
+        Tracking_State_10 = 5,
         //% block="● ● ◌ ◌" 
-        Tracking_State_11 = 12,
+        Tracking_State_11 = 3,
 
         //% block="◌ ◌ ◌ ●" 
-        Tracking_State_12 = 1,
+        Tracking_State_12 = 8,
         //% block="◌ ● ● ●" 
-        Tracking_State_13 = 7,
+        Tracking_State_13 = 14,
         //% block="◌ ◌ ● ●" 
-        Tracking_State_14 = 3,
+        Tracking_State_14 = 12,
         //% block="◌ ● ◌ ●" 
-        Tracking_State_15 = 5
+        Tracking_State_15 = 10
     }
     export enum TrackbitType{
         //% block="◌" 

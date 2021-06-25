@@ -159,7 +159,7 @@ namespace PlanetX_Basic {
         let Delta = maxVal - minVal;  //△ = Max - Min
 
         /***********   计算Hue  **********/
-        if (Delta <= 0) {
+        if (Delta < 0) {
             Hue = 0;
         }
         else if (maxVal == R && G >= B) //最大值为红色

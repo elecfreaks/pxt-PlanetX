@@ -845,7 +845,7 @@ namespace PlanetX_Basic {
         }
         voltage = voltage / 100
         if (voltage < 200) {
-            voltage = Math.map(voltage, 45, 200, 0, 1600)
+            voltage = Math.map(voltage, 0, 200, 0, 1600)
         }
         else {
             voltage = Math.map(voltage, 200, 1023, 1600, 14000)

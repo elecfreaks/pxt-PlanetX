@@ -115,7 +115,10 @@ namespace PlanetX_Basic {
         0x6F, 0x32, 0x71, 0x00, 0x72, 0x01, 0x73, 0x35, 0x74, 0x00, 0x75, 0x33, 0x76, 0x31, 0x77, 0x01,
         0x7C, 0x84, 0x7D, 0x03, 0x7E, 0x01
     ];
-
+    ////////////////DHT20////////////////////////////////
+    let DHT20_Addr = 0x38
+    let DHT20WriteBuff = pins.createBuffer(3);
+    let DHT20ReadBuff = pins.createBuffer(6);
     /////////////////////////color/////////////////////////
     const APDS9960_ADDR = 0x39
     const APDS9960_ENABLE = 0x80
@@ -581,6 +584,13 @@ namespace PlanetX_Basic {
 
         //% block="humidity(0~100)" enumval=1
         DHT11_humidity,
+    }
+    export enum DHT20_state {
+        //% block="temperature(℃)" enumval=0
+        DHT20_temperature_C,
+
+        //% block="humidity(0~100)" enumval=1
+        DHT20_humidity,
     }
     /**
     *  Gestures
@@ -1651,6 +1661,41 @@ namespace PlanetX_Basic {
         }
         return true;
     }
+    /**
+    * get dht20 temperature and humidity Value   
+    */
+    //% blockId="readdht20" block="DHT20 sensor %dht20state value"
+    //% dht20state.fieldEditor="gridpicker"
+    //% dht20state.fieldOptions.columns=1
+    //% subcategory=Sensor group="IIC Port"
+    export function dht20Sensor(dht20state: DHT20_state): number {
+        let temp, temp1, rawData = 0;
+        let temperature, humidity = 0;
+        DHT20WriteBuff[0] = 0xAC;
+        DHT20WriteBuff[1] = 0x33;
+        DHT20WriteBuff[2] = 0x00;
+        pins.i2cWriteBuffer(DHT20_Addr, DHT20WriteBuff);
+        basic.pause(80)
+        DHT20ReadBuff = pins.i2cReadBuffer(DHT20_Addr, 6)
+        if(dht20state == DHT20_state.DHT20_temperature_C){
+            temp = DHT20ReadBuff[3] & 0xff;
+            temp1 = DHT20ReadBuff[4] & 0xff;
+            rawData = 0;
+            rawData = ((temp & 0xf) << 16) + (temp1 << 8) + (DHT20ReadBuff[5]);
+            temperature = rawData / 5242 - 50;
+            return Math.round(temperature);
+            
+        }
+        else{
+            temp = DHT20ReadBuff[1] & 0xff;
+            temp1 = DHT20ReadBuff[2] & 0xff;
+            rawData = 0;
+            rawData = (temp << 12) + (temp1 << 4) + ((DHT20ReadBuff[3] & 0xf0) >> 4);
+            humidity = rawData / 0x100000;
+            return Math.round(humidity);
+        }
+    }
+
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2

@@ -1677,20 +1677,16 @@ namespace PlanetX_Basic {
         pins.i2cWriteBuffer(DHT20_Addr, DHT20WriteBuff);
         basic.pause(80)
         DHT20ReadBuff = pins.i2cReadBuffer(DHT20_Addr, 6)
+        temp = DHT20ReadBuff[1] & 0xff;
+        temp1 = DHT20ReadBuff[2] & 0xff;
+        rawData = 0;
         if(dht20state == DHT20_state.DHT20_temperature_C){
-            temp = DHT20ReadBuff[3] & 0xff;
-            temp1 = DHT20ReadBuff[4] & 0xff;
-            rawData = 0;
             rawData = ((temp & 0xf) << 16) + (temp1 << 8) + (DHT20ReadBuff[5]);
             temperature = rawData / 5242 - 50;
             temperature = temperature * 100
             return Math.round(temperature) / 100;
-            
         }
         else{
-            temp = DHT20ReadBuff[1] & 0xff;
-            temp1 = DHT20ReadBuff[2] & 0xff;
-            rawData = 0;
             rawData = (temp << 12) + (temp1 << 4) + ((DHT20ReadBuff[3] & 0xf0) >> 4);
             humidity = rawData / 0x100000;
             humidity = humidity * 10000

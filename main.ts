@@ -658,70 +658,7 @@ namespace PlanetX_Basic {
         //% block="Second"
         Second
     }
-    export enum vocabularyList {
-        //% block="Hi,Shaun"
-        Hi_Shaun = 1,
-        //% block="Turn on lights" 
-        Turn_on_lights = 16,
-        //% block="Turn off lights"
-        Turn_off_lights = 17,
-        //% block="Turn left"
-        Turn_left = 18,
-        //% block="Turn right"
-        Turn_right = 19,
-        //% block="Go forward"
-        Go_forward = 20,
-        //% block="Go Backwards"
-        Go_Backwards = 21,
-        //% block="Line Tracking"
-        Line_tacking = 22,
-        //% block="Avoid object"
-        Avoid_object = 23,
-        //% block="Stop car"
-        Stop_car = 24,
-        //% block="Start device"
-        Start_device = 32,
-        //% block="Close device"
-        Close_device = 33,
-        //% block="Pause device"
-        Pause_device = 34,
-        //% block="Keep going"
-        Keep_going = 35,
-        //% block="Add a level"
-        Add_a_level = 36,
-        //% block="Lower a level"
-        Lower_a_level = 37,
-        //% block="Music on"
-        Music_on = 38,
-        //% block="Music off"
-        Music_off = 39,
-        //% block="Switch music"
-        Switch_music = 40,
-        //% block="Execute function one"
-        Execute_function_one = 49,
-        //% block="Execute function two"
-        Execute_function_two = 50,
-        //% block="Learning entry 1"
-        Learning_entry_1 = 80,
-        //% block="Learning entry 2"
-        Learning_entry_2 = 81,
-        //% block="Learning entry 3"
-        Learning_entry_3 = 82,
-        //% block="Learning entry 4"
-        Learning_entry_4 = 83,
-        //% block="Learning entry 5"
-        Learning_entry_5 = 84,
-        //% block="Learning entry 6"
-        Learning_entry_6 = 85,
-        //% block="Learning entry 7"
-        Learning_entry_7 = 86,
-        //% block="Learning entry 8"
-        Learning_entry_8 = 87,
-        //% block="Learning entry 9"
-        Learning_entry_9 = 88,
-        //% block="Learning entry 10"
-        Learning_entry_10 = 89
-    }
+    
     ///////////////////////////////////blocks/////////////////////////////
     /** 
     * TODO: get noise(dB)
@@ -1538,34 +1475,7 @@ namespace PlanetX_Basic {
                 break
         }
     }
-    let asrEventId = 3500
-    let lastvoc = 0
-    //% block="ASR sensor IIC port hear %vocabulary"
-    //% subcategory=Sensor group="IIC Port"
-    //% vocabulary.fieldEditor="gridpicker" vocabulary.fieldOptions.columns=3
-    export function onASR(vocabulary: vocabularyList, handler: () => void) {
-        control.onEvent(asrEventId, vocabulary, handler);
-        control.inBackground(() => {
-            while (true) {
-                const voc = pins.i2cReadNumber(0x0B, 1)
-                if (voc != lastvoc) {
-                    lastvoc = voc
-                    control.raiseEvent(asrEventId, lastvoc);
-                }
-                basic.pause(50);
-            }
-        })
-    }
-    //% block="ASR sensor IIC port enter learning-model"
-    //% subcategory=Sensor group="IIC Port"
-    export function setASRLearn(): void {
-        pins.i2cWriteNumber(0x0B, 0x50, NumberFormat.Int8LE)
-    }
-    //% block="ASR sensor IIC port factory reset"
-    //% subcategory=Sensor group="IIC Port"
-    export function delASRLearn():void{
-        pins.i2cWriteNumber(0x0B, 0x60, NumberFormat.Int8LE)
-    }
+    
     //% block="RFID sensor IIC port read data from card"
     //% subcategory=Sensor group="IIC Port"
     export function readDataBlock(): string {

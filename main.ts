@@ -195,8 +195,6 @@ namespace PlanetX_Basic {
         i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, tmp);
     }
 
-
-
     ////////////////////////////////////////////real time clock
     let DS1307_I2C_ADDR = 104;
     let DS1307_REG_SECOND = 0

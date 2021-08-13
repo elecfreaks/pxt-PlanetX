@@ -352,6 +352,8 @@
   "{id:subcategory}Display": "显示单元",
   "{id:subcategory}Excute": "执行单元",
   "{id:subcategory}Input": "输入单元",
+  "{id:subcategory}Visin": "视觉",
+  "{id:subcategory}ASR": "语音",
   "{id:subcategory}KidsIot": "KidsIot",
   "{id:subcategory}Neopixel": "彩灯单元",
   "{id:subcategory}Sensor": "传感器单元",

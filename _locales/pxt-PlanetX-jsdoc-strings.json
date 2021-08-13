@@ -52,6 +52,7 @@
   "PlanetX_Basic.UVLevel": "get UV level value (0~15)",
   "PlanetX_Basic.UnitList": "Unit of temperature",
   "PlanetX_Basic.dht11Sensor": "get dht11 temperature and humidity Value",
+  "PlanetX_Basic.dht20Sensor": "get dht20 temperature and humidity Value",
   "PlanetX_Basic.execute": "TODO: Perform playback or other",
   "PlanetX_Basic.execute|param|myType": "Left wheel speed , eg: playType.Play",
   "PlanetX_Basic.folderPlay": "TODO: Specify songs in the play folder",

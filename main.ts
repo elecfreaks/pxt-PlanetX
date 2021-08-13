@@ -1201,7 +1201,6 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
-
         //initialize
         let _temperature: number = -999.0
         let _humidity: number = -999.0
@@ -1313,21 +1312,18 @@ namespace PlanetX_Basic {
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
     //% subcategory=Sensor  group="IIC Port"
     export function bme280Sensor(state: BME280_state): number {
+        getBme280Value();
         switch (state) {
             case BME280_state.BME280_temperature_C:
-                getBme280Value();
                 return Math.round(T);
                 break;
             case BME280_state.BME280_humidity:
-                getBme280Value();
                 return Math.round(H);
                 break;
             case BME280_state.BME280_pressure:
-                getBme280Value();
                 return Math.round(P / 100);
                 break;
             case BME280_state.BME280_altitude:
-                getBme280Value();
                 return Math.round(1022 - (P / 100)) * 9
                 break;
             default:
@@ -1439,20 +1435,14 @@ namespace PlanetX_Basic {
         let retemp = 0
         switch (target) {
             case targetList.human_body:
-                if (Unit == 0) {
-                    retemp = readdata(humanbody_Addr) + 3;
-                }
-                else {
-                    retemp = readdata(humanbody_Addr) + 3;
+                retemp = readdata(humanbody_Addr) + 3;
+                if (Unit == 1) {
                     retemp = retemp * 9 / 5 + 32
                 }
                 break;
             case targetList.environment:
-                if (Unit == 0) {
-                    retemp = readdata(environment_Addr) - 5;
-                }
-                else {
-                    retemp = readdata(environment_Addr) - 5;
+                retemp = readdata(environment_Addr) - 5;
+                if (Unit == 1) {
                     retemp = retemp * 9 / 5 + 32
                 }
                 break;
@@ -1605,12 +1595,6 @@ namespace PlanetX_Basic {
         cmdRead[cmdRead.length - 2] = 0xff - sum & 0xff;
         let buf = pins.createBufferFromArray(cmdRead)
         writeAndReadBuf(buf, 31);
-        for (let i = 0; i < 4; i++) {
-            if (recvAck[1 + i] != ackBuf[i]) {
-                serial.writeLine("ACK error!")
-                return ""
-            }
-        }
         let ret = "";
         if ((recvBuf[6] === 0xD5) && (recvBuf[7] === 0x41) && (recvBuf[8] === 0x00) && (checkDcs(31 - 4))) {
             for (let i = 0; i < 16; i++) {
@@ -1620,7 +1604,6 @@ namespace PlanetX_Basic {
             }
             return ret;
         }
-        serial.writeLine("read error!")
         return ""
     }
     //% block="RFID sensor IIC port write %data to card"

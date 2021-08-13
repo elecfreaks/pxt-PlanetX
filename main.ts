@@ -1683,7 +1683,7 @@ namespace PlanetX_Basic {
             rawData = 0;
             rawData = ((temp & 0xf) << 16) + (temp1 << 8) + (DHT20ReadBuff[5]);
             temperature = rawData / 5242 - 50;
-            return Math.round(temperature);
+            return temperature;
             
         }
         else{
@@ -1692,7 +1692,7 @@ namespace PlanetX_Basic {
             rawData = 0;
             rawData = (temp << 12) + (temp1 << 4) + ((DHT20ReadBuff[3] & 0xf0) >> 4);
             humidity = rawData / 0x100000;
-            return Math.round(humidity);
+            return humidity;
         }
     }
 

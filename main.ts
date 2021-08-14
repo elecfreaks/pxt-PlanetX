@@ -151,28 +151,24 @@ namespace PlanetX_Basic {
     }
     function rgb2hsl(color_r: number, color_g: number, color_b: number): number {
         let Hue = 0
-        // normalizes red-green-blue values  把RGB值转成【0，1】中数值。
-        let R = color_r * 100 / 255;   //由于H25不支持浮点运算，放大100倍在计算，下面的运算也放大100倍
+        let R = color_r * 100 / 255;   
         let G = color_g * 100 / 255;
         let B = color_b * 100 / 255;
+        let maxVal = Math.max(R, Math.max(G, B))
+        let minVal = Math.min(R, Math.min(G, B)) 
+        let Delta = maxVal - minVal;  
 
-        let maxVal = Math.max(R, Math.max(G, B))//找出R,G和B中的最大值
-        let minVal = Math.min(R, Math.min(G, B)) //找出R,G和B中的最小值
-
-        let Delta = maxVal - minVal;  //△ = Max - Min
-
-        /***********   计算Hue  **********/
         if (Delta < 0) {
             Hue = 0;
         }
-        else if (maxVal == R && G >= B) //最大值为红色
+        else if (maxVal == R && G >= B)
         {
-            Hue = (60 * ((G - B) * 100 / Delta)) / 100;  //放大100倍
+            Hue = (60 * ((G - B) * 100 / Delta)) / 100; 
         }
         else if (maxVal == R && G < B) {
             Hue = (60 * ((G - B) * 100 / Delta) + 360 * 100) / 100;
         }
-        else if (maxVal == G) //最大值为绿色
+        else if (maxVal == G) 
         {
             Hue = (60 * ((B - R) * 100 / Delta) + 120 * 100) / 100;
         }
@@ -182,12 +178,12 @@ namespace PlanetX_Basic {
         return Hue
     }
     function initModule(): void {
-        i2cwrite_color(APDS9960_ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
-        i2cwrite_color(APDS9960_ADDR, APDS9960_CONTROL, 0x03) // todo: make gain adjustable
-        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x00) // put everything off
-        i2cwrite_color(APDS9960_ADDR, APDS9960_GCONF4, 0x00) // disable gesture mode
-        i2cwrite_color(APDS9960_ADDR, APDS9960_AICLEAR, 0x00) // clear all interrupt
-        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x01) // clear all interrupt
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ATIME, 252) 
+        i2cwrite_color(APDS9960_ADDR, APDS9960_CONTROL, 0x03) 
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x00) 
+        i2cwrite_color(APDS9960_ADDR, APDS9960_GCONF4, 0x00) 
+        i2cwrite_color(APDS9960_ADDR, APDS9960_AICLEAR, 0x00) 
+        i2cwrite_color(APDS9960_ADDR, APDS9960_ENABLE, 0x01) 
         color_first_init = true
     }
     function colorMode(): void {
@@ -236,18 +232,14 @@ namespace PlanetX_Basic {
     const MLX90615Addr = 0x5B
     const humanbody_Addr = 0x27
     const environment_Addr = 0x26
-    /**
-    * List of detected targets
-    */
+
     export enum targetList {
         //% block="Human body"
         human_body,
         //% block="Environment"
         environment
     }
-    /**
-    * Unit of temperature
-    */
+
     export enum UnitList {
         //% block="℃"
         Centigrade,
@@ -590,9 +582,7 @@ namespace PlanetX_Basic {
         //% block="humidity(0~100)" enumval=1
         DHT20_humidity,
     }
-    /**
-    *  Gestures
-    */
+
     export enum GestureType {
         //% block="None"
         None = 0,
@@ -660,10 +650,6 @@ namespace PlanetX_Basic {
     }
     
     ///////////////////////////////////blocks/////////////////////////////
-    /** 
-    * TODO: get noise(dB)
-    * @param noisepin describe parameter here, eg: AnalogRJPin.J1
-    */
     //% blockId="readnoise" block="Noise sensor %Rjpin loudness(dB)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -773,10 +759,6 @@ namespace PlanetX_Basic {
         noise = Math.round(noise)
         return Math.round(noise)
     }
-    /**
-    * TODO: get light intensity(lux)
-    * @param lightintensitypin describe parameter here, eg: AnalogRJPin.J1
-    */
     //% blockId="lightSensor" block="Light sensor %Rjpin light intensity(lux)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -800,10 +782,6 @@ namespace PlanetX_Basic {
         }
         return Math.round(voltage)
     }
-    /**
-    * TODO: get soil moisture(0~100%)
-    * @param soilmoisturepin describe parameter here, eg: AnalogRJPin.J1
-    */
     //% blockId="readsoilmoisture" block="Soil moisture sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -823,10 +801,6 @@ namespace PlanetX_Basic {
         return Math.round(soilmoisture);
     }
 
-    /**
-    * get water level value (0~100)
-    * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
-    */
     //% blockId="readwaterLevel" block="Water level sensor %Rjpin value(0~100)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -849,10 +823,6 @@ namespace PlanetX_Basic {
         return Math.round(waterlevel)
     }
 
-    /**
-    * get UV level value (0~15)
-    * @param waterlevelpin describe parameter here, eg: AnalogRJPin.J1
-    */
     //% blockId="readUVLevel" block="UV sensor %Rjpin level(0~15)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -885,9 +855,7 @@ namespace PlanetX_Basic {
         }
         return pins.analogReadPin(pin)
     }
-    /**
-    * check crash
-    */
+
     //% blockId=Crash block="Crash Sensor %Rjpin is pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -903,9 +871,7 @@ namespace PlanetX_Basic {
             return false
         }
     }
-    /**
-* get Ultrasonic distance
-*/
+
     //% blockId=sonarbit block="Ultrasonic sensor %Rjpin distance %distance_unit"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -958,10 +924,7 @@ namespace PlanetX_Basic {
                 return 0
         }
     }
-    /**
-    * TODO: Detect soil moisture value(0~100%)
-    * @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
-    */
+
     //% blockId="PIR" block="PIR sensor %Rjpin detects motion"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -976,10 +939,7 @@ namespace PlanetX_Basic {
             return false
         }
     }
-     /**
-    * TODO: get pm2.5 value (μg/m³) 
-    * @param soilmoisturepin describe parameter here, eg: DigitalRJPin.J1
-    */
+
     //% blockId="PM25" block="PM2.5 sensor %Rjpin value (μg/m³)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -998,10 +958,7 @@ namespace PlanetX_Basic {
         pm25 = input.runningTime() - pm25
         return pm25
     }
-    /**
-     * get dust value (μg/m³) 
-     * @param Rjpin describe parameter here, eg: Rjpin.J1
-     */
+
     //% blockId="readdust" block="Dust sensor %Rjpin value (μg/m³)"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -1041,9 +998,7 @@ namespace PlanetX_Basic {
         return Math.round(dust)
 
     }
-    /**
-    * TODO: line following
-    */
+
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
@@ -1083,9 +1038,7 @@ namespace PlanetX_Basic {
             return true;
         } else return false;
     }
-    /**
-    * TODO: 4 line following
-    */
+
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel gray value"
@@ -1127,10 +1080,7 @@ namespace PlanetX_Basic {
             }
         }
     }
-    /**
-    * get dht11 temperature and humidity Value
-    * @param dht11pin describe parameter here, eg: DigitalPin.P15     
-    */
+
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
@@ -1339,11 +1289,6 @@ namespace PlanetX_Basic {
     const gestureEventId = 3100;
     let lastGesture = GestureType.None;
     let paj7620 = new PAJ7620();
-    /**
-        * Do something when a gesture is detected
-        * @param gesture type of gesture to detect
-        * @param handler code to run
-    */
     //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor group="IIC Port"
@@ -1552,9 +1497,7 @@ namespace PlanetX_Basic {
         }
         return true;
     }
-    /**
-    * get dht20 temperature and humidity Value   
-    */
+
     //% blockId="readdht20" block="DHT20 sensor %dht20state value"
     //% dht20state.fieldEditor="gridpicker"
     //% dht20state.fieldOptions.columns=1
@@ -1636,9 +1579,7 @@ namespace PlanetX_Basic {
             return false
         }
     }
-    /**
-    * toggle fans
-    */
+
     //% blockId=fans block="Motor fan %Rjpin toggle to $fanstate || speed %speed \\%"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -1671,9 +1612,7 @@ namespace PlanetX_Basic {
             speed = 0
         }
     }
-    /**
-    * toggle laserSensor
-    */
+
     //% blockId=laserSensor block="Laser %Rjpin toggle to $laserstate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -1690,9 +1629,6 @@ namespace PlanetX_Basic {
         }
     }
 
-    /**
-    * toggle Relay
-    */
     //% blockId=Relay block="Relay %Rjpin toggle to %Relaystate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -1711,10 +1647,7 @@ namespace PlanetX_Basic {
                 break;
         }
     }
-    /**
-     * TODO: Loop songs in folders
-     * @param folderNum Specify a floder , eg: 0
-     */
+
     //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:$folderNum"
     //% folderNum.defl="01"
     //% subcategory=Excute group="MP3" color=#EA5532
@@ -1728,12 +1661,7 @@ namespace PlanetX_Basic {
         mp3_checkSum()
         mp3_sendData()
     }
-    /**
-    * TODO: Specify songs in the play folder
-    * @param folderNum Specify a floder , eg: 0
-    * @param fileNum Specify a song , eg: 0
-    * @param myAns repeat , eg: repeatList.Yes
-    */
+
     //% blockId="folderPlay" 
     //% block="play the mp3 in the folder:$folderNum filename:$fileNum || repeatList: $myAns"
     //% folderNum.defl="01" fileNum.defl="001"
@@ -1752,11 +1680,7 @@ namespace PlanetX_Basic {
         if (myAns)
             execute(0x19)
     }
-    /**
-     * TODO: Specify a song to play
-     * @param tracking Specify a song , eg: 0
-     * @param myAns repeat , eg: repeatList.Yes
-     */
+ 
     //% blockId="setTracking" 
     //% block="play the mp3 in order of:%tracking || repeatList: $myAns"
     //% myAns.shadow="toggleYesNo"
@@ -1776,11 +1700,6 @@ namespace PlanetX_Basic {
         if (myAns)
             execute(0x19)
     }
-	
-    /**
-     * TODO: Perform playback or other
-     * @param myType Left wheel speed , eg: playType.Play
-     */
     //% blockId=MP3execute block="Set MP3 execute procedure:%myType"
     //% myType.fieldEditor="gridpicker"
     //% myType.fieldOptions.columns=2
@@ -1795,10 +1714,6 @@ namespace PlanetX_Basic {
         mp3_checkSum()
         mp3_sendData()
     }
-    /**
-     * TODO: Set volume
-     * @param Sound Volume, eg: 48
-     */
     //% blockId="setVolume" block="Set volume(0~25):%volume"
     //% volume.min=0 volume.max=25
     //% subcategory=Excute group="MP3" color=#EA5532
@@ -1815,10 +1730,6 @@ namespace PlanetX_Basic {
         mp3_checkSum()
         mp3_sendData()
     }
-    /**
-     * TODO: Initializing the MP3 connection port as a serial port
-     * @param pinRX Serial port TX pin of micro:bit
-     */
     //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2

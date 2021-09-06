@@ -14,7 +14,16 @@ namespace PlanetX_IOT {
     let mqtthost_def = "ELECFREAKS"
     let iftttkey_def = ""
     let iftttevent_def = ""
-
+    export enum DigitalRJPin {
+        //% block="J1"
+        J1,
+        //% block="J2"
+        J2,
+        //% block="J3"
+        J3,
+        //% block="J4"
+        J4
+    }
     export enum stateList {
         //% block="on"
         on = 14,
@@ -97,20 +106,39 @@ namespace PlanetX_IOT {
     /**
     * Initialize ESP8266 module 
     */
-    //% block="set ESP8266|RX %tx|TX %rx|Baud rate %baudrate"
-    //% tx.defl=SerialPin.P8
-    //% rx.defl=SerialPin.P12
+    //% block="set ESP8266 %Rjpin Baud rate %baudrate"
     //% ssid.defl=your_ssid
     //% pw.defl=your_password weight=100
-    export function initWIFI(tx: SerialPin, rx: SerialPin, baudrate: BaudRate) {
-        serial.redirect(tx, rx, BaudRate.BaudRate115200)
+    export function initWIFI(Rjpin: DigitalRJPin, baudrate: BaudRate) {
+        let pin_tx = SerialPin.P1
+        let pin_rx = SerialPin.P8
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin_tx = SerialPin.P8
+                pin_rx = SerialPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin_tx = SerialPin.P12
+                pin_rx = SerialPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin_tx = SerialPin.P14
+                pin_rx = SerialPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin_tx = SerialPin.P16
+                pin_rx = SerialPin.P15
+                break;
+        }
+        serial.redirect(
+            pin_tx,
+            pin_rx,
+            baudrate
+        )
+        sendAT("AT+RESTORE", 1000) // restore to factory settings
+        sendAT("ATE0") // disable echo
+        sendAT("AT+CWMODE=1") // set to STA mode
         basic.pause(100)
-        serial.setTxBufferSize(128)
-        serial.setRxBufferSize(128)
-        serial.readString()
-        sendAT("AT+RESTORE", 2500) // restore to factory settings
-        sendAT("ATE0", 1500) // disable echo
-        sendAT("AT+CWMODE=1", 1500) // set to STA mode
     }
     /**
     * connect to Wifi router

@@ -8,13 +8,15 @@
     },
     "files": [
         "README.md",
-        "main.ts",
+        "basic.ts",
         "display.ts",
         "wifi.ts",
         "sendBuffer.asm",
         "ai-lens.ts",
         "_locales/zh-CN/pxt-PlanetX-strings.json",
-        "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json"
+        "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json",
+        "main.ts",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"

@@ -15,8 +15,7 @@
         "ai-lens.ts",
         "_locales/zh-CN/pxt-PlanetX-strings.json",
         "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json",
-        "main.ts",
-        "main.py"
+        "main.ts"
     ],
     "testFiles": [
         "test.ts"

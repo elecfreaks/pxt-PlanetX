@@ -530,6 +530,13 @@ namespace PlanetX_Basic {
         //% block="4"
         Four = 3
     }
+    export enum TrackBit_gray
+    {
+        //% block="black"
+        One = 0,
+        //% block="white"
+        Two = 4
+    }
 
     export enum Distance_Unit_List {
         //% block="cm" 
@@ -1077,6 +1084,28 @@ namespace PlanetX_Basic {
                 return true
             }
         }
+    }
+
+    //% State.fieldEditor="gridpicker"
+    //% State.fieldOptions.columns=4
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Trackbit Init_Sensor_Val channel %channel black or white %brw value"
+    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel,brw: TrackBit_gray):number
+    {
+        let Init_Sensor_Val = pins.createBuffer(8)
+        pins.i2cWriteNumber(0x1a,5,NumberFormat.Int8LE)
+        Init_Sensor_Val = pins.i2cReadBuffer(0x1a,8)
+        return Init_Sensor_Val[channel + brw]
+    }
+    
+    //% State.fieldEditor="gridpicker"
+    //% State.fieldOptions.columns=4
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Set Trackbit learn fail value %val"
+    export function Trackbit_learn_fail_value(val: number)
+    {
+        pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
+        pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
     }
 
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"

@@ -446,9 +446,12 @@ namespace PlanetX_Basic {
         return pin
     }
 
+    //////////////////////////////////////////////////////////////TrackBit
+    let TrackBit_state_value : number = 0
+
     ///////////////////////////////enum
     export enum DigitalRJPin {
-        //% block="J1" 
+        //% block="J1"
         J1,
         //% block="J2"
         J2,
@@ -1056,10 +1059,7 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit is %State"
     export function TrackbitState(State: TrackbitStateType): boolean {
-        let TempVal: number = 0
-        pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
-        TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
-        return TempVal == State
+        return TrackBit_state_value == State
     }
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=2
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
@@ -1106,6 +1106,16 @@ namespace PlanetX_Basic {
     {
         pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
         pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
+    }
+
+    //% State.fieldEditor="gridpicker"
+    //% State.fieldOptions.columns=4
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Get a trackbit state value"
+    export function Trackbit_get_state_value()
+    {
+        pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
+        TrackBit_state_value = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
     }
 
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"

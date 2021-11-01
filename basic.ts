@@ -1116,6 +1116,7 @@ namespace PlanetX_Basic {
     {
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
         TrackBit_state_value = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+        basic.pause(5);
     }
 
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"

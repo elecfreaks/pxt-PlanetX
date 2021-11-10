@@ -1111,7 +1111,22 @@ namespace PlanetX_Basic {
     //% State.fieldEditor="gridpicker"
     //% State.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
-    //% block="Get a trackbit state value"
+    //% block="Get Trackbit offset value"
+    export function TrackBit_get_offset(): number
+    {
+        let offset_data = pins.createBuffer(2)
+        pins.i2cWriteNumber(0x1a,8,NuberFormat.Int8LE)
+        offset_data = pins.i2cReadBuffer(0x1a, 2)
+        let offset_sum = offset_data[0] + offset_data[1]
+        let offset_avg = offset_data[0] * 1 * 1000 + offset_data[1] * 2 * 1000
+        let offset = offset_avg / offset_sum
+        return offset
+    }
+
+    //% State.fieldEditor="gridpicker"
+    //% State.fieldOptions.columns=4
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Get a Trackbit state value"
     export function Trackbit_get_state_value()
     {
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)

@@ -1124,7 +1124,7 @@ namespace PlanetX_Basic {
         let offset_sum
         let offset_avg
         let offset
-        pins.i2cWriteNumber(0x1a,8,NuberFormat.Int8LE)
+        pins.i2cWriteNumber(0x1a,8,NumberFormat.Int8LE)
         offset_data = pins.i2cReadBuffer(0x1a, 4)
         if (sensor_number == trackbit_sensor_number.Two)
         {

@@ -535,10 +535,17 @@ namespace PlanetX_Basic {
     }
     export enum TrackBit_gray
     {
-        //% block="black"
+        //% block="line"
         One = 0,
-        //% block="white"
+        //% block="background"
         Two = 4
+    }
+    export enum trackbit_sensor_number
+    {
+        //% block="two"
+        Two = 2,
+        //% block="four"
+        Four = 4
     }
 
     export enum Distance_Unit_List {
@@ -1086,20 +1093,20 @@ namespace PlanetX_Basic {
         }
     }
 
-    //% State.fieldEditor="gridpicker"
-    //% State.fieldOptions.columns=4
+    //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
+    //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    //% block="Trackbit Init_Sensor_Val channel %channel black or white %brw value"
-    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel,brw: TrackBit_gray):number
+    //% block="Trackbit Init_Sensor_Val channel %channel detection target %detect_target value"
+    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel,detect_target: TrackBit_gray):number
     {
         let Init_Sensor_Val = pins.createBuffer(8)
         pins.i2cWriteNumber(0x1a,5,NumberFormat.Int8LE)
         Init_Sensor_Val = pins.i2cReadBuffer(0x1a,8)
-        return Init_Sensor_Val[channel + brw]
+        return Init_Sensor_Val[channel + detect_target]
     }
     
-    //% State.fieldEditor="gridpicker"
-    //% State.fieldOptions.columns=4
+
+    //% val.min=0 val.max=255
     //% subcategory=Sensor group="IIC Port"
     //% block="Set Trackbit learn fail value %val"
     export function Trackbit_learn_fail_value(val: number)
@@ -1108,23 +1115,31 @@ namespace PlanetX_Basic {
         pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
     }
 
-    //% State.fieldEditor="gridpicker"
-    //% State.fieldOptions.columns=4
+    //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    //% block="Get Trackbit offset value"
-    export function TrackBit_get_offset(): number
+    //% block="Get Trackbit sensor number %sensor_number offset value"
+    export function TrackBit_get_offset(sensor_number:trackbit_sensor_number): number
     {
-        let offset_data = pins.createBuffer(2)
+        let offset_data = pins.createBuffer(4)
+        let offset_sum
+        let offset_avg
+        let offset
         pins.i2cWriteNumber(0x1a,8,NuberFormat.Int8LE)
-        offset_data = pins.i2cReadBuffer(0x1a, 2)
-        let offset_sum = offset_data[0] + offset_data[1]
-        let offset_avg = offset_data[0] * 1 * 1000 + offset_data[1] * 2 * 1000
-        let offset = offset_avg / offset_sum
+        offset_data = pins.i2cReadBuffer(0x1a, 4)
+        if (sensor_number == trackbit_sensor_number.Two)
+        {
+            offset_sum = offset_data[1] + offset_data[2]
+            offset_avg = offset_data[1] * 1 * 1000 + offset_data[2] * 2 * 1000
+        }
+        else if(sensor_number == trackbit_sensor_number.Four)
+        {
+            offset_sum = offset_data[0] + offset_data[1] + offset_data[2] + offset_data[3];
+            offset_avg = offset_data[0] * 1 * 1000 + offset_data[1] * 2 * 1000 + offset_data[2] * 3 * 1000 + offset_data[3] * 4 * 1000
+        }
+        offset = offset_avg / offset_sum
         return offset
     }
 
-    //% State.fieldEditor="gridpicker"
-    //% State.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Get a Trackbit state value"
     export function Trackbit_get_state_value()

@@ -1133,7 +1133,7 @@ namespace PlanetX_Basic {
         }
         else if(sensor_number == trackbit_sensor_number.Four)
         {
-            offset_sum = offset_data[0] + offset_data[1] + offset_data[2] + offset_data[3];
+            offset_sum = offset_data[0] + offset_data[1] + offset_data[2] + offset_data[3]
             offset_avg = offset_data[0] * 1 * 1000 + offset_data[1] * 2 * 1000 + offset_data[2] * 3 * 1000 + offset_data[3] * 4 * 1000
         }
         offset = offset_avg / offset_sum

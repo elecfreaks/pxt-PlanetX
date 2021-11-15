@@ -664,6 +664,20 @@ namespace PlanetX_Basic {
         Second
     }
 
+    export enum joyvalEnum{
+        //% block="x"
+        x,
+        //% block="y"
+        y
+    }
+
+    export enum joykeyEnum{
+        //% block="pressed"
+        pressed=1,
+        //% block="unpressed"
+        unpressed=0
+    }
+
     ///////////////////////////////////blocks/////////////////////////////
     //% blockId="readnoise" block="Noise sensor %Rjpin loudness(dB)"
     //% Rjpin.fieldEditor="gridpicker"
@@ -1598,6 +1612,34 @@ namespace PlanetX_Basic {
             humidity = humidity * 10000
             return Math.round(humidity) / 100;
         }
+    }
+
+    //% block="joystick sensor %state value"
+    //% state.fieldEditor="gridpicker"
+    //% state.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    export function joystickval(state:joyvalEnum):number{
+        let buff=pins.createBuffer(3)
+        buff=pins.i2cReadBuffer(0xaa,3)
+        if(state==joyvalEnum.x)
+        {
+            return buff[1]*4-508
+        }
+        else
+        {
+            return buff[0]*4-512
+        }
+        return 0
+    }
+
+    //% block="joystick sensor %key key"
+    //% key.fieldEditor="gridpicker"
+    //% key.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    export function joystickkey(key:joykeyEnum):boolean{
+        let buff=pins.createBuffer(3)
+        buff=pins.i2cReadBuffer(0xaa,3)
+        return key==buff[2]
     }
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"

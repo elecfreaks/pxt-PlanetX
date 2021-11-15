@@ -1620,14 +1620,24 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="IIC Port"
     export function joystickval(state:joyvalEnum):number{
         let buff=pins.createBuffer(3)
+        let x_val,y_val
         buff=pins.i2cReadBuffer(0xaa,3)
         if(state==joyvalEnum.x)
         {
-            return buff[1]*4-508
+            x_val = buff[0] * 4 - 512
+            if(x_val > -10 && x_val < 10)
+            {
+                x_val = 0
+            }
+            return x_val
         }
         else
         {
-            return buff[0]*4-512
+            y_val = buff[1] * 4 - 512
+            if (y_val > -10 && y_val < 10) {
+                y_val = 0
+            }
+            return y_val
         }
         return 0
     }

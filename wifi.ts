@@ -608,7 +608,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=MQTT weight=30 
     //% blockId=initMQTT block="Set MQTT client config|scheme: %scheme clientID: %clientID username: %username password: %password path: %path"
-    export function setMQTT(scheme: number, clientID: string, username: string, password: string, path: string): void {
+    export function setMQTT(scheme: SchemeList, clientID: string, username: string, password: string, path: string): void {
         //sendAT("AT+MQTTUSERCFG=0," + scheme + ",\"" + clientID + "\",\"" + username + "\",\"" + password + "\"," + 0 + "," + 0 + ",\"" + path + "\"", 1000) // connect to website server
         sendAT(`AT+MQTTUSERCFG=0,${scheme},"${clientID}","${username}","${password}",0,0,"${path}"`, 1000)
     }
@@ -665,34 +665,38 @@ namespace PlanetX_IOT {
     */
     //% block="MQTT broker connection %State"
     //% subcategory="MQTT" weight=24
+/*
     export function brokerState(state: boolean) {
         return MQTTbroker_connected == state
     }
+*/
     /**
     * send message 
     */
     //% subcategory=MQTT weight=21
     //% blockId=sendMQTT block="send %mes to $topic=variables_get(topic) Qos %qos"
-    export function sendmesMQTT(mes: string, topic: string, qos: number): void {
+/*   export function sendmesMQTT(mes: string, topic: string, qos: number): void {
         sendAT("AT+MQTTPUB=0,\"" + topic + "\",\"" + mes + "\"," + qos + ",0", 1000) // connect to website server
     }
+*/
     /**
     * subscribe 
     */
     //% subcategory=MQTT weight=20
     //% blockId=subMQTT block="subscribe $topic=variables_get(topic) with Qos: %qos"
-    export function subMQTT(topic: string, qos: number): void {
+/*    export function subMQTT(topic: string, qos: number): void {
         sendAT("AT+MQTTSUB=0,\"" + topic + "\"," + qos, 1000) // connect to website server
     }
+*/    
     /**
     * unsubscribe 
     */
     //% subcategory=MQTT weight=19
     //% blockId=unsubMQTT block="unsubscribe $topic=variables_get(topic)"
-    export function unsubMQTT(topic: string): void {
+/*    export function unsubMQTT(topic: string): void {
         sendAT("AT+MQTTUNSUB=0,\"" + topic + "\"", 1000) // connect to website server
     }
-
+*/
     /**
     * send message 
     */

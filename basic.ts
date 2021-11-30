@@ -1107,6 +1107,7 @@ namespace PlanetX_Basic {
         }
     }
 
+    //% deprecated=true
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
@@ -1120,6 +1121,7 @@ namespace PlanetX_Basic {
     }
     
 
+    //% deprecated=true
     //% val.min=0 val.max=255
     //% subcategory=Sensor group="IIC Port"
     //% block="Set Trackbit learn fail value %val"

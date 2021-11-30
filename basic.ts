@@ -446,9 +446,12 @@ namespace PlanetX_Basic {
         return pin
     }
 
+    //////////////////////////////////////////////////////////////TrackBit
+    let TrackBit_state_value : number = 0
+
     ///////////////////////////////enum
     export enum DigitalRJPin {
-        //% block="J1" 
+        //% block="J1"
         J1,
         //% block="J2"
         J2,
@@ -529,6 +532,20 @@ namespace PlanetX_Basic {
         Three = 2,
         //% block="4"
         Four = 3
+    }
+    export enum TrackBit_gray
+    {
+        //% block="line"
+        One = 0,
+        //% block="background"
+        Two = 4
+    }
+    export enum trackbit_sensor_number
+    {
+        //% block="two"
+        Two = 2,
+        //% block="four"
+        Four = 4
     }
 
     export enum Distance_Unit_List {
@@ -645,6 +662,20 @@ namespace PlanetX_Basic {
         Minute,
         //% block="Second"
         Second
+    }
+
+    export enum joyvalEnum{
+        //% block="x"
+        x,
+        //% block="y"
+        y
+    }
+
+    export enum joykeyEnum{
+        //% block="pressed"
+        pressed=1,
+        //% block="unpressed"
+        unpressed=0
     }
 
     ///////////////////////////////////blocks/////////////////////////////
@@ -1049,10 +1080,7 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit is %State"
     export function TrackbitState(State: TrackbitStateType): boolean {
-        let TempVal: number = 0
-        pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
-        TempVal = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
-        return TempVal == State
+        return TrackBit_state_value == State
     }
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=2
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
@@ -1077,6 +1105,62 @@ namespace PlanetX_Basic {
                 return true
             }
         }
+    }
+
+    //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
+    //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Trackbit Init_Sensor_Val channel %channel detection target %detect_target value"
+    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel,detect_target: TrackBit_gray):number
+    {
+        let Init_Sensor_Val = pins.createBuffer(8)
+        pins.i2cWriteNumber(0x1a,5,NumberFormat.Int8LE)
+        Init_Sensor_Val = pins.i2cReadBuffer(0x1a,8)
+        return Init_Sensor_Val[channel + detect_target]
+    }
+    
+
+    //% val.min=0 val.max=255
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Set Trackbit learn fail value %val"
+    export function Trackbit_learn_fail_value(val: number)
+    {
+        pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
+        pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
+    }
+
+    //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Get Trackbit sensor number %sensor_number offset value"
+    export function TrackBit_get_offset(sensor_number:trackbit_sensor_number): number
+    {
+        let offset_data = pins.createBuffer(4)
+        let offset_sum
+        let offset_avg
+        let offset
+        pins.i2cWriteNumber(0x1a,8,NumberFormat.Int8LE)
+        offset_data = pins.i2cReadBuffer(0x1a, 4)
+        if (sensor_number == trackbit_sensor_number.Two)
+        {
+            offset_sum = offset_data[1] + offset_data[2]
+            offset_avg = offset_data[1] * 1 * 1000 + offset_data[2] * 2 * 1000
+        }
+        else if(sensor_number == trackbit_sensor_number.Four)
+        {
+            offset_sum = offset_data[0] + offset_data[1] + offset_data[2] + offset_data[3]
+            offset_avg = offset_data[0] * 1 * 1000 + offset_data[1] * 2 * 1000 + offset_data[2] * 3 * 1000 + offset_data[3] * 4 * 1000
+        }
+        offset = offset_avg / offset_sum
+        return offset
+    }
+
+    //% subcategory=Sensor group="IIC Port"
+    //% block="Get a Trackbit state value"
+    export function Trackbit_get_state_value()
+    {
+        pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
+        TrackBit_state_value = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+        basic.pause(5);
     }
 
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
@@ -1528,6 +1612,44 @@ namespace PlanetX_Basic {
             humidity = humidity * 10000
             return Math.round(humidity) / 100;
         }
+    }
+
+    //% block="joystick sensor %state value"
+    //% state.fieldEditor="gridpicker"
+    //% state.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    export function joystickval(state:joyvalEnum):number{
+        let buff=pins.createBuffer(3)
+        let x_val,y_val
+        buff=pins.i2cReadBuffer(0xaa,3)
+        if(state==joyvalEnum.x)
+        {
+            x_val = buff[0] * 4 - 512
+            if(x_val > -10 && x_val < 10)
+            {
+                x_val = 0
+            }
+            return x_val
+        }
+        else
+        {
+            y_val = buff[1] * 4 - 512
+            if (y_val > -10 && y_val < 10) {
+                y_val = 0
+            }
+            return y_val
+        }
+        return 0
+    }
+
+    //% block="joystick sensor %key key"
+    //% key.fieldEditor="gridpicker"
+    //% key.fieldOptions.columns=2
+    //% subcategory=Sensor group="IIC Port"
+    export function joystickkey(key:joykeyEnum):boolean{
+        let buff=pins.createBuffer(3)
+        buff=pins.i2cReadBuffer(0xaa,3)
+        return key==buff[2]
     }
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"

@@ -540,13 +540,7 @@ namespace PlanetX_Basic {
         //% block="background"
         Two = 4
     }
-    export enum trackbit_sensor_number
-    {
-        //% block="two"
-        Two = 2,
-        //% block="four"
-        Four = 4
-    }
+    
 
     export enum Distance_Unit_List {
         //% block="cm" 
@@ -1133,27 +1127,17 @@ namespace PlanetX_Basic {
 
     //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    //% block="Get Trackbit sensor number %sensor_number offset value"
-    export function TrackBit_get_offset(sensor_number:trackbit_sensor_number): number
+    //% block="Trackbit sensor offset value"
+    export function TrackBit_get_offset(): number
     {
-        let offset_data = pins.createBuffer(4)
-        let offset_sum
-        let offset_avg
-        let offset
-        pins.i2cWriteNumber(0x1a,8,NumberFormat.Int8LE)
-        offset_data = pins.i2cReadBuffer(0x1a, 4)
-        if (sensor_number == trackbit_sensor_number.Two)
-        {
-            offset_sum = offset_data[1] + offset_data[2]
-            offset_avg = offset_data[1] * 1 * 1000 + offset_data[2] * 2 * 1000
-        }
-        else if(sensor_number == trackbit_sensor_number.Four)
-        {
-            offset_sum = offset_data[0] + offset_data[1] + offset_data[2] + offset_data[3]
-            offset_avg = offset_data[0] * 1 * 1000 + offset_data[1] * 2 * 1000 + offset_data[2] * 3 * 1000 + offset_data[3] * 4 * 1000
-        }
-        offset = offset_avg / offset_sum
-        return offset
+        let offset:number
+        pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
+        const offsetH = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+        pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
+        const offsetL = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
+        offset = (offsetH << 8) | offsetL
+        offset = Math.map(offset,0,6000,-3000,3000)
+        return offset;
     }
 
     //% subcategory=Sensor group="IIC Port"

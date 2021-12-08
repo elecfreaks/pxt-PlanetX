@@ -1155,7 +1155,7 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
-        basic.pause(1000)
+        basic.pause(1100)
         let _temperature: number = -999.0
         let _humidity: number = -999.0
         let checksum: number = 0

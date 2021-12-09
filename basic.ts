@@ -1472,7 +1472,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.yellow:
-                if (hue > 30 && 115 > hue) {
+                if (hue > 30 && 120 > hue) {
                     return true
                 }
                 else {

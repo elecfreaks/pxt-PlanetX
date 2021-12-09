@@ -1440,7 +1440,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.green:
-                if (hue > 110 && 150 > hue) {
+                if (hue > 120 && 180 > hue) {
                     return true
                 }
                 else {
@@ -1448,7 +1448,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.blue:
-                if (hue > 200 && 270 > hue) {
+                if (hue > 210 && 270 > hue) {
                     return true
                 }
                 else {
@@ -1456,7 +1456,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.cyan:
-                if (hue > 160 && 180 > hue) {
+                if (hue > 190 && 210 > hue) {
                     return true
                 }
                 else {
@@ -1472,7 +1472,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.yellow:
-                if (hue > 30 && 90 > hue) {
+                if (hue > 30 && 115 > hue) {
                     return true
                 }
                 else {
@@ -1480,7 +1480,7 @@ namespace PlanetX_Basic {
                 }
                 break
             case ColorList.white:
-                if (hue >= 180 && 200 > hue) {
+                if (hue >= 180 && 190 > hue) {
                     return true
                 }
                 else {

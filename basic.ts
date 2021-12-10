@@ -933,7 +933,7 @@ namespace PlanetX_Basic {
         let d = pins.pulseIn(pinE, PulseValue.High, 25000)
         let distance = d * 9 / 6 / 58
 
-        if (distance > 400) {
+        if (distance < 4) {
             distance = 0
         }
         switch (distance_unit) {

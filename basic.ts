@@ -933,9 +933,29 @@ namespace PlanetX_Basic {
         let d = pins.pulseIn(pinE, PulseValue.High, 25000)
         let distance = d * 9 / 6 / 58
 
-        if (distance < 4) {
+        if (distance > 430) {
             distance = 0
         }
+
+        if (distance == 0)
+        {
+            basic.pause(50);
+
+            pins.digitalWritePin(pinT, 0)
+            control.waitMicros(2)
+            pins.digitalWritePin(pinT, 1)
+            control.waitMicros(10)
+            pins.digitalWritePin(pinT, 0)
+
+            d = pins.pulseIn(pinE, PulseValue.High, 25000)
+            let distance = d * 9 / 6 / 58
+        }
+
+        if(distance > 430){
+            distance = 0
+        }
+
+
         switch (distance_unit) {
             case Distance_Unit_List.Distance_Unit_cm:
                 return Math.floor(distance)  //cm

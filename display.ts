@@ -335,12 +335,32 @@ namespace PlanetX_Display {
         }
         matrixShow();
     }
+
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=7
     //% blockId= matrix_draw block="Matrix Draw|X %x|Y %y"
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     export function matrixDraw(x: number, y: number): void {
         if (!initializedMatrix) {
             matrixInit();
             initializedMatrix = true;
+        }
+
+        if(x > 15)
+        {
+            x = 15
+        }
+        if(y > 7)
+        {
+            y = 7
+        }
+        if(x < 0)
+        {
+            x = 0
+        }
+        if(y < 0)
+        {
+            y = 0
         }
         x = Math.round(x)
         y = Math.round(y)
@@ -350,6 +370,8 @@ namespace PlanetX_Display {
         let tmp = matBuf[idx + 1];
         tmp |= (1 << (x % 8));
         matBuf[idx + 1] = tmp;
+
+        matrixShow();
     }
     //% block="Matrix show emoji %ID" color=#00B1ED
     //% subcategory=Display group="8*16 Matrix" 

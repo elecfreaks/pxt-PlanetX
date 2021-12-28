@@ -134,5 +134,6 @@
   "PlanetX_IOT.uploadData": "upload data. It would not upload anything if it failed to connect to Wifi or ThingSpeak.",
   "PlanetX_IOT.uploadKidsiot": "upload data to kitsiot",
   "PlanetX_IOT.wait": "Wait between uploads",
-  "PlanetX_IOT.wifiState": "Check if ESP8266 successfully connected to Wifi"
+  "PlanetX_IOT.wifiState": "Check if ESP8266 successfully connected to Wifi",
+  "PlanetX_Basic.TrackBit_get_offset": "获取位置偏移量，范围从-3000到3000。"
 }

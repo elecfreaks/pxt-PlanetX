@@ -1138,6 +1138,9 @@ namespace PlanetX_Basic {
         pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
     }
 
+    /**
+    * Gets the position offset.The range is from -3000 to 3000.
+    */
     //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit sensor offset value"

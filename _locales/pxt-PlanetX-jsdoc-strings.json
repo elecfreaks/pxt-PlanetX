@@ -107,5 +107,6 @@
   "PlanetX_IOT.uploadData": "upload data. It would not upload anything if it failed to connect to Wifi or ThingSpeak.",
   "PlanetX_IOT.uploadKidsiot": "upload data to kidsiot",
   "PlanetX_IOT.wifiState": "Check if ESP8266 successfully connected to Wifi",
-  "PlanetX_Basic.TrackBit_get_offset": "Gets the position offset.The range is from -3000 to 3000."
+  "PlanetX_Basic.TrackBit_get_offset": "Gets the position offset.The range is from -3000 to 3000.",
+  "PlanetX_Basic.TrackbitgetGray": "Get gray value.The range is from 0 to 255."
 }

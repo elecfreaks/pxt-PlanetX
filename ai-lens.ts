@@ -721,8 +721,13 @@ namespace PlanetX_AILens {
     //% status.fieldOptions.columns=3
     //% group="Learn" weight=14 subcategory=Vision
     export function objectCheck(status: learnID): boolean {
-        if (DataBuff[0] == 10) {
-            return status == DataBuff[1]
+        if (DataBuff[0] == 10 && status == DataBuff[1]) {
+            if (objectConfidence(status) >= 83){
+                return true
+            }
+            else{
+                return false
+            }
         }
         else
             return false

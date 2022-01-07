@@ -1,4 +1,8 @@
 #include "pxt.h"
+#include <locale.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <tchar.h>
 
 namespace GetUnicode{
 

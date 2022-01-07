@@ -13,6 +13,7 @@
         "wifi.ts",
         "sendBuffer.asm",
         "ai-lens.ts",
+        "GetUnicode.cpp",
         "_locales/zh-CN/pxt-PlanetX-strings.json",
         "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json",
         "main.ts"

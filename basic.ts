@@ -1887,4 +1887,61 @@ namespace PlanetX_Basic {
         setVolume(25)
     }
 
+    //%shim=GetUnicode::getUnicode
+    function getUnicode(chardata: string): number {
+        return 0
+    }
+
+    //%block="Set %Rjpin synthetic speech text %text"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    export function Text_to_Speech(Rjpin: DigitalRJPin, text: string) {
+        let pin_tx = SerialPin.P8
+        let pin_rx = SerialPin.P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin_tx = SerialPin.P8
+                pin_rx = SerialPin.P1
+                break
+            case DigitalRJPin.J2:
+                pin_tx = SerialPin.P8
+                pin_rx = SerialPin.P1
+                break
+            case DigitalRJPin.J3:
+                pin_tx = SerialPin.P8
+                pin_rx = SerialPin.P1
+                break
+            case DigitalRJPin.J4:
+                pin_tx = SerialPin.P8
+                pin_rx = SerialPin.P1
+                break
+        }
+        serial.redirect(pin_tx, pin_rx, 9600)
+
+        let text_length = text.length * 2
+        if (text_length > 4000) {
+            basic.showString("error,text too length!")
+            return
+        }
+        let tts_data = pins.createBuffer(5 + text_length)
+        tts_data[0] = 0xFD
+        tts_data[1] = Math.floor(text_length / 255)
+        tts_data[2] = text_length % 255 + 2
+        tts_data[3] = 0x01
+        tts_data[4] = 0x04
+
+        let aaa: number = getUnicode("哈")
+        let bbb: number = getUnicode(text[0])
+        
+        serial.writeNumber(aaa)
+        
+        
+        
+        
+        
+        
+
+
+    }
+
 }

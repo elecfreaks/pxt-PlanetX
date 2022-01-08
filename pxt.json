@@ -13,6 +13,9 @@
         "wifi.ts",
         "sendBuffer.asm",
         "ai-lens.ts",
+        "shims.d.ts",
+        "enums.d.ts",
+        "GetUnicode.cpp",
         "_locales/zh-CN/pxt-PlanetX-strings.json",
         "_locales/zh-CN/pxt-PlanetX-jsdoc-strings.json",
         "main.ts"

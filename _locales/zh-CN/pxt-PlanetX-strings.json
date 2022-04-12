@@ -204,6 +204,7 @@
   "PlanetX_Basic.UnitList.Fahrenheit|block": "℉",
   "PlanetX_Basic.bme280Sensor|block": "BME280 传感器 IIC接口  %state 值",
   "PlanetX_Basic.buttonCD|block": "按钮模块 %Rjpin 按键 %button 被按下",
+  "PlanetX_Basic.buttonEvent|block": "当按钮 %Rjpin %button 被按下时",
   "PlanetX_Basic.checkCard|block": "RFID 传感器 IIC接口 检测到卡片",
   "PlanetX_Basic.checkColor|block": "颜色识别传感器 IIC接口 检测到 %color",
   "PlanetX_AILens.delASRLearn|block": "语音识别传感器 IIC接口 恢复出厂设置",

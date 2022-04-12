@@ -238,6 +238,7 @@
   "PlanetX_Basic.UnitList.Fahrenheit|block": "℉",
   "PlanetX_Basic.bme280Sensor|block": "BME280 sensor IIC port value %state",
   "PlanetX_Basic.buttonCD|block": "Button %Rjpin %button is pressed",
+  "PlanetX_Basic.buttonEvent|block": "on button %Rjpin %button pressed",
   "PlanetX_Basic.checkCard|block": "RFID sensor IIC port Detect Card",
   "PlanetX_Basic.checkColor|block": "Color sensor IIC port detects %color",
   "PlanetX_Basic.dht11Sensor|block": "DHT11 sensor %Rjpin %dht11state value",

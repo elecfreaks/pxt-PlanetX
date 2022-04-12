@@ -1738,41 +1738,43 @@ namespace PlanetX_Basic {
     export function buttonEvent(Rjpin: DigitalRJPin, button: ButtonStateList, handler: () => void) {
         let ButtonPin_C = DigitalPin.P1
         let ButtonPin_D = DigitalPin.P2
-        let pinEventSource_C = MICROBIT_ID_IO_P0
-        let pinEventSource_D = MICROBIT_ID_IO_P1
+        let pinEventSource_C = EventBusSource.MICROBIT_ID_IO_P0
+        let pinEventSource_D = EventBusSource.MICROBIT_ID_IO_P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
                 ButtonPin_C = DigitalPin.P1
                 ButtonPin_D = DigitalPin.P8
-                pinEventSource_C = MICROBIT_ID_IO_P1
-                pinEventSource_D = MICROBIT_ID_IO_P8
+                pinEventSource_C = EventBusSource.MICROBIT_ID_IO_P1
+                pinEventSource_D = EventBusSource.MICROBIT_ID_IO_P8
                 break;
             case DigitalRJPin.J2:
                 ButtonPin_C = DigitalPin.P2
                 ButtonPin_D = DigitalPin.P12
-                pinEventSource_C = MICROBIT_ID_IO_P2
-                pinEventSource_D = MICROBIT_ID_IO_P12
+                pinEventSource_C = EventBusSource.MICROBIT_ID_IO_P2
+                pinEventSource_D = EventBusSource.MICROBIT_ID_IO_P12
                 break;
             case DigitalRJPin.J3:
                 ButtonPin_C = DigitalPin.P13
                 ButtonPin_D = DigitalPin.P14
-                pinEventSource_C = MICROBIT_ID_IO_P13
-                pinEventSource_D = MICROBIT_ID_IO_P14
+                pinEventSource_C = EventBusSource.MICROBIT_ID_IO_P13
+                pinEventSource_D = EventBusSource.MICROBIT_ID_IO_P14
                 break;
             case DigitalRJPin.J4:
                 ButtonPin_C = DigitalPin.P15
                 ButtonPin_D = DigitalPin.P16
-                pinEventSource_C = MICROBIT_ID_IO_P15
-                pinEventSource_D = MICROBIT_ID_IO_P16
+                pinEventSource_C = EventBusSource.MICROBIT_ID_IO_P15
+                pinEventSource_D = EventBusSource.MICROBIT_ID_IO_P16
                 break;
         }
         if (button == ButtonStateList.C) {
+            pins.setPull(ButtonPin_C, PinPullMode.PullUp)
             pins.setEvents(ButtonPin_C, PinEventType.Edge)
-            control.onEvent(pinEventSource_C, MICROBIT_EVT_ANY, handler)
+            control.onEvent(pinEventSource_C, EventBusValue.MICROBIT_PIN_EVT_RISE, handler)
         }
         else {
+            pins.setPull(ButtonPin_D, PinPullMode.PullUp)
             pins.setEvents(ButtonPin_D, PinEventType.Edge)
-            control.onEvent(pinEventSource_D, MICROBIT_EVT_ANY, handler)
+            control.onEvent(pinEventSource_D, EventBusValue.MICROBIT_PIN_EVT_RISE, handler)
         }
     }
 

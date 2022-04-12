@@ -557,12 +557,6 @@ namespace PlanetX_Basic {
         //% block="C+D"
         CD
     }
-    // export enum ButtonState {
-    //     //% block="pressed"
-    //     pressed,
-    //     //% block="unpressed"
-    //     unpressed
-    // }
     export enum RelayStateList {
         //% block="NC|Close NO|Open"
         On,
@@ -1719,22 +1713,12 @@ namespace PlanetX_Basic {
         }
     }
 
-    // const ButtonEventSource = 5000
-    // const ButtonEventValue = {
-    //     C_pressed:ButtonState.pressed,
-    //     D_pressed:ButtonState.pressed,
-    //     CD_pressed:ButtonState.pressed,
-    //     C_unpressed:ButtonState.unpressed,
-    //     D_unpressed:ButtonState.unpressed,
-    //     CD_unpressed:ButtonState.unpressed
-    // }
-
     //% block="on button %Rjpin %button pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=1
-    //% group="Digital" color=#EA5532
+    //% subcategory=Input group="Digital" color=#EA5532
     export function buttonEvent(Rjpin: DigitalRJPin, button: ButtonStateList, handler: () => void) {
         let ButtonPin_C = DigitalPin.P1
         let ButtonPin_D = DigitalPin.P2

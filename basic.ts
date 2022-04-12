@@ -557,6 +557,12 @@ namespace PlanetX_Basic {
         //% block="C+D"
         CD
     }
+    // export enum ButtonState {
+    //     //% block="pressed"
+    //     pressed,
+    //     //% block="unpressed"
+    //     unpressed
+    // }
     export enum RelayStateList {
         //% block="NC|Close NO|Open"
         On,
@@ -933,7 +939,11 @@ namespace PlanetX_Basic {
 
         // read pulse
         let d = pins.pulseIn(pinE, PulseValue.High, 25000)
+        let version = control.hardwareVersion()
         let distance = d * 9 / 6 / 58
+        if (version == "1") {
+            distance = distance * 3 / 2
+        }
 
         if (distance > 430) {
             distance = 0
@@ -1706,6 +1716,63 @@ namespace PlanetX_Basic {
         }
         else {
             return false
+        }
+    }
+
+    // const ButtonEventSource = 5000
+    // const ButtonEventValue = {
+    //     C_pressed:ButtonState.pressed,
+    //     D_pressed:ButtonState.pressed,
+    //     CD_pressed:ButtonState.pressed,
+    //     C_unpressed:ButtonState.unpressed,
+    //     D_unpressed:ButtonState.unpressed,
+    //     CD_unpressed:ButtonState.unpressed
+    // }
+
+    //% block="on button %Rjpin %button pressed"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% button.fieldEditor="gridpicker"
+    //% button.fieldOptions.columns=1
+    //% group="Digital" color=#EA5532
+    export function buttonEvent(Rjpin: DigitalRJPin, button: ButtonStateList, handler: () => void) {
+        let ButtonPin_C = DigitalPin.P1
+        let ButtonPin_D = DigitalPin.P2
+        let pinEventSource_C = MICROBIT_ID_IO_P0
+        let pinEventSource_D = MICROBIT_ID_IO_P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                ButtonPin_C = DigitalPin.P1
+                ButtonPin_D = DigitalPin.P8
+                pinEventSource_C = MICROBIT_ID_IO_P1
+                pinEventSource_D = MICROBIT_ID_IO_P8
+                break;
+            case DigitalRJPin.J2:
+                ButtonPin_C = DigitalPin.P2
+                ButtonPin_D = DigitalPin.P12
+                pinEventSource_C = MICROBIT_ID_IO_P2
+                pinEventSource_D = MICROBIT_ID_IO_P12
+                break;
+            case DigitalRJPin.J3:
+                ButtonPin_C = DigitalPin.P13
+                ButtonPin_D = DigitalPin.P14
+                pinEventSource_C = MICROBIT_ID_IO_P13
+                pinEventSource_D = MICROBIT_ID_IO_P14
+                break;
+            case DigitalRJPin.J4:
+                ButtonPin_C = DigitalPin.P15
+                ButtonPin_D = DigitalPin.P16
+                pinEventSource_C = MICROBIT_ID_IO_P15
+                pinEventSource_D = MICROBIT_ID_IO_P16
+                break;
+        }
+        if (button == ButtonStateList.C) {
+            pins.setEvents(ButtonPin_C, PinEventType.Edge)
+            control.onEvent(pinEventSource_C, MICROBIT_EVT_ANY, handler)
+        }
+        else {
+            pins.setEvents(ButtonPin_D, PinEventType.Edge)
+            control.onEvent(pinEventSource_D, MICROBIT_EVT_ANY, handler)
         }
     }
 

@@ -1713,6 +1713,19 @@ namespace PlanetX_Basic {
         }
     }
 
+    export enum ButtonState {
+        //% block="on"
+        on = 1,
+        //% block="off"
+        off = 2
+    }
+
+    const buttonEventSource = 5000
+    const buttonEventValue = {
+        CD_pressed:ButtonState.on,
+        CD_unpressed:ButtonState.off
+    }
+
     //% block="on button %Rjpin %button pressed"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -1755,10 +1768,18 @@ namespace PlanetX_Basic {
             pins.setEvents(ButtonPin_C, PinEventType.Edge)
             control.onEvent(pinEventSource_C, EventBusValue.MICROBIT_PIN_EVT_RISE, handler)
         }
-        else {
+        else if (button == ButtonStateList.D) {
             pins.setPull(ButtonPin_D, PinPullMode.PullUp)
             pins.setEvents(ButtonPin_D, PinEventType.Edge)
             control.onEvent(pinEventSource_D, EventBusValue.MICROBIT_PIN_EVT_RISE, handler)
+        }
+        else if ((button == ButtonStateList.CD) {
+            loops.everyInterval(50, function () {
+                if (pins.digitalReadPin(ButtonPin_C) == 0 && pins.digitalReadPin(ButtonPin_D) == 0) {
+                    control.raiseEvent(buttonEventSource, buttonEventValue.CD_pressed)
+                }
+            })
+            control.onEvent(buttonEventSource, buttonEventValue.CD_pressed, handler)
         }
     }
 

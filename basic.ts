@@ -1773,7 +1773,7 @@ namespace PlanetX_Basic {
             pins.setEvents(ButtonPin_D, PinEventType.Edge)
             control.onEvent(pinEventSource_D, EventBusValue.MICROBIT_PIN_EVT_RISE, handler)
         }
-        else if ((button == ButtonStateList.CD) {
+        else if (button == ButtonStateList.CD) {
             loops.everyInterval(50, function () {
                 if (pins.digitalReadPin(ButtonPin_C) == 0 && pins.digitalReadPin(ButtonPin_D) == 0) {
                     control.raiseEvent(buttonEventSource, buttonEventValue.CD_pressed)

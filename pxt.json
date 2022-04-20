@@ -5,7 +5,7 @@
     "dependencies": {
         "core": "*",
         "microphone": "*",
-        "PlanetX_AI": "https://github.com/elecfreaks/pxt-PlanetX-AI#v0.3.1"
+        "PlanetX_AI": "github:elecfreaks/pxt-PlanetX-AI"
     },
     "files": [
         "README.md",

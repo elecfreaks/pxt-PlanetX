@@ -1,22 +1,6 @@
-//% color=#4ca630 icon="\uf1eb" 
+//% color=#EA5532 icon="\uf1eb" 
 //% block="PlanetX_IoT" blockId="PlanetX_IoT"
-namespace PlanetX_IOT {
-    /*
-    let CMD = 0
-    let wifi_connected: boolean = false
-    let thingspeak_connected: boolean = false
-    let kidsiot_connected: boolean = false
-    let MQTTbroker_connected: boolean = false
-    let userToken_def: string = ""
-    let topic_def: string = ""
-    type mess = (t: string, s: string) => void
-    let mqttEvt: mess = null
-    let mqttlist = [];
-    let mqtthost_def = "ELECFREAKS"
-    let iftttkey_def = ""
-    let iftttevent_def = ""
-    */
-    
+namespace PlanetX_IOT { 
     enum Cmd {
         None,
         ConnectWifi,
@@ -91,15 +75,6 @@ namespace PlanetX_IOT {
 
     let TStoSendStr = ""
 
-
-
-
-
-
-
-
-
-
     export enum DigitalRJPin {
         //% block="J1"
         J1,
@@ -110,86 +85,6 @@ namespace PlanetX_IOT {
         //% block="J4"
         J4
     }
-
-    /*
-    export enum stateList {
-        //% block="on"
-        on = 14,
-        //% block="off"
-        off = 15
-    }
-    */
-    //let TStoSendStr = ""
-
-
-
-    /*
-    serial.onDataReceived("\n", function () {
-        let serial_str = serial.readString()
-        if (serial_str.includes("WIFI GOT IP")) {
-            if (CMD == 0x01) {
-                wifi_connected = true
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 1)
-            }
-        }
-        else if (serial_str.includes("MQTTSUBRECV")) {
-            basic.showNumber(1)
-            mqttlist = serial_str.split(",", 4)
-            mqttEvt(mqttlist[1].slice(1, mqttlist[1].length - 1), mqttlist[3])
-        }
-        else if (serial_str.includes("ERROR")) {
-            if (CMD == 0x01) {
-                wifi_connected = false
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 1)
-            }
-            else if (CMD == 0x02) {
-                thingspeak_connected = false
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 2)
-            }
-            else if (CMD == 0x04) {
-                kidsiot_connected = false
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 4)
-            }
-            else if (CMD == 0x06) {
-                MQTTbroker_connected = false
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 6)
-            }
-            else if (CMD == 0x07) {
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 7)
-            }
-        }
-        else if (serial_str.includes(mqtthost_def)) {
-            MQTTbroker_connected = true
-            control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 6)
-        }
-        else if (serial_str.includes("CONNECT")) {
-            if (CMD == 0x02) {
-                thingspeak_connected = true
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 2)
-            }
-            else if (CMD == 0x04) {
-                control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 4)
-            }
-        }
-        else if (serial_str.includes("Congratu")) {
-            control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 7)
-        }
-        else if (serial_str.includes("bytes")) {
-            kidsiot_connected = true
-            control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 5)
-        }
-        else if (serial_str.includes("switchoff")) {
-            control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 15)
-        }
-        else if (serial_str.includes("switchon")) {
-            control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 14)
-        }
-
-        else if (serial_str.includes("WIFI DISCONNECT")) {
-            wifi_connected = false
-        }
-    })
-    */
     
     /**
      * on serial received data
@@ -355,7 +250,6 @@ namespace PlanetX_IOT {
 
     // write AT command with CR+LF ending
     function sendAT(command: string, wait: number = 0) {
-        //serial.writeString(command + "\u000D\u000A")
         serial.writeString(`${command}\u000D\u000A`)
         basic.pause(wait)
     }
@@ -370,9 +264,9 @@ namespace PlanetX_IOT {
     }
 
     /**
-    * Initialize ESP8266 module 
+    * Initialize wifi module 
     */
-    //% block="set ESP8266 %Rjpin Baud rate %baudrate"
+    //% block="set wifi module %Rjpin Baud rate %baudrate"
     //% ssid.defl=your_ssid
     //% pw.defl=your_password weight=100
     export function initWIFI(Rjpin: DigitalRJPin, baudrate: BaudRate) {
@@ -416,12 +310,6 @@ namespace PlanetX_IOT {
     //% ssid.defl=your_ssid
     //% pw.defl=your_pw weight=95
     export function connectWifi(ssid: string, pw: string) {
-        /*
-        CMD = 0x01
-        sendAT("AT+CWJAP=\"" + ssid + "\",\"" + pw + "\"", 1000) // connect to Wifi router
-        control.waitForEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 1)
-        */
-
         currentCmd = Cmd.ConnectWifi
         sendAT(`AT+CWJAP="${ssid}","${pw}"`) // connect to Wifi router
         control.waitForEvent(EspEventSource, EspEventValue.ConnectWifi)
@@ -445,12 +333,6 @@ namespace PlanetX_IOT {
     //% write_api_key.defl=your_write_api_key
     //% subcategory="ThingSpeak" weight=90
     export function connectThingSpeak() {
-        /*
-        CMD = 0x02
-        let text = "AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80"
-        sendAT(text, 0) // connect to website server
-        control.waitForEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 2)
-        */
         currentCmd = Cmd.ConnectThingSpeak
         // connect to server
         sendAT(`AT+CIPSTART="TCP","${THINGSPEAK_HOST}",${THINGSPEAK_PORT}`)
@@ -510,17 +392,6 @@ namespace PlanetX_IOT {
     //% subcategory=KidsIot weight=50
     //% blockId=initkidiot block="Connect KidsIot with userToken: %userToken Topic: %topic"
     export function connectKidsiot(userToken: string, topic: string): void {
-        /*
-        userToken_def = userToken
-        topic_def = topic
-        CMD = 0x04
-        sendAT("AT+CIPSTART=\"TCP\",\"139.159.161.57\",5555", 0) // connect to website server
-        control.waitForEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 4)
-        let jsonText = "{\"topic\":\"" + topic + "\",\"userToken\":\"" + userToken + "\",\"op\":\"init\"}"
-        sendAT("AT+CIPSEND=" + (jsonText.length + 2), 300)
-        sendAT(jsonText, 0)
-        control.waitForEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 5)
-        */
         userToken_def = userToken
         topic_def = topic
         currentCmd = Cmd.ConnectKidsIot
@@ -543,14 +414,6 @@ namespace PlanetX_IOT {
     //% subcategory=KidsIot weight=45
     //% blockId=uploadkidsiot block="Upload data %data to kidsiot"
     export function uploadKidsiot(data: number): void {
-        /*
-        if (kidsiot_connected) {
-            data = Math.floor(data)
-            let jsonText = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"up\",\"data\":\"" + data + "\"}"
-            sendAT("AT+CIPSEND=" + (jsonText.length + 2), 300)
-            sendAT(jsonText, 0)
-        }
-        */
         data = Math.floor(data)
         const jsonText = `{"topic":"${topic_def}","userToken":"${userToken_def}","op":"up","data":"${data}"}`
         currentCmd = Cmd.UploadKidsIot
@@ -568,13 +431,6 @@ namespace PlanetX_IOT {
     //% subcategory=KidsIot weight=40
     //% blockId=Disconnect block="Disconnect with kidsiot"
     export function disconnectKidsiot(): void {
-        /*
-        if (kidsiot_connected) {
-            let text_one = "{\"topic\":\"" + topic_def + "\",\"userToken\":\"" + userToken_def + "\",\"op\":\"close\"}"
-            sendAT("AT+CIPSEND=" + (text_one.length + 2), 300)
-            sendAT(text_one, 0)
-        }
-        */
         if (kidsiot_connected) {
             const jsonText = `{"topic":"${topic_def}","userToken":"${userToken_def}","op":"close"}`
             currentCmd = Cmd.DisconnectKidsIot
@@ -609,7 +465,6 @@ namespace PlanetX_IOT {
     //% subcategory=MQTT weight=30 
     //% blockId=initMQTT block="Set MQTT client config|scheme: %scheme clientID: %clientID username: %username password: %password path: %path"
     export function setMQTT(scheme: SchemeList, clientID: string, username: string, password: string, path: string): void {
-        //sendAT("AT+MQTTUSERCFG=0," + scheme + ",\"" + clientID + "\",\"" + username + "\",\"" + password + "\"," + 0 + "," + 0 + ",\"" + path + "\"", 1000) // connect to website server
         sendAT(`AT+MQTTUSERCFG=0,${scheme},"${clientID}","${username}","${password}",0,0,"${path}"`, 1000)
     }
     /**
@@ -618,16 +473,6 @@ namespace PlanetX_IOT {
     //% subcategory=MQTT weight=25
     //% blockId=connectMQTT block="connect MQTT broker host: %host port: %port reconnect: $reconnect"
     export function connectMQTT(host: string, port: number, reconnect: boolean): void {
-        /*
-        CMD = 0x06
-        mqtthost_def = host
-        let rec = 1
-        if (reconnect) {
-            rec = 0
-        }
-        sendAT("AT+MQTTCONN=0,\"" + host + "\"," + port + "," + rec, 5000) // connect to website server
-        control.waitForEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 6)
-        */
         mqtthost_def = host
         const rec = reconnect ? 0 : 1
         currentCmd = Cmd.ConnectMqtt
@@ -659,44 +504,6 @@ namespace PlanetX_IOT {
         sendAT(`AT+MQTTPUB=0,"${topic}","${msg}",${qos},0`, 1000)
     }
 
-
-    /**
-    * Check if ESP8266 successfully connected to mqtt broker
-    */
-    //% block="MQTT broker connection %State"
-    //% subcategory="MQTT" weight=24
-/*
-    export function brokerState(state: boolean) {
-        return MQTTbroker_connected == state
-    }
-*/
-    /**
-    * send message 
-    */
-    //% subcategory=MQTT weight=21
-    //% blockId=sendMQTT block="send %mes to $topic=variables_get(topic) Qos %qos"
-/*   export function sendmesMQTT(mes: string, topic: string, qos: number): void {
-        sendAT("AT+MQTTPUB=0,\"" + topic + "\",\"" + mes + "\"," + qos + ",0", 1000) // connect to website server
-    }
-*/
-    /**
-    * subscribe 
-    */
-    //% subcategory=MQTT weight=20
-    //% blockId=subMQTT block="subscribe $topic=variables_get(topic) with Qos: %qos"
-/*    export function subMQTT(topic: string, qos: number): void {
-        sendAT("AT+MQTTSUB=0,\"" + topic + "\"," + qos, 1000) // connect to website server
-    }
-*/    
-    /**
-    * unsubscribe 
-    */
-    //% subcategory=MQTT weight=19
-    //% blockId=unsubMQTT block="unsubscribe $topic=variables_get(topic)"
-/*    export function unsubMQTT(topic: string): void {
-        sendAT("AT+MQTTUNSUB=0,\"" + topic + "\"", 1000) // connect to website server
-    }
-*/
     /**
     * send message 
     */
@@ -705,15 +512,7 @@ namespace PlanetX_IOT {
     export function breakMQTT(): void {
         sendAT("AT+MQTTCLEAN=0", 1000) // connect to website server
     }
-
-    /*
-    //% block="When $topic have new $message"
-    //% subcategory=MQTT weight=10
-    //% draggableParameters
-    export function MqttEvent(handler: (topic: string, message: string) => void) {
-        mqttEvt = handler
-    }
-    */
+    
     //% block="when Topic: %topic have new $message with Qos: %qos"
     //% subcategory=MQTT weight=10
     //% draggableParameters

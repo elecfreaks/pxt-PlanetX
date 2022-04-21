@@ -287,7 +287,7 @@ namespace PlanetX_Display {
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% brightness.min=0 brightness.max=100
     //% ledstate.shadow="toggleOnOff"
-    //% subcategory=Display group="Digital" color=#EA5532
+    //% subcategory=Display group="LED" color=#EA5532
     //% expandableArgumentMode="toggle"
     export function ledBrightness(Rjpin: DigitalRJPin, ledstate: boolean, brightness: number = 100): void {
         let pin = AnalogPin.P1

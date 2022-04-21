@@ -1401,6 +1401,8 @@ namespace PlanetX_Basic {
             }
         })
     }
+
+    //% deprecated=true
     //% subcategory=Sensor group="IIC Port"
     //% block="MLX90615 Infra Temp sensor IIC port %target Unit %Unit"
     export function MLX90615tempe(target: targetList, Unit: UnitList): number {
@@ -1590,6 +1592,7 @@ namespace PlanetX_Basic {
         return true;
     }
 
+    //% deprecated=true
     //% blockId="readdht20" block="DHT20 sensor %dht20state value"
     //% dht20state.fieldEditor="gridpicker"
     //% dht20state.fieldOptions.columns=1
@@ -1623,6 +1626,7 @@ namespace PlanetX_Basic {
         }
     }
 
+    //% deprecated=true
     //% block="joystick sensor %state value"
     //% state.fieldEditor="gridpicker"
     //% state.fieldOptions.columns=2
@@ -1651,6 +1655,7 @@ namespace PlanetX_Basic {
         return 0
     }
 
+    //% deprecated=true
     //% block="joystick sensor %key key"
     //% key.fieldEditor="gridpicker"
     //% key.fieldOptions.columns=2
@@ -1832,6 +1837,7 @@ namespace PlanetX_Basic {
         }
     }
 
+    //% deprecated=true
     //% blockId=Relay block="Relay %Rjpin toggle to %Relaystate"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2

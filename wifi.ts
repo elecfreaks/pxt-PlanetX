@@ -1,4 +1,4 @@
-//% color=#EA5532 icon="\uf1eb" 
+//% color=#4ca630 icon="\uf1eb" 
 //% block="PlanetX_IoT" blockId="PlanetX_IoT"
 namespace PlanetX_IOT { 
     enum Cmd {
@@ -269,6 +269,7 @@ namespace PlanetX_IOT {
     //% block="set wifi module %Rjpin Baud rate %baudrate"
     //% ssid.defl=your_ssid
     //% pw.defl=your_password weight=100
+    //% color=#EA5532
     export function initWIFI(Rjpin: DigitalRJPin, baudrate: BaudRate) {
         let pin_tx = SerialPin.P1
         let pin_rx = SerialPin.P8
@@ -309,6 +310,7 @@ namespace PlanetX_IOT {
     //% block="connect Wifi SSID = %ssid|KEY = %pw"
     //% ssid.defl=your_ssid
     //% pw.defl=your_pw weight=95
+    //% color=#EA5532
     export function connectWifi(ssid: string, pw: string) {
         currentCmd = Cmd.ConnectWifi
         sendAT(`AT+CWJAP="${ssid}","${pw}"`) // connect to Wifi router
@@ -323,6 +325,7 @@ namespace PlanetX_IOT {
     * Check if ESP8266 successfully connected to Wifi
     */
     //% block="Wifi connected %State" weight=70
+    //% color=#EA5532
     export function wifiState(state: boolean) {
         return wifi_connected == state
     }
@@ -332,6 +335,7 @@ namespace PlanetX_IOT {
     //% block="connect thingspeak"
     //% write_api_key.defl=your_write_api_key
     //% subcategory="ThingSpeak" weight=90
+    //% color=#EA5532
     export function connectThingSpeak() {
         currentCmd = Cmd.ConnectThingSpeak
         // connect to server
@@ -346,6 +350,7 @@ namespace PlanetX_IOT {
     //% write_api_key.defl=your_write_api_key
     //% expandableArgumentMode="enabled"
     //% subcategory="ThingSpeak" weight=85
+    //% color=#EA5532
     export function setData(write_api_key: string, n1: number = 0, n2: number = 0, n3: number = 0, n4: number = 0, n5: number = 0, n6: number = 0, n7: number = 0, n8: number = 0) {
         TStoSendStr = "GET /update?api_key="
             + write_api_key
@@ -371,6 +376,7 @@ namespace PlanetX_IOT {
     */
     //% block="Upload data to ThingSpeak"
     //% subcategory="ThingSpeak" weight=80
+    //% color=#EA5532
     export function uploadData() {
         //sendAT("AT+CIPSEND=" + (TStoSendStr.length + 2), 300)
         sendAT(`AT+CIPSEND=${TStoSendStr.length + 2}`, 300)
@@ -382,6 +388,7 @@ namespace PlanetX_IOT {
     */
     //% block="ThingSpeak connected %State"
     //% subcategory="ThingSpeak" weight=65
+    //% color=#EA5532
     export function thingSpeakState(state: boolean) {
         return thingspeak_connected == state
     }
@@ -391,6 +398,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=KidsIot weight=50
     //% blockId=initkidiot block="Connect KidsIot with userToken: %userToken Topic: %topic"
+    //% color=#EA5532
     export function connectKidsiot(userToken: string, topic: string): void {
         userToken_def = userToken
         topic_def = topic
@@ -413,6 +421,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=KidsIot weight=45
     //% blockId=uploadkidsiot block="Upload data %data to kidsiot"
+    //% color=#EA5532
     export function uploadKidsiot(data: number): void {
         data = Math.floor(data)
         const jsonText = `{"topic":"${topic_def}","userToken":"${userToken_def}","op":"up","data":"${data}"}`
@@ -430,6 +439,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=KidsIot weight=40
     //% blockId=Disconnect block="Disconnect with kidsiot"
+    //% color=#EA5532
     export function disconnectKidsiot(): void {
         if (kidsiot_connected) {
             const jsonText = `{"topic":"${topic_def}","userToken":"${userToken_def}","op":"close"}`
@@ -448,12 +458,14 @@ namespace PlanetX_IOT {
     */
     //% block="KidsIot connection %State"
     //% subcategory="KidsIot" weight=35
+    //% color=#EA5532
     export function kidsiotState(state: boolean) {
         return kidsiot_connected == state
     }
     //% block="When switch %vocabulary"
     //% subcategory="KidsIot" weight=30
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=2
+    //% color=#EA5532
     export function iotSwitchEvent(state: KidsIotSwitchState, handler: () => void) {
         //control.onEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, state, handler)
         control.onEvent(KidsIotEventSource, state, handler)
@@ -462,8 +474,9 @@ namespace PlanetX_IOT {
     /**
     * Set  MQTT client
     */
-    //% subcategory=MQTT weight=30 
+    //% subcategory=MQTT weight=30
     //% blockId=initMQTT block="Set MQTT client config|scheme: %scheme clientID: %clientID username: %username password: %password path: %path"
+    //% color=#EA5532
     export function setMQTT(scheme: SchemeList, clientID: string, username: string, password: string, path: string): void {
         sendAT(`AT+MQTTUSERCFG=0,${scheme},"${clientID}","${username}","${password}",0,0,"${path}"`, 1000)
     }
@@ -472,6 +485,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=MQTT weight=25
     //% blockId=connectMQTT block="connect MQTT broker host: %host port: %port reconnect: $reconnect"
+    //% color=#EA5532
     export function connectMQTT(host: string, port: number, reconnect: boolean): void {
         mqtthost_def = host
         const rec = reconnect ? 0 : 1
@@ -489,6 +503,7 @@ namespace PlanetX_IOT {
      */
     //% block="MQTT broker is connected"
     //% subcategory="MQTT" weight=24
+    //% color=#EA5532
     export function isMqttBrokerConnected() {
         return mqttBrokerConnected
     }
@@ -500,6 +515,7 @@ namespace PlanetX_IOT {
     //% blockId=sendMQTT block="publish %msg to Topic:%topic with Qos:%qos"
     //% msg.defl=hello
     //% topic.defl=topic/1
+    //% color=#EA5532
     export function publishMqttMessage(msg: string, topic: string, qos: QosList): void {
         sendAT(`AT+MQTTPUB=0,"${topic}","${msg}",${qos},0`, 1000)
     }
@@ -509,6 +525,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=MQTT weight=15
     //% blockId=breakMQTT block="Disconnect from broker"
+    //% color=#EA5532
     export function breakMQTT(): void {
         sendAT("AT+MQTTCLEAN=0", 1000) // connect to website server
     }
@@ -517,6 +534,7 @@ namespace PlanetX_IOT {
     //% subcategory=MQTT weight=10
     //% draggableParameters
     //% topic.defl=topic/1
+    //% color=#EA5532
     export function MqttEvent(topic: string, qos: QosList, handler: (message: string) => void) {
         mqttSubscribeHandlers[topic] = handler
         mqttSubscribeQos[topic] = qos
@@ -529,6 +547,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=IFTTT weight=9
     //% blockId=setIFTTT block="set IFTTT key:%key event:%event"
+    //% color=#EA5532
     export function setIFTTT(key: string, event: string): void {
         iftttkey_def = key
         iftttevent_def = event
@@ -538,6 +557,7 @@ namespace PlanetX_IOT {
     */
     //% subcategory=IFTTT weight=8
     //% blockId=postIFTTT block="post IFTTT with|value1:%value value2:%value2 value3:%value3"
+    //% color=#EA5532
     export function postIFTTT(value1: string, value2: string, value3: string): void {
         let sendST1 = "AT+HTTPCLIENT=3,1,\"http://maker.ifttt.com/trigger/" + iftttevent_def + "/with/key/" + iftttkey_def + "\",,,2,"
         let sendST2 = "\"{\\\"value1\\\":\\\"" + value1 + "\\\"\\\,\\\"value2\\\":\\\"" + value2 + "\\\"\\\,\\\"value3\\\":\\\"" + value3 + "\\\"}\""

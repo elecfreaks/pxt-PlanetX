@@ -32,7 +32,7 @@
   "PlanetX_Basic.DigitalRJPin.J3|block": "J3",
   "PlanetX_Basic.DigitalRJPin.J4|block": "J4",
   "PlanetX_Basic.Distance_Unit_List.Distance_Unit_cm|block": "厘米",
-  "PlanetX_Basic.Distance_Unit_List.Distance_Unit_inch|block": "英尺",
+  "PlanetX_Basic.Distance_Unit_List.Distance_Unit_foot|block": "英尺",
   "PlanetX_Basic.Dust|block": "灰尘传感器 %Rjpin 浓度值(μg/m³)",
   "PlanetX_Basic.GasList.Alcohol|block": "酒精",
   "PlanetX_Basic.GasList.Co2|block": "二氧化碳",

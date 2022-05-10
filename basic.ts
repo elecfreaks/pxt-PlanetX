@@ -546,8 +546,8 @@ namespace PlanetX_Basic {
         //% block="cm" 
         Distance_Unit_cm,
 
-        //% block="inch"
-        Distance_Unit_inch,
+        //% block="foot"
+        Distance_Unit_foot,
     }
     export enum ButtonStateList {
         //% block="C"
@@ -934,7 +934,7 @@ namespace PlanetX_Basic {
         // read pulse
         let d = pins.pulseIn(pinE, PulseValue.High, 25000)
         let version = control.hardwareVersion()
-        let distance = d * 9 / 6 / 58
+        let distance = d * 34 / 2 / 1000
         if (version == "1") {
             distance = distance * 3 / 2
         }
@@ -957,8 +957,8 @@ namespace PlanetX_Basic {
             case Distance_Unit_List.Distance_Unit_cm:
                 return Math.floor(distance)  //cm
                 break
-            case Distance_Unit_List.Distance_Unit_inch:
-                return Math.floor(distance / 30.48)   //inch
+            case Distance_Unit_List.Distance_Unit_foot:
+                return Math.floor(distance / 30.48)   //foot
                 break
             default:
                 return 0

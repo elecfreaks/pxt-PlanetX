@@ -32,7 +32,7 @@
   "PlanetX_Basic.DigitalRJPin.J3|block": "J3",
   "PlanetX_Basic.DigitalRJPin.J4|block": "J4",
   "PlanetX_Basic.Distance_Unit_List.Distance_Unit_cm|block": "cm",
-  "PlanetX_Basic.Distance_Unit_List.Distance_Unit_inch|block": "inch",
+  "PlanetX_Basic.Distance_Unit_List.Distance_Unit_foot|block": "foot",
   "PlanetX_Basic.Dust|block": "Dust sensor %Rjpin value (μg/m³)",
   "PlanetX_Basic.GasList.Alcohol|block": "Alcohol",
   "PlanetX_Basic.GasList.Co2|block": "Co2",

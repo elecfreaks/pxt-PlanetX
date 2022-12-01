@@ -470,75 +470,75 @@ namespace PlanetX_IOT {
         //control.onEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, state, handler)
         control.onEvent(KidsIotEventSource, state, handler)
     }
-    /*----------------------------------MQTT-----------------------*/
-    /**
-    * Set  MQTT client
-    */
-    //% subcategory=MQTT weight=30
-    //% blockId=initMQTT block="Set MQTT client config|scheme: %scheme clientID: %clientID username: %username password: %password path: %path"
-    //% color=#EA5532
-    export function setMQTT(scheme: SchemeList, clientID: string, username: string, password: string, path: string): void {
-        sendAT(`AT+MQTTUSERCFG=0,${scheme},"${clientID}","${username}","${password}",0,0,"${path}"`, 1000)
-    }
-    /**
-    * Connect to MQTT broker
-    */
-    //% subcategory=MQTT weight=25
-    //% blockId=connectMQTT block="connect MQTT broker host: %host port: %port reconnect: $reconnect"
-    //% color=#EA5532
-    export function connectMQTT(host: string, port: number, reconnect: boolean): void {
-        mqtthost_def = host
-        const rec = reconnect ? 0 : 1
-        currentCmd = Cmd.ConnectMqtt
-        sendAT(`AT+MQTTCONN=0,"${host}",${port},${rec}`)
-        control.waitForEvent(EspEventSource, EspEventValue.ConnectMqtt)
-        Object.keys(mqttSubscribeQos).forEach(topic => {
-            const qos = mqttSubscribeQos[topic]
-            sendAT(`AT+MQTTSUB=0,"${topic}",${qos}`, 1000)
-        })
-    }
+//     /*----------------------------------MQTT-----------------------*/
+//     /**
+//     * Set  MQTT client
+//     */
+//     //% subcategory=MQTT weight=30
+//     //% blockId=initMQTT block="Set MQTT client config|scheme: %scheme clientID: %clientID username: %username password: %password path: %path"
+//     //% color=#EA5532
+//     export function setMQTT(scheme: SchemeList, clientID: string, username: string, password: string, path: string): void {
+//         sendAT(`AT+MQTTUSERCFG=0,${scheme},"${clientID}","${username}","${password}",0,0,"${path}"`, 1000)
+//     }
+//     /**
+//     * Connect to MQTT broker
+//     */
+//     //% subcategory=MQTT weight=25
+//     //% blockId=connectMQTT block="connect MQTT broker host: %host port: %port reconnect: $reconnect"
+//     //% color=#EA5532
+//     export function connectMQTT(host: string, port: number, reconnect: boolean): void {
+//         mqtthost_def = host
+//         const rec = reconnect ? 0 : 1
+//         currentCmd = Cmd.ConnectMqtt
+//         sendAT(`AT+MQTTCONN=0,"${host}",${port},${rec}`)
+//         control.waitForEvent(EspEventSource, EspEventValue.ConnectMqtt)
+//         Object.keys(mqttSubscribeQos).forEach(topic => {
+//             const qos = mqttSubscribeQos[topic]
+//             sendAT(`AT+MQTTSUB=0,"${topic}",${qos}`, 1000)
+//         })
+//     }
 
-    /**
-     * Check if ESP8266 successfully connected to mqtt broker
-     */
-    //% block="MQTT broker is connected"
-    //% subcategory="MQTT" weight=24
-    //% color=#EA5532
-    export function isMqttBrokerConnected() {
-        return mqttBrokerConnected
-    }
+//     /**
+//      * Check if ESP8266 successfully connected to mqtt broker
+//      */
+//     //% block="MQTT broker is connected"
+//     //% subcategory="MQTT" weight=24
+//     //% color=#EA5532
+//     export function isMqttBrokerConnected() {
+//         return mqttBrokerConnected
+//     }
 
-    /**
-     * send message
-     */
-    //% subcategory=MQTT weight=21
-    //% blockId=sendMQTT block="publish %msg to Topic:%topic with Qos:%qos"
-    //% msg.defl=hello
-    //% topic.defl=topic/1
-    //% color=#EA5532
-    export function publishMqttMessage(msg: string, topic: string, qos: QosList): void {
-        sendAT(`AT+MQTTPUB=0,"${topic}","${msg}",${qos},0`, 1000)
-    }
+//     /**
+//      * send message
+//      */
+//     //% subcategory=MQTT weight=21
+//     //% blockId=sendMQTT block="publish %msg to Topic:%topic with Qos:%qos"
+//     //% msg.defl=hello
+//     //% topic.defl=topic/1
+//     //% color=#EA5532
+//     export function publishMqttMessage(msg: string, topic: string, qos: QosList): void {
+//         sendAT(`AT+MQTTPUB=0,"${topic}","${msg}",${qos},0`, 1000)
+//     }
 
-    /**
-    * send message 
-    */
-    //% subcategory=MQTT weight=15
-    //% blockId=breakMQTT block="Disconnect from broker"
-    //% color=#EA5532
-    export function breakMQTT(): void {
-        sendAT("AT+MQTTCLEAN=0", 1000) // connect to website server
-    }
+//     /**
+//     * send message 
+//     */
+//     //% subcategory=MQTT weight=15
+//     //% blockId=breakMQTT block="Disconnect from broker"
+//     //% color=#EA5532
+//     export function breakMQTT(): void {
+//         sendAT("AT+MQTTCLEAN=0", 1000) // connect to website server
+//     }
     
-    //% block="when Topic: %topic have new $message with Qos: %qos"
-    //% subcategory=MQTT weight=10
-    //% draggableParameters
-    //% topic.defl=topic/1
-    //% color=#EA5532
-    export function MqttEvent(topic: string, qos: QosList, handler: (message: string) => void) {
-        mqttSubscribeHandlers[topic] = handler
-        mqttSubscribeQos[topic] = qos
-    }
+//     //% block="when Topic: %topic have new $message with Qos: %qos"
+//     //% subcategory=MQTT weight=10
+//     //% draggableParameters
+//     //% topic.defl=topic/1
+//     //% color=#EA5532
+//     export function MqttEvent(topic: string, qos: QosList, handler: (message: string) => void) {
+//         mqttSubscribeHandlers[topic] = handler
+//         mqttSubscribeQos[topic] = qos
+//     }
     
 
     //////////----------------------------------- IFTTT--------------------------------/////////

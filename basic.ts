@@ -2603,6 +2603,7 @@ namespace PlanetX_Basic {
         }
     }
 
+    //% subcategory=Sensor group="IIC Port"
     //% blockId=ChooseVibration block="ChooseVibration %Choose"
     export function Choose_Vibration(Choose: Vibration): void {
         while (pins.i2cReadNumber(0x08, NumberFormat.UInt8LE, false) != 0x10);

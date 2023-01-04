@@ -2649,8 +2649,7 @@ namespace PlanetX_Basic {
 
 
     /*
-     * Do something w
-     * 
+     * Do something
      * hen one of the MicroGamer Buttons is pressed
      * @param button press to be checked
      * @param event happening on the button, eg: click

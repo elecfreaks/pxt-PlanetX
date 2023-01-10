@@ -131,6 +131,8 @@
   "PlanetX_Basic.targetList.human_body|block": "人体",
   "PlanetX_Basic.trackingSensor|block": "巡线传感器 %Rjpin 识别到 %state",
   "PlanetX_Basic.trimpot|block": "电位器 %Rjpin 模拟值",
+  "PlanetX_Basic.get_Attention_Value|block": "摇杆 %Rjpin 被按下",
+  "PlanetX_Basic.GetAnalogValue|block": "摇杆 %Rjpin 模拟值",
   "PlanetX_Basic.ultrasoundSensor|block": "超声波传感器 %Rjpin 距离 %distance_unit",
   "PlanetX_Basic.waterLevel|block": "水位传感器 %Rjpin 水位值(0~100)",
   "PlanetX_Basic.writeData|block": "RFID 传感器 IIC接口 将数据 %data 写入卡",

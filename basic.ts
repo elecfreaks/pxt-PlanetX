@@ -2307,7 +2307,7 @@ namespace PlanetX_Basic {
     * Whether a Button is pressed
     */
     //% subcategory=Input group="IIC Port" color=#00B1ED
-    //% block="Button %level is pressed" blockId="DigitalButton"
+    //% block="Joystick button %level is pressed" blockId="DigitalButton"
     export function get_Attention_Value(level: value_level): boolean {
         let value = 0
         let digital = 0
@@ -2485,7 +2485,7 @@ namespace PlanetX_Basic {
      * Get Analog value
     */
     //% subcategory=Input group="IIC Port" color=#00B1ED
-    //% blockId="AnlogValue" block="Rocker value of %Button"
+    //% blockId="AnlogValue" block="Joystick rocker value of %Button"
     export function GetAnalogValue(Button: value_A): number {
         let Analog = 0
         let re_value = 128

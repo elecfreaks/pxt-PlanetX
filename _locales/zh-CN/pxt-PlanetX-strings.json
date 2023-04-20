@@ -215,6 +215,7 @@
   "PlanetX_IOT.uploadData|block": "上传数据到 ThingSpeak 平台",
   "PlanetX_IOT.uploadKidsiot|block": "上传数据 %data 到 kidsiot 平台",
   "PlanetX_IOT.wifiState|block": "Wifi连接 %State",
+  
   "PlanetX_IOT|block": "行星X_IoT",
   "{id:category}PlanetX_Basic": "行星X_基础",
   "{id:category}PlanetX_Display": "行星X_显示",
@@ -240,5 +241,6 @@
   "{id:subcategory}KidsIot": "KidsIot",
   "{id:subcategory}Neopixel": "彩灯单元",
   "{id:subcategory}Sensor": "传感器单元",
-  "{id:subcategory}ThingSpeak": "ThingSpeak"
+  "{id:subcategory}ThingSpeak": "ThingSpeak",
+  "{id:subcategory}MQTT": "MQTT"
 }

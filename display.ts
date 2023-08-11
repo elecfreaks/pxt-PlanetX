@@ -651,7 +651,7 @@ namespace PlanetX_Display {
             }
         }
     }
-    //% shim=displaySendBufferAsm
+    //% shim=sendBufferAsm
     function sendBuffer(buf: Buffer, pin: DigitalPin) {
     }
     export class Strip {

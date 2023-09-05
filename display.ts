@@ -651,8 +651,8 @@ namespace PlanetX_Display {
             }
         }
     }
-    //% shim=pxtsendBufferAsm
-    function pxtsendBuffer(buf: Buffer, pin: DigitalPin) {
+    //% shim=sendBufferAsm
+    function sendBuffer(buf: Buffer, pin: DigitalPin) {
     }
     export class Strip {
         buf:Buffer;
@@ -762,7 +762,7 @@ namespace PlanetX_Display {
         //% weight=79
         //% parts="neopixel" subcategory=Neopixel
         show() {
-            pxtsendBuffer(this.buf, this.pin);
+            sendBuffer(this.buf, this.pin);
         }
 
         /**

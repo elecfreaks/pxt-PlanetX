@@ -447,7 +447,7 @@ namespace PlanetX_Basic {
     }
 
     //////////////////////////////////////////////////////////////TrackBit
-    let TrackBit_state_value : number = 0
+    let TrackBit_state_value: number = 0
 
     ///////////////////////////////enum
     export enum DigitalRJPin {
@@ -533,14 +533,13 @@ namespace PlanetX_Basic {
         //% block="4"
         Four = 3
     }
-    export enum TrackBit_gray
-    {
+    export enum TrackBit_gray {
         //% block="line"
         One = 0,
         //% block="background"
         Two = 4
     }
-    
+
 
     export enum Distance_Unit_List {
         //% block="cm" 
@@ -658,18 +657,18 @@ namespace PlanetX_Basic {
         Second
     }
 
-    export enum joyvalEnum{
+    export enum joyvalEnum {
         //% block="x"
         x,
         //% block="y"
         y
     }
 
-    export enum joykeyEnum{
+    export enum joykeyEnum {
         //% block="pressed"
-        pressed=1,
+        pressed = 1,
         //% block="unpressed"
-        unpressed=0
+        unpressed = 0
     }
 
     ///////////////////////////////////blocks/////////////////////////////
@@ -943,13 +942,11 @@ namespace PlanetX_Basic {
             distance = 0
         }
 
-        if (distance == 0)
-        {
+        if (distance == 0) {
             distance = distance_last
             distance_last = 0
         }
-        else
-        {
+        else {
             distance_last = distance
         }
 
@@ -1126,21 +1123,19 @@ namespace PlanetX_Basic {
     //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit Init_Sensor_Val channel %channel detection target %detect_target value"
-    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel,detect_target: TrackBit_gray):number
-    {
+    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel, detect_target: TrackBit_gray): number {
         let Init_Sensor_Val = pins.createBuffer(8)
-        pins.i2cWriteNumber(0x1a,5,NumberFormat.Int8LE)
-        Init_Sensor_Val = pins.i2cReadBuffer(0x1a,8)
+        pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
+        Init_Sensor_Val = pins.i2cReadBuffer(0x1a, 8)
         return Init_Sensor_Val[channel + detect_target]
     }
-    
+
 
     //% deprecated=true
     //% val.min=0 val.max=255
     //% subcategory=Sensor group="IIC Port"
     //% block="Set Trackbit learn fail value %val"
-    export function Trackbit_learn_fail_value(val: number)
-    {
+    export function Trackbit_learn_fail_value(val: number) {
         pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
         pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
     }
@@ -1151,22 +1146,20 @@ namespace PlanetX_Basic {
     //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit sensor offset value"
-    export function TrackBit_get_offset(): number
-    {
-        let offset:number
+    export function TrackBit_get_offset(): number {
+        let offset: number
         pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
         const offsetH = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
         const offsetL = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         offset = (offsetH << 8) | offsetL
-        offset = Math.map(offset,0,6000,-3000,3000)
+        offset = Math.map(offset, 0, 6000, -3000, 3000)
         return offset;
     }
 
     //% subcategory=Sensor group="IIC Port"
     //% block="Get a Trackbit state value"
-    export function Trackbit_get_state_value()
-    {
+    export function Trackbit_get_state_value() {
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
         TrackBit_state_value = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         basic.pause(5);
@@ -1425,9 +1418,34 @@ namespace PlanetX_Basic {
         }
         return Math.round(retemp * 100) / 100
     }
+
+
+
+    let zx: number[] = []
     let revalue = 0
+    let cnt = 0
+    zx = [1, 2, 3]
     let SCL = DigitalPin.P19
     let SDA = DigitalPin.P20
+    function i2cData(Data: number = 0) {
+
+        control.waitMicros(2)
+        for (let i = 7; i >= 0; i--) {
+
+            if ((Data >> i) & 0x01) {
+
+                pins.digitalWritePin(SDA, 1)
+            } else {
+
+                pins.digitalWritePin(SDA, 0)
+            }
+            control.waitMicros(4)
+            pins.digitalWritePin(SCL, 1)
+            control.waitMicros(4)
+            pins.digitalWritePin(SCL, 0)
+            control.waitMicros(2)
+        }
+    }
 
     function waitAck() {
         pins.digitalWritePin(SDA, 1)
@@ -1436,8 +1454,8 @@ namespace PlanetX_Basic {
         pins.digitalWritePin(SCL, 1)
         control.waitMicros(2)
         revalue = pins.digitalReadPin(SDA)
+        control.waitMicros(2)
         pins.digitalWritePin(SCL, 0)
-        return revalue
     }
 
     function i2cEnd() {
@@ -1449,7 +1467,6 @@ namespace PlanetX_Basic {
         control.waitMicros(2)
         pins.digitalWritePin(SDA, 1)
     }
-
     function i2cStart() {
         pins.digitalWritePin(SCL, 1)
         pins.digitalWritePin(SDA, 1)
@@ -1458,39 +1475,30 @@ namespace PlanetX_Basic {
         control.waitMicros(1)
         pins.digitalWritePin(SCL, 0)
     }
-    
-    function i2cData(Data: number = 0) {
-
-        pins.digitalWritePin(SDA, 0)
-        pins.digitalWritePin(SCL, 0)
-        control.waitMicros(2)
-    
-        for (let i = 7; i >= 0; i--) {
-    
-            if ((Data >> i) & 0x01) {
-    
-                pins.digitalWritePin(SDA, 1)
-            } else {
-    
-                pins.digitalWritePin(SDA, 0)
-            }
-            control.waitMicros(2)
-            pins.digitalWritePin(SCL, 1)
-            control.waitMicros(2)
-            pins.digitalWritePin(SCL, 0)
-        }
-    }
 
     function scanIICAddr(Data: number = 0) {
 
-        let revalue2 = 0
-    
         i2cStart()
         i2cData(Data)
-        revalue2 = waitAck()
+        waitAck()
         i2cEnd()
-    
-        return revalue2
+    }
+
+
+
+    //% blockId=getscanIICAddr block="getscanIICAddr"
+    //% subcategory=Sensor group="IIC Port"
+    export function getscanIICAddr(): number {
+        for (let j = 0; j <= 127; j++) {
+            scanIICAddr(j * 2)
+            if (revalue == 0) {
+                zx[cnt++] = j * 2
+            }
+        }///
+
+        ///
+        zx = [1, 2, 3]
+        return (zx[cnt])
     }
 
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
@@ -1699,21 +1707,18 @@ namespace PlanetX_Basic {
     //% state.fieldEditor="gridpicker"
     //% state.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    export function joystickval(state:joyvalEnum):number{
-        let buff=pins.createBuffer(3)
-        let x_val,y_val
-        buff=pins.i2cReadBuffer(0xaa,3)
-        if(state==joyvalEnum.x)
-        {
+    export function joystickval(state: joyvalEnum): number {
+        let buff = pins.createBuffer(3)
+        let x_val, y_val
+        buff = pins.i2cReadBuffer(0xaa, 3)
+        if (state == joyvalEnum.x) {
             x_val = buff[0] * 4 - 512
-            if(x_val > -10 && x_val < 10)
-            {
+            if (x_val > -10 && x_val < 10) {
                 x_val = 0
             }
             return x_val
         }
-        else
-        {
+        else {
             y_val = buff[1] * 4 - 512
             if (y_val > -10 && y_val < 10) {
                 y_val = 0
@@ -1728,10 +1733,10 @@ namespace PlanetX_Basic {
     //% key.fieldEditor="gridpicker"
     //% key.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    export function joystickkey(key:joykeyEnum):boolean{
-        let buff=pins.createBuffer(3)
-        buff=pins.i2cReadBuffer(0xaa,3)
-        return key==buff[2]
+    export function joystickkey(key: joykeyEnum): boolean {
+        let buff = pins.createBuffer(3)
+        buff = pins.i2cReadBuffer(0xaa, 3)
+        return key == buff[2]
     }
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
@@ -1795,8 +1800,8 @@ namespace PlanetX_Basic {
 
     const buttonEventSource = 5000
     const buttonEventValue = {
-        CD_pressed:ButtonState.on,
-        CD_unpressed:ButtonState.off
+        CD_pressed: ButtonState.on,
+        CD_unpressed: ButtonState.off
     }
 
     //% block="on button %Rjpin %button pressed"

@@ -1425,6 +1425,74 @@ namespace PlanetX_Basic {
         }
         return Math.round(retemp * 100) / 100
     }
+    let revalue = 0
+    let SCL = DigitalPin.P19
+    let SDA = DigitalPin.P20
+
+    function waitAck() {
+        pins.digitalWritePin(SDA, 1)
+        pins.digitalWritePin(SCL, 0)
+        control.waitMicros(2)
+        pins.digitalWritePin(SCL, 1)
+        control.waitMicros(2)
+        revalue = pins.digitalReadPin(SDA)
+        pins.digitalWritePin(SCL, 0)
+        return revalue
+    }
+
+    function i2cEnd() {
+        pins.digitalWritePin(SDA, 0)
+        pins.digitalWritePin(SCL, 0)
+        control.waitMicros(2)
+        pins.digitalWritePin(SCL, 1)
+        pins.digitalWritePin(SDA, 0)
+        control.waitMicros(2)
+        pins.digitalWritePin(SDA, 1)
+    }
+
+    function i2cStart() {
+        pins.digitalWritePin(SCL, 1)
+        pins.digitalWritePin(SDA, 1)
+        control.waitMicros(2)
+        pins.digitalWritePin(SDA, 0)
+        control.waitMicros(1)
+        pins.digitalWritePin(SCL, 0)
+    }
+    
+    function i2cData(Data: number = 0) {
+
+        pins.digitalWritePin(SDA, 0)
+        pins.digitalWritePin(SCL, 0)
+        control.waitMicros(2)
+    
+        for (let i = 7; i >= 0; i--) {
+    
+            if ((Data >> i) & 0x01) {
+    
+                pins.digitalWritePin(SDA, 1)
+            } else {
+    
+                pins.digitalWritePin(SDA, 0)
+            }
+            control.waitMicros(2)
+            pins.digitalWritePin(SCL, 1)
+            control.waitMicros(2)
+            pins.digitalWritePin(SCL, 0)
+        }
+    }
+
+    function scanIICAddr(Data: number = 0) {
+
+        let revalue2 = 0
+    
+        i2cStart()
+        i2cData(Data)
+        revalue2 = waitAck()
+        i2cEnd()
+    
+        return revalue2
+    }
+
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
     //% subcategory=Sensor group="IIC Port"
     export function readColor(): number {

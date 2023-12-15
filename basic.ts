@@ -1539,21 +1539,21 @@ namespace PlanetX_Basic {
         i2cwrite_color1(67, 161)
         let data2 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
         let dataR = data2 * 256 + data1
-        let dataR_jisuan = dataR * 2.294087 / 16 * 3.44
+        let dataR_jisuan = dataR * 2.629298 / 16 * 3.44
         //G值
         i2cwrite_color1(67, 162)
         let DATA3 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
         i2cwrite_color1(67, 163)
         let DATA4 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
         let dataG = DATA4 * 256 + DATA3
-        let dataG_jisuan = dataG * 0.71 / 16 * 3.44
+        let dataG_jisuan = dataG * 0.7368538 / 16 * 3.44
         //B值
         i2cwrite_color1(67, 164)
         let DATA5 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
         i2cwrite_color1(67, 165)
         let DATA6 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
         let dataB = DATA6 * 256 + DATA5
-        let dataB_jisuan = dataB * 0.6311 / 16 * 3.44
+        let dataB_jisuan = dataB * 0.7130187 / 16 * 3.44
         let hue1 = rgb2hsl(dataR_jisuan, dataG_jisuan, dataB_jisuan)
         if (hue1) {
             return hue1

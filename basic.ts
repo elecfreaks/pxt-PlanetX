@@ -1500,16 +1500,23 @@ namespace PlanetX_Basic {
         zx = [1, 2, 3]
         return (zx[cnt])
     }
-
+    function i2cwrite_color1(addr: number, reg: number) {
+        let buf3 = pins.createBuffer(2)
+        buf3[0] = reg
+        pins.i2cWriteBuffer(addr, buf3)
+    }
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
     //% subcategory=Sensor group="IIC Port"
     export function readColor(): number {
         if (color_first_init == false) {
             initModule()
             colorMode()
+            i2cwrite_color(0x43, 0x81, 0xCA)
+            i2cwrite_color(0x43, 0x80, 0x17)
         }
         let tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
-        while (!tmp) {
+        let count = 10
+        while (count--) {
             basic.pause(5);
             tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
         }
@@ -1524,7 +1531,35 @@ namespace PlanetX_Basic {
         b = b * 255 / avg;
         //let hue = rgb2hue(r, g, b);
         let hue = rgb2hsl(r, g, b)
-        return hue
+        if (hue) {
+            return hue
+        }
+        i2cwrite_color1(67, 160)
+        let data1 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
+        i2cwrite_color1(67, 161)
+        let data2 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
+        let dataR = data2 * 256 + data1
+        let dataR_jisuan = dataR * 2.294087 / 16 * 3.44
+        //G值
+        i2cwrite_color1(67, 162)
+        let DATA3 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
+        i2cwrite_color1(67, 163)
+        let DATA4 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
+        let dataG = DATA4 * 256 + DATA3
+        let dataG_jisuan = dataG * 0.71 / 16 * 3.44
+        //B值
+        i2cwrite_color1(67, 164)
+        let DATA5 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
+        i2cwrite_color1(67, 165)
+        let DATA6 = pins.i2cReadNumber(67, NumberFormat.UInt8LE, false)
+        let dataB = DATA6 * 256 + DATA5
+        let dataB_jisuan = dataB * 0.6311 / 16 * 3.44
+        let hue1 = rgb2hsl(dataR_jisuan, dataG_jisuan, dataB_jisuan)
+        if (hue1) {
+            return hue1
+        }
+
+        return 99
     }
     //% block="Color sensor IIC port detects %color"
     //% subcategory=Sensor group="IIC Port"

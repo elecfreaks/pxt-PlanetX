@@ -2598,8 +2598,13 @@ namespace PlanetX_Basic {
         write_18b20(pin, 0xBE)
         low = read_18b20(pin)
         high = read_18b20(pin)
-        temperature = high << 8 | low
-        temperature = temperature / 16
+
+        let rawTemp = (highByte << 8) | lowByte;
+        let temperature = rawTemp / 16.0;
+            // Check the sign bit manually after reading both bytes
+        if ((highByte & 0x80) !== 0) { // If the MSB of highByte is set, it's a negative temp
+            temperature = -((~rawTemp + 1) / 16.0); // Convert to negative value
+        }
         if (temperature > 130) {
             temperature = lastTemp
         }

@@ -2588,27 +2588,8 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="Digital" color=#EA5532
     //% block="value of DS18B20 %state at pin %Rjpin"
     export function Ds18b20Temp(Rjpin: DigitalRJPin, state: ValType): number {
-        let pin = RJpin_to_digital(Rjpin)
-        init_18b20(pin)
-        write_18b20(pin, 0xCC)
-        write_18b20(pin, 0x44)
-        basic.pause(10)
-        init_18b20(pin)
-        write_18b20(pin, 0xCC)
-        write_18b20(pin, 0xBE)
-        low = read_18b20(pin)
-        high = read_18b20(pin)
-
-        let rawTemp = (highByte << 8) | lowByte;
-        let temperature = rawTemp / 16.0;
-            // Check the sign bit manually after reading both bytes
-        if ((highByte & 0x80) !== 0) { // If the MSB of highByte is set, it's a negative temp
-            temperature = -((~rawTemp + 1) / 16.0); // Convert to negative value
-        }
-        if (temperature > 130) {
-            temperature = lastTemp
-        }
-        lastTemp = temperature
+        let pin = RJpin_to_digital(Rjpin);
+        let temperature = celsius(pin);
         switch (state) {
             case ValType.DS18B20_temperature_C:
                 return temperature
@@ -2620,4 +2601,11 @@ namespace PlanetX_Basic {
         }
 
     }
+
+    //% shim=dstemp::celsius
+    //% parts=dstemp trackArgs=0
+     function celsius(pin: DigitalPin): number {
+        return 32.6;
+    }
+
 }

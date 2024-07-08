@@ -1,11 +1,12 @@
 {
     "name": "pxt-PlanetX",
-    "version": "1.5.15",
+    "version": "1.5.17",
     "description": "The micro:bit new sensor series PlanetX(行星X) with RJ11 connection port by ELECFREAKS Co.ltd",
     "dependencies": {
         "core": "*",
         "microphone": "*",
-        "pxt-PlanetX-AI": "github:elecfreaks/pxt-PlanetX-AI#v1.0.2"
+        "pxt-PlanetX-AI": "github:elecfreaks/pxt-PlanetX-AI#v1.0.2",
+        "microbit-dstemp": "github:bsiever/microbit-dstemp#v0.1.26"
     },
     "files": [
         "README.md",

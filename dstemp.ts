@@ -15,25 +15,25 @@ namespace dstemp {
     //% blockId="celsius" block="temperature (\u00B0\\C) on %pin|"
     //% shim=dstemp::celsius
     //% parts=dstemp trackArgs=0
-    export function celsius(pin: DigitalPin) : number {
+    function celsius(pin: DigitalPin) : number {
         return 32.6;
     }
 
     // Helper function
     //% shim=dstemp::setErrorHandler
-    export function setErrorHandler(a: Action) {
+    function setErrorHandler(a: Action) {
         errorHandler = a; 
     }
 
     // Helper function
     //% shim=dstemp::getErrorObjectIdx
-    export function getErrorObjectIdx() : number {
+    function getErrorObjectIdx() : number {
         return errorObjectIdx;
     }
 
     // Helper function
     //% shim=dstemp::getErrorPort
-    export function getErrorPort() : number {
+    function getErrorPort() : number {
         return errorPort;
     }
 
@@ -43,7 +43,7 @@ namespace dstemp {
      */
     //% blockId="error" block="temperature sensor error"
     //% draggableParameters="reporter" weight=0
-    export function sensorError(errCallback: (errorMessage: string, errorCode: number, port: number) => void) { 
+    function sensorError(errCallback: (errorMessage: string, errorCode: number, port: number) => void) { 
         if(errCallback) {
             errorHandler = () => {
                 let i  = getErrorObjectIdx(); 

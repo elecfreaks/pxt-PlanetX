@@ -18,6 +18,7 @@
   "PlanetX_Basic.folderPlay|param|folderNum": "Specify a floder , eg: 0",
   "PlanetX_Basic.folderPlay|param|myAns": "repeat , eg: repeatList.Yes",
   "PlanetX_Basic.laserSensor": "toggle laserSensor",
+  "PlanetX_Basic.magnet": "toggle magnet",
   "PlanetX_Basic.lightSensor": "TODO: get light intensity(lux)",
   "PlanetX_Basic.motorFan": "toggle fans",
   "PlanetX_Basic.noiseSensor": "TODO: get noise(dB)",

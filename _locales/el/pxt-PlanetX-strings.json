@@ -110,6 +110,7 @@
   "PlanetX_Basic.folderPlay|block": "Παίξε απο το mp3 στο φάκελο:$folderNum filename:$fileNum || repeatList: $myAns",
   "PlanetX_Basic.gasValue|block": "Τιμή συγκέντρωσης αισθητήρα αερίων %sensor %Rjpin ",
   "PlanetX_Basic.laserSensor|block": "Laser %Rjpin Θέσε σε $laserstate",
+  "PlanetX_Basic.magnet|block": "magnet %Rjpin Θέσε σε $laserstate",
   "PlanetX_Basic.lightSensor|block": "Τιμή Αισθητήρα φωτός %Rjpin (lux)",
   "PlanetX_Basic.motorFan|block": "Θέσε Ανεμιστήρα %Rjpin σε $fanstate || Ταχύτητα %speed \\%",
   "PlanetX_Basic.noiseSensor|block": "Τιμή Αισθητήρα θορύβου %Rjpin (dB)",

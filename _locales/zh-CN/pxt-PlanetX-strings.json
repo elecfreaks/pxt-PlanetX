@@ -111,6 +111,7 @@
   "PlanetX_Basic.folderPlay|block": "播放指定歌曲 文件夹:%folderNum 文件名:%fileNum || 重复播放: $myAns",
   "PlanetX_Basic.gasValue|block": "%sensor 气体传感器 %Rjpin 浓度值",
   "PlanetX_Basic.laserSensor|block": "激光模块 %Rjpin 切换至 %laserstate",
+  "PlanetX_Basic.magnet|block": "磁铁模块 %Rjpin 切换至 %magnetstate",
   "PlanetX_Basic.lightSensor|block": "光线传感器 %Rjpin 光线强度(lux)",
   "PlanetX_Basic.motorFan|block": "电机风扇 %Rjpin 切换至 $fanstate || 速度 %speed \\%",
   "PlanetX_Basic.noiseSensor|block": "噪声传感器 %Rjpin 响度(dB)",

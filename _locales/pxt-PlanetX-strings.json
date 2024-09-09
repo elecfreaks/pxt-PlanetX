@@ -110,6 +110,7 @@
   "PlanetX_Basic.folderPlay|block": "play the mp3 in the folder:$folderNum filename:$fileNum || repeatList: $myAns",
   "PlanetX_Basic.gasValue|block": "%sensor Gas sensor %Rjpin concentration value",
   "PlanetX_Basic.laserSensor|block": "Laser %Rjpin toggle to $laserstate",
+  "PlanetX_Basic.magnet|block": "magnet %Rjpin toggle to $magnetstate",
   "PlanetX_Basic.lightSensor|block": "Light sensor %Rjpin light intensity(lux)",
   "PlanetX_Basic.motorFan|block": "Motor fan %Rjpin toggle to $fanstate || speed %speed \\%",
   "PlanetX_Basic.noiseSensor|block": "Noise sensor %Rjpin loudness(dB)",

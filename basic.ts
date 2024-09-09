@@ -1834,6 +1834,35 @@ namespace PlanetX_Basic {
         }
     }
 
+    //% blockId=magnet block="magnet %Rjpin toggle to $magnetstate"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% magnetstate.shadow="toggleOnOff"
+    //% subcategory=Excute group="Digital" color=#EA5532
+    export function magnet(Rjpin: DigitalRJPin, magnetstate: boolean): void {
+        let pin = AnalogPin.P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin = AnalogPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin = AnalogPin.P15
+                break;
+        }
+        if (magnetstate) {
+            pins.digitalWritePin(pin, 1)
+        }
+        else {
+            pins.digitalWritePin(pin, 0)
+        }
+    }
+
     //% deprecated=true
     //% blockId=Relay block="Relay %Rjpin toggle to %Relaystate"
     //% Rjpin.fieldEditor="gridpicker"

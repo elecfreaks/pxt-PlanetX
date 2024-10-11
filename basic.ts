@@ -1238,7 +1238,7 @@ namespace PlanetX_Basic {
             }
             if (timeout_flag == 1)
             {
-                for (let index = 0; index < 40; index++)
+                for (let index = 0; index < dataArray.length; index++)
                 {
                     if (dataArray[index])
                     {
@@ -1249,7 +1249,6 @@ namespace PlanetX_Basic {
                         serial.writeNumber(0)
                     }
                 }
-                
             }
 
             //convert byte number array to integer

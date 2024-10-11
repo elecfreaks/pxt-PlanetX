@@ -385,18 +385,23 @@ namespace dstemp {
                 float temp;
                 success = readScratchpad(gpio, temp);
 
-                if(success) {
+                if(success) { // 校验温度范围
+                    if (temp > -100 && temp < 200) { // 假设有效的温度范围
                     errorObjectIdx = 0;
                     errorPort = pin;
-                    // Return to input
                     setToInput(gpio);
                     return temp;
+                    } else {
+                        return -999; // 返回一个特定的错误代码表示温度无效
+                    }
+                } else {
+                    return -999; // 返回一个特定的错误代码表示读取失败
                 }
             }
         } 
         // ERROR: Max Read Tries 
         error(3, pin);
-return_error:
+        return_error:
         // Return to input
         setToInput(gpio);
         // Return special sentinel value

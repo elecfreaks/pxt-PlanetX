@@ -1208,7 +1208,7 @@ namespace PlanetX_Basic {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
         let i: number = 0
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 1; i++) {
             for (let index = 0; index < 40; index++) dataArray.push(false)
             for (let index = 0; index < 5; index++) resultArray.push(0)
             pins.setPull(pin, PinPullMode.PullUp)

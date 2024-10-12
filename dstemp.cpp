@@ -146,7 +146,8 @@ namespace dstemp {
 
     // ************* Blocks
 
-    float _temperature;
+    float _temperature = 0;
+    int first_time_flag = 0;
 
     //% 
     void setErrorHandler(Action a) {
@@ -393,6 +394,11 @@ namespace dstemp {
                     errorPort = pin;
                     setToInput(gpio);
                     _temperature = temp;
+                    if (first_time_flag == 0)
+                    {
+                        first_time_flag = 1;
+                        return 26;
+                    }
                     return temp;
                     } else {
                         return _temperature; // 返回一个特定的错误代码表示温度无效

@@ -29,8 +29,8 @@ namespace PlanetX_Basic {
     let P = 0
     let H = 0
     let timeout:number = 0
-    let __temperature: number = -999
-    let __humidity: number = -999
+    let __temperature: number = 0
+    let __humidity: number = 0
     setreg(0xF2, 0x04)
     setreg(0xF4, 0x2F)
     setreg(0xF5, 0x0C)
@@ -1260,8 +1260,8 @@ namespace PlanetX_Basic {
             checksum = resultArray[4]
             if (checksumTmp >= 512) checksumTmp -= 512
             if (checksumTmp >= 256) checksumTmp -= 256
-            __temperature = resultArray[2] + resultArray[3] / 100
-            __humidity = resultArray[0] + resultArray[1] / 100
+            // __temperature = resultArray[2] + resultArray[3] / 100
+            // __humidity = resultArray[0] + resultArray[1] / 100
             if (checksumTmp == checksum){
                 __temperature = resultArray[2] + resultArray[3] / 100
                 __humidity = resultArray[0] + resultArray[1] / 100

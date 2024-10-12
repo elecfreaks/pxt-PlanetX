@@ -144,7 +144,9 @@ namespace dstemp {
     Action errorHandler = NULL;
 
 
-    // ************* Blocks 
+    // ************* Blocks
+
+    float _temperature;
 
     //% 
     void setErrorHandler(Action a) {
@@ -390,12 +392,13 @@ namespace dstemp {
                     errorObjectIdx = 0;
                     errorPort = pin;
                     setToInput(gpio);
+                    _temperature = temp;
                     return temp;
                     } else {
-                        return -999; // 返回一个特定的错误代码表示温度无效
+                        return _temperature; // 返回一个特定的错误代码表示温度无效
                     }
                 } else {
-                    return -999; // 返回一个特定的错误代码表示读取失败
+                    return _temperature; // 返回一个特定的错误代码表示读取失败
                 }
             }
         } 

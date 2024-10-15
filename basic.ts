@@ -28,6 +28,9 @@ namespace PlanetX_Basic {
     let T = 0
     let P = 0
     let H = 0
+    let timeout:number = 0
+    let __temperature: number = 0
+    let __humidity: number = 0
     setreg(0xF2, 0x04)
     setreg(0xF4, 0x2F)
     setreg(0xF5, 0x0C)
@@ -1165,13 +1168,37 @@ namespace PlanetX_Basic {
         basic.pause(5);
     }
 
+    function waitDigitalReadPin(state: number, timeout: number, pin:DigitalPin)
+    {
+        while (pins.digitalReadPin(pin) != state) {
+            if (!(--timeout)) {
+                return 0
+            }
+        };
+        return 1
+    }
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
-        basic.pause(1100)
+
+        if (input.runningTime() >= timeout)
+        {
+            timeout = input.runningTime() + 2000
+        }
+        else
+        {
+            switch (dht11state) {
+                case DHT11_state.DHT11_temperature_C:
+                    return __temperature
+                case DHT11_state.DHT11_humidity:
+                    return __humidity
+            }
+        }
+
+        let timeout_flag: number = 0
         let _temperature: number = -999.0
         let _humidity: number = -999.0
         let checksum: number = 0
@@ -1180,41 +1207,54 @@ namespace PlanetX_Basic {
         let resultArray: number[] = []
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
-        for (let index = 0; index < 40; index++) dataArray.push(false)
-        for (let index = 0; index < 5; index++) resultArray.push(0)
+        let i: number = 0
+        for (i = 0; i < 1; i++) {
+            for (let index = 0; index < 40; index++) dataArray.push(false)
+            for (let index = 0; index < 5; index++) resultArray.push(0)
+            pins.setPull(pin, PinPullMode.PullUp)
+            pins.digitalWritePin(pin, 0) //begin protocol, pull down pin
+            basic.pause(18)
+            pins.digitalWritePin(pin, 1) //pull up pin for 18us
+            pins.digitalReadPin(pin) //pull up pin
+            control.waitMicros(40)
+            if (!(waitDigitalReadPin(1, 9999, pin))) continue;
+            if (!(waitDigitalReadPin(0, 9999, pin))) continue;
+            //read data (5 bytes)
 
-        pins.setPull(pin, PinPullMode.PullUp)
-        pins.digitalWritePin(pin, 0) //begin protocol, pull down pin
-        basic.pause(18)
-        pins.digitalReadPin(pin) //pull up pin
-        control.waitMicros(40)
-        while (pins.digitalReadPin(pin) == 0); //sensor response
-        while (pins.digitalReadPin(pin) == 1); //sensor response
+            for (let index = 0; index < 40; index++) {
+                if (!(waitDigitalReadPin(0, 9999, pin))) {
+                    timeout_flag = 1
+                    break;
+                }
+                if (!(waitDigitalReadPin(1, 9999, pin))) {
+                    timeout_flag = 1
+                    break;
+                }
+                control.waitMicros(40)
+                //if sensor still pull up data pin after 28 us it means 1, otherwise 0
+                if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
+            }
 
-        //read data (5 bytes)
-        for (let index = 0; index < 40; index++) {
-            while (pins.digitalReadPin(pin) == 1);
-            while (pins.digitalReadPin(pin) == 0);
-            control.waitMicros(28)
-            //if sensor still pull up data pin after 28 us it means 1, otherwise 0
-            if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
+            //convert byte number array to integer
+            for (let index = 0; index < 5; index++)
+                for (let index2 = 0; index2 < 8; index2++)
+                    if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
+            //verify checksum
+            checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
+            checksum = resultArray[4]
+            if (checksumTmp >= 512) checksumTmp -= 512
+            if (checksumTmp >= 256) checksumTmp -= 256
+            if (checksumTmp == checksum){
+                __temperature = resultArray[2] + resultArray[3] / 100
+                __humidity = resultArray[0] + resultArray[1] / 100
+                break;
+            }
         }
-        //convert byte number array to integer
-        for (let index = 0; index < 5; index++)
-            for (let index2 = 0; index2 < 8; index2++)
-                if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
-        //verify checksum
-        checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
-        checksum = resultArray[4]
-        if (checksumTmp >= 512) checksumTmp -= 512
-        if (checksumTmp >= 256) checksumTmp -= 256
         switch (dht11state) {
             case DHT11_state.DHT11_temperature_C:
-                _temperature = resultArray[2] + resultArray[3] / 100
-                return _temperature
+                return __temperature
             case DHT11_state.DHT11_humidity:
-                _humidity = resultArray[0] + resultArray[1] / 100
-                return _humidity
+                return __humidity
         }
         return 0
     }

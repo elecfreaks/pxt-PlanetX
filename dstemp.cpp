@@ -144,7 +144,10 @@ namespace dstemp {
     Action errorHandler = NULL;
 
 
-    // ************* Blocks 
+    // ************* Blocks
+
+    float _temperature = 0;
+    int first_time_flag = 0;
 
     //% 
     void setErrorHandler(Action a) {
@@ -385,18 +388,29 @@ namespace dstemp {
                 float temp;
                 success = readScratchpad(gpio, temp);
 
-                if(success) {
+                if(success) { // 校验温度范围
+                    if (temp > -100 && temp < 200) { // 假设有效的温度范围
                     errorObjectIdx = 0;
                     errorPort = pin;
-                    // Return to input
                     setToInput(gpio);
+                    _temperature = temp;
+                    if (first_time_flag == 0)
+                    {
+                        first_time_flag = 1;
+                        return 26;
+                    }
                     return temp;
+                    } else {
+                        return _temperature; // 返回上次的温度值
+                    }
+                } else {
+                    return _temperature; // 返回上次的温度值
                 }
             }
         } 
         // ERROR: Max Read Tries 
         error(3, pin);
-return_error:
+        return_error:
         // Return to input
         setToInput(gpio);
         // Return special sentinel value

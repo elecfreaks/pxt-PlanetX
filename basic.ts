@@ -1223,32 +1223,16 @@ namespace PlanetX_Basic {
 
             for (let index = 0; index < 40; index++) {
                 if (!(waitDigitalReadPin(0, 9999, pin))) {
-                    serial.writeNumber(index)
                     timeout_flag = 1
                     break;
                 }
                 if (!(waitDigitalReadPin(1, 9999, pin))) {
-                    serial.writeNumber(index)
                     timeout_flag = 1
                     break;
                 }
                 control.waitMicros(40)
                 //if sensor still pull up data pin after 28 us it means 1, otherwise 0
                 if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
-            }
-            if (timeout_flag == 1)
-            {
-                for (let index = 0; index < dataArray.length; index++)
-                {
-                    if (dataArray[index])
-                    {
-                        serial.writeNumber(1)
-                    }
-                    else
-                    {
-                        serial.writeNumber(0)
-                    }
-                }
             }
 
             //convert byte number array to integer
@@ -1260,8 +1244,6 @@ namespace PlanetX_Basic {
             checksum = resultArray[4]
             if (checksumTmp >= 512) checksumTmp -= 512
             if (checksumTmp >= 256) checksumTmp -= 256
-            // __temperature = resultArray[2] + resultArray[3] / 100
-            // __humidity = resultArray[0] + resultArray[1] / 100
             if (checksumTmp == checksum){
                 __temperature = resultArray[2] + resultArray[3] / 100
                 __humidity = resultArray[0] + resultArray[1] / 100

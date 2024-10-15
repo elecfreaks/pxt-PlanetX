@@ -401,10 +401,10 @@ namespace dstemp {
                     }
                     return temp;
                     } else {
-                        return _temperature; // 返回一个特定的错误代码表示温度无效
+                        return _temperature; // 返回上次的温度值
                     }
                 } else {
-                    return _temperature; // 返回一个特定的错误代码表示读取失败
+                    return _temperature; // 返回上次的温度值
                 }
             }
         } 

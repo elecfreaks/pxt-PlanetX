@@ -52,8 +52,8 @@ namespace PlanetX_IOT {
 
     const THINGSPEAK_HOST = "api.thingspeak.com"
     const THINGSPEAK_PORT = "80"
-    const SMARTIOT_HOST = "139.159.161.57"
-    const SMARTIOT_PORT = "5555"
+    const SMARTIOT_HOST = "47.239.108.37"
+    const SMARTIOT_PORT = "8081"
 
     const EspEventSource = 3000
     const EspEventValue = {

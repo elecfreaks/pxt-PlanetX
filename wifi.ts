@@ -312,7 +312,7 @@ namespace PlanetX_IOT {
     //% pw.defl=your_pw weight=95
     //% color=#EA5532
     export function connectWifi(ssid: string, pw: string) {
-        control.onEvent(EspEventSource, EspEventValue.ConnectKidsIot, () => {})
+        control.onEvent(EspEventSource, EspEventValue.ConnectSmartIot, () => {})
         currentCmd = Cmd.ConnectWifi
         sendAT(`AT+CWJAP="${ssid}","${pw}"`) // connect to Wifi router
         let timeout = input.runningTime() + 1000

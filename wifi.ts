@@ -312,14 +312,27 @@ namespace PlanetX_IOT {
     //% pw.defl=your_pw weight=95
     //% color=#EA5532
     export function connectWifi(ssid: string, pw: string) {
+        control.onEvent(EspEventSource, EspEventValue.ConnectKidsIot, () => {})
         currentCmd = Cmd.ConnectWifi
         sendAT(`AT+CWJAP="${ssid}","${pw}"`) // connect to Wifi router
-        control.waitForEvent(EspEventSource, EspEventValue.ConnectWifi)
-        while (!wifi_connected) {
-            restEsp8266()
-            sendAT(`AT+CWJAP="${ssid}","${pw}"`)
-            control.waitForEvent(EspEventSource, EspEventValue.ConnectWifi)
+        let timeout = input.runningTime() + 1000
+        let count = 0;
+        while(!wifi_connected && count < 10){
+            if (input.runningTime() > timeout){
+                currentCmd = Cmd.ConnectWifi
+                sendAT(`AT+CWJAP="${ssid}","${pw}"`) // connect to Wifi router
+                timeout = input.runningTime() + 1000
+                count++
+            }
         }
+        // currentCmd = Cmd.ConnectWifi
+        // sendAT(`AT+CWJAP="${ssid}","${pw}"`) // connect to Wifi router
+        // control.waitForEvent(EspEventSource, EspEventValue.ConnectWifi)
+        // while (!wifi_connected) {
+        //     restEsp8266()
+        //     sendAT(`AT+CWJAP="${ssid}","${pw}"`)
+        //     control.waitForEvent(EspEventSource, EspEventValue.ConnectWifi)
+        // }
     }
     /**
     * Check if ESP8266 successfully connected to Wifi

@@ -1399,7 +1399,7 @@ namespace PlanetX_Basic {
     //% blockId= gesture_create_event block="onGestureInit"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor group="IIC Port"
-    export function onGestureInit() {
+    function onGestureInit() {
         paj7620.init();
     }
 
@@ -1451,16 +1451,16 @@ namespace PlanetX_Basic {
                 }
             }
         }
-        if (color_new_init == true){
+        if (color_new_init == true) {
             basic.pause(100);
             c = i2cread_color(0x43, 0xA6) + i2cread_color(0x43, 0xA7) * 256;
             r = i2cread_color(0x43, 0xA0) + i2cread_color(0x43, 0xA1) * 256;
             g = i2cread_color(0x43, 0xA2) + i2cread_color(0x43, 0xA3) * 256;
             b = i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256;
 
-            r *= 1.3 * 0.5
-            g *= 0.68 * 0.5
-            b *= 0.80 * 0.5
+            r *= 1.3 * 0.55 * 0.83
+            g *= 0.69 * 0.5 * 0.83
+            b *= 0.80 * 0.53 * 0.83
             c *= 0.3
 
             r = Math.min(r, 4095.9356)
@@ -1468,7 +1468,7 @@ namespace PlanetX_Basic {
             b = Math.min(b, 4095.9356)
             c = Math.min(c, 4095.9356)
         }
-        else{
+        else {
             if (color_first_init == false) {
                 initModule()
                 colorMode()
@@ -1484,15 +1484,15 @@ namespace PlanetX_Basic {
             b = i2cread_color(APDS9960_ADDR, APDS9960_BDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_BDATAH) * 256;
         }
 
-        // serial.writeNumber(r)
-        // serial.writeLine("r")
-        // serial.writeNumber(g)
-        // serial.writeLine("g")
-        // serial.writeNumber(b)
-        // serial.writeLine("b")
-        // serial.writeNumber(c)
-        // serial.writeLine("c")
-        
+        serial.writeNumber(r)
+        serial.writeLine("r")
+        serial.writeNumber(g)
+        serial.writeLine("g")
+        serial.writeNumber(b)
+        serial.writeLine("b")
+        serial.writeNumber(c)
+        serial.writeLine("c")
+
         // map to rgb based on clear channel
         let avg = c / 3;
         r = r * 255 / avg;

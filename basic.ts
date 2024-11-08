@@ -1466,7 +1466,7 @@ namespace PlanetX_Basic {
             r = Math.min(r, 4095.9356)
             g = Math.min(g, 4095.9356)
             b = Math.min(b, 4095.9356)
-            c = Math.min(c, 4095.9356)
+            // c = Math.min(c, 4095.9356)
         }
         else {
             if (color_first_init == false) {
@@ -1500,6 +1500,10 @@ namespace PlanetX_Basic {
         b = b * 255 / avg;
         //let hue = rgb2hue(r, g, b);
         let hue = rgb2hsl(r, g, b)
+        if (color_new_init == true && hue >= 180 && hue <= 220 && c >= 4000) {
+            c = Math.map(c, 0, 15000, 0, 9000);
+            hue = 180 + (9000 - c) / 1000.0;
+        }
         return hue
     }
     //% block="Color sensor IIC port detects %color"

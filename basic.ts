@@ -1464,7 +1464,7 @@ namespace PlanetX_Basic {
             b = i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256;
 
             r *= 1.3 * 0.47 * 0.85
-            g *= 0.69 * 0.525 * 0.85
+            g *= 0.69 * 0.52 * 0.85
             b *= 0.80 * 0.49 * 0.85
             c *= 0.3
 

@@ -1463,9 +1463,9 @@ namespace PlanetX_Basic {
             g = i2cread_color(0x43, 0xA2) + i2cread_color(0x43, 0xA3) * 256;
             b = i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256;
 
-            r *= 1.3 * 0.47 * 0.85
-            g *= 0.69 * 0.52 * 0.85
-            b *= 0.80 * 0.49 * 0.85
+            r *= 1.3 * 0.47 * 0.83
+            g *= 0.69 * 0.53 * 0.83
+            b *= 0.80 * 0.49 * 0.83
             c *= 0.3
 
             temp_c = c
@@ -1517,7 +1517,7 @@ namespace PlanetX_Basic {
         b = b * 255 / avg;
         //let hue = rgb2hue(r, g, b);
         let hue = rgb2hsl(r, g, b)
-        if (color_new_init == true && hue >= 180 && hue <= 200 && temp_c >= 6000 && (temp_b - temp_g)<1000) {
+        if (color_new_init == true && hue >= 180 && hue <= 201 && temp_c >= 6000 && (temp_b - temp_g) < 1000 || (temp_r > 4096 && temp_g > 4096 && temp_b > 4096)) {
             temp_c = Math.map(temp_c, 0, 15000, 0, 13000);
             hue = 180 + (13000 - temp_c) / 1000.0;
         }

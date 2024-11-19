@@ -28,6 +28,9 @@ namespace PlanetX_Basic {
     let T = 0
     let P = 0
     let H = 0
+    let timeout:number = 0
+    let __temperature: number = 0
+    let __humidity: number = 0
     setreg(0xF2, 0x04)
     setreg(0xF4, 0x2F)
     setreg(0xF5, 0x0C)
@@ -447,7 +450,7 @@ namespace PlanetX_Basic {
     }
 
     //////////////////////////////////////////////////////////////TrackBit
-    let TrackBit_state_value : number = 0
+    let TrackBit_state_value: number = 0
 
     ///////////////////////////////enum
     export enum DigitalRJPin {
@@ -533,14 +536,13 @@ namespace PlanetX_Basic {
         //% block="4"
         Four = 3
     }
-    export enum TrackBit_gray
-    {
+    export enum TrackBit_gray {
         //% block="line"
         One = 0,
         //% block="background"
         Two = 4
     }
-    
+
 
     export enum Distance_Unit_List {
         //% block="cm" 
@@ -658,18 +660,18 @@ namespace PlanetX_Basic {
         Second
     }
 
-    export enum joyvalEnum{
+    export enum joyvalEnum {
         //% block="x"
         x,
         //% block="y"
         y
     }
 
-    export enum joykeyEnum{
+    export enum joykeyEnum {
         //% block="pressed"
-        pressed=1,
+        pressed = 1,
         //% block="unpressed"
-        unpressed=0
+        unpressed = 0
     }
 
     ///////////////////////////////////blocks/////////////////////////////
@@ -943,13 +945,11 @@ namespace PlanetX_Basic {
             distance = 0
         }
 
-        if (distance == 0)
-        {
+        if (distance == 0) {
             distance = distance_last
             distance_last = 0
         }
-        else
-        {
+        else {
             distance_last = distance
         }
 
@@ -1126,21 +1126,19 @@ namespace PlanetX_Basic {
     //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit Init_Sensor_Val channel %channel detection target %detect_target value"
-    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel,detect_target: TrackBit_gray):number
-    {
+    export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel, detect_target: TrackBit_gray): number {
         let Init_Sensor_Val = pins.createBuffer(8)
-        pins.i2cWriteNumber(0x1a,5,NumberFormat.Int8LE)
-        Init_Sensor_Val = pins.i2cReadBuffer(0x1a,8)
+        pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
+        Init_Sensor_Val = pins.i2cReadBuffer(0x1a, 8)
         return Init_Sensor_Val[channel + detect_target]
     }
-    
+
 
     //% deprecated=true
     //% val.min=0 val.max=255
     //% subcategory=Sensor group="IIC Port"
     //% block="Set Trackbit learn fail value %val"
-    export function Trackbit_learn_fail_value(val: number)
-    {
+    export function Trackbit_learn_fail_value(val: number) {
         pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
         pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
     }
@@ -1151,34 +1149,56 @@ namespace PlanetX_Basic {
     //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit sensor offset value"
-    export function TrackBit_get_offset(): number
-    {
-        let offset:number
+    export function TrackBit_get_offset(): number {
+        let offset: number
         pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
         const offsetH = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
         const offsetL = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         offset = (offsetH << 8) | offsetL
-        offset = Math.map(offset,0,6000,-3000,3000)
+        offset = Math.map(offset, 0, 6000, -3000, 3000)
         return offset;
     }
 
     //% subcategory=Sensor group="IIC Port"
     //% block="Get a Trackbit state value"
-    export function Trackbit_get_state_value()
-    {
+    export function Trackbit_get_state_value() {
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
         TrackBit_state_value = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
         basic.pause(5);
     }
 
+    function waitDigitalReadPin(state: number, timeout: number, pin:DigitalPin)
+    {
+        while (pins.digitalReadPin(pin) != state) {
+            if (!(--timeout)) {
+                return 0
+            }
+        };
+        return 1
+    }
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
-        basic.pause(1100)
+
+        if (input.runningTime() >= timeout)
+        {
+            timeout = input.runningTime() + 2000
+        }
+        else
+        {
+            switch (dht11state) {
+                case DHT11_state.DHT11_temperature_C:
+                    return __temperature
+                case DHT11_state.DHT11_humidity:
+                    return __humidity
+            }
+        }
+
+        let timeout_flag: number = 0
         let _temperature: number = -999.0
         let _humidity: number = -999.0
         let checksum: number = 0
@@ -1187,41 +1207,54 @@ namespace PlanetX_Basic {
         let resultArray: number[] = []
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
-        for (let index = 0; index < 40; index++) dataArray.push(false)
-        for (let index = 0; index < 5; index++) resultArray.push(0)
+        let i: number = 0
+        for (i = 0; i < 1; i++) {
+            for (let index = 0; index < 40; index++) dataArray.push(false)
+            for (let index = 0; index < 5; index++) resultArray.push(0)
+            pins.setPull(pin, PinPullMode.PullUp)
+            pins.digitalWritePin(pin, 0) //begin protocol, pull down pin
+            basic.pause(18)
+            pins.digitalWritePin(pin, 1) //pull up pin for 18us
+            pins.digitalReadPin(pin) //pull up pin
+            control.waitMicros(40)
+            if (!(waitDigitalReadPin(1, 9999, pin))) continue;
+            if (!(waitDigitalReadPin(0, 9999, pin))) continue;
+            //read data (5 bytes)
 
-        pins.setPull(pin, PinPullMode.PullUp)
-        pins.digitalWritePin(pin, 0) //begin protocol, pull down pin
-        basic.pause(18)
-        pins.digitalReadPin(pin) //pull up pin
-        control.waitMicros(40)
-        while (pins.digitalReadPin(pin) == 0); //sensor response
-        while (pins.digitalReadPin(pin) == 1); //sensor response
+            for (let index = 0; index < 40; index++) {
+                if (!(waitDigitalReadPin(0, 9999, pin))) {
+                    timeout_flag = 1
+                    break;
+                }
+                if (!(waitDigitalReadPin(1, 9999, pin))) {
+                    timeout_flag = 1
+                    break;
+                }
+                control.waitMicros(40)
+                //if sensor still pull up data pin after 28 us it means 1, otherwise 0
+                if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
+            }
 
-        //read data (5 bytes)
-        for (let index = 0; index < 40; index++) {
-            while (pins.digitalReadPin(pin) == 1);
-            while (pins.digitalReadPin(pin) == 0);
-            control.waitMicros(28)
-            //if sensor still pull up data pin after 28 us it means 1, otherwise 0
-            if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
+            //convert byte number array to integer
+            for (let index = 0; index < 5; index++)
+                for (let index2 = 0; index2 < 8; index2++)
+                    if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
+            //verify checksum
+            checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
+            checksum = resultArray[4]
+            if (checksumTmp >= 512) checksumTmp -= 512
+            if (checksumTmp >= 256) checksumTmp -= 256
+            if (checksumTmp == checksum){
+                __temperature = resultArray[2] + resultArray[3] / 100
+                __humidity = resultArray[0] + resultArray[1] / 100
+                break;
+            }
         }
-        //convert byte number array to integer
-        for (let index = 0; index < 5; index++)
-            for (let index2 = 0; index2 < 8; index2++)
-                if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
-        //verify checksum
-        checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
-        checksum = resultArray[4]
-        if (checksumTmp >= 512) checksumTmp -= 512
-        if (checksumTmp >= 256) checksumTmp -= 256
         switch (dht11state) {
             case DHT11_state.DHT11_temperature_C:
-                _temperature = resultArray[2] + resultArray[3] / 100
-                return _temperature
+                return __temperature
             case DHT11_state.DHT11_humidity:
-                _humidity = resultArray[0] + resultArray[1] / 100
-                return _humidity
+                return __humidity
         }
         return 0
     }
@@ -1400,6 +1433,13 @@ namespace PlanetX_Basic {
                 basic.pause(200);
             }
         })
+    }
+
+    //% blockId= gesture_create_event block="onGestureInit"
+    //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
+    //% subcategory=Sensor group="IIC Port"
+    export function onGestureInit() {
+        paj7620.init();
     }
 
     //% deprecated=true
@@ -1631,21 +1671,18 @@ namespace PlanetX_Basic {
     //% state.fieldEditor="gridpicker"
     //% state.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    export function joystickval(state:joyvalEnum):number{
-        let buff=pins.createBuffer(3)
-        let x_val,y_val
-        buff=pins.i2cReadBuffer(0xaa,3)
-        if(state==joyvalEnum.x)
-        {
+    export function joystickval(state: joyvalEnum): number {
+        let buff = pins.createBuffer(3)
+        let x_val, y_val
+        buff = pins.i2cReadBuffer(0xaa, 3)
+        if (state == joyvalEnum.x) {
             x_val = buff[0] * 4 - 512
-            if(x_val > -10 && x_val < 10)
-            {
+            if (x_val > -10 && x_val < 10) {
                 x_val = 0
             }
             return x_val
         }
-        else
-        {
+        else {
             y_val = buff[1] * 4 - 512
             if (y_val > -10 && y_val < 10) {
                 y_val = 0
@@ -1660,10 +1697,10 @@ namespace PlanetX_Basic {
     //% key.fieldEditor="gridpicker"
     //% key.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    export function joystickkey(key:joykeyEnum):boolean{
-        let buff=pins.createBuffer(3)
-        buff=pins.i2cReadBuffer(0xaa,3)
-        return key==buff[2]
+    export function joystickkey(key: joykeyEnum): boolean {
+        let buff = pins.createBuffer(3)
+        buff = pins.i2cReadBuffer(0xaa, 3)
+        return key == buff[2]
     }
 
     //% blockId="potentiometer" block="Trimpot %Rjpin analog value"
@@ -1727,8 +1764,8 @@ namespace PlanetX_Basic {
 
     const buttonEventSource = 5000
     const buttonEventValue = {
-        CD_pressed:ButtonState.on,
-        CD_unpressed:ButtonState.off
+        CD_pressed: ButtonState.on,
+        CD_unpressed: ButtonState.off
     }
 
     //% block="on button %Rjpin %button pressed"
@@ -1830,6 +1867,35 @@ namespace PlanetX_Basic {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
         if (laserstate) {
+            pins.digitalWritePin(pin, 1)
+        }
+        else {
+            pins.digitalWritePin(pin, 0)
+        }
+    }
+
+    //% blockId=magnet block="magnet %Rjpin toggle to $magnetstate"
+    //% Rjpin.fieldEditor="gridpicker"
+    //% Rjpin.fieldOptions.columns=2
+    //% magnetstate.shadow="toggleOnOff"
+    //% subcategory=Excute group="Digital" color=#EA5532
+    export function magnet(Rjpin: DigitalRJPin, magnetstate: boolean): void {
+        let pin = AnalogPin.P1
+        switch (Rjpin) {
+            case DigitalRJPin.J1:
+                pin = AnalogPin.P1
+                break;
+            case DigitalRJPin.J2:
+                pin = AnalogPin.P2
+                break;
+            case DigitalRJPin.J3:
+                pin = AnalogPin.P13
+                break;
+            case DigitalRJPin.J4:
+                pin = AnalogPin.P15
+                break;
+        }
+        if (magnetstate) {
             pins.digitalWritePin(pin, 1)
         }
         else {
@@ -2588,22 +2654,8 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="Digital" color=#EA5532
     //% block="value of DS18B20 %state at pin %Rjpin"
     export function Ds18b20Temp(Rjpin: DigitalRJPin, state: ValType): number {
-        let pin = RJpin_to_digital(Rjpin)
-        init_18b20(pin)
-        write_18b20(pin, 0xCC)
-        write_18b20(pin, 0x44)
-        basic.pause(10)
-        init_18b20(pin)
-        write_18b20(pin, 0xCC)
-        write_18b20(pin, 0xBE)
-        low = read_18b20(pin)
-        high = read_18b20(pin)
-        temperature = high << 8 | low
-        temperature = temperature / 16
-        if (temperature > 130) {
-            temperature = lastTemp
-        }
-        lastTemp = temperature
+        let pin = RJpin_to_digital(Rjpin);
+        let temperature = celsius(pin);
         switch (state) {
             case ValType.DS18B20_temperature_C:
                 return temperature
@@ -2615,4 +2667,11 @@ namespace PlanetX_Basic {
         }
 
     }
+
+    //% shim=dstemp::celsius
+    //% parts=dstemp trackArgs=0
+    function celsius(pin: DigitalPin): number {
+        return 32.6;
+    }
+
 }

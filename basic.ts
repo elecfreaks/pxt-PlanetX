@@ -138,6 +138,10 @@ namespace PlanetX_Basic {
     let color_first_init = false
     let color_new_init = false
 
+    let __dht11_last_read_time = 0;
+    let __temperature: number = 0
+    let __humidity: number = 0
+
 
     function i2cwrite_color(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -1166,56 +1170,93 @@ namespace PlanetX_Basic {
         basic.pause(5);
     }
 
+    function waitDigitalReadPin(state: number, timeout: number, pin: DigitalPin) {
+        while (pins.digitalReadPin(pin) != state) {
+            if (!(--timeout)) {
+                return 0
+            }
+        };
+        return 1
+    }
+
+    function delay_us(us: number){
+        // control.waitMicros(us)
+        let time = input.runningTimeMicros() + us;
+        while(input.runningTimeMicros() < time);
+    }
+
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
-        basic.pause(1100)
-        let _temperature: number = -999.0
-        let _humidity: number = -999.0
-        let checksum: number = 0
-        let checksumTmp: number = 0
-        let dataArray: boolean[] = []
-        let resultArray: number[] = []
+        if (__dht11_last_read_time != 0 && __dht11_last_read_time + 1000 > input.runningTime()){
+            switch (dht11state) {
+                case DHT11_state.DHT11_temperature_C:
+                    return __temperature
+                case DHT11_state.DHT11_humidity:
+                    return __humidity
+            }
+        }
+        let fail_flag: number = 0
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
-        for (let index = 0; index < 40; index++) dataArray.push(false)
-        for (let index = 0; index < 5; index++) resultArray.push(0)
-
         pins.setPull(pin, PinPullMode.PullUp)
-        pins.digitalWritePin(pin, 0) //begin protocol, pull down pin
-        basic.pause(18)
-        pins.digitalReadPin(pin) //pull up pin
-        control.waitMicros(40)
-        while (pins.digitalReadPin(pin) == 0); //sensor response
-        while (pins.digitalReadPin(pin) == 1); //sensor response
+        for (let count = 0; count < (__dht11_last_read_time == 0 ? 50 : 10); count++) {
+            if(count != 0){
+                basic.pause(5);
+            }
+            fail_flag = 0;
+            // 拉高1us后拉低代表重置
+            pins.digitalWritePin(pin, 1)
+            delay_us(1)
+            pins.digitalWritePin(pin, 0)
+            basic.pause(18)
+            // 等待18ms后拉高代表开始
+            pins.digitalWritePin(pin, 1) //pull up pin for 18us
+            delay_us(30)
+            pins.digitalReadPin(pin);
+            if (!(waitDigitalReadPin(1, 9999, pin))) continue;
+            if (!(waitDigitalReadPin(0, 9999, pin))) continue;
+            //read data (5 bytes)
+            let data_arr = [0, 0, 0, 0, 0];
+            let i,j;
+            for( i = 0; i < 5; i++){
+                for ( j = 0; j < 8; j++) {
+                    if (!(waitDigitalReadPin(0, 9999, pin))) {
+                        fail_flag = 1
+                        break;
+                    }
+                    if (!(waitDigitalReadPin(1, 9999, pin))) {
+                        fail_flag = 1
+                        break;
+                    }
+                    delay_us(40)
+                    //if sensor still pull up data pin after 28 us it means 1, otherwise 0
+                    if (pins.digitalReadPin(pin) == 1) {
+                        data_arr[i] |= 1 << (7 - j)
+                    }
+                }
+                if (fail_flag) break;
+            }
+            if (fail_flag) {
+                continue;
+            };
 
-        //read data (5 bytes)
-        for (let index = 0; index < 40; index++) {
-            while (pins.digitalReadPin(pin) == 1);
-            while (pins.digitalReadPin(pin) == 0);
-            control.waitMicros(28)
-            //if sensor still pull up data pin after 28 us it means 1, otherwise 0
-            if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
+            if (data_arr[4] == ((data_arr[0] + data_arr[1] + data_arr[2] + data_arr[3]) & 0xFF)) {
+                __temperature = data_arr[2] + data_arr[3] / 100
+                __humidity = data_arr[0] + data_arr[1] / 100
+                __dht11_last_read_time = input.runningTime();
+                break;
+            }
+            fail_flag = 1;
         }
-        //convert byte number array to integer
-        for (let index = 0; index < 5; index++)
-            for (let index2 = 0; index2 < 8; index2++)
-                if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
-        //verify checksum
-        checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
-        checksum = resultArray[4]
-        if (checksumTmp >= 512) checksumTmp -= 512
-        if (checksumTmp >= 256) checksumTmp -= 256
         switch (dht11state) {
             case DHT11_state.DHT11_temperature_C:
-                _temperature = resultArray[2] + resultArray[3] / 100
-                return _temperature
+                return __temperature
             case DHT11_state.DHT11_humidity:
-                _humidity = resultArray[0] + resultArray[1] / 100
-                return _humidity
+                return __humidity
         }
         return 0
     }

@@ -19,7 +19,6 @@
         "_locales/el/pxt-PlanetX-strings.json",
         "_locales/el/pxt-PlanetX-jsdoc-strings.json",
         "_locales/de/pxt-PlanetX-strings.json",
-        "_locales/ko/pxt-PlanetX-strings.json",
         "main.ts",
         "dstemp.ts",
         "dstemp.cpp"

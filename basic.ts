@@ -28,9 +28,6 @@ namespace PlanetX_Basic {
     let T = 0
     let P = 0
     let H = 0
-    let timeout:number = 0
-    let __temperature: number = 0
-    let __humidity: number = 0
     setreg(0xF2, 0x04)
     setreg(0xF4, 0x2F)
     setreg(0xF5, 0x0C)
@@ -139,6 +136,11 @@ namespace PlanetX_Basic {
     const APDS9960_GCONF4 = 0xAB
     const APDS9960_AICLEAR = 0xE7
     let color_first_init = false
+    let color_new_init = false
+
+    let __dht11_last_read_time = 0;
+    let __temperature: number = 0
+    let __humidity: number = 0
 
 
     function i2cwrite_color(addr: number, reg: number, value: number) {
@@ -1168,8 +1170,7 @@ namespace PlanetX_Basic {
         basic.pause(5);
     }
 
-    function waitDigitalReadPin(state: number, timeout: number, pin:DigitalPin)
-    {
+    function waitDigitalReadPin(state: number, timeout: number, pin: DigitalPin) {
         while (pins.digitalReadPin(pin) != state) {
             if (!(--timeout)) {
                 return 0
@@ -1177,19 +1178,20 @@ namespace PlanetX_Basic {
         };
         return 1
     }
+
+    function delay_us(us: number){
+        // control.waitMicros(us)
+        let time = input.runningTimeMicros() + us;
+        while(input.runningTimeMicros() < time);
+    }
+
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
-
-        if (input.runningTime() >= timeout)
-        {
-            timeout = input.runningTime() + 2000
-        }
-        else
-        {
+        if (__dht11_last_read_time != 0 && __dht11_last_read_time + 1000 > input.runningTime()){
             switch (dht11state) {
                 case DHT11_state.DHT11_temperature_C:
                     return __temperature
@@ -1197,58 +1199,58 @@ namespace PlanetX_Basic {
                     return __humidity
             }
         }
-
-        let timeout_flag: number = 0
-        let _temperature: number = -999.0
-        let _humidity: number = -999.0
-        let checksum: number = 0
-        let checksumTmp: number = 0
-        let dataArray: boolean[] = []
-        let resultArray: number[] = []
+        let fail_flag: number = 0
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
-        let i: number = 0
-        for (i = 0; i < 1; i++) {
-            for (let index = 0; index < 40; index++) dataArray.push(false)
-            for (let index = 0; index < 5; index++) resultArray.push(0)
-            pins.setPull(pin, PinPullMode.PullUp)
-            pins.digitalWritePin(pin, 0) //begin protocol, pull down pin
+        pins.setPull(pin, PinPullMode.PullUp)
+        for (let count = 0; count < (__dht11_last_read_time == 0 ? 50 : 10); count++) {
+            if(count != 0){
+                basic.pause(5);
+            }
+            fail_flag = 0;
+            // 拉高1us后拉低代表重置
+            pins.digitalWritePin(pin, 1)
+            delay_us(1)
+            pins.digitalWritePin(pin, 0)
             basic.pause(18)
+            // 等待18ms后拉高代表开始
             pins.digitalWritePin(pin, 1) //pull up pin for 18us
-            pins.digitalReadPin(pin) //pull up pin
-            control.waitMicros(40)
+            delay_us(30)
+            pins.digitalReadPin(pin);
             if (!(waitDigitalReadPin(1, 9999, pin))) continue;
             if (!(waitDigitalReadPin(0, 9999, pin))) continue;
             //read data (5 bytes)
-
-            for (let index = 0; index < 40; index++) {
-                if (!(waitDigitalReadPin(0, 9999, pin))) {
-                    timeout_flag = 1
-                    break;
+            let data_arr = [0, 0, 0, 0, 0];
+            let i,j;
+            for( i = 0; i < 5; i++){
+                for ( j = 0; j < 8; j++) {
+                    if (!(waitDigitalReadPin(0, 9999, pin))) {
+                        fail_flag = 1
+                        break;
+                    }
+                    if (!(waitDigitalReadPin(1, 9999, pin))) {
+                        fail_flag = 1
+                        break;
+                    }
+                    delay_us(40)
+                    //if sensor still pull up data pin after 28 us it means 1, otherwise 0
+                    if (pins.digitalReadPin(pin) == 1) {
+                        data_arr[i] |= 1 << (7 - j)
+                    }
                 }
-                if (!(waitDigitalReadPin(1, 9999, pin))) {
-                    timeout_flag = 1
-                    break;
-                }
-                control.waitMicros(40)
-                //if sensor still pull up data pin after 28 us it means 1, otherwise 0
-                if (pins.digitalReadPin(pin) == 1) dataArray[index] = true
+                if (fail_flag) break;
             }
+            if (fail_flag) {
+                continue;
+            };
 
-            //convert byte number array to integer
-            for (let index = 0; index < 5; index++)
-                for (let index2 = 0; index2 < 8; index2++)
-                    if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
-            //verify checksum
-            checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
-            checksum = resultArray[4]
-            if (checksumTmp >= 512) checksumTmp -= 512
-            if (checksumTmp >= 256) checksumTmp -= 256
-            if (checksumTmp == checksum){
-                __temperature = resultArray[2] + resultArray[3] / 100
-                __humidity = resultArray[0] + resultArray[1] / 100
+            if (data_arr[4] == ((data_arr[0] + data_arr[1] + data_arr[2] + data_arr[3]) & 0xFF)) {
+                __temperature = data_arr[2] + data_arr[3] / 100
+                __humidity = data_arr[0] + data_arr[1] / 100
+                __dht11_last_read_time = input.runningTime();
                 break;
             }
+            fail_flag = 1;
         }
         switch (dht11state) {
             case DHT11_state.DHT11_temperature_C:
@@ -1438,7 +1440,7 @@ namespace PlanetX_Basic {
     //% blockId= gesture_create_event block="onGestureInit"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor group="IIC Port"
-    export function onGestureInit() {
+    function onGestureInit() {
         paj7620.init();
     }
 
@@ -1468,19 +1470,88 @@ namespace PlanetX_Basic {
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
     //% subcategory=Sensor group="IIC Port"
     export function readColor(): number {
-        if (color_first_init == false) {
-            initModule()
-            colorMode()
+        let buf = pins.createBuffer(2)
+        let c = 0
+        let r = 0
+        let g = 0
+        let b = 0
+        let temp_c = 0
+        let temp_r = 0
+        let temp_g = 0
+        let temp_b = 0
+        let temp = 0
+
+        if (color_new_init == false && color_first_init == false) {
+            let i = 0;
+            while (i++ < 20) {
+                buf[0] = 0x81
+                buf[1] = 0xCA
+                pins.i2cWriteBuffer(0x43, buf)
+                buf[0] = 0x80
+                buf[1] = 0x17
+                pins.i2cWriteBuffer(0x43, buf)
+                basic.pause(50);
+                
+                if ((i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256) != 0) {
+                    color_new_init = true
+                    break;
+                }
+            }
         }
-        let tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
-        while (!tmp) {
-            basic.pause(5);
-            tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
+        if (color_new_init == true) {
+            basic.pause(100);
+            c = i2cread_color(0x43, 0xA6) + i2cread_color(0x43, 0xA7) * 256;
+            r = i2cread_color(0x43, 0xA0) + i2cread_color(0x43, 0xA1) * 256;
+            g = i2cread_color(0x43, 0xA2) + i2cread_color(0x43, 0xA3) * 256;
+            b = i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256;
+
+            r *= 1.3 * 0.47 * 0.83
+            g *= 0.69 * 0.53 * 0.83
+            b *= 0.80 * 0.49 * 0.83
+            c *= 0.3
+
+            temp_c = c
+            temp_r = r
+            temp_g = g
+            temp_b = b
+
+            r = Math.min(r, 4095.9356)
+            g = Math.min(g, 4095.9356)
+            b = Math.min(b, 4095.9356)
+            c = Math.min(c, 4095.9356)
+
+            if (temp_b < temp_g)
+            {
+                temp = temp_b
+                temp_b = temp_g
+                temp_g = temp
+            }
         }
-        let c = i2cread_color(APDS9960_ADDR, APDS9960_CDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_CDATAH) * 256;
-        let r = i2cread_color(APDS9960_ADDR, APDS9960_RDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_RDATAH) * 256;
-        let g = i2cread_color(APDS9960_ADDR, APDS9960_GDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_GDATAH) * 256;
-        let b = i2cread_color(APDS9960_ADDR, APDS9960_BDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_BDATAH) * 256;
+        else {
+            if (color_first_init == false) {
+                initModule()
+                colorMode()
+            }
+            let tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
+            while (!tmp) {
+                basic.pause(5);
+                tmp = i2cread_color(APDS9960_ADDR, APDS9960_STATUS) & 0x1;
+            }
+            c = i2cread_color(APDS9960_ADDR, APDS9960_CDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_CDATAH) * 256;
+            r = i2cread_color(APDS9960_ADDR, APDS9960_RDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_RDATAH) * 256;
+            g = i2cread_color(APDS9960_ADDR, APDS9960_GDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_GDATAH) * 256;
+            b = i2cread_color(APDS9960_ADDR, APDS9960_BDATAL) + i2cread_color(APDS9960_ADDR, APDS9960_BDATAH) * 256;
+        }
+
+        serial.writeNumber(r)
+        serial.writeLine("r")
+        serial.writeNumber(g)
+        serial.writeLine("g")
+        serial.writeNumber(b)
+        serial.writeLine("b")
+        serial.writeNumber(c)
+        serial.writeLine("c")
+
         // map to rgb based on clear channel
         let avg = c / 3;
         r = r * 255 / avg;
@@ -1488,6 +1559,10 @@ namespace PlanetX_Basic {
         b = b * 255 / avg;
         //let hue = rgb2hue(r, g, b);
         let hue = rgb2hsl(r, g, b)
+        if (color_new_init == true && hue >= 180 && hue <= 201 && temp_c >= 6000 && (temp_b - temp_g) < 1000 || (temp_r > 4096 && temp_g > 4096 && temp_b > 4096)) {
+            temp_c = Math.map(temp_c, 0, 15000, 0, 13000);
+            hue = 180 + (13000 - temp_c) / 1000.0;
+        }
         return hue
     }
     //% block="Color sensor IIC port detects %color"

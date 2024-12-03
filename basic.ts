@@ -1491,6 +1491,7 @@ namespace PlanetX_Basic {
                 buf[1] = 0x17
                 pins.i2cWriteBuffer(0x43, buf)
                 basic.pause(50);
+                
                 if ((i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256) != 0) {
                     color_new_init = true
                     break;

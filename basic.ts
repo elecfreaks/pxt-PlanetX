@@ -1506,9 +1506,15 @@ namespace PlanetX_Basic {
             b = i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256;
 
             r *= 1.3 * 0.47 * 0.83
-            g *= 0.69 * 0.53 * 0.83
-            b *= 0.80 * 0.49 * 0.83
+            g *= 0.69 * 0.56 * 0.83
+            b *= 0.80 * 0.415 * 0.83
             c *= 0.3
+
+            if(r>b && r>g)
+            {
+                b *= 1.18;
+                g *= 0.95
+            }
 
             temp_c = c
             temp_r = r

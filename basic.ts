@@ -313,7 +313,7 @@ namespace PlanetX_Basic {
     let passwdBuf = pins.createBuffer(6);
     let blockData = pins.createBuffer(16);
     let NFC_ENABLE = 0;
-    const block_def = 1;
+    const block_def = 8;
     ackBuf[0] = 0x00;
     ackBuf[1] = 0x00;
     ackBuf[2] = 0xFF;
@@ -529,7 +529,7 @@ namespace PlanetX_Basic {
     //变量
     let ws1850Type2 = 0
     let WS1850_MAX_LEN = 16;
-    const WS1850BlockAdr: number[] = [1, 2, 3]//写入块的位置
+    const WS1850BlockAdr: number[] = [8, 9, 10]
     let ws1850tuid: number[] = []
     let ws1850tretLen = 0
     let ws1850retData: number[] = []

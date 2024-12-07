@@ -529,7 +529,7 @@ namespace PlanetX_Basic {
     //变量
     let ws1850Type2 = 0
     let WS1850_MAX_LEN = 16;
-    const WS1850BlockAdr: number[] = [0, 1, 2]//写入块的位置
+    const WS1850BlockAdr: number[] = [1, 2, 3]//写入块的位置
     let ws1850tuid: number[] = []
     let ws1850tretLen = 0
     let ws1850retData: number[] = []

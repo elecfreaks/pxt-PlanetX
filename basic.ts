@@ -720,7 +720,7 @@ namespace PlanetX_Basic {
             }
 
             for (let j = txt.length; j < 48; j++) {
-                data.push(32)
+                data.push(0)
             }
 
             let b = 0
@@ -949,7 +949,7 @@ namespace PlanetX_Basic {
         }
         let strlenth = text.length;
         while (strlenth) {
-            if (text[strlenth - 1] == ' ') {
+            if (text[strlenth - 1].charCodeAt(0) == 0x00) {
                 strlenth--;
             }
             else {

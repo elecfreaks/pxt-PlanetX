@@ -390,7 +390,7 @@ namespace PlanetX_Basic {
             }
         }
         if ((i != ackBuf.length) || (recvBuf[6] != 0xD5) || (recvBuf[7] != 0x15) || (!checkDcs(14 - 4))) {
-            NFC_ENABLE = 0;
+            NFC_ENABLE = 2;
         } else {
             NFC_ENABLE = 1;
         }
@@ -2202,7 +2202,7 @@ namespace PlanetX_Basic {
             wakeup();
         }
 
-        if (NFC_ENABLE === 0) {
+        if (NFC_ENABLE === 2) {
             return WS1850_Read();
         }
 
@@ -2244,7 +2244,7 @@ namespace PlanetX_Basic {
         if (NFC_ENABLE === 0) {
             wakeup();
         }
-        if (NFC_ENABLE === 0) {
+        if (NFC_ENABLE === 2) {
             WS1850_Write(data);
             return;
         }
@@ -2263,7 +2263,7 @@ namespace PlanetX_Basic {
         if (NFC_ENABLE === 0) {
             wakeup();
         }
-        if (NFC_ENABLE === 0) {
+        if (NFC_ENABLE === 2) {
             return WS1850_scan();
         }
 

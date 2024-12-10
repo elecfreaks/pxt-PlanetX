@@ -722,12 +722,14 @@ namespace PlanetX_Basic {
             for (let j = txt.length; j < 48; j++) {
                 data.push(0)
             }
-
-            let b = 0
-            for (let BlockNum2 of WS1850BlockAdr) {
-                WS1850_WriteRFID(BlockNum2, data.slice((b * 16), ((b + 1) * 16)))
-                b++
-            }
+            //写3个块
+            // let b = 0
+            // for (let BlockNum2 of WS1850BlockAdr) {
+            //     WS1850_WriteRFID(BlockNum2, data.slice((b * 16), ((b + 1) * 16)))
+            //     b++
+            // }
+            //写一个块
+            WS1850_WriteRFID(WS1850BlockAdr[0], data.slice(0, 16))
         }
 
         WS1850_Crypto1Stop()
@@ -883,12 +885,13 @@ namespace PlanetX_Basic {
         let text_read = ''
         let block: number[] = []
         if (ws1850status == 0) {
-            for (let BlockNum of WS1850BlockAdr) {
-                block = WS1850_ReadRFID(BlockNum)
-                if (block) {
-                    data = data.concat(block)
-                }
-            }
+            // for (let BlockNum of WS1850BlockAdr) {//读3个块
+            //     block = WS1850_ReadRFID(BlockNum)
+            //     if (block) {
+            //         data = data.concat(block)
+            //     }
+            // }
+            data = data.concat(WS1850_ReadRFID(8))//读一个块
             if (data) {
                 for (let c of data) {
                     text_read = text_read.concat(String.fromCharCode(c))
@@ -940,13 +943,13 @@ namespace PlanetX_Basic {
     //*****仅显示有效字符串，去除补位字符0 *//
     function WS1850_Read(): string {               //数据长度48个字节
         let text = WS1850_readFromCard()
-        let i = 2;
-        while (!text) {
-            text = WS1850_readFromCard();
-            if (i-- <= 0) {
-                break;
-            }
-        }
+        // let i = 2;
+        // while (!text) {
+        //     text = WS1850_readFromCard();
+        //     if (i-- <= 0) {
+        //         break;
+        //     }
+        // }
         let strlenth = text.length;
         while (strlenth) {
             if (text[strlenth - 1].charCodeAt(0) == 0x00) {
@@ -969,11 +972,11 @@ namespace PlanetX_Basic {
     }
 
     /**************write卡数据的主函数*********************/
-    export function WS1850_Write(str: string){
+    export function WS1850_Write(str: string) {
         let id = WS1850_writeToCard(str)
 
         let flag = 1;
-        while (!id && flag <= 3) {
+        while (!id && flag <= 2) {
             let id = WS1850_writeToCard(str)
 
             flag += 1

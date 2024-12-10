@@ -940,7 +940,7 @@ namespace PlanetX_Basic {
     //*****仅显示有效字符串，去除补位字符0 *//
     function WS1850_Read(): string {               //数据长度48个字节
         let text = WS1850_readFromCard()
-        let i = 5;
+        let i = 2;
         while (!text) {
             text = WS1850_readFromCard();
             if (i-- <= 0) {

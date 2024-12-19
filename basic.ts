@@ -313,7 +313,7 @@ namespace PlanetX_Basic {
     let passwdBuf = pins.createBuffer(6);
     let blockData = pins.createBuffer(16);
     let NFC_ENABLE = 0;
-    const block_def = 1;
+    const block_def = 8;
     ackBuf[0] = 0x00;
     ackBuf[1] = 0x00;
     ackBuf[2] = 0xFF;
@@ -390,7 +390,7 @@ namespace PlanetX_Basic {
             }
         }
         if ((i != ackBuf.length) || (recvBuf[6] != 0xD5) || (recvBuf[7] != 0x15) || (!checkDcs(14 - 4))) {
-            NFC_ENABLE = 0;
+            NFC_ENABLE = 2;
         } else {
             NFC_ENABLE = 1;
         }
@@ -417,6 +417,570 @@ namespace PlanetX_Basic {
         cmdWrite[26] = 0xff - (sum & 0xff);
         let tempbuf = pins.createBufferFromArray(cmdWrite)
         writeAndReadBuf(tempbuf, 16);
+    }
+
+    ////////////////////////////////////////////////////////NFC_RFID_WS1850T
+    let WS1850_I2CADDR = 0x28; // Set your I2C address for the MFRC522
+
+    //MF522命令字
+    let PCD_IDLE = 0x00               //NO action;取消当前命令
+    let PCD_AUTHENT = 0x0E               //验证密钥
+    let PCD_RECEIVE = 0x08               //接收数据
+    let PCD_TRANSMIT = 0x04               //发送数据
+    let PCD_TRANSCEIVE = 0x0C               //发送并接收数据
+    let PCD_RESETPHASE = 0x0F               //复位
+    let PCD_CALCCRC = 0x03               //CRC计算
+
+    //Mifare_One卡片命令字
+    let PICC_REQIDL = 0x26               //寻天线区内未进入休眠状态
+    let PICC_REQALL = 0x52               //寻天线区内全部卡
+    let PICC_ANTICOLL = 0x93               //防冲撞
+    let PICC_SElECTTAG = 0x95              //选卡93
+    let PICC_AUTHENT1A = 0x60               //验证A密钥
+    let PICC_AUTHENT1B = 0x61               //验证B密钥
+    let PICC_READ = 0x30               //读块
+    let PICC_WRITE = 0xA0               //写块
+    let PICC_DECREMENT = 0xC0               //扣款
+    let PICC_INCREMENT = 0xC1               //充值
+    let PICC_RESTORE = 0xC2               //调块数据到缓冲区
+    let PICC_TRANSFER = 0xB0               //保存缓冲区中数据
+    let PICC_HALT = 0x50               //休眠
+
+
+    //和MF522通讯时返回的错误代码
+    let MI_OK = 0
+    let MI_NOTAGERR = (-1)  //1
+    let MI_ERR = (-2)  //2
+
+    //MF522 FIFO长度定义
+    /////////////////////////////////////////////////////////////////////
+    let DEF_FIFO_LENGTH = 64                 //FIFO size=64byte
+
+    //------------------MFRC522寄存器---------------
+    //Page 0:Command and Status
+    let Reserved00 = 0x00
+    let CommandReg = 0x01
+    let CommIEnReg = 0x02
+    let DivlEnReg = 0x03
+    let CommIrqReg = 0x04
+    let DivIrqReg = 0x05
+    let ErrorReg = 0x06
+    let Status1Reg = 0x07
+    let Status2Reg = 0x08
+    let FIFODataReg = 0x09
+    let FIFOLevelReg = 0x0A
+    let WaterLevelReg = 0x0B
+    let ControlReg = 0x0C
+    let BitFramingReg = 0x0D
+    let CollReg = 0x0E
+    let Reserved01 = 0x0F
+    //Page 1:Command     
+    let Reserved10 = 0x10
+    let ModeReg = 0x11
+    let TxModeReg = 0x12
+    let RxModeReg = 0x13
+    let TxControlReg = 0x14
+    let TxAutoReg = 0x15
+    let TxSelReg = 0x16
+    let RxSelReg = 0x17
+    let RxThresholdReg = 0x18
+    let DemodReg = 0x19
+    let Reserved11 = 0x1A
+    let Reserved12 = 0x1B
+    let MifareReg = 0x1C
+    let Reserved13 = 0x1D
+    let Reserved14 = 0x1E
+    let SerialSpeedReg = 0x1F
+    //Page 2:CFG    
+    let Reserved20 = 0x20
+    let CRCResultRegM = 0x21
+    let CRCResultRegL = 0x22
+    let Reserved21 = 0x23
+    let ModWidthReg = 0x24
+    let Reserved22 = 0x25
+    let RFCfgReg = 0x26
+    let GsNReg = 0x27
+    let CWGsPReg = 0x28
+    let ModGsPReg = 0x29
+    let TModeReg = 0x2A
+    let TPrescalerReg = 0x2B
+    let TReloadRegH = 0x2C
+    let TReloadRegL = 0x2D
+    let TCounterValueRegH = 0x2E
+    let TCounterValueRegL = 0x2F
+    //Page 3:TestRegister     
+    let Reserved30 = 0x30
+    let TestSel1Reg = 0x31
+    let TestSel2Reg = 0x32
+    let TestPinEnReg = 0x33
+    let TestPinValueReg = 0x34
+    let TestBusReg = 0x35
+    let AutoTestReg = 0x36
+    let VersionReg = 0x37
+    let AnalogTestReg = 0x38
+    let TestDAC1Reg = 0x39
+    let TestDAC2Reg = 0x3A
+    let TestADCReg = 0x3B
+    let Reserved31 = 0x3C
+    let Reserved32 = 0x3D
+    let Reserved33 = 0x3E
+    let Reserved34 = 0x3F
+    //-----------------------------------------------
+    //变量
+    let ws1850Type2 = 0
+    let WS1850_MAX_LEN = 16;
+    const WS1850BlockAdr: number[] = [8, 9, 10]
+    let ws1850tuid: number[] = []
+    let ws1850tretLen = 0
+    let ws1850retData: number[] = []
+    let ws1850status = 0
+    let ws1850ChkSerNum = 0
+    let ws1850retBits: number = null
+    let ws1850recvData: number[] = []
+    let ws1850Key = [255, 255, 255, 255, 255, 255]
+
+    function WS1850T_IIC_Read(reg: number): number {
+        pins.i2cWriteNumber(WS1850_I2CADDR, reg, NumberFormat.Int8LE);
+        return pins.i2cReadNumber(WS1850_I2CADDR, NumberFormat.Int8LE);
+    }
+
+    function WS1850T_IIC_Write(reg: number, value: number) {
+        let buf = pins.createBuffer(2);
+        buf.setNumber(NumberFormat.Int8LE, 0, reg);
+        buf.setNumber(NumberFormat.Int8LE, 1, value);
+        pins.i2cWriteBuffer(WS1850_I2CADDR, buf);
+    }
+
+    //********天线开启函数**************//
+    function WS1850_AntennaON() {
+        let temp = WS1850T_IIC_Read(TxControlReg)//0x14控制天线驱动器管脚TX1和TX2的寄存器
+        if (~(temp & 0x03)) {
+            WS1850_SetBits(TxControlReg, 0x03)
+        }
+    }
+    //*******设置使能天线发射载波13.56Mhz寄存器函数*********//
+    function WS1850_SetBits(reg: number, mask: number) {
+        let tmp = WS1850T_IIC_Read(reg)
+        WS1850T_IIC_Write(reg, (tmp | mask))
+    }
+
+    //*******设置禁止天线发射载波13.56Mhz寄存器函数*********
+    function WS1850_ClearBits(reg: number, mask: number) {
+        let tmp = WS1850T_IIC_Read(reg)
+        WS1850T_IIC_Write(reg, tmp & (~mask))
+    }
+
+    function WS1850_ToCard(command: number, sendData: number[]): [number, number[], number] {
+        ws1850retData = []
+        ws1850tretLen = 0
+        ws1850status = 2
+        let irqEN = 0x00
+        let waitIRQ = 0x00
+        let lastBits = null
+        let n = 0
+
+        if (command == PCD_AUTHENT) {
+            irqEN = 0x12
+            waitIRQ = 0x10
+        }
+
+        if (command == PCD_TRANSCEIVE) {
+            irqEN = 0x77
+            waitIRQ = 0x30
+        }
+
+        WS1850T_IIC_Write(0x02, irqEN | 0x80)
+        WS1850_ClearBits(CommIrqReg, 0x80)
+        WS1850_SetBits(FIFOLevelReg, 0x80)
+        WS1850T_IIC_Write(CommandReg, PCD_IDLE)
+
+        for (let o = 0; o < (sendData.length); o++) {
+            WS1850T_IIC_Write(FIFODataReg, sendData[o])
+        }
+        WS1850T_IIC_Write(CommandReg, command)
+
+        if (command == PCD_TRANSCEIVE) {
+            WS1850_SetBits(BitFramingReg, 0x80)
+        }
+
+        let p = 1000
+        while (true) {
+            n = WS1850T_IIC_Read(CommIrqReg)
+            p--
+            if (~(p != 0 && ~(n & 0x01) && ~(n & waitIRQ))) {
+                break
+            }
+        }
+        WS1850_ClearBits(BitFramingReg, 0x80)
+
+        if (p != 0) {
+            if ((WS1850T_IIC_Read(0x06) & 0x1B) == 0x00) {
+                ws1850status = 0
+                if (n & irqEN & 0x01) {
+                    ws1850status = 1
+                }
+                if (command == PCD_TRANSCEIVE) {
+                    n = WS1850T_IIC_Read(FIFOLevelReg)
+                    lastBits = WS1850T_IIC_Read(ControlReg) & 0x07
+                    if (lastBits != 0) {
+                        ws1850tretLen = (n - 1) * 8 + lastBits
+                    }
+                    else {
+                        ws1850tretLen = n * 8
+                    }
+                    if (n == 0) {
+                        n = 1
+                    }
+                    if (n > WS1850_MAX_LEN) {
+                        n = WS1850_MAX_LEN
+                    }
+                    for (let q = 0; q < n; q++) {
+                        ws1850retData.push(WS1850T_IIC_Read(FIFODataReg))
+                    }
+                }
+            }
+            else {
+                ws1850status = 2
+            }
+        }
+
+        return [ws1850status, ws1850retData, ws1850tretLen]
+    }
+
+    //---------------readID的第一个函数----寻卡函数-------------//
+    function WS1850_Request(reqMode: number): [number, number] {
+        let Type: number[] = []
+        WS1850T_IIC_Write(BitFramingReg, 0x07)  //0x0d面向位的帧的调节寄存器，0x07
+        Type.push(reqMode)
+        let [ws1850status, ws1850retData, ws1850retBits] = WS1850_ToCard(PCD_TRANSCEIVE, Type)
+
+        if ((ws1850status != 0) || (ws1850retBits != 16)) {
+            ws1850status = 2
+        }
+
+        return [ws1850status, ws1850retBits]
+    }
+
+    //-----------------readID的第二个函数-------------------//
+    function WS1850_AvoidColl(): [number, number[]] {
+        let SerNum = []
+        ws1850ChkSerNum = 0
+        WS1850T_IIC_Write(BitFramingReg, 0)
+        SerNum.push(PICC_ANTICOLL)
+        SerNum.push(0x20)
+        let [ws1850status, ws1850retData, ws1850retBits] = WS1850_ToCard(PCD_TRANSCEIVE, SerNum)
+
+        if (ws1850status == 0) {
+            if (ws1850retData.length == 5) {
+                for (let k = 0; k <= 3; k++) {
+                    ws1850ChkSerNum = ws1850ChkSerNum ^ ws1850retData[k]
+                }
+                if (ws1850ChkSerNum != ws1850retData[4]) {
+                    ws1850status = 2
+                }
+            }
+            else {
+                ws1850status = 2
+            }
+        }
+        return [ws1850status, ws1850retData]
+    }
+    //------------------readID的第三个函数---------------------//
+    function WS1850_getIDNum(ws1850tuid: number[]): number {
+        let a = 0
+
+        for (let e = 0; e < 5; e++) {
+            a = a * 256 + ws1850tuid[e]
+        }
+        return a
+    }
+
+    //---------write卡数据的第一个函数------------------------//
+    function WS1850_writeToCard(txt: string): number {
+        [ws1850status, ws1850Type2] = WS1850_Request(PICC_REQIDL)
+
+        if (ws1850status != 0) {
+            return null
+        }
+        [ws1850status, ws1850tuid] = WS1850_AvoidColl()
+
+        if (ws1850status != 0) {
+            return null
+        }
+
+        let id = WS1850_getIDNum(ws1850tuid)
+        WS1850_TagSelect(ws1850tuid)
+        ws1850status = WS1850_Authent(PICC_AUTHENT1A, 11, ws1850Key, ws1850tuid)
+        WS1850_ReadRFID(11)
+
+        if (ws1850status == 0) {
+            let data: NumberFormat.UInt8LE[] = []
+            for (let i = 0; i < txt.length; i++) {
+                data.push(txt.charCodeAt(i))
+            }
+
+            for (let j = txt.length; j < 48; j++) {
+                data.push(0)
+            }
+            //写3个块
+            // let b = 0
+            // for (let BlockNum2 of WS1850BlockAdr) {
+            //     WS1850_WriteRFID(BlockNum2, data.slice((b * 16), ((b + 1) * 16)))
+            //     b++
+            // }
+            //写一个块
+            WS1850_WriteRFID(WS1850BlockAdr[0], data.slice(0, 16))
+        }
+
+        WS1850_Crypto1Stop()
+        // serial.writeLine("Written to Card")
+        return id
+    }
+
+    //---------Read读取卡M1卡数据第二个函数------------------------//
+    function WS1850_TagSelect(SerNum: number[]) {
+        let buff: number[] = []
+        buff.push(0x93)
+        buff.push(0x70)
+        for (let r = 0; r < 5; r++) {
+            buff.push(SerNum[r])
+        }
+
+        let pOut = WS1850_CRC_Calculation(buff)
+        buff.push(pOut[0])
+        buff.push(pOut[1])
+        let [ws1850status, ws1850retData, ws1850tretLen] = WS1850_ToCard(PCD_TRANSCEIVE, buff)
+        if ((ws1850status == 0) && (ws1850tretLen == 0x18)) {
+            return ws1850retData[0]
+        }
+        else {
+            return 0
+        }
+    }
+
+    //---------Read读取卡M1卡数据第六个函数------------------------//
+    function WS1850_CRC_Calculation(DataIn: number[]) {
+        WS1850_ClearBits(DivIrqReg, 0x04)
+        WS1850_SetBits(FIFOLevelReg, 0x80)
+        for (let s = 0; s < (DataIn.length); s++) {
+            WS1850T_IIC_Write(FIFODataReg, DataIn[s])
+        }
+        WS1850T_IIC_Write(CommandReg, 0x03)
+        let t = 0xFF
+
+        while (true) {
+            let v = WS1850T_IIC_Read(DivIrqReg)
+            t--
+            if (!(t != 0 && !(v & 0x04))) {
+                break
+            }
+        }
+
+        let DataOut: number[] = []
+        DataOut.push(WS1850T_IIC_Read(0x22))
+        DataOut.push(WS1850T_IIC_Read(0x21))
+        return DataOut
+    }
+
+    //---------Read读取卡M1卡数据第三个函数------------------------//
+    function WS1850_Authent(authMode: number, WS1850BlockAdr: number, Sectorkey: number[], SerNum: number[]) {
+        let buff: number[] = []
+        buff.push(authMode)
+        buff.push(WS1850BlockAdr)
+        for (let l = 0; l < (Sectorkey.length); l++) {
+            buff.push(Sectorkey[l])
+        }
+        for (let m = 0; m < 4; m++) {
+            buff.push(SerNum[m])
+        }
+        [ws1850status, ws1850retData, ws1850tretLen] = WS1850_ToCard(PCD_AUTHENT, buff)
+        if (ws1850status != 0) {
+            serial.writeLine("AUTH ERROR!")
+        }
+        if ((WS1850T_IIC_Read(Status2Reg) & 0x08) == 0) {
+            serial.writeLine("AUTH ERROR2!")
+        }
+        return ws1850status
+    }
+
+    //---------Read读取卡M1卡数据第四个函数------------------------//
+    function WS1850_ReadRFID(blockAdr: number) {
+        ws1850recvData = []
+        ws1850recvData.push(PICC_READ)
+        ws1850recvData.push(blockAdr)
+        let pOut2 = []
+        pOut2 = WS1850_CRC_Calculation(ws1850recvData)
+        ws1850recvData.push(pOut2[0])
+        ws1850recvData.push(pOut2[1])
+        let [ws1850status, ws1850retData, ws1850tretLen] = WS1850_ToCard(PCD_TRANSCEIVE, ws1850recvData)
+
+        if (ws1850status != 0) {
+            serial.writeLine("Error while reading!")
+        }
+
+        if (ws1850retData.length != 16) {
+            return null
+        }
+        else {
+            return ws1850retData
+        }
+    }
+
+    //---------write卡数据的第二个函数------------------------//
+    function WS1850_WriteRFID(blockAdr: number, writeData: number[]) {
+        let buff: number[] = []
+        let crc: number[] = []
+
+        buff.push(0xA0)
+        buff.push(blockAdr)
+        crc = WS1850_CRC_Calculation(buff)
+        buff.push(crc[0])
+        buff.push(crc[1])
+        let [ws1850status, ws1850retData, ws1850tretLen] = WS1850_ToCard(PCD_TRANSCEIVE, buff)
+        if ((ws1850status != 0) || (ws1850tretLen != 4) || ((ws1850retData[0] & 0x0F) != 0x0A)) {
+            ws1850status = 2
+            serial.writeLine("ERROR")
+        }
+
+        if (ws1850status == 0) {
+            let buff2: number[] = []
+            for (let w = 0; w < 16; w++) {
+                buff2.push(writeData[w])
+            }
+            crc = WS1850_CRC_Calculation(buff2)
+            buff2.push(crc[0])
+            buff2.push(crc[1])
+            let [ws1850status, ws1850retData, ws1850tretLen] = WS1850_ToCard(PCD_TRANSCEIVE, buff2)
+            if ((ws1850status != 0) || (ws1850tretLen != 4) || ((ws1850retData[0] & 0x0F) != 0x0A)) {
+                serial.writeLine("Error while writing")
+            }
+            else {
+                serial.writeLine("Data written")
+            }
+        }
+    }
+
+    //---------Read读取卡M1卡数据第五个函数------------------------//
+    function WS1850_Crypto1Stop() {
+        WS1850_ClearBits(Status2Reg, 0x08)
+    }
+
+    //------------Read读取卡M1卡数据第一个函数------------------//
+    function WS1850_readFromCard(): string {
+        let [ws1850status, ws1850Type2] = WS1850_Request(PICC_REQIDL)     //寻卡+复位应答
+        if (ws1850status != 0) {
+            return null
+        }
+
+        [ws1850status, ws1850tuid] = WS1850_AvoidColl()     //防多卡冲突机制
+
+        if (ws1850status != 0) {
+            return null
+        }
+
+        let id = WS1850_getIDNum(ws1850tuid)
+        WS1850_TagSelect(ws1850tuid)                  //选择卡片
+        ws1850status = WS1850_Authent(PICC_AUTHENT1A, 11, ws1850Key, ws1850tuid)  //三次相互验证
+        let data: NumberFormat.UInt8LE[] = []
+        let text_read = ''
+        let block: number[] = []
+        if (ws1850status == 0) {
+            // for (let BlockNum of WS1850BlockAdr) {//读3个块
+            //     block = WS1850_ReadRFID(BlockNum)
+            //     if (block) {
+            //         data = data.concat(block)
+            //     }
+            // }
+            data = data.concat(WS1850_ReadRFID(8))//读一个块
+            if (data) {
+                for (let c of data) {
+                    text_read = text_read.concat(String.fromCharCode(c))
+                }
+            }
+        }
+        WS1850_Crypto1Stop()
+        return text_read
+    }
+
+    // 初始化
+    function WS1850_Init() {
+        WS1850T_IIC_Write(CommandReg, PCD_RESETPHASE)//掉电和命令寄存器，0x0F软复位
+        WS1850T_IIC_Write(TModeReg, 0x8D)//0x2A内部定时器的设置寄存器，0x8D*****
+        WS1850T_IIC_Write(TPrescalerReg, 0x3E)//0x2B内部定时器的设置寄存器，0x3E***
+        WS1850T_IIC_Write(TReloadRegL, 0x1E)//0x2D定义16位定时器的重载值寄存器，30***
+        WS1850T_IIC_Write(TCounterValueRegH, 0x00)//0x2E 16位定时器的计数值寄存器，0
+        WS1850T_IIC_Write(TxAutoReg, 0x40)//0x15控制天线驱动器设置的寄存器，0x40
+        WS1850T_IIC_Write(ModeReg, 0x3D)//0x11当以发送和接收通用模式的寄存器，0x3D
+        WS1850_AntennaON()
+    }
+
+    //扫描ic卡
+    function WS1850_scan(): boolean {
+        WS1850_Init();
+
+        [ws1850status, ws1850Type2] = WS1850_Request(PICC_REQIDL)  //寻卡+复位应答
+
+        if (ws1850status != 0) {
+            return false
+        }
+        [ws1850status, ws1850tuid] = WS1850_AvoidColl()
+
+        if (ws1850status != 0) {
+            return false
+        }
+
+        if (WS1850_getIDNum(ws1850tuid) == 0) {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
+    //**************Read读取卡M1卡数据主函数***********/
+    //*****读取的卡数据read()处理函数***********//
+    //*****由于卡2扇区数据共48个字节（即48个字符），填入数据后，未填写的数据会自动补字符0（即16进制的0X20）***********//
+    //*****仅显示有效字符串，去除补位字符0 *//
+    function WS1850_Read(): string {               //数据长度48个字节
+        let text = WS1850_readFromCard()
+        let i = 1;
+        while (!text) {
+            text = WS1850_readFromCard();
+            if (i-- <= 0) {
+                break;
+            }
+        }
+        let strlenth = text.length;
+        while (strlenth) {
+            if (text[strlenth - 1].charCodeAt(0) == 0x00) {
+                strlenth--;
+            }
+            else {
+                break;
+            }
+        }
+
+        strlenth = strlenth > 16 ? 16 : strlenth
+
+        return text.slice(0, strlenth)
+
+
+        // let manage_DATA: string
+        // let m_DATA_1: string = text
+        // manage_DATA = m_DATA_1 != null ? m_DATA_1.trim() : 'NULL'   //.trim()为js语言去除两端空格的函数
+        // return text
+    }
+
+    /**************write卡数据的主函数*********************/
+    export function WS1850_Write(str: string) {
+        let id = WS1850_writeToCard(str)
+
+        let flag = 1;
+        while (!id && flag <= 2) {
+            let id = WS1850_writeToCard(str)
+
+            flag += 1
+        }
     }
 
     ///////////////////////////////////////////////////////RJpin_to_pin
@@ -1179,10 +1743,10 @@ namespace PlanetX_Basic {
         return 1
     }
 
-    function delay_us(us: number){
+    function delay_us(us: number) {
         // control.waitMicros(us)
         let time = input.runningTimeMicros() + us;
-        while(input.runningTimeMicros() < time);
+        while (input.runningTimeMicros() < time);
     }
 
     //% blockId="readdht11" block="DHT11 sensor %Rjpin %dht11state value"
@@ -1191,7 +1755,7 @@ namespace PlanetX_Basic {
     //% subcategory=Sensor group="Digital" color=#EA5532
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
-        if (__dht11_last_read_time != 0 && __dht11_last_read_time + 1000 > input.runningTime()){
+        if (__dht11_last_read_time != 0 && __dht11_last_read_time + 1000 > input.runningTime()) {
             switch (dht11state) {
                 case DHT11_state.DHT11_temperature_C:
                     return __temperature
@@ -1204,7 +1768,7 @@ namespace PlanetX_Basic {
         pin = RJpin_to_digital(Rjpin)
         pins.setPull(pin, PinPullMode.PullUp)
         for (let count = 0; count < (__dht11_last_read_time == 0 ? 50 : 10); count++) {
-            if(count != 0){
+            if (count != 0) {
                 basic.pause(5);
             }
             fail_flag = 0;
@@ -1221,9 +1785,9 @@ namespace PlanetX_Basic {
             if (!(waitDigitalReadPin(0, 9999, pin))) continue;
             //read data (5 bytes)
             let data_arr = [0, 0, 0, 0, 0];
-            let i,j;
-            for( i = 0; i < 5; i++){
-                for ( j = 0; j < 8; j++) {
+            let i, j;
+            for (i = 0; i < 5; i++) {
+                for (j = 0; j < 8; j++) {
                     if (!(waitDigitalReadPin(0, 9999, pin))) {
                         fail_flag = 1
                         break;
@@ -1491,7 +2055,7 @@ namespace PlanetX_Basic {
                 buf[1] = 0x17
                 pins.i2cWriteBuffer(0x43, buf)
                 basic.pause(50);
-                
+
                 if ((i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256) != 0) {
                     color_new_init = true
                     break;
@@ -1506,9 +2070,14 @@ namespace PlanetX_Basic {
             b = i2cread_color(0x43, 0xA4) + i2cread_color(0x43, 0xA5) * 256;
 
             r *= 1.3 * 0.47 * 0.83
-            g *= 0.69 * 0.53 * 0.83
-            b *= 0.80 * 0.49 * 0.83
+            g *= 0.69 * 0.56 * 0.83
+            b *= 0.80 * 0.415 * 0.83
             c *= 0.3
+
+            if (r > b && r > g) {
+                b *= 1.18;
+                g *= 0.95
+            }
 
             temp_c = c
             temp_r = r
@@ -1520,8 +2089,7 @@ namespace PlanetX_Basic {
             b = Math.min(b, 4095.9356)
             c = Math.min(c, 4095.9356)
 
-            if (temp_b < temp_g)
-            {
+            if (temp_b < temp_g) {
                 temp = temp_b
                 temp_b = temp_g
                 temp_g = temp
@@ -1636,6 +2204,11 @@ namespace PlanetX_Basic {
         if (NFC_ENABLE === 0) {
             wakeup();
         }
+
+        if (NFC_ENABLE === 2) {
+            return WS1850_Read();
+        }
+
         if (checkCard() === false) {
             serial.writeLine("No NFC Card!")
             return ""
@@ -1671,6 +2244,13 @@ namespace PlanetX_Basic {
     //% block="RFID sensor IIC port write %data to card"
     //% subcategory=Sensor group="IIC Port"
     export function writeData(data: string): void {
+        if (NFC_ENABLE === 0) {
+            wakeup();
+        }
+        if (NFC_ENABLE === 2) {
+            WS1850_Write(data);
+            return;
+        }
         let len = data.length
         if (len > 16) {
             len = 16
@@ -1686,6 +2266,10 @@ namespace PlanetX_Basic {
         if (NFC_ENABLE === 0) {
             wakeup();
         }
+        if (NFC_ENABLE === 2) {
+            return WS1850_scan();
+        }
+
         let buf: number[] = [];
         buf = [0x00, 0x00, 0xFF, 0x04, 0xFC, 0xD4, 0x4A, 0x01, 0x00, 0xE1, 0x00];
         let cmdUid = pins.createBufferFromArray(buf);

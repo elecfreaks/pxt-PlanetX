@@ -202,7 +202,7 @@
     "PlanetX_IOT.connectSmartiot|block": "SmartIot 유저토큰: %userToken 토픽: %topic으로 연결하기",
     "PlanetX_IOT.connectMQTT|block": "MQTT 브로커 와 연결 호스트: %host 포트: %port 재연결: $reconnect",
     "PlanetX_IOT.isMqttBrokerConnected|block": "MQTT 브로커가 연결되었습니다",
-    "PlanetX_IOT.isMqttBrokerConnectpublishMqttMessageed|block": "%msg를 Topic:%topic with Qos:%qos에 게시합니다",
+    "PlanetX_IOT.publishMqttMessage|block": "%msg를 Topic:%topic with Qos:%qos에 게시합니다",
     "PlanetX_IOT.connectThingSpeak|block": "thingspeak에 연결하기",
     "PlanetX_IOT.connectWifi|block": "와이파이 연결 SSID = %ssid 키=%pw",
     "PlanetX_IOT.disconnectSmartiot|block": "smartiot와 연결 끊기",

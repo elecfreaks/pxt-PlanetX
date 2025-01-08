@@ -653,7 +653,7 @@ namespace PlanetX_Display {
     }
     
     //% shim=displaySendBufferAsm
-    function sendBuffer(buf: Buffer, pin: DigitalPin) {
+    function ndBuffer(buf: Buffer, pin: DigitalPin) {
     }
     
     export class Strip {
@@ -764,7 +764,7 @@ namespace PlanetX_Display {
         //% weight=79
         //% parts="neopixel" subcategory=Neopixel
         show() {
-            sendBuffer(this.buf, this.pin);
+            ndBuffer(this.buf, this.pin);
         }
 
         /**

@@ -652,7 +652,7 @@ namespace PlanetX_Display {
         }
     }
     
-    //% shim=dBufferAsm
+    //% shim=sendBufferAsm
     function sendBuffer(buf: Buffer, pin: DigitalPin) {
     }
     

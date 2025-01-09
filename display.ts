@@ -652,7 +652,7 @@ namespace PlanetX_Display {
         }
     }
     
-    //% shim=sendBufferAsm
+    //% shim=displaySendBufferAsm
     declare function sendBuffer(buf: Buffer, pin: DigitalPin): void;
     
     export class Strip {

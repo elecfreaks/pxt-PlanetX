@@ -242,7 +242,7 @@
     "{id:group}OLED": "OLED",
     "{id:group}Tracking": "트레이싱",
     "{id:subcategory}Display": "디스플레이",
-    "{id:subcategory}Excute": "실행",
+    "{id:subcategory}Execute": "실행",
     "{id:subcategory}IFTTT": "IFTTT",
     "{id:subcategory}Input": "입력",
     "{id:subcategory}SmartIot": "SmartIot",

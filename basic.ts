@@ -1809,8 +1809,8 @@ namespace PlanetX_Basic {
             };
 
             if (data_arr[4] == ((data_arr[0] + data_arr[1] + data_arr[2] + data_arr[3]) & 0xFF)) {
-                __temperature = data_arr[2] + data_arr[3] / 100
-                __humidity = data_arr[0] + data_arr[1] / 100
+                __temperature = data_arr[2] + data_arr[3] / 10
+                __humidity = data_arr[0] + data_arr[1] / 10
                 __dht11_last_read_time = input.runningTime();
                 break;
             }

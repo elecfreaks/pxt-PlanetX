@@ -236,7 +236,7 @@
     "{id:group}OLED": "OLED",
     "{id:group}Tracking": "Suivi",
     "{id:subcategory}Display": "Affichage",
-    "{id:subcategory}Excute": "Actionneurs",
+    "{id:subcategory}Execute": "Actionneurs",
     "{id:subcategory}Input": "Entrées",
     "{id:subcategory}SmartIot": "SmartIoT",
     "{id:subcategory}Neopixel": "Neopixel",

@@ -140,7 +140,7 @@
     "PlanetX_Basic.MP3SetPort|block": "Définir MP3 sur %Rjpin",
     "PlanetX_Basic.get_Attention_Value|block": "Bouton joystick %value_level est appuyé",
     "PlanetX_Basic.GetAnalogValue|block": "Position joystick sur %value_A",
-    "PlanetX_Basic.Ds18b20Temp|block": "%state du DS18B20 %Rjpin",
+    "PlanetX_Basic.Ds18b20Temp|block": "DS18B20 sur %state valeur %Rjpin",
     "PlanetX_Display.DigitalRJPin.J1|block": "J1",
     "PlanetX_Display.DigitalRJPin.J2|block": "J2",
     "PlanetX_Display.DigitalRJPin.J3|block": "J3",

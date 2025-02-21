@@ -2489,7 +2489,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% fanstate.shadow="toggleOnOff"
     //% subcategory=Execute group="Digital" color=#EA5532
-    //% speed.min=0 speed.max=100
+    //% speed.min=0 speed.max=100 speed.defl=50
     //% expandableArgumentMode="toggle"
     export function motorFan(Rjpin: DigitalRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1

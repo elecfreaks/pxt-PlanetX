@@ -869,13 +869,13 @@ namespace PlanetX_Basic {
     function WS1850_readFromCard(): string {
         let [ws1850status, ws1850Type2] = WS1850_Request(PICC_REQIDL)     //寻卡+复位应答
         if (ws1850status != 0) {
-            return null
+            return ""
         }
 
         [ws1850status, ws1850tuid] = WS1850_AvoidColl()     //防多卡冲突机制
 
         if (ws1850status != 0) {
-            return null
+            return ""
         }
 
         let id = WS1850_getIDNum(ws1850tuid)

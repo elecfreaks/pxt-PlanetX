@@ -5,7 +5,7 @@
     "dependencies": {
         "core": "*",
         "microphone": "*",
-        "pxt-PlanetX-AI": "github:elecfreaks/pxt-PlanetX-AI#v1.0.7"
+        "pxt-PlanetX-AI": "github:elecfreaks/pxt-PlanetX-AI#v1.0.8"
     },
     "files": [
         "README.md",
@@ -19,6 +19,7 @@
         "_locales/el/pxt-PlanetX-jsdoc-strings.json",
         "_locales/de/pxt-PlanetX-strings.json",
         "_locales/ko/pxt-PlanetX-strings.json",
+        "_locales/fr/pxt-PlanetX-strings.json",
         "main.ts",
         "dstemp.ts",
         "dstemp.cpp"

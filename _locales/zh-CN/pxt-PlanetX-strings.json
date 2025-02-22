@@ -240,7 +240,7 @@
   "{id:group}OLED": "OLED显示屏",
   "{id:group}Tracking": "巡线",
   "{id:subcategory}Display": "显示单元",
-  "{id:subcategory}Excute": "执行单元",
+  "{id:subcategory}Execute": "执行单元",
   "{id:subcategory}Input": "输入单元",
   "{id:subcategory}SmartIot": "SmartIot",
   "{id:subcategory}Neopixel": "彩灯单元",

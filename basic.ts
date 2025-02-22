@@ -2488,8 +2488,8 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% fanstate.shadow="toggleOnOff"
-    //% subcategory=Excute group="Digital" color=#EA5532
-    //% speed.min=0 speed.max=100
+    //% subcategory=Execute group="Digital" color=#EA5532
+    //% speed.min=0 speed.max=100 speed.defl=50
     //% expandableArgumentMode="toggle"
     export function motorFan(Rjpin: DigitalRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
@@ -2521,7 +2521,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
-    //% subcategory=Excute group="Digital" color=#EA5532
+    //% subcategory=Execute group="Digital" color=#EA5532
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -2537,7 +2537,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% magnetstate.shadow="toggleOnOff"
-    //% subcategory=Excute group="Digital" color=#EA5532
+    //% subcategory=Execute group="Digital" color=#EA5532
     export function magnet(Rjpin: DigitalRJPin, magnetstate: boolean): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -2568,7 +2568,7 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% Relaystate.fieldEditor="gridpicker"
     //% Relaystate.fieldOptions.columns=1
-    //% subcategory=Excute group="Digital" color=#EA5532
+    //% subcategory=Execute group="Digital" color=#EA5532
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -2584,7 +2584,7 @@ namespace PlanetX_Basic {
 
     //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:$folderNum"
     //% folderNum.defl="01"
-    //% subcategory=Excute group="MP3" color=#EA5532
+    //% subcategory=Execute group="MP3" color=#EA5532
     export function setLoopFolder(folderNum: string): void {
         CMD = 0x17
         para1 = 0
@@ -2601,7 +2601,7 @@ namespace PlanetX_Basic {
     //% folderNum.defl="01" fileNum.defl="001"
     //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
-    //% subcategory=Excute group="MP3" color=#EA5532
+    //% subcategory=Execute group="MP3" color=#EA5532
     export function folderPlay(folderNum: string, fileNum: string, myAns: boolean = false): void {
         CMD = 0x0F
         para1 = parseInt(folderNum)
@@ -2620,7 +2620,7 @@ namespace PlanetX_Basic {
     //% myAns.shadow="toggleYesNo"
     //% tracking.defl=1
     //% expandableArgumentMode="toggle"
-    //% subcategory=Excute group="MP3" color=#EA5532
+    //% subcategory=Execute group="MP3" color=#EA5532
     export function setTracking(tracking: number, myAns: boolean = false): void {
         CMD = 0x03
         para1 = 0x00
@@ -2637,7 +2637,7 @@ namespace PlanetX_Basic {
     //% blockId=MP3execute block="Set MP3 execute procedure:%myType"
     //% myType.fieldEditor="gridpicker"
     //% myType.fieldOptions.columns=2
-    //% subcategory=Excute group="MP3" color=#EA5532
+    //% subcategory=Execute group="MP3" color=#EA5532
     export function execute(myType: playType): void {
         CMD = myType
         para1 = 0x00
@@ -2650,7 +2650,7 @@ namespace PlanetX_Basic {
     }
     //% blockId="setVolume" block="Set volume(0~25):%volume"
     //% volume.min=0 volume.max=25
-    //% subcategory=Excute group="MP3" color=#EA5532
+    //% subcategory=Execute group="MP3" color=#EA5532
     export function setVolume(volume: number): void {
         if (volume > 25) {
             volume = 25
@@ -2667,7 +2667,7 @@ namespace PlanetX_Basic {
     //% blockId=MP3setPort block="Set the MP3 port to %Rjpin"
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
-    //% subcategory=Excute group="MP3" color=#EA5532
+    //% subcategory=Execute group="MP3" color=#EA5532
     export function MP3SetPort(Rjpin: DigitalRJPin): void {
         let pin = SerialPin.USB_TX
         switch (Rjpin) {

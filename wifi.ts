@@ -89,24 +89,6 @@ namespace PlanetX_IOT {
         return waitForResponse(key, wait)
     }
 
-    export function sendHttpRequest(host: string, port: number, queryString: string, key: string = null, wait: number = 1000) {
-
-        if (sendRequest(`AT+CIPSTART="TCP","${host}",${port}`, "CONNECT") == null) {
-            return null
-        }
-
-        if (sendRequest(`AT+CIPSEND=${queryString.length + 2}`, "OK") == null) {
-            return null
-        }
-
-        if (key == null) {
-            sendAT(queryString)
-            return null;
-        }
-
-        return sendRequest(queryString, key, wait)
-    }
-
     export function resetEsp8266() {
         sendRequest("AT+RESTORE", "ready", 2000) // restore to factory settings
         sendRequest("AT+RST", "ready", 2000) // rest
@@ -325,8 +307,7 @@ namespace PlanetX_IOT {
     //% subcategory="ThingSpeak" weight=85
     //% color=#EA5532
     export function setData(write_api_key: string, n1: number = 0, n2: number = 0, n3: number = 0, n4: number = 0, n5: number = 0, n6: number = 0, n7: number = 0, n8: number = 0) {
-
-        thingSpeakDatatemp = "GET /update?api_key="
+        thingSpeakDatatemp = "AT+HTTPCLIENT=2,0,\"http://api.thingspeak.com/update?api_key="
             + write_api_key
             + "&field1="
             + n1
@@ -354,7 +335,8 @@ namespace PlanetX_IOT {
     //% subcategory="ThingSpeak" weight=80
     //% color=#EA5532
     export function uploadData() {
-        sendHttpRequest(THINGSPEAK_HOST, THINGSPEAK_PORT, thingSpeakDatatemp, "http", 2000)
+        sendRequest(thingSpeakDatatemp, "http", 2000)
+        basic.pause(200)
     }
 
     /*
@@ -387,7 +369,7 @@ namespace PlanetX_IOT {
     let smartiot_lastSendTime: number = 0
     let smartiot_switchListenFlag: boolean = false
     let smartiot_switchStatus: boolean = false
-    let smartiot_host: string = "www.smartiot.space"
+    let smartiot_host: string = "http://www.smartiot.space"
     let smartiot_port: number = 8080
     let smartiot_token: string = ""
     let smartiot_topic: string = ""
@@ -395,6 +377,10 @@ namespace PlanetX_IOT {
     export function setSmartIotAddr(host: any, port: any) {
         smartiot_host = host
         smartiot_port = port
+    }
+
+    function concatReqMsg(queryString: string): string {
+        return `AT+HTTPCLIENT=2,0,\"${smartiot_host}:${smartiot_port}${queryString}\",,,1`;
     }
 
     /* ----------------------------------- smartiot ----------------------------------- */
@@ -408,7 +394,7 @@ namespace PlanetX_IOT {
         smartiot_token = userToken
         smartiot_topic = topic
         for (let i = 0; i < 3; i++) {
-            let ret = sendHttpRequest(smartiot_host, smartiot_port, `GET /iot/iotTopic/getTopicStatus/${userToken}/${topic}`, '"code":200', 2000);
+            let ret = sendRequest(concatReqMsg(`/iot/iotTopic/getTopicStatus/${userToken}/${topic}`), '"code":200', 2000);
             if (ret != null) {
                 smartiot_connected = true
                 if (ret.includes('switchOn')) {
@@ -418,7 +404,6 @@ namespace PlanetX_IOT {
             }
             smartiot_connected = (ret != null)
         }
-
     }
 
     /**
@@ -437,7 +422,8 @@ namespace PlanetX_IOT {
         n7: number = 0,
         n8: number = 0
     ): void {
-        smartiot_sendMsg = `GET /iot/iotTopicData/addTopicData?userToken=${smartiot_token}&topicName=${smartiot_topic}`
+        smartiot_sendMsg = concatReqMsg(
+            `/iot/iotTopicData/addTopicData?userToken=${smartiot_token}&topicName=${smartiot_topic}`
             + "&data1=" + n1
             + "&data2=" + n2
             + "&data3=" + n3
@@ -446,6 +432,7 @@ namespace PlanetX_IOT {
             + "&data6=" + n6
             + "&data7=" + n7
             + "&data8=" + n8
+        )
     }
 
     /**
@@ -459,7 +446,7 @@ namespace PlanetX_IOT {
             return
         }
         basic.pause(smartiot_lastSendTime + 1000 - input.runningTime())
-        sendHttpRequest(smartiot_host, smartiot_port, smartiot_sendMsg)
+        sendAT(smartiot_sendMsg)
         smartiot_lastSendTime = input.runningTime();
     }
 
@@ -497,7 +484,7 @@ namespace PlanetX_IOT {
         if (!smartiot_switchListenFlag) {
             basic.forever(() => {
                 if (smartiot_connected) {
-                    sendHttpRequest(smartiot_host, smartiot_port, `GET /iot/iotTopic/getTopicStatus/${smartiot_token}/${smartiot_topic}`);
+                    sendAT(concatReqMsg(`/iot/iotTopic/getTopicStatus/${smartiot_token}/${smartiot_topic}`));
                 }
                 basic.pause(1000)
             })

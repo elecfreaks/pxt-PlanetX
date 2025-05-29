@@ -99,7 +99,7 @@ namespace PlanetX_IOT {
             return null
         }
 
-        if(key == null){
+        if (key == null) {
             sendAT(queryString)
             return null;
         }
@@ -108,9 +108,12 @@ namespace PlanetX_IOT {
     }
 
     export function resetEsp8266() {
-        sendRequest("AT+RESTORE", "ready") // restore to factory settings
-        sendRequest("AT+RST", "ready") // rest
-        sendRequest("AT+CWMODE=1", "OK") // set to STA mode
+        sendRequest("AT+RESTORE", "ready", 2000) // restore to factory settings
+        sendRequest("AT+RST", "ready", 2000) // rest
+        // set to STA mode
+        if (sendRequest("AT+CWMODE=1", "OK") == null) {
+            sendRequest("AT+CWMODE=1", "OK")
+        }
     }
 
     /**

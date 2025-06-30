@@ -128,7 +128,7 @@
     "PlanetX_Basic.trimpot|block": "Valeur potentiomètre %Rjpin",
     "PlanetX_Basic.buttonCD|block": "Bouton sur %Rjpin %button appuyé",
     "PlanetX_Basic.buttonEvent|block": "Lorsque bouton sur %Rjpin %button est appuyé",
-    "PlanetX_Basic.motorFan|block": "Ventilateur %Rjpin sur $fanstate || vitesse %speed \\%",
+    "PlanetX_Basic.motorFan|block": "Moteur %Rjpin sur $fanstate || vitesse %speed \\%",
     "PlanetX_Basic.laserSensor|block": "Laser %Rjpin sur $laserstate",
     "PlanetX_Basic.magnet|block": "Ventouse magnétique %Rjpin sur $magnetstate",
     "PlanetX_Basic.Relay|block": "Basculer relais %Rjpin sur %Relaystate",

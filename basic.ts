@@ -6,32 +6,30 @@
 namespace PlanetX_Basic {
     /////////////////////////// BME280 
     let BME280_I2C_ADDR = 0x76
-    let dig_T1 = getUInt16LE(0x88)
-    let dig_T2 = getInt16LE(0x8A)
-    let dig_T3 = getInt16LE(0x8C)
-    let dig_P1 = getUInt16LE(0x8E)
-    let dig_P2 = getInt16LE(0x90)
-    let dig_P3 = getInt16LE(0x92)
-    let dig_P4 = getInt16LE(0x94)
-    let dig_P5 = getInt16LE(0x96)
-    let dig_P6 = getInt16LE(0x98)
-    let dig_P7 = getInt16LE(0x9A)
-    let dig_P8 = getInt16LE(0x9C)
-    let dig_P9 = getInt16LE(0x9E)
-    let dig_H1 = getreg(0xA1)
-    let dig_H2 = getInt16LE(0xE1)
-    let dig_H3 = getreg(0xE3)
-    let a = getreg(0xE5)
-    let dig_H4 = (getreg(0xE4) << 4) + (a % 16)
-    let dig_H5 = (getreg(0xE6) << 4) + (a >> 4)
-    let dig_H6 = getInt8LE(0xE7)
+    let bme280Ready = false
+    const BME280_CHIP_ID_REG = 0xD0
+    const BME280_CHIP_ID = 0x60
+    let dig_T1 = 0
+    let dig_T2 = 0
+    let dig_T3 = 0
+    let dig_P1 = 0
+    let dig_P2 = 0
+    let dig_P3 = 0
+    let dig_P4 = 0
+    let dig_P5 = 0
+    let dig_P6 = 0
+    let dig_P7 = 0
+    let dig_P8 = 0
+    let dig_P9 = 0
+    let dig_H1 = 0
+    let dig_H2 = 0
+    let dig_H3 = 0
+    let dig_H4 = 0
+    let dig_H5 = 0
+    let dig_H6 = 0
     let T = 0
     let P = 0
     let H = 0
-    setreg(0xF2, 0x04)
-    setreg(0xF4, 0x2F)
-    setreg(0xF5, 0x0C)
-    setreg(0xF4, 0x2F)
     function setreg(reg: number, dat: number): void {
         let buf = pins.createBuffer(2);
         buf[0] = reg;
@@ -53,6 +51,49 @@ namespace PlanetX_Basic {
     function getInt16LE(reg: number): number {
         pins.i2cWriteNumber(BME280_I2C_ADDR, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(BME280_I2C_ADDR, NumberFormat.Int16LE);
+    }
+    function tryInitBME280(addr: number): boolean {
+        BME280_I2C_ADDR = addr
+        if (getreg(BME280_CHIP_ID_REG) != BME280_CHIP_ID) {
+            return false
+        }
+        dig_T1 = getUInt16LE(0x88)
+        dig_T2 = getInt16LE(0x8A)
+        dig_T3 = getInt16LE(0x8C)
+        dig_P1 = getUInt16LE(0x8E)
+        dig_P2 = getInt16LE(0x90)
+        dig_P3 = getInt16LE(0x92)
+        dig_P4 = getInt16LE(0x94)
+        dig_P5 = getInt16LE(0x96)
+        dig_P6 = getInt16LE(0x98)
+        dig_P7 = getInt16LE(0x9A)
+        dig_P8 = getInt16LE(0x9C)
+        dig_P9 = getInt16LE(0x9E)
+        dig_H1 = getreg(0xA1)
+        dig_H2 = getInt16LE(0xE1)
+        dig_H3 = getreg(0xE3)
+        let e5 = getreg(0xE5)
+        dig_H4 = (getreg(0xE4) << 4) + (e5 % 16)
+        dig_H5 = (getreg(0xE6) << 4) + (e5 >> 4)
+        dig_H6 = getInt8LE(0xE7)
+        setreg(0xF2, 0x04)
+        setreg(0xF4, 0x2F)
+        setreg(0xF5, 0x0C)
+        setreg(0xF4, 0x2F)
+        bme280Ready = true
+        return true
+    }
+    function ensureBME280Ready(): boolean {
+        if (bme280Ready) {
+            return true
+        }
+        if (tryInitBME280(0x76)) {
+            return true
+        }
+        if (tryInitBME280(0x77)) {
+            return true
+        }
+        return false
     }
     function getBme280Value(): void {
         let adc_T = (getreg(0xFA) << 12) + (getreg(0xFB) << 4) + (getreg(0xFC) >> 4)
@@ -1888,6 +1929,9 @@ namespace PlanetX_Basic {
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
     //% subcategory=Sensor  group="IIC Port"
     export function bme280Sensor(state: BME280_state): number {
+        if (!ensureBME280Ready()) {
+            return 0
+        }
         getBme280Value();
         switch (state) {
             case BME280_state.BME280_temperature_C:

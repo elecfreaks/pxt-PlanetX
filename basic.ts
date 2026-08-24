@@ -2606,42 +2606,39 @@ namespace PlanetX_Basic {
         }
     }
 
-    //% blockId=airPump block="air pump %Rjpin %operation"
+    //% blockId=airPump block="water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%"
+    //% inlineInputMode=inline
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% operation.shadow="toggleOnOff"
-    //% operation.label="suction|release"
-    //% operation.tooltips="true=suction, false=release"
+    //% duration.min=0 duration.defl=1000
+    //% power.min=0 power.max=100 power.defl=100
+    //% expandableArgumentMode="enabled"
     //% subcategory=Execute group="Digital" color=#EA5532
-    export function airPump(Rjpin: DigitalRJPin, operation: boolean): void {
-        let suctionPin = DigitalPin.P1
-        let releasePin = DigitalPin.P8
+    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: number = 1000, power: number = 100): void {
+        let pin = AnalogPin.P1
         switch (Rjpin) {
             case DigitalRJPin.J1:
-                suctionPin = DigitalPin.P1
-                releasePin = DigitalPin.P8
+                pin = AnalogPin.P1
                 break;
             case DigitalRJPin.J2:
-                suctionPin = DigitalPin.P2
-                releasePin = DigitalPin.P12
+                pin = AnalogPin.P2
                 break;
             case DigitalRJPin.J3:
-                suctionPin = DigitalPin.P13
-                releasePin = DigitalPin.P14
+                pin = AnalogPin.P13
                 break;
             case DigitalRJPin.J4:
-                suctionPin = DigitalPin.P15
-                releasePin = DigitalPin.P16
+                pin = AnalogPin.P15
                 break;
         }
         if (operation) {
-            pins.digitalWritePin(suctionPin, 1)
-            control.waitMicros(300000)
-            pins.digitalWritePin(suctionPin, 0)
+            pins.analogSetPeriod(pin, 100)
+            pins.analogWritePin(pin, Math.map(power, 0, 100, 0, 1023))
+            basic.pause(duration)
+            pins.analogWritePin(pin, 0)
         } else {
-            pins.digitalWritePin(releasePin, 1)
-            control.waitMicros(100000)
-            pins.digitalWritePin(releasePin, 0)
+            pins.analogWritePin(pin, 0)
+            power = 0
         }
     }
 

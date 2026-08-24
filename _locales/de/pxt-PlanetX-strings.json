@@ -111,7 +111,7 @@
     "PlanetX_Basic.folderPlay|block": "mp3 im Ordner abspielen:$folderNum filename:$fileNum || repeatList: $myAns",
     "PlanetX_Basic.gasValue|block": "%sensor Gassensor %Rjpin Konzentrationswert",
     "PlanetX_Basic.laserSensor|block": "Laser %Rjpin umschalten auf $laserstate",
-    "PlanetX_Basic.airPump|block": "Luftpumpe %Rjpin %operation",
+    "PlanetX_Basic.airPump|block": "water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%",
     "PlanetX_Basic.lightSensor|block": "Lichtsensor %Rjpin Lichtstärke(lux)",
     "PlanetX_Basic.motorFan|block": "Motorlüfter %Rjpin umschalten auf $fanstate || Geschwindigkeit %speed \\%",
     "PlanetX_Basic.noiseSensor|block": "Geräuschsensor %Rjpin Lautstärke(dB)",

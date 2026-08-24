@@ -111,7 +111,7 @@
     "PlanetX_Basic.gasValue|block": "%sensor 가스 센서 %Rjpin 농도 값",
     "PlanetX_Basic.laserSensor|block": "레이저 %Rjpin을 $laserstate로 전환",
     "PlanetX_Basic.magnet|block": "마그넷 %Rjpin을 $magnetstate로 전환",
-    "PlanetX_Basic.airPump|block": "air pump %Rjpin %operation",
+    "PlanetX_Basic.airPump|block": "water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%",
     "PlanetX_Basic.lightSensor|block": "광 센서 %Rjpin 광도(lux)",
     "PlanetX_Basic.motorFan|block": "모터 팬 %Rjpin $fanstate를 전환하고 속도 speed %speed % 설정",
     "PlanetX_Basic.noiseSensor|block": "사운드 센서 %Rjpin 소음(dB)",

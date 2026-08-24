@@ -131,7 +131,7 @@
     "PlanetX_Basic.motorFan|block": "Moteur %Rjpin sur $fanstate || vitesse %speed \\%",
     "PlanetX_Basic.laserSensor|block": "Laser %Rjpin sur $laserstate",
     "PlanetX_Basic.magnet|block": "Ventouse magnétique %Rjpin sur $magnetstate",
-    "PlanetX_Basic.airPump|block": "pompe a air %Rjpin %operation",
+    "PlanetX_Basic.airPump|block": "water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%",
     "PlanetX_Basic.Relay|block": "Basculer relais %Rjpin sur %Relaystate",
     "PlanetX_Basic.setLoopFolder|block": "Répéter lecture en boucle fichiers MP3 du dossier :$folderNum",
     "PlanetX_Basic.folderPlay|block": "Lecture fichier mp3 du dossier :$folderNum nom :$fileNum || répéter : $myAns",

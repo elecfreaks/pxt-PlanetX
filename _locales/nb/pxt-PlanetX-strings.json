@@ -101,7 +101,7 @@
   "PlanetX_AILens.trafficCards.turnleft|block": "Snu til venstre",
   "PlanetX_AILens.trafficCards.turnright|block": "Snu til høyre",
   "PlanetX_AILens.trafficCard|block": "Bildet inneholder trafikkkort: %status",
-  "PlanetX_Basic.airPump|block": "air pump %Rjpin %operation",
+  "PlanetX_Basic.airPump|block": "water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%",
   "PlanetX_AILens|block": "PlanetX_AI-Lens",
   "{id:category}PlanetX_AILens": "PlanetX_AILens",
   "{id:group}Ball": "Ball",

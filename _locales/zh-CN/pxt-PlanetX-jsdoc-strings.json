@@ -19,7 +19,7 @@
   "PlanetX_Basic.folderPlay|param|myAns": "repeat , eg: repeatList.Yes",
   "PlanetX_Basic.laserSensor": "toggle laserSensor",
   "PlanetX_Basic.magnet": "toggle magnet",
-  "PlanetX_Basic.airPump": "control air pump suction or release",
+  "PlanetX_Basic.airPump": "控制水泵开启或关闭，可选运行时长和功率",
   "PlanetX_Basic.lightSensor": "TODO: get light intensity(lux)",
   "PlanetX_Basic.motorFan": "toggle fans",
   "PlanetX_Basic.noiseSensor": "TODO: get noise(dB)",

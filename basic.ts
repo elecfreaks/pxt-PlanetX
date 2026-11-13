@@ -2606,6 +2606,42 @@ namespace PlanetX_Basic {
         }
     }
 
+    enum AirPumpState {
+        Idle,
+        Running,
+        Releasing
+    }
+    const airPumpPins: AnalogPin[] = [AnalogPin.P1, AnalogPin.P2, AnalogPin.P13, AnalogPin.P15]
+    const airPumpReleasePins: DigitalPin[] = [DigitalPin.P8, DigitalPin.P12, DigitalPin.P14, DigitalPin.P16]
+    let airPumpStates: AirPumpState[] = [AirPumpState.Idle, AirPumpState.Idle, AirPumpState.Idle, AirPumpState.Idle]
+    let airPumpDeadlines: number[] = [0, 0, 0, 0]
+    let airPumpMonitorStarted = false
+
+    function startAirPumpMonitor(): void {
+        if (airPumpMonitorStarted) return
+        airPumpMonitorStarted = true
+        control.inBackground(() => {
+            while (true) {
+                const now = input.runningTime()
+                for (let port = 0; port < airPumpStates.length; port++) {
+                    if (airPumpStates[port] != AirPumpState.Idle && now >= airPumpDeadlines[port]) {
+                        if (airPumpStates[port] == AirPumpState.Running) {
+                            pins.analogWritePin(airPumpPins[port], 0)
+                        } else {
+                            pins.digitalWritePin(airPumpReleasePins[port], 0)
+                        }
+                        airPumpStates[port] = AirPumpState.Idle
+                    }
+                }
+                basic.pause(10)
+            }
+        })
+    }
+
+    /**
+     * Start or stop the pump and return immediately. Each command replaces the
+     * previous timer on this port. Stopping opens the release valve for 100 ms.
+     */
     //% blockId=airPump block="water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%"
     //% inlineInputMode=inline
     //% Rjpin.fieldEditor="gridpicker"
@@ -2616,30 +2652,28 @@ namespace PlanetX_Basic {
     //% expandableArgumentMode="enabled"
     //% subcategory=Execute group="Digital" color=#EA5532
     export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: number = 1000, power: number = 100): void {
-        let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case DigitalRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-            case DigitalRJPin.J3:
-                pin = AnalogPin.P13
-                break;
-            case DigitalRJPin.J4:
-                pin = AnalogPin.P15
-                break;
-        }
+        const port = Rjpin >= DigitalRJPin.J1 && Rjpin <= DigitalRJPin.J4 ? Rjpin : DigitalRJPin.J1
+        const pin = airPumpPins[port]
+        const releasePin = airPumpReleasePins[port]
+        // Replacing the per-port state cancels both running and release timers.
+        airPumpStates[port] = AirPumpState.Idle
         if (operation) {
+            pins.digitalWritePin(releasePin, 0)
             pins.analogSetPeriod(pin, 100)
-            pins.analogWritePin(pin, Math.map(power, 0, 100, 0, 1023))
-            basic.pause(duration)
-            pins.analogWritePin(pin, 0)
+            if (duration > 0) {
+                pins.analogWritePin(pin, Math.map(power, 0, 100, 0, 1023))
+                airPumpDeadlines[port] = input.runningTime() + duration
+                airPumpStates[port] = AirPumpState.Running
+            } else {
+                pins.analogWritePin(pin, 0)
+            }
         } else {
             pins.analogWritePin(pin, 0)
-            power = 0
+            pins.digitalWritePin(releasePin, 1)
+            airPumpDeadlines[port] = input.runningTime() + 100
+            airPumpStates[port] = AirPumpState.Releasing
         }
+        startAirPumpMonitor()
     }
 
     //% deprecated=true

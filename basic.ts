@@ -2606,6 +2606,19 @@ namespace PlanetX_Basic {
         }
     }
 
+    export enum AirPumpDuration {
+        //% block="1"
+        Seconds1 = 1,
+        //% block="2"
+        Seconds2 = 2,
+        //% block="3"
+        Seconds3 = 3,
+        //% block="4"
+        Seconds4 = 4,
+        //% block="5"
+        Seconds5 = 5
+    }
+
     enum AirPumpState {
         Idle,
         Running,
@@ -2614,66 +2627,73 @@ namespace PlanetX_Basic {
     const airPumpPins: AnalogPin[] = [AnalogPin.P1, AnalogPin.P2, AnalogPin.P13, AnalogPin.P15]
     const airPumpReleasePins: DigitalPin[] = [DigitalPin.P8, DigitalPin.P12, DigitalPin.P14, DigitalPin.P16]
     let airPumpStates: AirPumpState[] = [AirPumpState.Idle, AirPumpState.Idle, AirPumpState.Idle, AirPumpState.Idle]
-    let airPumpDeadlines: number[] = [0, 0, 0, 0]
-    let airPumpMonitorStarted = false
-
-    function startAirPumpMonitor(): void {
-        if (airPumpMonitorStarted) return
-        airPumpMonitorStarted = true
-        control.inBackground(() => {
-            while (true) {
-                const now = input.runningTime()
-                for (let port = 0; port < airPumpStates.length; port++) {
-                    if (airPumpStates[port] != AirPumpState.Idle && now >= airPumpDeadlines[port]) {
-                        if (airPumpStates[port] == AirPumpState.Running) {
-                            pins.analogWritePin(airPumpPins[port], 0)
-                        } else {
-                            pins.digitalWritePin(airPumpReleasePins[port], 0)
-                        }
-                        airPumpStates[port] = AirPumpState.Idle
-                    }
-                }
-                basic.pause(10)
-            }
-        })
-    }
+    // Zero allows the first start immediately. A stop before the first start
+    // also sets this deadline, so its release/cooldown cannot be bypassed.
+    let airPumpNextStartTimes: number[] = [0, 0, 0, 0]
+    let airPumpCancelVersions: number[] = [0, 0, 0, 0]
+    let airPumpReleaseDeadlines: number[] = [0, 0, 0, 0]
 
     /**
-     * Start or stop the pump and return immediately. Each command replaces the
-     * previous timer on this port. Stopping opens the release valve for 100 ms.
+     * Wait for the pump operation to finish while other fibers can run.
+     * Duration is 1-5 seconds. Stop cancels earlier starts and releases for
+     * 100 ms. The next start waits until 1 second after running or release ends.
      */
-    //% blockId=airPump block="water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%"
+    //% blockId=airPump block="water pump module %Rjpin toggle to $operation || duration %duration s power %power \\%"
     //% inlineInputMode=inline
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% operation.shadow="toggleOnOff"
-    //% duration.min=0 duration.defl=1000
+    //% duration.defl=AirPumpDuration.Seconds1
     //% power.min=0 power.max=100 power.defl=100
     //% expandableArgumentMode="enabled"
     //% subcategory=Execute group="Digital" color=#EA5532
-    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: number = 1000, power: number = 100): void {
+    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: AirPumpDuration = AirPumpDuration.Seconds1, power: number = 100): void {
         const port = Rjpin >= DigitalRJPin.J1 && Rjpin <= DigitalRJPin.J4 ? Rjpin : DigitalRJPin.J1
         const pin = airPumpPins[port]
         const releasePin = airPumpReleasePins[port]
-        // Replacing the per-port state cancels both running and release timers.
-        airPumpStates[port] = AirPumpState.Idle
         if (operation) {
+            // Reject legacy millisecond values and invalid JavaScript arguments.
+            if (!(duration >= 1 && duration <= 5 && Math.floor(duration) == duration)) return
+            const version = airPumpCancelVersions[port]
+            while (airPumpStates[port] != AirPumpState.Idle || input.runningTime() < airPumpNextStartTimes[port]) {
+                if (version != airPumpCancelVersions[port]) return
+                basic.pause(10)
+            }
+            if (version != airPumpCancelVersions[port]) return
+            // No yielding between claiming the port and switching the outputs.
+            airPumpStates[port] = AirPumpState.Running
             pins.digitalWritePin(releasePin, 0)
             pins.analogSetPeriod(pin, 100)
-            if (duration > 0) {
-                pins.analogWritePin(pin, Math.map(power, 0, 100, 0, 1023))
-                airPumpDeadlines[port] = input.runningTime() + duration
-                airPumpStates[port] = AirPumpState.Running
-            } else {
-                pins.analogWritePin(pin, 0)
+            pins.analogWritePin(pin, Math.map(power, 0, 100, 0, 1023))
+            const endTime = input.runningTime() + duration * 1000
+            while (input.runningTime() < endTime) {
+                if (version != airPumpCancelVersions[port]) return
+                basic.pause(10)
             }
+            // A canceled start must not change a newer operation's pins/timer.
+            if (version != airPumpCancelVersions[port]) return
+            pins.analogWritePin(pin, 0)
+            airPumpNextStartTimes[port] = input.runningTime() + 1000
+            airPumpStates[port] = AirPumpState.Idle
         } else {
+            // Cancel both active starts and starts waiting for this port.
+            airPumpCancelVersions[port]++
+            airPumpStates[port] = AirPumpState.Releasing
             pins.analogWritePin(pin, 0)
             pins.digitalWritePin(releasePin, 1)
-            airPumpDeadlines[port] = input.runningTime() + 100
-            airPumpStates[port] = AirPumpState.Releasing
+            airPumpReleaseDeadlines[port] = input.runningTime() + 100
+            // Repeated stops extend the shared release period. All stop callers
+            // wait for it to finish; only one closes the valve and sets cooldown.
+            while (airPumpStates[port] == AirPumpState.Releasing) {
+                if (input.runningTime() >= airPumpReleaseDeadlines[port]) {
+                    pins.digitalWritePin(releasePin, 0)
+                    airPumpNextStartTimes[port] = input.runningTime() + 1000
+                    airPumpStates[port] = AirPumpState.Idle
+                } else {
+                    basic.pause(10)
+                }
+            }
         }
-        startAirPumpMonitor()
     }
 
     //% deprecated=true

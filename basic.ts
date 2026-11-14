@@ -2638,7 +2638,7 @@ namespace PlanetX_Basic {
      * Duration is 1-5 seconds. Stop cancels earlier starts and releases for
      * 100 ms. The next start waits until 1 second after running or release ends.
      */
-    //% blockId=airPump block="water pump module %Rjpin toggle to $operation || duration %duration s power %power \\%"
+    //% blockId=airPump block="air pump module %Rjpin toggle to $operation || duration %duration s power %power \\%"
     //% inlineInputMode=inline
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2

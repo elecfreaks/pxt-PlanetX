@@ -2638,7 +2638,7 @@ namespace PlanetX_Basic {
      * Duration is 1-5 seconds. Stop cancels earlier starts and releases for
      * 100 ms. The next start waits until 1 second after running or release ends.
      */
-    //% blockId=airPump block="air pump module %Rjpin toggle to $operation || duration %duration s power %power \\%"
+    //% blockId=airPump block="air pump module %Rjpin toggle to $operation || duration %duration seconds"
     //% inlineInputMode=inline
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
@@ -2647,10 +2647,11 @@ namespace PlanetX_Basic {
     //% power.min=0 power.max=100 power.defl=100
     //% expandableArgumentMode="enabled"
     //% subcategory=Execute group="Digital" color=#EA5532
-    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: AirPumpDuration = AirPumpDuration.Seconds1, power: number = 100): void {
+    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: AirPumpDuration = AirPumpDuration.Seconds1): void {
         const port = Rjpin >= DigitalRJPin.J1 && Rjpin <= DigitalRJPin.J4 ? Rjpin : DigitalRJPin.J1
         const pin = airPumpPins[port]
         const releasePin = airPumpReleasePins[port]
+        const power = 100
         if (operation) {
             // Reject legacy millisecond values and invalid JavaScript arguments.
             if (!(duration >= 1 && duration <= 5 && Math.floor(duration) == duration)) return

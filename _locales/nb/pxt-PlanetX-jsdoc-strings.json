@@ -39,7 +39,7 @@
   "PlanetX_Basic.UVLevel": "Les UV-nivået fra 0 til 15.",
   "PlanetX_Basic.UVLevel|param|Rjpin": "Porten modulen er koblet til.",
   "PlanetX_Basic.UnitList": "Enhet for temperaturmålinger.",
-  "PlanetX_Basic.airPump": "Vent til luftpumpeoperasjonen er ferdig mens andre oppgaver kan kjøre. Kjøretid 1–5 sekunder. Stopp avbryter tidligere startforespørsler og slipper ut trykk i 100 ms. En ny start venter til ett sekund etter at kjøring eller trykkavlastning er ferdig.",
+  "PlanetX_Basic.airPump": "Slår luftpumpen på eller av.",
   "PlanetX_Basic.airPump|param|Rjpin": "Porten modulen er koblet til.",
   "PlanetX_Basic.airPump|param|duration": "Luftpumpens kjøretid når den slås på, fra 1 til 5 sekunder.",
   "PlanetX_Basic.airPump|param|operation": "True for å slå på, false for å slå av.",

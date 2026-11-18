@@ -39,7 +39,7 @@
   "PlanetX_Basic.UVLevel": "Read the ultraviolet level from 0 to 15.",
   "PlanetX_Basic.UVLevel|param|Rjpin": "Port connected to the module.",
   "PlanetX_Basic.UnitList": "Unit used for temperature readings.",
-  "PlanetX_Basic.airPump": "Wait for the air pump operation to finish while other fibers can run. Run for 1-5 seconds. Stop cancels earlier starts and releases pressure for 100 ms. A new start waits until one second after running or pressure release ends.",
+  "PlanetX_Basic.airPump": "Turn the air pump on or off.",
   "PlanetX_Basic.airPump|param|Rjpin": "Port connected to the module.",
   "PlanetX_Basic.airPump|param|duration": "Air pump running time from 1 to 5 seconds when turned on.",
   "PlanetX_Basic.airPump|param|operation": "True to turn on; false to turn off.",

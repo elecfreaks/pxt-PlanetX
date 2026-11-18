@@ -39,7 +39,7 @@
   "PlanetX_Basic.UVLevel": "Lees het uv-niveau van 0 tot 15.",
   "PlanetX_Basic.UVLevel|param|Rjpin": "Poort waarop de module is aangesloten.",
   "PlanetX_Basic.UnitList": "Eenheid voor temperatuurmetingen.",
-  "PlanetX_Basic.airPump": "Wacht tot de luchtpompactie klaar is terwijl andere taken kunnen doorgaan. Looptijd 1–5 seconden. Stoppen annuleert eerdere startverzoeken en laat 100 ms druk ontsnappen. Een nieuwe start wacht tot één seconde na het einde van de werking of drukontlasting.",
+  "PlanetX_Basic.airPump": "Schakelt de luchtpomp in of uit.",
   "PlanetX_Basic.airPump|param|Rjpin": "Poort waarop de module is aangesloten.",
   "PlanetX_Basic.airPump|param|duration": "Looptijd van de luchtpomp bij inschakelen, van 1 tot 5 seconden.",
   "PlanetX_Basic.airPump|param|operation": "True om in te schakelen, false om uit te schakelen.",

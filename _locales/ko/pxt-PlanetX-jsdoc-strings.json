@@ -39,7 +39,7 @@
   "PlanetX_Basic.UVLevel": "자외선 수준을 0~15 범위로 읽습니다.",
   "PlanetX_Basic.UVLevel|param|Rjpin": "모듈이 연결된 포트입니다.",
   "PlanetX_Basic.UnitList": "온도 측정에 사용하는 단위입니다.",
-  "PlanetX_Basic.airPump": "다른 작업이 실행될 수 있도록 하면서 공기 펌프 동작이 끝날 때까지 기다립니다. 작동 시간은 1~5초입니다. 정지하면 이전 시작 요청을 취소하고 100ms 동안 압력을 배출합니다. 작동 또는 압력 배출이 끝난 뒤 1초가 지나야 다시 시작합니다.",
+  "PlanetX_Basic.airPump": "공기 펌프를 켜거나 끕니다.",
   "PlanetX_Basic.airPump|param|Rjpin": "모듈이 연결된 포트입니다.",
   "PlanetX_Basic.airPump|param|duration": "공기 펌프를 켰을 때의 작동 시간으로 범위는 1~5초입니다.",
   "PlanetX_Basic.airPump|param|operation": "true는 켜기, false는 끄기입니다.",

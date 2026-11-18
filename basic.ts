@@ -2804,7 +2804,7 @@ namespace PlanetX_Basic {
     let airPumpReleaseDeadlines: number[] = [0, 0, 0, 0]
 
     /**
-     * Wait for the air pump operation to finish while other fibers can run. Run for 1-5 seconds. Stop cancels earlier starts and releases pressure for 100 ms. A new start waits until one second after running or pressure release ends.
+     * Turn the air pump on or off.
      * @param Rjpin Port connected to the module.
      * @param operation True to turn on; false to turn off.
      * @param duration Air pump running time from 1 to 5 seconds when turned on.

@@ -39,7 +39,7 @@
   "PlanetX_Basic.UVLevel": "Liest die UV-Stufe von 0 bis 15.",
   "PlanetX_Basic.UVLevel|param|Rjpin": "Anschluss, an dem das Modul angeschlossen ist.",
   "PlanetX_Basic.UnitList": "Einheit der Temperaturmessung.",
-  "PlanetX_Basic.airPump": "Wartet auf das Ende des Luftpumpenvorgangs, während andere Tasks weiterlaufen. Laufzeit 1–5 Sekunden. Stoppen bricht frühere Startanforderungen ab und lässt 100 ms lang Druck ab. Ein neuer Start wartet bis eine Sekunde nach Laufende oder Druckablass.",
+  "PlanetX_Basic.airPump": "Schaltet die Luftpumpe ein oder aus.",
   "PlanetX_Basic.airPump|param|Rjpin": "Anschluss, an dem das Modul angeschlossen ist.",
   "PlanetX_Basic.airPump|param|duration": "Laufzeit der Luftpumpe beim Einschalten von 1 bis 5 Sekunden.",
   "PlanetX_Basic.airPump|param|operation": "True zum Einschalten, false zum Ausschalten.",

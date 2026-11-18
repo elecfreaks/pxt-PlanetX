@@ -39,7 +39,7 @@
   "PlanetX_Basic.UVLevel": "Lit le niveau ultraviolet de 0 à 15.",
   "PlanetX_Basic.UVLevel|param|Rjpin": "Port auquel le module est connecté.",
   "PlanetX_Basic.UnitList": "Unité des mesures de température.",
-  "PlanetX_Basic.airPump": "Attend la fin de l’opération de la pompe à air tout en laissant les autres tâches s’exécuter. Durée de 1 à 5 secondes. L’arrêt annule les démarrages précédents et libère la pression pendant 100 ms. Un nouveau démarrage attend une seconde après la fin du fonctionnement ou de la décompression.",
+  "PlanetX_Basic.airPump": "Active ou désactive la pompe à air.",
   "PlanetX_Basic.airPump|param|Rjpin": "Port auquel le module est connecté.",
   "PlanetX_Basic.airPump|param|duration": "Durée de fonctionnement de la pompe à air à l’activation, de 1 à 5 secondes.",
   "PlanetX_Basic.airPump|param|operation": "True pour activer, false pour désactiver.",

@@ -1,6 +1,6 @@
 /**
-* Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
-*/
+ * Control PlanetX modules from ELECFREAKS.
+ */
 //% color=#00B1ED  icon="\uf005" block="PlanetX_Base" blockId="PlanetX_Base"
 //% groups='["Digital", "Analog", "IIC Port"]'
 namespace PlanetX_Basic {
@@ -277,6 +277,9 @@ namespace PlanetX_Basic {
     const humanbody_Addr = 0x27
     const environment_Addr = 0x26
 
+    /**
+     * Select the temperature measurement target.
+     */
     export enum targetList {
         //% block="Human body"
         human_body,
@@ -284,6 +287,9 @@ namespace PlanetX_Basic {
         environment
     }
 
+    /**
+     * Unit used for temperature readings.
+     */
     export enum UnitList {
         //% block="℃"
         Centigrade,
@@ -1201,6 +1207,9 @@ namespace PlanetX_Basic {
         DHT20_humidity,
     }
 
+    /**
+     * Gesture detected by the sensor.
+     */
     export enum GestureType {
         //% block="None"
         None = 0,
@@ -1241,9 +1250,9 @@ namespace PlanetX_Basic {
     }
 
     export enum GasList {
-        //% block="Co"
+        //% block="CO"
         Co,
-        //% block="Co2"
+        //% block="CO₂"
         Co2,
         //% block="Smoke"
         Smoke,
@@ -1286,6 +1295,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the sound level in decibels.
+     */
     export function noiseSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1395,6 +1407,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read light intensity in lux.
+     */
     export function lightSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1418,6 +1433,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read soil moisture from 0 to 100.
+     */
     export function soilHumidity(Rjpin: AnalogRJPin): number {
         let voltage = 0, soilmoisture = 0;
         let pin = AnalogPin.P1
@@ -1437,6 +1455,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the water level from 0 to 100.
+     */
     export function waterLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1459,6 +1480,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the ultraviolet level from 0 to 15.
+     */
     export function UVLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1492,6 +1516,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532 
+    /**
+     * Check whether the collision sensor is pressed.
+     */
     export function Crash(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -1512,6 +1539,9 @@ namespace PlanetX_Basic {
     //% distance_unit.fieldEditor="gridpicker"
     //% distance_unit.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
+    /**
+     * Read distance using the ultrasonic sensor.
+     */
     export function ultrasoundSensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
         let pinT = DigitalPin.P1
         let pinE = DigitalPin.P2
@@ -1576,6 +1606,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital"  color=#EA5532
+    /**
+     * Check whether the PIR sensor detects motion.
+     */
     export function PIR(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -1591,6 +1624,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
+    /**
+     * Read PM2.5 concentration in micrograms per cubic metre.
+     */
     export function PM25(Rjpin: DigitalRJPin): number {
         let pin = DigitalPin.P1
         let pm25 = 0
@@ -1610,6 +1646,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read dust concentration in micrograms per cubic metre.
+     * @param Rjpin Port connected to the sensor.
+     */
     export function Dust(Rjpin: AnalogRJPin): number {
         let voltage = 0
         let dust = 0
@@ -1650,6 +1690,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
     //% blockId=tracking_sensor block="Line-tracking sensor %Rjpin is %state"
+    /**
+     * Check the line sensor state.
+     */
     export function trackingSensor(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
         let rpin = DigitalPin.P2
@@ -1687,8 +1730,8 @@ namespace PlanetX_Basic {
     }
 
     /**
-    * Get gray value.The range is from 0 to 255.
-    */
+     * Read the grayscale value from 0 to 255.
+     */
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel gray value"
@@ -1732,7 +1775,7 @@ namespace PlanetX_Basic {
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    //% block="Trackbit Init_Sensor_Val channel %channel detection target %detect_target value"
+    //% block="Trackbit channel %channel initial gray value for %detect_target"
     export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel, detect_target: TrackBit_gray): number {
         let Init_Sensor_Val = pins.createBuffer(8)
         pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
@@ -1751,8 +1794,8 @@ namespace PlanetX_Basic {
     }
 
     /**
-    * Gets the position offset.The range is from -3000 to 3000.
-    */
+     * Read the position offset from -3000 to 3000.
+     */
     //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit sensor offset value"
@@ -1794,6 +1837,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
+    /**
+     * Read the selected temperature or humidity value from DHT11.
+     */
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
         if (__dht11_last_read_time != 0 && __dht11_last_read_time + 1000 > input.runningTime()) {
@@ -2027,6 +2073,11 @@ namespace PlanetX_Basic {
     //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Run the handler when the selected gesture is detected.
+     * @param gesture Gesture to detect.
+     * @param handler Code to run when the event occurs.
+     */
     export function onGesture(gesture: GestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
         if (gesture_first_init) {
@@ -2535,6 +2586,9 @@ namespace PlanetX_Basic {
     //% subcategory=Execute group="Digital" color=#EA5532
     //% speed.min=0 speed.max=100 speed.defl=50
     //% expandableArgumentMode="toggle"
+    /**
+     * Switch the fan on or off and set its speed.
+     */
     export function motorFan(Rjpin: DigitalRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -2566,6 +2620,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
     //% subcategory=Execute group="Digital" color=#EA5532
+    /**
+     * Switch the laser module on or off.
+     */
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -2582,6 +2639,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% magnetstate.shadow="toggleOnOff"
     //% subcategory=Execute group="Digital" color=#EA5532
+    /**
+     * Switch the electromagnet on or off.
+     */
     export function magnet(Rjpin: DigitalRJPin, magnetstate: boolean): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -2634,9 +2694,7 @@ namespace PlanetX_Basic {
     let airPumpReleaseDeadlines: number[] = [0, 0, 0, 0]
 
     /**
-     * Wait for the pump operation to finish while other fibers can run.
-     * Duration is 1-5 seconds. Stop cancels earlier starts and releases for
-     * 100 ms. The next start waits until 1 second after running or release ends.
+     * Wait for the air pump operation to finish while other fibers can run. Run for 1-5 seconds. Stop cancels earlier starts and releases pressure for 100 ms. A new start waits until one second after running or pressure release ends.
      */
     //% blockId=airPump block="air pump module %Rjpin toggle to $operation || duration %duration seconds"
     //% inlineInputMode=inline
@@ -2704,6 +2762,9 @@ namespace PlanetX_Basic {
     //% Relaystate.fieldEditor="gridpicker"
     //% Relaystate.fieldOptions.columns=1
     //% subcategory=Execute group="Digital" color=#EA5532
+    /**
+     * Switch the relay to the selected state.
+     */
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -2720,6 +2781,10 @@ namespace PlanetX_Basic {
     //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:$folderNum"
     //% folderNum.defl="01"
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Repeat all tracks in the selected folder.
+     * @param folderNum Number of the folder containing the music.
+     */
     export function setLoopFolder(folderNum: string): void {
         CMD = 0x17
         para1 = 0
@@ -2737,6 +2802,12 @@ namespace PlanetX_Basic {
     //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Play the selected MP3 file from a folder.
+     * @param fileNum Number of the track to play.
+     * @param folderNum Number of the folder containing the music.
+     * @param myAns Whether to repeat playback.
+     */
     export function folderPlay(folderNum: string, fileNum: string, myAns: boolean = false): void {
         CMD = 0x0F
         para1 = parseInt(folderNum)
@@ -2756,6 +2827,11 @@ namespace PlanetX_Basic {
     //% tracking.defl=1
     //% expandableArgumentMode="toggle"
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Play a track by its copy order.
+     * @param myAns Whether to repeat playback.
+     * @param tracking Number of the track to play.
+     */
     export function setTracking(tracking: number, myAns: boolean = false): void {
         CMD = 0x03
         para1 = 0x00
@@ -2773,6 +2849,10 @@ namespace PlanetX_Basic {
     //% myType.fieldEditor="gridpicker"
     //% myType.fieldOptions.columns=2
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Perform an MP3 playback control action.
+     * @param myType Playback action, such as play, pause or stop.
+     */
     export function execute(myType: playType): void {
         CMD = myType
         para1 = 0x00
@@ -2786,6 +2866,9 @@ namespace PlanetX_Basic {
     //% blockId="setVolume" block="Set volume(0~25):%volume"
     //% volume.min=0 volume.max=25
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Set MP3 playback volume.
+     */
     export function setVolume(volume: number): void {
         if (volume > 25) {
             volume = 25
@@ -2803,6 +2886,9 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Initialize the serial port connected to the MP3 module.
+     */
     export function MP3SetPort(Rjpin: DigitalRJPin): void {
         let pin = SerialPin.USB_TX
         switch (Rjpin) {
@@ -3167,7 +3253,7 @@ namespace PlanetX_Basic {
     * Whether a Button is pressed
     */
     //% subcategory=Input group="IIC Port" color=#00B1ED
-    //% block="Joystick button %value_level is pressed" blockId="DigitalButton"
+    //% block="Joystick button %level is pressed" blockId="DigitalButton"
     export function get_Attention_Value(level: value_level): boolean {
         let value = 0
         let digital = 0
@@ -3345,7 +3431,7 @@ namespace PlanetX_Basic {
      * Get Analog value
     */
     //% subcategory=Input group="IIC Port" color=#00B1ED
-    //% blockId="AnlogValue" block="Joystick rocker value of %value_A"
+    //% blockId="AnlogValue" block="Joystick rocker value of %Button"
     export function GetAnalogValue(Button: value_A): number {
         let Analog = 0
         let re_value = 128

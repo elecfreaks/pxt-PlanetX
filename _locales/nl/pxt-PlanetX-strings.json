@@ -1,16 +1,36 @@
 {
+  "PlanetX_Basic.AirPumpDuration.Seconds1|block": "1",
+  "PlanetX_Basic.AirPumpDuration.Seconds2|block": "2",
+  "PlanetX_Basic.AirPumpDuration.Seconds3|block": "3",
+  "PlanetX_Basic.AirPumpDuration.Seconds4|block": "4",
+  "PlanetX_Basic.AirPumpDuration.Seconds5|block": "5",
   "PlanetX_Basic.AnalogRJPin.J1|block": "J1",
   "PlanetX_Basic.AnalogRJPin.J2|block": "J2",
-
   "PlanetX_Basic.BME280_state.BME280_altitude|block": "hoogte (m)",
   "PlanetX_Basic.BME280_state.BME280_humidity|block": "vochtigheid (0–100)",
   "PlanetX_Basic.BME280_state.BME280_pressure|block": "luchtdruk (hPa)",
   "PlanetX_Basic.BME280_state.BME280_temperature_C|block": "temperatuur (℃)",
-
+  "PlanetX_Basic.ButtonEventSrouse.Button_Cir|block": "𐤏",
+  "PlanetX_Basic.ButtonEventSrouse.Button_DOWN|block": "⬇",
+  "PlanetX_Basic.ButtonEventSrouse.Button_LEFT|block": "⬅",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Left1|block": "links1",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Left2|block": "links2",
+  "PlanetX_Basic.ButtonEventSrouse.Button_RIGHT|block": "➡",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Right1|block": "rechts1",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Right2|block": "rechts2",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Sele|block": "selecteren",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Squ|block": "☐",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Star|block": "starten",
+  "PlanetX_Basic.ButtonEventSrouse.Button_Tri|block": "▷",
+  "PlanetX_Basic.ButtonEventSrouse.Button_UP|block": "⬆",
+  "PlanetX_Basic.ButtonEventSrouse.Button_X|block": "⨉",
+  "PlanetX_Basic.ButtonEventState.Button_off|block": "uit",
+  "PlanetX_Basic.ButtonEventState.Button_on|block": "aan",
+  "PlanetX_Basic.ButtonState.off|block": "uit",
+  "PlanetX_Basic.ButtonState.on|block": "aan",
   "PlanetX_Basic.ButtonStateList.CD|block": "C+D",
   "PlanetX_Basic.ButtonStateList.C|block": "C",
   "PlanetX_Basic.ButtonStateList.D|block": "D",
-
   "PlanetX_Basic.ColorList.blue|block": "Blauw",
   "PlanetX_Basic.ColorList.cyan|block": "Cyaan",
   "PlanetX_Basic.ColorList.green|block": "Groen",
@@ -18,38 +38,30 @@
   "PlanetX_Basic.ColorList.red|block": "Rood",
   "PlanetX_Basic.ColorList.white|block": "Wit",
   "PlanetX_Basic.ColorList.yellow|block": "Geel",
-
   "PlanetX_Basic.Crash|block": "Botsingssensor %Rjpin is ingedrukt",
-
   "PlanetX_Basic.DHT11_state.DHT11_humidity|block": "vochtigheid (0–100)",
   "PlanetX_Basic.DHT11_state.DHT11_temperature_C|block": "temperatuur (℃)",
-
   "PlanetX_Basic.DHT20_state.DHT20_humidity|block": "vochtigheid (0–100)",
   "PlanetX_Basic.DHT20_state.DHT20_temperature_C|block": "temperatuur (℃)",
-
   "PlanetX_Basic.DataUnit.Day|block": "Dag",
   "PlanetX_Basic.DataUnit.Hour|block": "Uur",
   "PlanetX_Basic.DataUnit.Minute|block": "Minuut",
   "PlanetX_Basic.DataUnit.Month|block": "Maand",
   "PlanetX_Basic.DataUnit.Second|block": "Seconde",
-  "PlanetX_Basic.DataUnit.Weekday|block": "Weekdag",
+  "PlanetX_Basic.DataUnit.Weekday|block": "Dag van de week",
   "PlanetX_Basic.DataUnit.Year|block": "Jaar",
-
   "PlanetX_Basic.DigitalRJPin.J1|block": "J1",
   "PlanetX_Basic.DigitalRJPin.J2|block": "J2",
   "PlanetX_Basic.DigitalRJPin.J3|block": "J3",
   "PlanetX_Basic.DigitalRJPin.J4|block": "J4",
-
   "PlanetX_Basic.Distance_Unit_List.Distance_Unit_cm|block": "cm",
   "PlanetX_Basic.Distance_Unit_List.Distance_Unit_foot|block": "voet",
-
+  "PlanetX_Basic.Ds18b20Temp|block": "DS18B20 op poort %Rjpin waarde voor %state",
   "PlanetX_Basic.Dust|block": "Stofsensor %Rjpin waarde (μg/m³)",
-
   "PlanetX_Basic.GasList.Alcohol|block": "Alcohol",
   "PlanetX_Basic.GasList.Co2|block": "CO₂",
   "PlanetX_Basic.GasList.Co|block": "CO",
   "PlanetX_Basic.GasList.Smoke|block": "Rook",
-
   "PlanetX_Basic.GestureType.Anticlockwise|block": "tegen de klok in",
   "PlanetX_Basic.GestureType.Backward|block": "achteruit",
   "PlanetX_Basic.GestureType.Clockwise|block": "met de klok mee",
@@ -60,27 +72,24 @@
   "PlanetX_Basic.GestureType.Right|block": "rechts",
   "PlanetX_Basic.GestureType.Up|block": "omhoog",
   "PlanetX_Basic.GestureType.Wave|block": "zwaaien",
-
-  "PlanetX_Basic.MLX90615tempe|block": "MLX90615 infrarood temperatuursensor IIC‑poort %target eenheid %Unit",
-
+  "PlanetX_Basic.GetAnalogValue|block": "Analoge joystickwaarde van %Button",
+  "PlanetX_Basic.LR_value.LEFT|block": "L",
+  "PlanetX_Basic.LR_value.RIGHT|block": "R",
+  "PlanetX_Basic.MLX90615tempe|block": "MLX90615 infraroodtemperatuursensor IIC-poort %target eenheid %Unit",
   "PlanetX_Basic.MP3SetPort|block": "Stel de MP3‑poort in op %Rjpin",
-
   "PlanetX_Basic.PIR|block": "PIR‑sensor %Rjpin detecteert beweging",
-
   "PlanetX_Basic.PM25|block": "PM2.5‑sensor %Rjpin waarde (μg/m³)",
-
   "PlanetX_Basic.RelayStateList.Off|block": "NC|Open  NO|Dicht",
   "PlanetX_Basic.RelayStateList.On|block": "NC|Dicht  NO|Open",
-
   "PlanetX_Basic.Relay|block": "Relais %Rjpin schakelen naar %Relaystate",
-
+  "PlanetX_Basic.TrackBit_get_offset|block": "Trackbit sensor‑offsetwaarde",
+  "PlanetX_Basic.TrackBit_gray.One|block": "lijn",
+  "PlanetX_Basic.TrackBit_gray.Two|block": "achtergrond",
   "PlanetX_Basic.TrackbitChannel.Four|block": "4",
   "PlanetX_Basic.TrackbitChannel.One|block": "1",
   "PlanetX_Basic.TrackbitChannel.Three|block": "3",
   "PlanetX_Basic.TrackbitChannel.Two|block": "2",
-
   "PlanetX_Basic.TrackbitChannelState|block": "Trackbit‑kanaal %channel is %state",
-
   "PlanetX_Basic.TrackbitStateType.Tracking_State_0|block": "◌ ◌ ◌ ◌",
   "PlanetX_Basic.TrackbitStateType.Tracking_State_10|block": "● ◌ ● ◌",
   "PlanetX_Basic.TrackbitStateType.Tracking_State_11|block": "● ● ◌ ◌",
@@ -97,113 +106,111 @@
   "PlanetX_Basic.TrackbitStateType.Tracking_State_7|block": "● ● ◌ ●",
   "PlanetX_Basic.TrackbitStateType.Tracking_State_8|block": "● ◌ ◌ ◌",
   "PlanetX_Basic.TrackbitStateType.Tracking_State_9|block": "● ● ● ◌",
-
   "PlanetX_Basic.TrackbitState|block": "Trackbit is %State",
-
   "PlanetX_Basic.TrackbitType.State_0|block": "◌",
   "PlanetX_Basic.TrackbitType.State_1|block": "●",
-
-  "PlanetX_Basic.TrackbitgetGray|block": "Trackbit‑kanaal %channel grijswaarde",
-  "PlanetX_Basic.Trackbit_Init_Sensor_Val|block": "Trackbit Init_Sensor_Val kanaal %channel detectiedoel %detect_target waarde",
-
-  "PlanetX_Basic.TrackBit_gray.One|block": "lijn",
-  "PlanetX_Basic.TrackBit_gray.Two|block": "achtergrond",
-
-  "PlanetX_Basic.Trackbit_learn_fail_value|block": "Stel Trackbit leer‑foutwaarde in op %val",
-  "PlanetX_Basic.TrackBit_get_offset|block": "Trackbit sensor‑offsetwaarde",
+  "PlanetX_Basic.Trackbit_Init_Sensor_Val|block": "Trackbit-kanaal %channel initiële grijswaarde voor %detect_target",
   "PlanetX_Basic.Trackbit_get_state_value|block": "Trackbit statuswaarde ophalen",
-
-  "PlanetX_Basic.joystickval|block": "joystick‑sensor %state waarde",
-  "PlanetX_Basic.joystickkey|block": "joystick‑sensor %key toets",
-
-  "PlanetX_Basic.joykeyEnum.pressed|block": "ingedrukt",
-  "PlanetX_Basic.joykeyEnum.unpressed|block": "niet ingedrukt",
-
-  "PlanetX_Basic.joyvalEnum.x|block": "x",
-  "PlanetX_Basic.joyvalEnum.y|block": "y",
-
+  "PlanetX_Basic.Trackbit_learn_fail_value|block": "Stel Trackbit-drempel voor mislukte kalibratie in op %val",
+  "PlanetX_Basic.TrackbitgetGray|block": "Trackbit‑kanaal %channel grijswaarde",
   "PlanetX_Basic.TrackingStateType.Tracking_State_0|block": "● ●",
   "PlanetX_Basic.TrackingStateType.Tracking_State_1|block": "● ◌",
   "PlanetX_Basic.TrackingStateType.Tracking_State_2|block": "◌ ●",
   "PlanetX_Basic.TrackingStateType.Tracking_State_3|block": "◌ ◌",
-
   "PlanetX_Basic.UVLevel|block": "UV‑sensor %Rjpin niveau (0–15)",
-
   "PlanetX_Basic.UnitList.Centigrade|block": "℃",
   "PlanetX_Basic.UnitList.Fahrenheit|block": "℉",
-
+  "PlanetX_Basic.ValType.DS18B20_temperature_C|block": "temperatuur(℃)",
+  "PlanetX_Basic.ValType.DS18B20_temperature_F|block": "temperatuur(℉)",
+  "PlanetX_Basic.Vibration.Vibration_off|block": "uit",
+  "PlanetX_Basic.Vibration.Vibration_on|block": "aan",
+  "PlanetX_Basic.airPump|block": "Luchtpomp %Rjpin schakelen naar $operation || duur %duration seconden",
   "PlanetX_Basic.bme280Sensor|block": "BME280‑sensor IIC‑poort waarde %state",
-
   "PlanetX_Basic.buttonCD|block": "Knop %Rjpin %button is ingedrukt",
   "PlanetX_Basic.buttonEvent|block": "wanneer knop %Rjpin %button wordt ingedrukt",
-
   "PlanetX_Basic.checkCard|block": "RFID‑sensor IIC‑poort detecteert kaart",
   "PlanetX_Basic.checkColor|block": "Kleursensor IIC‑poort detecteert %color",
-
   "PlanetX_Basic.dht11Sensor|block": "DHT11‑sensor %Rjpin %dht11state waarde",
   "PlanetX_Basic.dht20Sensor|block": "DHT20‑sensor %dht20state waarde",
-
-  "PlanetX_Basic.execute|block": "Stel MP3‑uitvoerprocedure in: %myType",
-
+  "PlanetX_Basic.execute|block": "MP3-afspeelbediening: %myType",
   "PlanetX_Basic.folderPlay|block": "speel mp3 af in map: $folderNum bestandsnaam: $fileNum || herhalen: $myAns",
-
   "PlanetX_Basic.gasValue|block": "%sensor gassensor %Rjpin concentratiewaarde",
-
+  "PlanetX_Basic.get_Attention_Value|block": "Joystickknop %level is ingedrukt",
+  "PlanetX_Basic.joykeyEnum.pressed|block": "ingedrukt",
+  "PlanetX_Basic.joykeyEnum.unpressed|block": "niet ingedrukt",
+  "PlanetX_Basic.joystickkey|block": "joystick‑sensor %key toets",
+  "PlanetX_Basic.joystickval|block": "joystick‑sensor %state waarde",
+  "PlanetX_Basic.joyvalEnum.x|block": "x",
+  "PlanetX_Basic.joyvalEnum.y|block": "y",
   "PlanetX_Basic.laserSensor|block": "Laser %Rjpin schakelen naar $laserstate",
-  "PlanetX_Basic.magnet|block": "Magneet %Rjpin schakelen naar $magnetstate",
-
   "PlanetX_Basic.lightSensor|block": "Lichtsensor %Rjpin lichtintensiteit (lux)",
+  "PlanetX_Basic.magnet|block": "Elektromagneet %Rjpin schakelen naar $magnetstate",
   "PlanetX_Basic.motorFan|block": "Motorventilator %Rjpin schakelen naar $fanstate || snelheid %speed \\%",
   "PlanetX_Basic.noiseSensor|block": "Geluidsensor %Rjpin luidheid (dB)",
-
   "PlanetX_Basic.onGesture|block": "Gebaar‑sensor IIC‑poort is %gesture",
-
   "PlanetX_Basic.playType.Pause|block": "Pauze",
   "PlanetX_Basic.playType.PlayNext|block": "Volgende",
   "PlanetX_Basic.playType.PlayPrevious|block": "Vorige",
   "PlanetX_Basic.playType.Play|block": "Afspelen",
   "PlanetX_Basic.playType.Stop|block": "Stop",
-
-  "PlanetX_Basic.readColor|block": "Kleursensor IIC‑poort kleur HUE (0–360)",
+  "PlanetX_Basic.readColor|block": "Kleursensor IIC-poort tint(0~360)",
   "PlanetX_Basic.readDataBlock|block": "RFID‑sensor IIC‑poort lees gegevens van kaart",
-
   "PlanetX_Basic.readData|block": "RTC IIC‑poort haal %data op",
   "PlanetX_Basic.setData|block": "RTC IIC‑poort stel %data in op %num",
-
   "PlanetX_Basic.setLoopFolder|block": "herhaal alle MP3’s in map: $folderNum",
   "PlanetX_Basic.setTracking|block": "speel MP3’s af in volgorde van: %tracking || herhalen: $myAns",
-
   "PlanetX_Basic.setVolume|block": "Stel volume in (0–25): %volume",
-
   "PlanetX_Basic.soilHumidity|block": "Bodemvochtsensor %Rjpin waarde (0–100)",
-
   "PlanetX_Basic.targetList.environment|block": "Omgeving",
   "PlanetX_Basic.targetList.human_body|block": "Menselijk lichaam",
-
   "PlanetX_Basic.trackingSensor|block": "Lijnvolgsensor %Rjpin is %state",
-
   "PlanetX_Basic.trimpot|block": "Trimpot %Rjpin analoge waarde",
-
   "PlanetX_Basic.ultrasoundSensor|block": "Ultrasone sensor %Rjpin afstand %distance_unit",
-
+  "PlanetX_Basic.value_A.Button_L3|block": "L3",
+  "PlanetX_Basic.value_A.Button_R3|block": "R3",
+  "PlanetX_Basic.value_A.LX|block": "LX",
+  "PlanetX_Basic.value_A.LY|block": "LY",
+  "PlanetX_Basic.value_A.RX|block": "RX",
+  "PlanetX_Basic.value_A.RY|block": "RY",
+  "PlanetX_Basic.value_Analog.DOWN|block": "⬇",
+  "PlanetX_Basic.value_Analog.LDOWN|block": "↙",
+  "PlanetX_Basic.value_Analog.LEFT|block": "⬅",
+  "PlanetX_Basic.value_Analog.LUP|block": "↖",
+  "PlanetX_Basic.value_Analog.P|block": "P",
+  "PlanetX_Basic.value_Analog.RDOWN|block": "↘",
+  "PlanetX_Basic.value_Analog.RIGHT|block": "➡",
+  "PlanetX_Basic.value_Analog.RUP|block": "↗",
+  "PlanetX_Basic.value_Analog.UP|block": "⬆",
+  "PlanetX_Basic.value_level.Cir|block": "𐤏",
+  "PlanetX_Basic.value_level.DOWN|block": "⬇",
+  "PlanetX_Basic.value_level.L3|block": "L3",
+  "PlanetX_Basic.value_level.LEFT|block": "⬅",
+  "PlanetX_Basic.value_level.Left1|block": "L1",
+  "PlanetX_Basic.value_level.Left2|block": "L2",
+  "PlanetX_Basic.value_level.R3|block": "R3",
+  "PlanetX_Basic.value_level.RIGHT|block": "➡",
+  "PlanetX_Basic.value_level.Right1|block": "R1",
+  "PlanetX_Basic.value_level.Right2|block": "R2",
+  "PlanetX_Basic.value_level.Sele|block": "SELECT",
+  "PlanetX_Basic.value_level.Squ|block": "☐",
+  "PlanetX_Basic.value_level.Star|block": "START",
+  "PlanetX_Basic.value_level.Tri|block": "▷",
+  "PlanetX_Basic.value_level.UP|block": "⬆",
+  "PlanetX_Basic.value_level.X|block": "⨉",
   "PlanetX_Basic.waterLevel|block": "Waterniveausensor %Rjpin waarde (0–100)",
-
   "PlanetX_Basic.writeData|block": "RFID‑sensor IIC‑poort schrijf %data naar kaart",
-
+  "PlanetX_Basic|block": "PlanetX_Basis",
   "PlanetX_Display.AnalogRJPin.J1|block": "J1",
   "PlanetX_Display.AnalogRJPin.J2|block": "J2",
-
   "PlanetX_Display.DigitalRJPin.J1|block": "J1",
   "PlanetX_Display.DigitalRJPin.J2|block": "J2",
   "PlanetX_Display.DigitalRJPin.J3|block": "J3",
   "PlanetX_Display.DigitalRJPin.J4|block": "J4",
-
   "PlanetX_Display.EmojiList.Angry_Face|block": "😠",
   "PlanetX_Display.EmojiList.Grinning_Squinting_Face|block": "😆",
   "PlanetX_Display.EmojiList.Neutral_Face|block": "😐",
   "PlanetX_Display.EmojiList.Sad_Face|block": "😞",
   "PlanetX_Display.EmojiList.Slightly_Smiling_Face|block": "🙂",
-
   "PlanetX_Display.NeoPixelColors.Black|block": "zwart",
   "PlanetX_Display.NeoPixelColors.Blue|block": "blauw",
   "PlanetX_Display.NeoPixelColors.Green|block": "groen",
@@ -214,11 +221,9 @@
   "PlanetX_Display.NeoPixelColors.Violet|block": "violet",
   "PlanetX_Display.NeoPixelColors.White|block": "wit",
   "PlanetX_Display.NeoPixelColors.Yellow|block": "geel",
-
   "PlanetX_Display.NeoPixelMode.RGBW|block": "RGB+W",
   "PlanetX_Display.NeoPixelMode.RGB_RGB|block": "RGB (RGB‑formaat)",
   "PlanetX_Display.NeoPixelMode.RGB|block": "RGB (GRB‑formaat)",
-
   "PlanetX_Display.Strip.clear|block": "%strip | wissen",
   "PlanetX_Display.Strip.range|block": "%strip | bereik van %start | met %length leds",
   "PlanetX_Display.Strip.rotate|block": "%strip | roteer pixels met %offset",
@@ -228,12 +233,10 @@
   "PlanetX_Display.Strip.showColor|block": "%strip | toon kleur %rgb=neopixel_colors",
   "PlanetX_Display.Strip.showRainbow|block": "%strip | toon regenboog van %startHue | tot %endHue",
   "PlanetX_Display.Strip.show|block": "%strip | tonen",
-
   "PlanetX_Display.TM1637LEDs.clear|block": "wis display %display",
   "PlanetX_Display.TM1637LEDs.showDP|block": "%display | decimaalpunt op %bit | toon $show",
   "PlanetX_Display.TM1637LEDs.showNumber|block": "%display | toon nummer %num",
   "PlanetX_Display.TM1637LEDs.showbit|block": "%display | toon cijfer %num | op positie %bit",
-
   "PlanetX_Display.colors|block": "%color",
   "PlanetX_Display.create|block": "NeoPixel op pin %Rjpin | met %numleds leds | als %mode",
   "PlanetX_Display.hsl|block": "tint %h | verzadiging %s | helderheid %l",
@@ -246,58 +249,44 @@
   "PlanetX_Display.rgb|block": "rood %red | groen %green | blauw %blue",
   "PlanetX_Display.showUserNumber|block": "OLED toon regel %line | nummer %n",
   "PlanetX_Display.showUserText|block": "OLED toon regel %line | tekst %text",
-  "PlanetX_Display.tm1637Create|block": "verbind 4‑digit display | pin %pin",
-  "PlanetX_Display|block": "PlanetX_Display",
-
+  "PlanetX_Display.tm1637Create|block": "Verbind 4-cijferig LED-display met poort %Rjpin",
+  "PlanetX_Display|block": "PlanetX_Weergave",
   "PlanetX_IOT.DigitalRJPin.J1|block": "J1",
   "PlanetX_IOT.DigitalRJPin.J2|block": "J2",
   "PlanetX_IOT.DigitalRJPin.J3|block": "J3",
   "PlanetX_IOT.DigitalRJPin.J4|block": "J4",
-
-  "PlanetX_IOT.MqttEvent|block": "Wanneer $topic een nieuw $message ontvangt",
+  "PlanetX_IOT.MqttEvent|block": "wanneer onderwerp %topic een nieuw bericht $message ontvangt met QoS %qos",
+  "PlanetX_IOT.QosList.Qos0|block": "0",
+  "PlanetX_IOT.QosList.Qos1|block": "1",
+  "PlanetX_IOT.QosList.Qos2|block": "2",
+  "PlanetX_IOT.SchemeList.TCP|block": "TCP",
+  "PlanetX_IOT.SchemeList.TLS|block": "TLS",
+  "PlanetX_IOT.SmartIotSwitchState.off|block": "uit",
+  "PlanetX_IOT.SmartIotSwitchState.on|block": "aan",
   "PlanetX_IOT.breakMQTT|block": "Verbreek verbinding met broker",
-  "PlanetX_IOT.brokerState|block": "MQTT‑brokerverbinding %State",
-
-  "PlanetX_IOT.connectSmartiot|block": "Verbind SmartIot met userToken: %userToken Topic: %topic",
   "PlanetX_IOT.connectMQTT|block": "verbind met MQTT‑broker host: %host poort: %port opnieuw verbinden: $reconnect",
+  "PlanetX_IOT.connectSmartiot|block": "Verbind met SmartIoT gebruikerstoken %userToken onderwerp %topic",
   "PlanetX_IOT.connectThingSpeak|block": "verbind met ThingSpeak",
   "PlanetX_IOT.connectWifi|block": "verbind met Wifi SSID = %ssid | sleutel = %pw",
-
-  "PlanetX_IOT.disconnectSmartiot|block": "Verbreek verbinding met SmartIot",
-
   "PlanetX_IOT.initWIFI|block": "stel wifi‑module %Rjpin in Baudrate %baudrate",
-
-  "PlanetX_IOT.iotSwitchEvent|block": "Wanneer schakelaar %vocabulary",
-
-  "PlanetX_IOT.smartiotState|block": "SmartIot‑verbinding %State",
-
-  "PlanetX_IOT.postIFTTT|block": "stuur IFTTT met | waarde1: %value waarde2: %value2 waarde3: %value3",
-
-  "PlanetX_IOT.sendmesMQTT|block": "stuur %mes naar $topic=variables_get(topic) Qos %qos",
-
-  "PlanetX_IOT.setData|block": "stel gegevens in voor ThingSpeak | Write API‑sleutel = %write_api_key | Veld 1 = %n1 || Veld 2 = %n2 | Veld 3 = %n3 | Veld 4 = %n4 | Veld 5 = %n5 | Veld 6 = %n6 | Veld 7 = %n7 | Veld 8 = %n8",
-
-  "PlanetX_IOT.setIFTTT|block": "stel IFTTT‑sleutel in: %key gebeurtenis: %event",
-
-  "PlanetX_IOT.setMQTT|block": "Stel MQTT‑clientconfiguratie in | schema: %scheme clientID: %clientID gebruikersnaam: %username wachtwoord: %password pad: %path",
-
-  "PlanetX_IOT.stateList.off|block": "uit",
-  "PlanetX_IOT.stateList.on|block": "aan",
-
-  "PlanetX_IOT.subMQTT|block": "abonneer op $topic=variables_get(topic) met QoS: %qos",
-  "PlanetX_IOT.thingSpeakState|block": "ThingSpeak verbonden %State",
-  "PlanetX_IOT.unsubMQTT|block": "afmelden van $topic=variables_get(topic)",
+  "PlanetX_IOT.iotSwitchEvent|block": "Wanneer schakelaar %state",
+  "PlanetX_IOT.isMqttBrokerConnected|block": "MQTT-broker is verbonden",
+  "PlanetX_IOT.postIFTTT|block": "Verstuur IFTTT-gegevens|waarde1 %value1 waarde2 %value2 waarde3 %value3",
+  "PlanetX_IOT.publishMqttMessage|block": "Publiceer %msg op onderwerp %topic met QoS %qos",
+  "PlanetX_IOT.setData|block": "Stel gegevens voor ThingSpeak in |API-schrijfsleutel %write_api_key|veld 1 = %n1 ||veld 2 = %n2 |veld 3 = %n3 |veld 4 = %n4 |veld 5 = %n5 |veld 6 = %n6 |veld 7 = %n7 |veld 8 = %n8",
+  "PlanetX_IOT.setIFTTT|block": "Stel IFTTT-sleutel %key en gebeurtenis %event in",
+  "PlanetX_IOT.setMQTT|block": "Configureer MQTT-client|verbindingstype %scheme client-ID %clientID gebruikersnaam %username wachtwoord %password pad %path",
+  "PlanetX_IOT.setSmartIotUploadData|block": "Stel gegevens voor SmartIoT in |gegeven 1 = %n1 ||gegeven 2 = %n2 |gegeven 3 = %n3 |gegeven 4 = %n4 |gegeven 5 = %n5 |gegeven 6 = %n6 |gegeven 7 = %n7 |gegeven 8 = %n8",
+  "PlanetX_IOT.smartiotState|block": "SmartIot‑verbinding %state",
+  "PlanetX_IOT.thingSpeakState|block": "ThingSpeak verbonden %state",
   "PlanetX_IOT.uploadData|block": "Upload gegevens naar ThingSpeak",
-  "PlanetX_IOT.uploadSmartiot|block": "Upload gegevens %data naar SmartIot",
-  "PlanetX_IOT.wifiState|block": "Wifi verbonden %State",
-
+  "PlanetX_IOT.uploadSmartIotData|block": "Upload gegevens naar SmartIoT",
+  "PlanetX_IOT.wifiState|block": "Wifi verbonden %state",
   "PlanetX_IOT|block": "PlanetX_IoT",
-
-  "{id:category}PlanetX_Basic": "PlanetX_Basic",
-  "{id:category}PlanetX_Display": "PlanetX_Display",
-  "{id:category}PlanetX_IOT": "PlanetX_IOT",
-
-  "{id:group}7-Seg 4-Dig LED Nixietube": "7‑Seg 4‑Digit LED Nixietube",
+  "{id:category}PlanetX_Basic": "PlanetX_Basis",
+  "{id:category}PlanetX_Display": "PlanetX_Weergave",
+  "{id:category}PlanetX_IOT": "PlanetX_IoT",
+  "{id:group}4-Digit 7-Segment LED Display": "4-cijferig 7-segment LED-display",
   "{id:group}8*16 Matrix": "8×16 Matrix",
   "{id:group}Analog": "Analoog",
   "{id:group}Ball": "Bal",
@@ -307,19 +296,18 @@
   "{id:group}Digital": "Digitaal",
   "{id:group}Face": "Gezicht",
   "{id:group}IIC Port": "IIC‑poort",
+  "{id:group}LED": "LED",
   "{id:group}Learn": "Leren",
   "{id:group}MP3": "MP3",
-  "{id:group}LED": "LED",
   "{id:group}OLED": "OLED",
-  "{id:group}Tracking": "Tracking",
-
+  "{id:group}Tracking": "Lijnvolgen",
   "{id:subcategory}Display": "Display",
   "{id:subcategory}Execute": "Uitvoeren",
   "{id:subcategory}IFTTT": "IFTTT",
   "{id:subcategory}Input": "Invoer",
-  "{id:subcategory}SmartIot": "SmartIot",
   "{id:subcategory}MQTT": "MQTT",
   "{id:subcategory}Neopixel": "Neopixel",
   "{id:subcategory}Sensor": "Sensor",
+  "{id:subcategory}SmartIoT": "SmartIot",
   "{id:subcategory}ThingSpeak": "ThingSpeak"
 }

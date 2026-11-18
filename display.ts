@@ -282,6 +282,9 @@ namespace PlanetX_Display {
 
     /**
      * Switch the LED on or off and set its brightness.
+     * @param Rjpin Port connected to the module.
+     * @param ledstate True to turn on; false to turn off.
+     * @param brightness LED brightness from 0 to 100 percent.
      */
     //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness \\%"
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
@@ -316,6 +319,9 @@ namespace PlanetX_Display {
     }
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     //% blockId= matrix_refresh block="Matrix Refresh" 
+    /**
+     * Send the current pixel buffer to the 16 by 8 LED matrix.
+     */
     export function matrixRefresh(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -325,6 +331,9 @@ namespace PlanetX_Display {
     }
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     //% blockId= matrix_clear block="Matrix Clear"
+    /**
+     * Clear the pixel buffer and the LED matrix display.
+     */
     export function matrixClear(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -340,6 +349,11 @@ namespace PlanetX_Display {
     //% y.min=0 y.max=7
     //% blockId= matrix_draw block="Matrix Draw|X %x|Y %y"
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
+    /**
+     * Light the selected pixel and update the LED matrix immediately.
+     * @param x Horizontal pixel coordinate from 0 to 15.
+     * @param y Vertical pixel coordinate from 0 to 7.
+     */
     export function matrixDraw(x: number, y: number): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -375,6 +389,10 @@ namespace PlanetX_Display {
     }
     //% block="Matrix show emoji %ID" color=#00B1ED
     //% subcategory=Display group="8*16 Matrix" 
+    /**
+     * Clear the LED matrix and display the selected emoji.
+     * @param ID Emoji to display.
+     */
     export function matrixEmoji(ID: EmojiList) {
         matrixClear();
         let point;
@@ -434,6 +452,11 @@ namespace PlanetX_Display {
     //% text.defl="Hello,ELECFREAKS"
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED" color=#00B1ED
+    /**
+     * Display up to 16 characters on the selected OLED line and clear the rest of that line.
+     * @param line OLED line number from 1 to 8.
+     * @param text Text to display; only the first 16 characters are shown.
+     */
     export function showUserText(line: number, text: string) {
         if (firstoledinit) {
             oledinit()
@@ -457,6 +480,11 @@ namespace PlanetX_Display {
     //% n.defl=20200508
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED" color=#00B1ED
+    /**
+     * Display a number as text on the selected OLED line, using at most 16 characters.
+     * @param line OLED line number from 1 to 8.
+     * @param n Number to display.
+     */
     export function showUserNumber(line: number, n: number) {
         if (firstoledinit) {
             oledinit()
@@ -466,6 +494,9 @@ namespace PlanetX_Display {
     }
     //% block="clear display" color=#00B1ED
     //% subcategory=Display group="OLED"
+    /**
+     * Clear all eight lines of the OLED display.
+     */
     export function oledClear() {
         //oledcmd(DISPLAY_OFF);   //display off
         for (let j = 0; j < 8; j++) {
@@ -482,6 +513,9 @@ namespace PlanetX_Display {
     }
     /**
      * Create a TM1637 four-digit LED display on the selected port.
+     * @param Rjpin Port connected to the module.
+     * @param intensity Display brightness level from 0 to 7; default 7.
+     * @param count Number of display digits; default 4.
      */
     //% blockId=grove_tm1637_create block="connect 4-Digit Display |port %Rjpin|"
     //% subcategory=Display group="4-Digit 7-Segment LED Display" blockSetVariable=display color=#EA5532
@@ -896,6 +930,8 @@ namespace PlanetX_Display {
     /**
      * Create a NeoPixel LED strip on the selected port.
      * @param numleds Number of LEDs.
+     * @param Rjpin Port connected to the module.
+     * @param mode LED strip color format: RGB (GRB order), RGB+W or RGB (RGB order).
      */
     //% blockId="neopixel_create" block="NeoPixel at pin %Rjpin|with %numleds|leds as %mode"
     //% weight=90 color=#EA5532
@@ -944,6 +980,7 @@ namespace PlanetX_Display {
 
     /**
      * Return the RGB value of a predefined color.
+     * @param color Predefined LED color.
      */
     //% weight=2 subcategory=Neopixel color=#EA5532
     //% blockId="neopixel_colors" block="%color"

@@ -56,7 +56,7 @@
   "PlanetX_Basic.DigitalRJPin.J4|block": "J4",
   "PlanetX_Basic.Distance_Unit_List.Distance_Unit_cm|block": "cm",
   "PlanetX_Basic.Distance_Unit_List.Distance_Unit_foot|block": "foot",
-  "PlanetX_Basic.Ds18b20Temp|block": "DS18B20 at port %state temperature %Rjpin",
+  "PlanetX_Basic.Ds18b20Temp|block": "value of DS18B20 %state at pin %Rjpin",
   "PlanetX_Basic.Dust|block": "Dust sensor %Rjpin value (μg/m³)",
   "PlanetX_Basic.GasList.Alcohol|block": "Alcohol",
   "PlanetX_Basic.GasList.Co2|block": "CO₂",

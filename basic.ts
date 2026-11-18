@@ -1,6 +1,6 @@
 /**
-* Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
-*/
+ * Control PlanetX modules from ELECFREAKS.
+ */
 //% color=#00B1ED  icon="\uf005" block="PlanetX_Base" blockId="PlanetX_Base"
 //% groups='["Digital", "Analog", "IIC Port"]'
 namespace PlanetX_Basic {
@@ -277,6 +277,9 @@ namespace PlanetX_Basic {
     const humanbody_Addr = 0x27
     const environment_Addr = 0x26
 
+    /**
+     * Select the temperature measurement target.
+     */
     export enum targetList {
         //% block="Human body"
         human_body,
@@ -284,6 +287,9 @@ namespace PlanetX_Basic {
         environment
     }
 
+    /**
+     * Unit used for temperature readings.
+     */
     export enum UnitList {
         //% block="℃"
         Centigrade,
@@ -1201,6 +1207,9 @@ namespace PlanetX_Basic {
         DHT20_humidity,
     }
 
+    /**
+     * Gesture detected by the sensor.
+     */
     export enum GestureType {
         //% block="None"
         None = 0,
@@ -1241,9 +1250,9 @@ namespace PlanetX_Basic {
     }
 
     export enum GasList {
-        //% block="Co"
+        //% block="CO"
         Co,
-        //% block="Co2"
+        //% block="CO₂"
         Co2,
         //% block="Smoke"
         Smoke,
@@ -1286,6 +1295,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the sound level in decibels.
+     * @param Rjpin Port connected to the module.
+     */
     export function noiseSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1395,6 +1408,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read light intensity in lux.
+     * @param Rjpin Port connected to the module.
+     */
     export function lightSensor(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1418,6 +1435,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read soil moisture from 0 to 100.
+     * @param Rjpin Port connected to the module.
+     */
     export function soilHumidity(Rjpin: AnalogRJPin): number {
         let voltage = 0, soilmoisture = 0;
         let pin = AnalogPin.P1
@@ -1437,6 +1458,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the water level from 0 to 100.
+     * @param Rjpin Port connected to the module.
+     */
     export function waterLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1459,6 +1484,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the ultraviolet level from 0 to 15.
+     * @param Rjpin Port connected to the module.
+     */
     export function UVLevel(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1479,6 +1508,11 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read the gas sensor's analog value; the CO2 reading is inverted.
+     * @param sensor Type of gas sensor: CO, CO2, smoke or alcohol.
+     * @param Rjpin Port connected to the module.
+     */
     export function gasValue(sensor: GasList, Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -1492,6 +1526,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532 
+    /**
+     * Check whether the collision sensor is pressed.
+     * @param Rjpin Port connected to the module.
+     */
     export function Crash(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -1512,6 +1550,11 @@ namespace PlanetX_Basic {
     //% distance_unit.fieldEditor="gridpicker"
     //% distance_unit.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
+    /**
+     * Read distance using the ultrasonic sensor.
+     * @param Rjpin Port connected to the module.
+     * @param distance_unit Distance unit: centimetres or feet.
+     */
     export function ultrasoundSensor(Rjpin: DigitalRJPin, distance_unit: Distance_Unit_List): number {
         let pinT = DigitalPin.P1
         let pinE = DigitalPin.P2
@@ -1576,6 +1619,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital"  color=#EA5532
+    /**
+     * Check whether the PIR sensor detects motion.
+     * @param Rjpin Port connected to the module.
+     */
     export function PIR(Rjpin: DigitalRJPin): boolean {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -1591,6 +1638,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
+    /**
+     * Read PM2.5 concentration in micrograms per cubic metre.
+     * @param Rjpin Port connected to the module.
+     */
     export function PM25(Rjpin: DigitalRJPin): number {
         let pin = DigitalPin.P1
         let pm25 = 0
@@ -1610,6 +1661,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor color=#E2C438 group="Analog"
+    /**
+     * Read dust concentration in micrograms per cubic metre.
+     * @param Rjpin Port connected to the sensor.
+     */
     export function Dust(Rjpin: AnalogRJPin): number {
         let voltage = 0
         let dust = 0
@@ -1650,6 +1705,11 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Sensor group="Digital" color=#EA5532
     //% blockId=tracking_sensor block="Line-tracking sensor %Rjpin is %state"
+    /**
+     * Check the line sensor state.
+     * @param Rjpin Port connected to the module.
+     * @param state Line sensor pattern to check.
+     */
     export function trackingSensor(Rjpin: DigitalRJPin, state: TrackingStateType): boolean {
         let lpin = DigitalPin.P1
         let rpin = DigitalPin.P2
@@ -1687,8 +1747,9 @@ namespace PlanetX_Basic {
     }
 
     /**
-    * Get gray value.The range is from 0 to 255.
-    */
+     * Read the grayscale value from 0 to 255.
+     * @param channel Line sensor channel, numbered 1 to 4.
+     */
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel gray value"
@@ -1700,6 +1761,10 @@ namespace PlanetX_Basic {
     //% State.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit is %State"
+    /**
+     * Check the cached four-channel line sensor state. Call Trackbit_get_state_value first to refresh it.
+     * @param State Line sensor pattern to check.
+     */
     export function TrackbitState(State: TrackbitStateType): boolean {
         return TrackBit_state_value == State
     }
@@ -1707,6 +1772,11 @@ namespace PlanetX_Basic {
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit channel %channel is %state"
+    /**
+     * Check whether the selected line sensor channel matches the selected state.
+     * @param channel Line sensor channel, numbered 1 to 4.
+     * @param state State to check for the selected line sensor channel.
+     */
     export function TrackbitChannelState(channel: TrackbitChannel, state: TrackbitType): boolean {
         let TempVal: number = 0
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
@@ -1732,7 +1802,12 @@ namespace PlanetX_Basic {
     //% channel.fieldEditor="gridpicker" channel.fieldOptions.columns=4
     //% detect_target.fieldEditor="gridpicker" detect_target.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
-    //% block="Trackbit Init_Sensor_Val channel %channel detection target %detect_target value"
+    //% block="Trackbit channel %channel initial gray value for %detect_target"
+    /**
+     * Read the initial grayscale value for the selected channel and calibration target.
+     * @param channel Line sensor channel, numbered 1 to 4.
+     * @param detect_target Calibration target: line or background.
+     */
     export function Trackbit_Init_Sensor_Val(channel: TrackbitChannel, detect_target: TrackBit_gray): number {
         let Init_Sensor_Val = pins.createBuffer(8)
         pins.i2cWriteNumber(0x1a, 5, NumberFormat.Int8LE)
@@ -1745,14 +1820,18 @@ namespace PlanetX_Basic {
     //% val.min=0 val.max=255
     //% subcategory=Sensor group="IIC Port"
     //% block="Set Trackbit learn fail value %val"
+    /**
+     * Set the learning failure threshold for the four-channel line sensor.
+     * @param val Learning failure threshold from 0 to 255.
+     */
     export function Trackbit_learn_fail_value(val: number) {
         pins.i2cWriteNumber(0x1a, 6, NumberFormat.Int8LE)
         pins.i2cWriteNumber(0x1a, val, NumberFormat.Int8LE)
     }
 
     /**
-    * Gets the position offset.The range is from -3000 to 3000.
-    */
+     * Read the position offset from -3000 to 3000.
+     */
     //% sensor_number.fieldEditor="gridpicker" sensor_number.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
     //% block="Trackbit sensor offset value"
@@ -1769,6 +1848,9 @@ namespace PlanetX_Basic {
 
     //% subcategory=Sensor group="IIC Port"
     //% block="Get a Trackbit state value"
+    /**
+     * Read and cache the four-channel line sensor state for TrackbitState; this block does not return a value.
+     */
     export function Trackbit_get_state_value() {
         pins.i2cWriteNumber(0x1a, 4, NumberFormat.Int8LE)
         TrackBit_state_value = pins.i2cReadNumber(0x1a, NumberFormat.UInt8LE, false)
@@ -1794,6 +1876,11 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker" dht11state.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2 dht11state.fieldOptions.columns=1
     //% subcategory=Sensor group="Digital" color=#EA5532
+    /**
+     * Read the selected temperature or humidity value from DHT11.
+     * @param Rjpin Port connected to the module.
+     * @param dht11state Reading to return: temperature in degrees Celsius or relative humidity in percent.
+     */
     export function dht11Sensor(Rjpin: DigitalRJPin, dht11state: DHT11_state): number {
         //initialize
         if (__dht11_last_read_time != 0 && __dht11_last_read_time + 1000 > input.runningTime()) {
@@ -1867,6 +1954,11 @@ namespace PlanetX_Basic {
     }
     //% blockID="set_all_data" block="RTC IIC port set %data | %num"
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Set the selected date or time field of the real-time clock and start the clock.
+     * @param data Clock field: year, month, day, weekday, hour, minute or second.
+     * @param num Value for the selected field. Use month 1-12, day 1-31, weekday 1-7, hour 0-23 or minute/second 0-59; only the last two year digits are stored.
+     */
     export function setData(data: DataUnit, num: number): void {
         switch (data) {
             case DataUnit.Year:
@@ -1897,6 +1989,10 @@ namespace PlanetX_Basic {
     }
     //% blockID="get_one_data" block="RTC IIC port get %data"
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Read the selected date or time field from the real-time clock.
+     * @param data Clock field: year, month, day, weekday, hour, minute or second.
+     */
     export function readData(data: DataUnit): number {
         switch (data) {
             case DataUnit.Year:
@@ -1928,6 +2024,10 @@ namespace PlanetX_Basic {
     //% block="BME280 sensor IIC port value %state"
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=1
     //% subcategory=Sensor  group="IIC Port"
+    /**
+     * Read BME280 temperature, humidity, pressure or estimated altitude. Return 0 if initialization fails.
+     * @param state Reading to return: temperature (Celsius), humidity (%), pressure (hPa) or estimated altitude (metres).
+     */
     export function bme280Sensor(state: BME280_state): number {
         if (!ensureBME280Ready()) {
             return 0
@@ -2027,6 +2127,11 @@ namespace PlanetX_Basic {
     //% blockId= gesture_create_event block="Gesture sensor IIC port is %gesture"
     //% gesture.fieldEditor="gridpicker" gesture.fieldOptions.columns=3
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Run the handler when the selected gesture is detected.
+     * @param gesture Gesture to detect.
+     * @param handler Code to run when the event occurs.
+     */
     export function onGesture(gesture: GestureType, handler: () => void) {
         control.onEvent(gestureEventId, gesture, handler);
         if (gesture_first_init) {
@@ -2055,6 +2160,11 @@ namespace PlanetX_Basic {
     //% deprecated=true
     //% subcategory=Sensor group="IIC Port"
     //% block="MLX90615 Infra Temp sensor IIC port %target Unit %Unit"
+    /**
+     * Read the selected target temperature from the MLX90615 infrared sensor in the selected unit.
+     * @param target Temperature measurement target: human body or environment.
+     * @param Unit Temperature unit: Celsius or Fahrenheit.
+     */
     export function MLX90615tempe(target: targetList, Unit: UnitList): number {
         let retemp = 0
         switch (target) {
@@ -2077,6 +2187,9 @@ namespace PlanetX_Basic {
     }
     //% blockId=apds9960_readcolor block="Color sensor IIC port color HUE(0~360)"
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Read the hue detected by the color sensor in degrees from 0 to 360.
+     */
     export function readColor(): number {
         let buf = pins.createBuffer(2)
         let c = 0
@@ -2180,6 +2293,10 @@ namespace PlanetX_Basic {
     //% block="Color sensor IIC port detects %color"
     //% subcategory=Sensor group="IIC Port"
     //% color.fieldEditor="gridpicker" color.fieldOptions.columns=3
+    /**
+     * Check whether the color sensor detects the selected color.
+     * @param color Color to detect.
+     */
     export function checkColor(color: ColorList): boolean {
         let hue = readColor()
         switch (color) {
@@ -2244,6 +2361,9 @@ namespace PlanetX_Basic {
 
     //% block="RFID sensor IIC port read data from card"
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Read text stored on an RFID card.
+     */
     export function readDataBlock(): string {
         if (NFC_ENABLE === 0) {
             wakeup();
@@ -2287,6 +2407,10 @@ namespace PlanetX_Basic {
     }
     //% block="RFID sensor IIC port write %data to card"
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Write text to an RFID card.
+     * @param data Text to store on the RFID card.
+     */
     export function writeData(data: string): void {
         if (NFC_ENABLE === 0) {
             wakeup();
@@ -2306,6 +2430,9 @@ namespace PlanetX_Basic {
     }
     //% block="RFID sensor IIC port Detect Card"
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Check whether an RFID card is detected.
+     */
     export function checkCard(): boolean {
         if (NFC_ENABLE === 0) {
             wakeup();
@@ -2340,6 +2467,10 @@ namespace PlanetX_Basic {
     //% dht20state.fieldEditor="gridpicker"
     //% dht20state.fieldOptions.columns=1
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Read the selected temperature or humidity value from DHT20.
+     * @param dht20state Reading to return: temperature in degrees Celsius or relative humidity in percent.
+     */
     export function dht20Sensor(dht20state: DHT20_state): number {
         let temp, temp1, rawData = 0;
         let temperature, humidity = 0;
@@ -2374,6 +2505,10 @@ namespace PlanetX_Basic {
     //% state.fieldEditor="gridpicker"
     //% state.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Read the joystick X or Y value, with a small dead zone around the center.
+     * @param state Joystick axis to read: X or Y.
+     */
     export function joystickval(state: joyvalEnum): number {
         let buff = pins.createBuffer(3)
         let x_val, y_val
@@ -2400,6 +2535,10 @@ namespace PlanetX_Basic {
     //% key.fieldEditor="gridpicker"
     //% key.fieldOptions.columns=2
     //% subcategory=Sensor group="IIC Port"
+    /**
+     * Check whether the joystick button matches the selected pressed or released state.
+     * @param key Button state to check: pressed or released.
+     */
     export function joystickkey(key: joykeyEnum): boolean {
         let buff = pins.createBuffer(3)
         buff = pins.i2cReadBuffer(0xaa, 3)
@@ -2410,6 +2549,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Input color=#E2C438 group="Analog"
+    /**
+     * Read the trimpot analog value from 0 to 1023.
+     * @param Rjpin Port connected to the module.
+     */
     export function trimpot(Rjpin: AnalogRJPin): number {
         let pin = AnalogPin.P1
         pin = RJpin_to_analog(Rjpin)
@@ -2421,6 +2564,11 @@ namespace PlanetX_Basic {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=1
     //% subcategory=Input group="Digital" color=#EA5532
+    /**
+     * Check whether only C, only D, or both buttons are pressed, according to the selection.
+     * @param Rjpin Port connected to the module.
+     * @param button Button selection: C, D or C+D.
+     */
     export function buttonCD(Rjpin: DigitalRJPin, button: ButtonStateList): boolean {
         let pinC = DigitalPin.P1
         let pinD = DigitalPin.P2
@@ -2477,6 +2625,12 @@ namespace PlanetX_Basic {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=1
     //% subcategory=Input group="Digital" color=#EA5532
+    /**
+     * Register a handler for C or D rising-edge events, or for C+D while both buttons are held.
+     * @param Rjpin Port connected to the module.
+     * @param button Button selection: C, D or C+D.
+     * @param handler Code to run when the event occurs.
+     */
     export function buttonEvent(Rjpin: DigitalRJPin, button: ButtonStateList, handler: () => void) {
         let ButtonPin_C = DigitalPin.P1
         let ButtonPin_D = DigitalPin.P2
@@ -2535,6 +2689,12 @@ namespace PlanetX_Basic {
     //% subcategory=Execute group="Digital" color=#EA5532
     //% speed.min=0 speed.max=100 speed.defl=50
     //% expandableArgumentMode="toggle"
+    /**
+     * Switch the fan on or off and set its speed.
+     * @param Rjpin Port connected to the module.
+     * @param fanstate True to turn on; false to turn off.
+     * @param speed Fan speed from 0 to 100 percent.
+     */
     export function motorFan(Rjpin: DigitalRJPin, fanstate: boolean, speed: number = 100): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -2566,6 +2726,11 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% laserstate.shadow="toggleOnOff"
     //% subcategory=Execute group="Digital" color=#EA5532
+    /**
+     * Switch the laser module on or off.
+     * @param Rjpin Port connected to the module.
+     * @param laserstate True to turn on; false to turn off.
+     */
     export function laserSensor(Rjpin: DigitalRJPin, laserstate: boolean): void {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -2582,6 +2747,11 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldOptions.columns=2
     //% magnetstate.shadow="toggleOnOff"
     //% subcategory=Execute group="Digital" color=#EA5532
+    /**
+     * Switch the electromagnet on or off.
+     * @param Rjpin Port connected to the module.
+     * @param magnetstate True to turn on; false to turn off.
+     */
     export function magnet(Rjpin: DigitalRJPin, magnetstate: boolean): void {
         let pin = AnalogPin.P1
         switch (Rjpin) {
@@ -2606,39 +2776,95 @@ namespace PlanetX_Basic {
         }
     }
 
-    //% blockId=airPump block="water pump module %Rjpin toggle to $operation || duration %duration ms power %power \\%"
+    export enum AirPumpDuration {
+        //% block="1"
+        Seconds1 = 1,
+        //% block="2"
+        Seconds2 = 2,
+        //% block="3"
+        Seconds3 = 3,
+        //% block="4"
+        Seconds4 = 4,
+        //% block="5"
+        Seconds5 = 5
+    }
+
+    enum AirPumpState {
+        Idle,
+        Running,
+        Releasing
+    }
+    const airPumpPins: AnalogPin[] = [AnalogPin.P1, AnalogPin.P2, AnalogPin.P13, AnalogPin.P15]
+    const airPumpReleasePins: DigitalPin[] = [DigitalPin.P8, DigitalPin.P12, DigitalPin.P14, DigitalPin.P16]
+    let airPumpStates: AirPumpState[] = [AirPumpState.Idle, AirPumpState.Idle, AirPumpState.Idle, AirPumpState.Idle]
+    // Zero allows the first start immediately. A stop before the first start
+    // also sets this deadline, so its release/cooldown cannot be bypassed.
+    let airPumpNextStartTimes: number[] = [0, 0, 0, 0]
+    let airPumpCancelVersions: number[] = [0, 0, 0, 0]
+    let airPumpReleaseDeadlines: number[] = [0, 0, 0, 0]
+
+    /**
+     * Turn the air pump on or off.
+     * @param Rjpin Port connected to the module.
+     * @param operation True to turn on; false to turn off.
+     * @param duration Air pump running time from 1 to 5 seconds when turned on.
+     */
+    //% blockId=airPump block="air pump module %Rjpin toggle to $operation || duration %duration seconds"
     //% inlineInputMode=inline
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% operation.shadow="toggleOnOff"
-    //% duration.min=0 duration.defl=1000
+    //% duration.defl=AirPumpDuration.Seconds1
     //% power.min=0 power.max=100 power.defl=100
     //% expandableArgumentMode="enabled"
     //% subcategory=Execute group="Digital" color=#EA5532
-    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: number = 1000, power: number = 100): void {
-        let pin = AnalogPin.P1
-        switch (Rjpin) {
-            case DigitalRJPin.J1:
-                pin = AnalogPin.P1
-                break;
-            case DigitalRJPin.J2:
-                pin = AnalogPin.P2
-                break;
-            case DigitalRJPin.J3:
-                pin = AnalogPin.P13
-                break;
-            case DigitalRJPin.J4:
-                pin = AnalogPin.P15
-                break;
-        }
+    export function airPump(Rjpin: DigitalRJPin, operation: boolean, duration: AirPumpDuration = AirPumpDuration.Seconds1): void {
+        const port = Rjpin >= DigitalRJPin.J1 && Rjpin <= DigitalRJPin.J4 ? Rjpin : DigitalRJPin.J1
+        const pin = airPumpPins[port]
+        const releasePin = airPumpReleasePins[port]
+        const power = 100
         if (operation) {
+            // Reject legacy millisecond values and invalid JavaScript arguments.
+            if (!(duration >= 1 && duration <= 5 && Math.floor(duration) == duration)) return
+            const version = airPumpCancelVersions[port]
+            while (airPumpStates[port] != AirPumpState.Idle || input.runningTime() < airPumpNextStartTimes[port]) {
+                if (version != airPumpCancelVersions[port]) return
+                basic.pause(10)
+            }
+            if (version != airPumpCancelVersions[port]) return
+            // No yielding between claiming the port and switching the outputs.
+            airPumpStates[port] = AirPumpState.Running
+            pins.digitalWritePin(releasePin, 0)
             pins.analogSetPeriod(pin, 100)
             pins.analogWritePin(pin, Math.map(power, 0, 100, 0, 1023))
-            basic.pause(duration)
+            const endTime = input.runningTime() + duration * 1000
+            while (input.runningTime() < endTime) {
+                if (version != airPumpCancelVersions[port]) return
+                basic.pause(10)
+            }
+            // A canceled start must not change a newer operation's pins/timer.
+            if (version != airPumpCancelVersions[port]) return
             pins.analogWritePin(pin, 0)
+            airPumpNextStartTimes[port] = input.runningTime() + 1000
+            airPumpStates[port] = AirPumpState.Idle
         } else {
+            // Cancel both active starts and starts waiting for this port.
+            airPumpCancelVersions[port]++
+            airPumpStates[port] = AirPumpState.Releasing
             pins.analogWritePin(pin, 0)
-            power = 0
+            pins.digitalWritePin(releasePin, 1)
+            airPumpReleaseDeadlines[port] = input.runningTime() + 100
+            // Repeated stops extend the shared release period. All stop callers
+            // wait for it to finish; only one closes the valve and sets cooldown.
+            while (airPumpStates[port] == AirPumpState.Releasing) {
+                if (input.runningTime() >= airPumpReleaseDeadlines[port]) {
+                    pins.digitalWritePin(releasePin, 0)
+                    airPumpNextStartTimes[port] = input.runningTime() + 1000
+                    airPumpStates[port] = AirPumpState.Idle
+                } else {
+                    basic.pause(10)
+                }
+            }
         }
     }
 
@@ -2649,6 +2875,11 @@ namespace PlanetX_Basic {
     //% Relaystate.fieldEditor="gridpicker"
     //% Relaystate.fieldOptions.columns=1
     //% subcategory=Execute group="Digital" color=#EA5532
+    /**
+     * Switch the relay to the selected state.
+     * @param Rjpin Port connected to the module.
+     * @param Relaystate Relay contact state to select.
+     */
     export function Relay(Rjpin: DigitalRJPin, Relaystate: RelayStateList): void {
         let pin = DigitalPin.P1
         pin = RJpin_to_digital(Rjpin)
@@ -2665,6 +2896,10 @@ namespace PlanetX_Basic {
     //% blockId="setLoopFolder" block="loop play all the MP3s in the folder:$folderNum"
     //% folderNum.defl="01"
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Repeat all tracks in the selected folder.
+     * @param folderNum Number of the folder containing the music.
+     */
     export function setLoopFolder(folderNum: string): void {
         CMD = 0x17
         para1 = 0
@@ -2682,6 +2917,12 @@ namespace PlanetX_Basic {
     //% myAns.shadow="toggleYesNo"
     //% expandableArgumentMode="toggle"
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Play the selected MP3 file from a folder.
+     * @param fileNum Number of the track to play.
+     * @param folderNum Number of the folder containing the music.
+     * @param myAns Whether to repeat playback.
+     */
     export function folderPlay(folderNum: string, fileNum: string, myAns: boolean = false): void {
         CMD = 0x0F
         para1 = parseInt(folderNum)
@@ -2701,6 +2942,11 @@ namespace PlanetX_Basic {
     //% tracking.defl=1
     //% expandableArgumentMode="toggle"
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Play a track by its copy order.
+     * @param myAns Whether to repeat playback.
+     * @param tracking Number of the track to play.
+     */
     export function setTracking(tracking: number, myAns: boolean = false): void {
         CMD = 0x03
         para1 = 0x00
@@ -2718,6 +2964,10 @@ namespace PlanetX_Basic {
     //% myType.fieldEditor="gridpicker"
     //% myType.fieldOptions.columns=2
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Perform an MP3 playback control action.
+     * @param myType Playback action, such as play, pause or stop.
+     */
     export function execute(myType: playType): void {
         CMD = myType
         para1 = 0x00
@@ -2731,6 +2981,10 @@ namespace PlanetX_Basic {
     //% blockId="setVolume" block="Set volume(0~25):%volume"
     //% volume.min=0 volume.max=25
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Set MP3 playback volume.
+     * @param volume Playback volume from 0 to 25.
+     */
     export function setVolume(volume: number): void {
         if (volume > 25) {
             volume = 25
@@ -2748,6 +3002,10 @@ namespace PlanetX_Basic {
     //% Rjpin.fieldEditor="gridpicker"
     //% Rjpin.fieldOptions.columns=2
     //% subcategory=Execute group="MP3" color=#EA5532
+    /**
+     * Initialize the serial port connected to the MP3 module.
+     * @param Rjpin Port connected to the module.
+     */
     export function MP3SetPort(Rjpin: DigitalRJPin): void {
         let pin = SerialPin.USB_TX
         switch (Rjpin) {
@@ -3110,9 +3368,10 @@ namespace PlanetX_Basic {
 
     /**
     * Whether a Button is pressed
+     * @param level Gamepad button to check.
     */
     //% subcategory=Input group="IIC Port" color=#00B1ED
-    //% block="Joystick button %value_level is pressed" blockId="DigitalButton"
+    //% block="Joystick button %level is pressed" blockId="DigitalButton"
     export function get_Attention_Value(level: value_level): boolean {
         let value = 0
         let digital = 0
@@ -3288,9 +3547,10 @@ namespace PlanetX_Basic {
 
     /**
      * Get Analog value
+     * @param Button Gamepad stick axis to read: RX, RY, LX or LY.
     */
     //% subcategory=Input group="IIC Port" color=#00B1ED
-    //% blockId="AnlogValue" block="Joystick rocker value of %value_A"
+    //% blockId="AnlogValue" block="Joystick rocker value of %Button"
     export function GetAnalogValue(Button: value_A): number {
         let Analog = 0
         let re_value = 128
@@ -3392,6 +3652,11 @@ namespace PlanetX_Basic {
 
     //% subcategory=Sensor group="Digital" color=#EA5532
     //% block="value of DS18B20 %state at pin %Rjpin"
+    /**
+     * Read the DS18B20 temperature in the selected unit.
+     * @param Rjpin Port connected to the module.
+     * @param state Temperature unit: Celsius or Fahrenheit.
+     */
     export function Ds18b20Temp(Rjpin: DigitalRJPin, state: ValType): number {
         let pin = RJpin_to_digital(Rjpin);
         let temperature = celsius(pin);

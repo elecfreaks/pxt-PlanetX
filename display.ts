@@ -1,8 +1,8 @@
 /**
-* Functions to PlanetX sensor by ELECFREAKS Co.,Ltd.
-*/
+ * Control PlanetX modules from ELECFREAKS.
+ */
 //% color=#EA5532 icon="\uf110" block="PlanetX_Display" blockId="PlanetX_Display" 
-//% groups='["LED", "Digital", "Analog", "IIC Port", "OLED", "8*16 Matrix", "7-Seg 4-Dig LED Nixietube"]'
+//% groups='["LED", "Digital", "Analog", "IIC Port", "OLED", "8*16 Matrix", "4-Digit 7-Segment LED Display"]'
 namespace PlanetX_Display {
     ////////////////////////////////TM 1637/////////////////
     let TM1637_CMD1 = 0x40;
@@ -237,7 +237,7 @@ namespace PlanetX_Display {
     }
 
     /**
-     * Different modes for RGB or RGB+W NeoPixel strips
+     * Select the LED strip color format.
      */
     export enum NeoPixelMode {
         //% block="RGB (GRB format)"
@@ -281,8 +281,11 @@ namespace PlanetX_Display {
     /////////////////////////////User_function//////////////////
 
     /**
-    * toggle led
-    */
+     * Switch the LED on or off and set its brightness.
+     * @param Rjpin Port connected to the module.
+     * @param ledstate True to turn on; false to turn off.
+     * @param brightness LED brightness from 0 to 100 percent.
+     */
     //% blockId=LED block="LED %Rjpin toggle to $ledstate || brightness %brightness \\%"
     //% Rjpin.fieldEditor="gridpicker" Rjpin.fieldOptions.columns=2
     //% brightness.min=0 brightness.max=100
@@ -316,6 +319,9 @@ namespace PlanetX_Display {
     }
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     //% blockId= matrix_refresh block="Matrix Refresh" 
+    /**
+     * Send the current pixel buffer to the 16 by 8 LED matrix.
+     */
     export function matrixRefresh(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -325,6 +331,9 @@ namespace PlanetX_Display {
     }
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
     //% blockId= matrix_clear block="Matrix Clear"
+    /**
+     * Clear the pixel buffer and the LED matrix display.
+     */
     export function matrixClear(): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -340,6 +349,11 @@ namespace PlanetX_Display {
     //% y.min=0 y.max=7
     //% blockId= matrix_draw block="Matrix Draw|X %x|Y %y"
     //% subcategory=Display group="8*16 Matrix" color=#00B1ED
+    /**
+     * Light the selected pixel and update the LED matrix immediately.
+     * @param x Horizontal pixel coordinate from 0 to 15.
+     * @param y Vertical pixel coordinate from 0 to 7.
+     */
     export function matrixDraw(x: number, y: number): void {
         if (!initializedMatrix) {
             matrixInit();
@@ -375,6 +389,10 @@ namespace PlanetX_Display {
     }
     //% block="Matrix show emoji %ID" color=#00B1ED
     //% subcategory=Display group="8*16 Matrix" 
+    /**
+     * Clear the LED matrix and display the selected emoji.
+     * @param ID Emoji to display.
+     */
     export function matrixEmoji(ID: EmojiList) {
         matrixClear();
         let point;
@@ -434,6 +452,11 @@ namespace PlanetX_Display {
     //% text.defl="Hello,ELECFREAKS"
     //% block="OLED show line %line|text %text"
     //% subcategory=Display group="OLED" color=#00B1ED
+    /**
+     * Display up to 16 characters on the selected OLED line and clear the rest of that line.
+     * @param line OLED line number from 1 to 8.
+     * @param text Text to display; only the first 16 characters are shown.
+     */
     export function showUserText(line: number, text: string) {
         if (firstoledinit) {
             oledinit()
@@ -457,6 +480,11 @@ namespace PlanetX_Display {
     //% n.defl=20200508
     //% block="OLED show line %line|number %n"
     //% subcategory=Display group="OLED" color=#00B1ED
+    /**
+     * Display a number as text on the selected OLED line, using at most 16 characters.
+     * @param line OLED line number from 1 to 8.
+     * @param n Number to display.
+     */
     export function showUserNumber(line: number, n: number) {
         if (firstoledinit) {
             oledinit()
@@ -466,6 +494,9 @@ namespace PlanetX_Display {
     }
     //% block="clear display" color=#00B1ED
     //% subcategory=Display group="OLED"
+    /**
+     * Clear all eight lines of the OLED display.
+     */
     export function oledClear() {
         //oledcmd(DISPLAY_OFF);   //display off
         for (let j = 0; j < 8; j++) {
@@ -481,12 +512,13 @@ namespace PlanetX_Display {
         setText(0, 0);
     }
     /**
-   * Create a new driver Grove - 4-Digit Display
-   * @param clkPin value of clk pin number
-   * @param dataPin value of data pin number
-   */
-    //% blockId=grove_tm1637_create block="connect 4-Digit Display |pin %pin|"
-    //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" blockSetVariable=display color=#EA5532
+     * Create a TM1637 four-digit LED display on the selected port.
+     * @param Rjpin Port connected to the module.
+     * @param intensity Display brightness level from 0 to 7; default 7.
+     * @param count Number of display digits; default 4.
+     */
+    //% blockId=grove_tm1637_create block="connect 4-Digit Display |port %Rjpin|"
+    //% subcategory=Display group="4-Digit 7-Segment LED Display" blockSetVariable=display color=#EA5532
     export function tm1637Create(Rjpin: DigitalRJPin, intensity: number = 7, count: number = 4): TM1637LEDs {
         let display = new TM1637LEDs();
         switch (Rjpin) {
@@ -521,7 +553,7 @@ namespace PlanetX_Display {
         brightness: number;
         count: number;  // number of LEDs
         /**
-         * initial TM1637
+         * Initialize the TM1637 display.
          */
         init(): void {
             pins.digitalWritePin(this.clk, 0);
@@ -531,14 +563,14 @@ namespace PlanetX_Display {
             this.clear();
         }
         /**
-         * Start 
+         * Start a display communication transaction.
          */
         _start() {
             pins.digitalWritePin(this.dio, 0);
             pins.digitalWritePin(this.clk, 0);
         }
         /**
-         * Stop
+         * End a display communication transaction.
          */
         _stop() {
             pins.digitalWritePin(this.dio, 0);
@@ -546,7 +578,7 @@ namespace PlanetX_Display {
             pins.digitalWritePin(this.dio, 1);
         }
         /**
-         * send command1
+         * Send the display data command.
          */
         _write_data_cmd() {
             this._start();
@@ -554,7 +586,7 @@ namespace PlanetX_Display {
             this._stop();
         }
         /**
-         * send command3
+         * Send the display control command.
          */
         _write_dsp_ctrl() {
             this._start();
@@ -562,7 +594,7 @@ namespace PlanetX_Display {
             this._stop();
         }
         /**
-         * send a byte to 2-wire interface
+         * Send a byte over the display interface.
          */
         _write_byte(b: number) {
             for (let i = 0; i < 8; i++) {
@@ -580,7 +612,7 @@ namespace PlanetX_Display {
             this._write_dsp_ctrl();
         }
         /**
-         * set data to TM1637, with given bit
+         * Write data to a specified display position.
          */
         _dat(bit: number, dat: number) {
             this._write_data_cmd();
@@ -591,12 +623,10 @@ namespace PlanetX_Display {
             this._write_dsp_ctrl();
         }
         /**
-         * Show a single number from 0 to 9 at a specified digit of Grove - 4-Digit Display
-         * @param dispData value of number
-         * @param bitAddr value of bit number
+         * Show a single digit at the selected display position.
          */
         //% blockId=grove_tm1637_display_bit block="%display|show single number|%num|at digit|%bit"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
+        //% subcategory=Display group="4-Digit 7-Segment LED Display" color=#EA5532
         //% bit.defl=1 bit.min=0 bit.max=9
         showbit(num: number = 5, bit: number = 0) {
             bit = Math.map(bit, 4, 1, 0, 3)
@@ -604,11 +634,10 @@ namespace PlanetX_Display {
             this._dat(bit, _SEGMENTS[num % 16])
         }
         /**
-         * Show a 4 digits number on display
-         * @param dispData value of number
+         * Show a number on the four-digit LED display.
          */
         //% blockId=grove_tm1637_display_number block="%display|show number|%num"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
+        //% subcategory=Display group="4-Digit 7-Segment LED Display" color=#EA5532
         showNumber(num: number) {
             if (num < 0) {
                 num = -num
@@ -626,13 +655,13 @@ namespace PlanetX_Display {
             }
         }
         /**
-         * show or hide dot point. 
-         * @param bit is the position, eg: 1
-         * @param show is show/hide dp, eg: true
+         * Show or hide the decimal point at the selected position.
+         * @param bit Position of the decimal point.
+         * @param show Whether to show the decimal point.
          */
         //% blockId="TM1637_showDP" block="%display|DotPoint at %bit|show $show"
         //% show.shadow="toggleOnOff"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
+        //% subcategory=Display group="4-Digit 7-Segment LED Display" color=#EA5532
         showDP(bit: number = 1, show: boolean = true) {
             bit = Math.map(bit, 4, 1, 0, 3)
             bit = bit % this.count
@@ -640,10 +669,10 @@ namespace PlanetX_Display {
             else this._dat(bit, this.buf[bit] & 0x7F)
         }
         /**
-         * clear LED. 
+         * Clear the LED display.
          */
         //% blockId="TM1637_clear" block="clear display %display"
-        //% subcategory=Display group="7-Seg 4-Dig LED Nixietube" color=#EA5532
+        //% subcategory=Display group="4-Digit 7-Segment LED Display" color=#EA5532
         clear() {
             for (let i = 0; i < this.count; i++) {
                 this._dat(i, 0)
@@ -666,8 +695,8 @@ namespace PlanetX_Display {
         _matrixWidth:number; // number of leds in a matrix - if any
 
         /**
-         * Shows all LEDs to a given color (range 0-255 for r, g, b).
-         * @param rgb RGB color of the LED
+         * Set and display the same color on every LED.
+         * @param rgb LED color encoded as an RGB value.
          */
         //% blockId="neopixel_set_strip_color" block="%strip|show color %rgb=neopixel_colors"
         //% weight=85 color=#EA5532
@@ -679,9 +708,9 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Shows a rainbow pattern on all LEDs.
-         * @param startHue the start hue value for the rainbow, eg: 1
-         * @param endHue the end hue value for the rainbow, eg: 360
+         * Display a rainbow across the LED strip.
+         * @param endHue Ending hue from 0 to 360.
+         * @param startHue Starting hue from 0 to 360.
          */
         //% blockId="neopixel_set_strip_rainbow" block="%strip|show rainbow from %startHue|to %endHue"
         //% weight=85 color=#EA5532
@@ -744,10 +773,9 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Set LED to a given color (range 0-255 for r, g, b).
-         * You need to call ``show`` to make the changes visible.
-         * @param pixeloffset position of the NeoPixel in the strip
-         * @param rgb RGB color of the LED
+         * Set one LED color. Call show to update the strip.
+         * @param pixeloffset Position of the LED in the strip.
+         * @param rgb LED color encoded as an RGB value.
          */
         //% blockId="neopixel_set_pixel_color" block="%strip|set pixel color at %pixeloffset|to %rgb=neopixel_colors"
         //% weight=80 color=#EA5532
@@ -757,7 +785,7 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Send all the changes to the strip.
+         * Send the buffered colors to the LED strip.
          */
         //% blockId="neopixel_show" block="%strip|show" 
         //% weight=79
@@ -767,8 +795,7 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Turn off all LEDs.
-         * You need to call ``show`` to make the changes visible.
+         * Clear the LED colors. Call show to update the strip.
          */
         //% blockId="neopixel_clear" block="%strip|clear"
         //% weight=76 color=#EA5532
@@ -779,8 +806,8 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Set the brightness of the strip. This flag only applies to future operation.
-         * @param brightness a measure of LED brightness in 0-255. eg: 255
+         * Set brightness for subsequent LED operations.
+         * @param brightness Brightness from 0 to 255.
          */
         //% blockId="neopixel_set_brightness" block="%strip|set brightness %brightness" 
         //% weight=59 color=#EA5532
@@ -790,9 +817,9 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Create a range of LEDs.
-         * @param start offset in the LED strip to start the range
-         * @param length number of LEDs in the range. eg: 4
+         * Create a section of the LED strip using a start position and length.
+         * @param length Number of LEDs.
+         * @param start Starting position in the LED strip.
          */
         //% weight=89 color=#EA5532
         //% blockId="neopixel_range" block="%strip|range from %start|with %length|leds"
@@ -813,9 +840,8 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Shift LEDs forward and clear with zeros.
-         * You need to call ``show`` to make the changes visible.
-         * @param offset number of pixels to shift forward, eg: 1
+         * Shift LED colors and fill empty positions with black. Call show to update.
+         * @param offset Number of pixels to move.
          */
         //% blockId="neopixel_shift" block="%strip|shift pixels by %offset" 
         //% weight=40 color=#EA5532
@@ -827,9 +853,8 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Rotate LEDs forward.
-         * You need to call ``show`` to make the changes visible.
-         * @param offset number of pixels to rotate forward, eg: 1
+         * Rotate the LED colors with wrapping. Call show to update the strip.
+         * @param offset Number of pixels to move.
          */
         //% blockId="neopixel_rotate" block="%strip|rotate pixels by %offset" 
         //% weight=39 color=#EA5532
@@ -841,7 +866,7 @@ namespace PlanetX_Display {
         }
 
         /**
-         * Set the pin where the neopixel is connected, defaults to P0.
+         * Set the output pin connected to the LED strip.
          */
         //% weight=10 color=#EA5532
         //% parts="neopixel" subcategory=Neopixel
@@ -903,9 +928,10 @@ namespace PlanetX_Display {
     }
 
     /**
-     * Create a new NeoPixel driver for `numleds` LEDs.
-     * @param pin the pin where the neopixel is connected.
-     * @param numleds number of leds in the strip, eg: 24,30,60,64
+     * Create a NeoPixel LED strip on the selected port.
+     * @param numleds Number of LEDs.
+     * @param Rjpin Port connected to the module.
+     * @param mode LED strip color format: RGB (GRB order), RGB+W or RGB (RGB order).
      */
     //% blockId="neopixel_create" block="NeoPixel at pin %Rjpin|with %numleds|leds as %mode"
     //% weight=90 color=#EA5532
@@ -941,10 +967,10 @@ namespace PlanetX_Display {
     }
 
     /**
-     * Converts red, green, blue channels into a RGB color
-     * @param red value of the red channel between 0 and 255. eg: 255
-     * @param green value of the green channel between 0 and 255. eg: 255
-     * @param blue value of the blue channel between 0 and 255. eg: 255
+     * Combine red, green and blue components into an RGB color.
+     * @param blue Color component from 0 to 255.
+     * @param green Color component from 0 to 255.
+     * @param red Color component from 0 to 255.
      */
     //% weight=1 subcategory=Neopixel color=#EA5532
     //% blockId="neopixel_rgb" block="red %red|green %green|blue %blue"
@@ -953,8 +979,9 @@ namespace PlanetX_Display {
     }
 
     /**
-     * Gets the RGB value of a known color
-    */
+     * Return the RGB value of a predefined color.
+     * @param color Predefined LED color.
+     */
     //% weight=2 subcategory=Neopixel color=#EA5532
     //% blockId="neopixel_colors" block="%color"
     export function colors(color: NeoPixelColors): number {
@@ -978,10 +1005,10 @@ namespace PlanetX_Display {
     }
 
     /**
-     * Converts a hue saturation luminosity value into a RGB color
-     * @param h hue from 0 to 360
-     * @param s saturation from 0 to 99
-     * @param l luminosity from 0 to 99
+     * Convert hue, saturation and lightness to an RGB color.
+     * @param h Hue from 0 to 360.
+     * @param l Lightness from 0 to 99.
+     * @param s Saturation from 0 to 99.
      */
     //% blockId=neopixelHSL block="hue %h|saturation %s|luminosity %l" subcategory=Neopixel color=#EA5532
     export function hsl(h: number, s: number, l: number): number {
